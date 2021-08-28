@@ -10,10 +10,22 @@ namespace Mwm.Asanate.Model {
         [JsonProperty("color")]
         public string Color { get; set; }
 
+        private string title;
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Title {
+            get => title;
+            set {
+                title = value;
+                var companyAndName = title.Split(" - ");
+                if (companyAndName.Length == 2) {
+                    Company = companyAndName[0];
+                    Name = companyAndName[1];
+                }
+            }
+        }
 
-        //public override string[] Attributes => new string[] { "gid", "name", "color" };
+        public string Name { get; private set; }
+        public string Company { get; private set; }
     }
 }
 
