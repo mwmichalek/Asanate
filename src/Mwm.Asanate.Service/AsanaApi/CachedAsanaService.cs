@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Service .AsanaApi {
-    public class CachedAsanaService : AsanaService {
-    }
+    //public class CachedAsanaService : AsanaService {
+    //}
 }

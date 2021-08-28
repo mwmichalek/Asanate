@@ -6,12 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Model {
-    public abstract class AsanateEntity {
+    public class Membership : AsanaEntity {
 
-        //public abstract string[] Attributes { get; }
-
-        [JsonProperty("gid")]
-        public string Gid { get; set; }
+        [JsonProperty("section")]
+        public Section Section { get; set; }
 
     }
 }

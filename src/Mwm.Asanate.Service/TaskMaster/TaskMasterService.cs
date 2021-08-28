@@ -23,8 +23,12 @@ namespace Mwm.Asanate.Service.TaskMaster {
         }
 
         public async Task Test() {
-            foreach (var project in (await asanaService.GetAll<Project>()).OrderBy(p => p.Company).ThenBy(p => p.Name)) {
-                Console.WriteLine($"Company: {project.Company}, Project: {project.Name}");
+            //foreach (var project in (await asanaService.GetAll<Project>()).OrderBy(p => p.Company).ThenBy(p => p.Name)) {
+            //    Console.WriteLine($"Company: {project.Company}, Project: {project.Name}");
+            //}
+
+            foreach (var atask in (await asanaService.GetAll<ATask>())) {
+                Console.WriteLine($"Name: {atask.Name}, Status: {atask.Status}");
             }
         }
     }

@@ -20,6 +20,7 @@ namespace Mwm.Asanate.Console {
             .AddLogging()
             .AddSingleton<IAsanaService, AsanaService>()
             .AddSingleton<ITaskMasterService, TaskMasterService>()
+            .AddScoped<HttpClient>(sp => AsanaHttpClientFactory.CreateClient())
             .BuildServiceProvider();
 
             //serviceProvider
