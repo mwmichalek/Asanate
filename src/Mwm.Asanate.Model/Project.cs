@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Runtime.Serialization;
 
 namespace Mwm.Asanate.Model {
+
+    [DataContract(Name = "projects")]
     public class Project : AsanateEntity {
 
         [JsonProperty("color")]
