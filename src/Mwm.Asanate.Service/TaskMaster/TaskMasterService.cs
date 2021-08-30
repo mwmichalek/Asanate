@@ -2,6 +2,7 @@
 using Mwm.Asanate.Service.AsanaApi;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,9 +28,19 @@ namespace Mwm.Asanate.Service.TaskMaster {
             //    Console.WriteLine($"Company: {project.Company}, Project: {project.Name}");
             //}
 
-            foreach (var atask in (await asanaService.GetAll<ATask>())) {
-                Console.WriteLine($"Name: {atask.Name}, Status: {atask.Status}");
-            }
+            var sw = new Stopwatch();
+            sw.Start();
+            var atasks = (await asanaService.GetAll<ATask>())
+                .Where(t => !t.IsCompleted)
+                .OrderByDescending(t => t.CreatedAt)
+                .ToList();
+
+
+            //foreach (var atask in atasks) {
+            //    Console.WriteLine(atask);
+            //}
+
+            Console.WriteLine(sw.ElapsedMilliseconds);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace Mwm.Asanate.Service.AsanaApi {
 
         [JsonProperty("data")]
         public TEntity[] Entities{ get; set; }
-        public object next_page { get; set; }
+
+        [JsonProperty("next_page")]
+        public AsanaUrl NextPageUrl { get; set; }
     }
 }

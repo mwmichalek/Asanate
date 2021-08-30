@@ -5,9 +5,24 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Console", "src\Mwm.Asanate.Console\Mwm.Asanate.Console.csproj", "{B0C781F2-0957-4EB4-92E4-2E6DEAD2D987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.Asanate.Service", "src\Mwm.Asanate.Service\Mwm.Asanate.Service.csproj", "{6E9CF546-7B98-431D-B7D7-59B087E29438}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Service", "src\Mwm.Asanate.Service\Mwm.Asanate.Service.csproj", "{6E9CF546-7B98-431D-B7D7-59B087E29438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.Asanate.Model", "src\Mwm.Asanate.Model\Mwm.Asanate.Model.csproj", "{922741EC-8DA1-4F59-96C2-20B6B58F0713}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Model", "src\Mwm.Asanate.Model\Mwm.Asanate.Model.csproj", "{922741EC-8DA1-4F59-96C2-20B6B58F0713}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4828A78-4422-47AA-A2B4-9B3DA0B38C75}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1) Clients", "1) Clients", "{577E2C42-F120-4B3E-9FAF-4327FE891C51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3) Services", "3) Services", "{11110D20-0CFF-4F72-9099-01E85F5B3E99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5) Common", "5) Common", "{FFD9D25E-4952-4A18-AC28-381ED9E25525}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9) Tests", "9) Tests", "{0354F159-A241-4289-9A73-8BE4BEF410CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.Asanate.Clients.Blazor", "src\Mwm.Asanate.Clients.Blazor\Mwm.Asanate.Clients.Blazor.csproj", "{B73F54B2-F601-491C-A696-BA5A35F7BE11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +42,19 @@ Global
 		{922741EC-8DA1-4F59-96C2-20B6B58F0713}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{922741EC-8DA1-4F59-96C2-20B6B58F0713}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{922741EC-8DA1-4F59-96C2-20B6B58F0713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B73F54B2-F601-491C-A696-BA5A35F7BE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B73F54B2-F601-491C-A696-BA5A35F7BE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B73F54B2-F601-491C-A696-BA5A35F7BE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B73F54B2-F601-491C-A696-BA5A35F7BE11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B0C781F2-0957-4EB4-92E4-2E6DEAD2D987} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
+		{6E9CF546-7B98-431D-B7D7-59B087E29438} = {11110D20-0CFF-4F72-9099-01E85F5B3E99}
+		{922741EC-8DA1-4F59-96C2-20B6B58F0713} = {FFD9D25E-4952-4A18-AC28-381ED9E25525}
+		{B73F54B2-F601-491C-A696-BA5A35F7BE11} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAEC8625-EDFB-456B-96CF-330C9CC36C39}

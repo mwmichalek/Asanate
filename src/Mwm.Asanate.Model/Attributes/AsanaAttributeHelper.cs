@@ -17,7 +17,7 @@ namespace Mwm.Asanate.Model.Attributes {
             var pluralEntityName = modelType.GetPluralEntityName();
             var properties = modelType.GetPropertyNameList();
             var additionalParameters = modelType.GetAdditionalParameters();
-            var request = $"{pluralEntityName}?opt_fields={properties}&limit=10&workspace={workspaceId}";
+            var request = $"{pluralEntityName}?opt_fields={properties}&limit=50&workspace={workspaceId}";
             if (!string.IsNullOrEmpty(additionalParameters))
                 request += $"&{additionalParameters}";
             return request;

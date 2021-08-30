@@ -38,19 +38,45 @@ namespace Mwm.Asanate.Model {
         [AsanaProperty("memberships.section.name")]
         public Membership[] Memberships { get; set; }
 
-        public string Status => Memberships.FirstOrDefault()?.Section?.Name ?? string.Empty;
+        public string Status => Memberships?.FirstOrDefault()?.Section?.Name ?? string.Empty;
+
+        [JsonProperty("projects")]
+        [AsanaProperty("projects.name")]
+        public Project[] Projects { get; set; }
+
+        public string ProjectName => Projects?.FirstOrDefault()?.Name ?? string.Empty;
+
+        public string ProjectCompany => Projects?.FirstOrDefault()?.Company ?? string.Empty;
 
         [JsonProperty("modified_at")]
         [AsanaProperty("modified_at")]
         public DateTime? ModifiedAt { get; set; }
 
+        private string name;
+
         [JsonProperty("name")]
         [AsanaProperty("name")]
-        public string Name { get; set; }
+        public string Name {
+            get => name;
+            set {
+                name = value;
+                var subProjectAndTask = name.Split(" - ");
+                if (subProjectAndTask.Length == 2) {
+                    SubProjectName = subProjectAndTask[0];
+                    name = subProjectAndTask[1];
+                }
+            }
+        }
+
+        public string SubProjectName { get; private set; }
 
         [JsonProperty("start_on")]
         [AsanaProperty("start_on")]
         public DateTime? StartedOn { get; set; }
+
+        public override string ToString() {
+            return $"Name: {Name:-20}, Status: {Status: -20}, ModifiedAt: {ModifiedAt: -20}, ProjectName: {ProjectName}, SubProjectName: {SubProjectName}, ProjectCompany: {ProjectCompany}";
+        }
 
     }
 }

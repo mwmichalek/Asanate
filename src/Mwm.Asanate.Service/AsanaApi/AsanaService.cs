@@ -21,10 +21,17 @@ namespace Mwm.Asanate.Service.AsanaApi {
 
         public async Task<List<TEntity>> GetAll<TEntity>() where TEntity : AsanaEntity {
             var requestUrl = typeof(TEntity).GetUrl();
-            var json = await httpClient.GetStringAsync(requestUrl);
-            var results = JsonConvert.DeserializeObject<AsanaResult<TEntity>>(json);
-            return results.Entities.ToList();
+            var resultList = new List<TEntity>();
+            while (requestUrl != null) {
+                var json = await httpClient.GetStringAsync(requestUrl);
+                var results = JsonConvert.DeserializeObject<AsanaResult<TEntity>>(json);
+                resultList.AddRange(results.Entities);
+                requestUrl = results.NextPageUrl?.Uri ?? null; 
+            }
+
+            return resultList;
         }
 
     }
 }
+
