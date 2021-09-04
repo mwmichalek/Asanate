@@ -6,13 +6,24 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Mwm.Asanate.Model.Converters;
 
 namespace Mwm.Asanate.Model {
+
+    //{
+    //  "data": {
+    //    "name": "Buy catnip 9",
+    //    "projects": [
+    //      "1200874933882307"
+    //    ],
+    //    "workspace": "1153313287544364"
+    //  }
+    //}
 
     [AsanaEntity(
         PluralEntityName = "tasks",
         AdditionalParameters = "assignee=1153313240116893")]
-    public class ATask : AsanaEntity {
+    public class Tsk : AsanaEntity {
 
         [JsonProperty("completed")]
         [AsanaProperty("completed")]
@@ -38,14 +49,18 @@ namespace Mwm.Asanate.Model {
         [AsanaProperty("memberships.section.name")]
         public Membership[] Memberships { get; set; }
 
+        [JsonIgnore]
         public string Status => Memberships?.FirstOrDefault()?.Section?.Name ?? string.Empty;
-
+                
         [JsonProperty("projects")]
         [AsanaProperty("projects.name")]
+        [JsonConverter(typeof(EntityArrayConverter<Project>))]
         public Project[] Projects { get; set; }
 
+        [JsonIgnore]
         public string ProjectName => Projects?.FirstOrDefault()?.Name ?? string.Empty;
 
+        [JsonIgnore]
         public string ProjectCompany => Projects?.FirstOrDefault()?.Company ?? string.Empty;
 
         [JsonProperty("modified_at")]
@@ -68,11 +83,22 @@ namespace Mwm.Asanate.Model {
             }
         }
 
+        [JsonProperty("assignee")]
+        [AsanaProperty("assignee.name")]
+        [JsonConverter(typeof(EntityConverter<User>))]
+        public User AssignedTo { get; set; }
+
+        [JsonIgnore]
         public string SubProjectName { get; private set; }
 
         [JsonProperty("start_on")]
         [AsanaProperty("start_on")]
         public DateTime? StartedOn { get; set; }
+
+        [JsonProperty("workspace")]
+        [AsanaProperty("workspace")]
+        [JsonConverter(typeof(EntityConverter<Workspace>))]
+        public Workspace Workspace => Workspace.Default;
 
         public override string ToString() {
             return $"Name: {Name:-20}, Status: {Status: -20}, ModifiedAt: {ModifiedAt: -20}, ProjectName: {ProjectName}, SubProjectName: {SubProjectName}, ProjectCompany: {ProjectCompany}";

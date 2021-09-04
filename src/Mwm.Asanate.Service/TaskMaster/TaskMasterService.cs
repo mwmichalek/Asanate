@@ -30,17 +30,25 @@ namespace Mwm.Asanate.Service.TaskMaster {
 
             var sw = new Stopwatch();
             sw.Start();
-            var atasks = (await asanaService.GetAll<ATask>())
-                .Where(t => !t.IsCompleted)
-                .OrderByDescending(t => t.CreatedAt)
-                .ToList();
+
+            var tskResult = await asanaService.RetrieveAll<Tsk>();
+
+            if (tskResult.IsSuccess) {
+                var atasks = tskResult.Value
+                                    .Where(t => !t.IsCompleted)
+                                    .OrderByDescending(t => t.CreatedAt)
+                                    .ToList();
 
 
-            //foreach (var atask in atasks) {
-            //    Console.WriteLine(atask);
-            //}
+                foreach (var atask in atasks) {
+                    Console.WriteLine(atask);
+                }
 
-            Console.WriteLine(sw.ElapsedMilliseconds);
+                Console.WriteLine(sw.ElapsedMilliseconds);
+
+            }
+
+            
         }
     }
 }

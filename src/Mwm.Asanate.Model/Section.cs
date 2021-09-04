@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mwm.Asanate.Model.Attributes;
 
 namespace Mwm.Asanate.Model {
-    public class Section {
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+    [AsanaEntity(PluralEntityName = "workspaces")]
+    public class Section : NamedAsanaEntity {
 
     }
 }

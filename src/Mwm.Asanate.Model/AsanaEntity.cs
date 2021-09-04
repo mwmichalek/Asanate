@@ -7,6 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Model {
+
+    public abstract class NamedAsanaEntity : AsanaEntity {
+
+        [JsonProperty("name")]
+        [AsanaProperty("name")]
+        public string Name { get; set; }
+    }
+
     public abstract class AsanaEntity {
 
         [JsonProperty("gid")]

@@ -10,17 +10,25 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Model.Attributes {
     public static class AsanaAttributeHelper {
 
-  
-        private const string workspaceId = "1153313287544364";
+        // modified_since=2021-09-04T12:00:00
 
-        public static string GetUrl(this Type modelType) {
+        public static string ToRetrieveAllUrl(this Type modelType, DateTime? modifiedSince = null) {
             var pluralEntityName = modelType.GetPluralEntityName();
             var properties = modelType.GetPropertyNameList();
             var additionalParameters = modelType.GetAdditionalParameters();
-            var request = $"{pluralEntityName}?opt_fields={properties}&limit=50&workspace={workspaceId}";
+            var request = $"{pluralEntityName}?opt_fields={properties}&limit=50&workspace={Workspace.Default.Gid}";
             if (!string.IsNullOrEmpty(additionalParameters))
                 request += $"&{additionalParameters}";
+            if (modifiedSince.HasValue) {
+                var dt = modifiedSince.Value;
+                request += $"&modified_since={dt.Year}-{dt.Month}-{dt.Day}T{dt.Hour}:{dt.Minute}:{dt.Second}";
+            }
             return request;
+        }
+
+        public static string ToPersistUrl(this Type modelType) {
+            var pluralEntityName = modelType.GetPluralEntityName();
+            return $"{pluralEntityName}"; 
         }
 
         public static List<string> GetPropertyNames(this Type modelType) {
