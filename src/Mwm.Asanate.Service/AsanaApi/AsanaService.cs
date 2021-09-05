@@ -15,21 +15,23 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Service.AsanaApi {
 
-    public interface IAsanaService {
+    public interface IAsanaService<TEntity> where TEntity : IAsanaEntity {
 
-        Task<Result<List<TEntity>>> RetrieveAll<TEntity>(DateTime? modifiedSince = null) where TEntity : AsanaEntity;
+        Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null);
+
+        Task<Result<TEntity>> Persist(TEntity entity);
 
     }
 
-    public class AsanaService : IAsanaService {
+    public class AsanaService<TEntity> : IAsanaService<TEntity> where TEntity : IAsanaEntity {
 
-        private HttpClient httpClient;
+        protected HttpClient httpClient;
 
         public AsanaService(HttpClient httpClient) {
             this.httpClient = httpClient;
         }
 
-        public async Task<Result<List<TEntity>>> RetrieveAll<TEntity>(DateTime? modifiedSince = null) where TEntity : AsanaEntity {
+        public virtual async Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null) {
             try {
                 var requestUrl = typeof(TEntity).ToRetrieveAllUrl(modifiedSince);
                 var resultList = new List<TEntity>();
@@ -39,14 +41,13 @@ namespace Mwm.Asanate.Service.AsanaApi {
                     resultList.AddRange(results.Entities);
                     requestUrl = results.NextPageUrl?.Uri ?? null;
                 }
-
                 return Result.Ok(resultList);
             } catch (Exception) {
                 return Result.Fail($"Unable to retrieve {typeof(TEntity)}.");
             }
         }
 
-        public async Task<Result<TEntity>> Persist<TEntity>(TEntity entity) where TEntity : AsanaEntity {
+        public virtual async Task<Result<TEntity>> Persist(TEntity entity) {
             try {
                 var requestUrl = typeof(TEntity).ToPersistUrl();
                 var persistRequest = new AsanaRequest<TEntity>(entity);
@@ -61,7 +62,6 @@ namespace Mwm.Asanate.Service.AsanaApi {
                 return Result.Fail($"Unable to persist {typeof(TEntity)}.")
                     .WithError(ex.ToString());
             }
-            
         }
 
     }

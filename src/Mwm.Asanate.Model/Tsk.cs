@@ -20,10 +20,26 @@ namespace Mwm.Asanate.Model {
     //  }
     //}
 
+    //{
+    //  "data": {
+    //    "name": "Buy catnip 1000",
+    //    "memberships": [{
+    //        "project": "1200874933882307",
+    //        "section": "1200874933882312"
+    //    }],
+
+    //    "workspace": "1153313287544364"
+    //  }
+    //}
+
     [AsanaEntity(
         PluralEntityName = "tasks",
         AdditionalParameters = "assignee=1153313240116893")]
     public class Tsk : AsanaEntity {
+
+        [JsonProperty("notes")]
+        [AsanaProperty("notes")]
+        public string Notes { get; set; }
 
         [JsonProperty("completed")]
         [AsanaProperty("completed")]
@@ -31,19 +47,23 @@ namespace Mwm.Asanate.Model {
 
         [JsonProperty("completed_at")]
         [AsanaProperty("completed_at")]
-        public DateTime? CompletedAt { get; set; }
+        public string CompletedAt { get; set; }
 
         [JsonProperty("created_at")]
         [AsanaProperty("created_at")]
-        public DateTime? CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
 
         [JsonProperty("due_at")]
         [AsanaProperty("due_at")]
-        public DateTime? DueAt { get; set; }
+        public string DueAt { get; set; }
 
         [JsonProperty("due_on")]
         [AsanaProperty("due_on")]
-        public DateTime? DueOn { get; set; }
+        public string DueOn { get; set; }
+
+        [JsonProperty("start_on")]
+        [AsanaProperty("start_on")]
+        public string StartedOn { get; set; }
 
         [JsonProperty("memberships")]
         [AsanaProperty("memberships.section.name")]
@@ -90,10 +110,6 @@ namespace Mwm.Asanate.Model {
 
         [JsonIgnore]
         public string SubProjectName { get; private set; }
-
-        [JsonProperty("start_on")]
-        [AsanaProperty("start_on")]
-        public DateTime? StartedOn { get; set; }
 
         [JsonProperty("workspace")]
         [AsanaProperty("workspace")]

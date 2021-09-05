@@ -8,7 +8,7 @@ using Mwm.Asanate.Model.Attributes;
 
 namespace Mwm.Asanate.Model {
 
-    [AsanaEntity(PluralEntityName = "workspaces")]
+    [AsanaEntity(PluralEntityName = "sections")]
     public class Section : NamedAsanaEntity {
 
     }

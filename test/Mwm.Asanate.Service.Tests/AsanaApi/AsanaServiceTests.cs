@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using Mwm.Asanate.Model;
+using Mwm.Asanate.Model.Converters;
 using Mwm.Asanate.Service.AsanaApi;
 using System;
 using System.Collections.Generic;
@@ -25,16 +26,25 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
             Assert.True(tsks.Count > 0);
 
             foreach (var tsk in tsks)
-                output.WriteLine($"Tsk Gid: {tsk.Gid}, Name: {tsk.Name}, AssignedTo: {tsk.AssignedTo.Name}");
+                output.WriteLine($"Tsk Gid: {tsk.Gid}, Name: {tsk.Name}, Status: {tsk.Status}, AssignedTo: {tsk.AssignedTo.Name}");
         }
 
         [Fact]
         public async Task PersistTsk() {
-            var tskName = $"Test {DateTime.Now.Ticks}";
+            var tskName = $"Test {DateTime.Now.Hour}:{DateTime.Now.Minute}";
             var tsk = new Tsk {
                 Name = tskName,
                 AssignedTo = User.Me,
-                Projects = Project.ToProjectArray("1200874933882307")
+                Notes = "This rocks!" + Environment.NewLine +
+                        "Right?",
+                DueAt = DateTime.UtcNow.AddHours(5).ToUtcIsoDate(),
+                Memberships = new Membership[] {
+                    new Membership {
+                        Section = new Section { Gid = "1200874933882312" },
+                        Project = new Project { Gid = "1200874933882307"}
+                    }
+                }
+                //Projects = Project.ToProjectArray("1200874933882307")
             };
 
             var responseTsk = await PersistAndAssertResults(tsk);
@@ -73,15 +83,15 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
         //************************************************************************************************
 
         private async Task<List<TEntity>> RetrieveAllAndAssertResults<TEntity>(DateTime? modifiedSince = null) where TEntity : AsanaEntity {
-            var asanaService = new AsanaService(AsanaHttpClientFactory.CreateClient());
-            var result = await asanaService.RetrieveAll<TEntity>(modifiedSince);
+            var asanaService = new AsanaService<TEntity>(AsanaHttpClientFactory.CreateClient());
+            var result = await asanaService.RetrieveAll(modifiedSince);
             Assert.True(result.IsSuccess);
             return result.Value;
         }
 
         private async Task<TEntity> PersistAndAssertResults<TEntity>(TEntity entity) where TEntity : AsanaEntity {
-            var asanaService = new AsanaService(AsanaHttpClientFactory.CreateClient());
-            var result = await asanaService.Persist<TEntity>(entity);
+            var asanaService = new AsanaService<TEntity>(AsanaHttpClientFactory.CreateClient());
+            var result = await asanaService.Persist(entity);
             Assert.True(result.IsSuccess);
             return result.Value;
         }

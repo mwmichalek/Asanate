@@ -16,27 +16,7 @@ namespace Mwm.Asanate.Console {
     class Program {
         static async Task Main(string[] args) {
 
-            var serviceProvider = new ServiceCollection()
-            .AddLogging()
-            .AddSingleton<IAsanaService, AsanaService>()
-            .AddSingleton<ITaskMasterService, TaskMasterService>()
-            .AddScoped<HttpClient>(sp => AsanaHttpClientFactory.CreateClient())
-            .BuildServiceProvider();
-
-            //serviceProvider
-            //    .GetService<ILoggerFactory>().AddCons
-
-
-            //var logger = serviceProvider.GetService<ILoggerFactory>()
-            //    .CreateLogger<Program>();
-            //logger.LogDebug("Starting application");
-
-            //Consol.WriteLine("Hello World!");
-
-
-            //var asanateService = serviceProvider.GetService<IAsanaService>();
-
-            //var projects = await asanateService.GetAll<Project>();
+            var serviceProvider = ServiceFactory.Build();
 
             var service = serviceProvider.GetService<ITaskMasterService>();
             await service.Test();

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Service.AsanaApi {
-    public class AsanaRequest<TEntity> where TEntity : AsanaEntity {
+    public class AsanaRequest<TEntity> where TEntity : IAsanaEntity {
 
         public AsanaRequest(TEntity entity) {
             Entity = entity;

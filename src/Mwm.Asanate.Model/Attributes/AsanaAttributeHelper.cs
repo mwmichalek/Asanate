@@ -12,18 +12,31 @@ namespace Mwm.Asanate.Model.Attributes {
 
         // modified_since=2021-09-04T12:00:00
 
-        public static string ToRetrieveAllUrl(this Type modelType, DateTime? modifiedSince = null) {
+        public static string ToRetrieveAllUrl(this Type modelType, 
+                                              DateTime? modifiedSince = null,
+                                              string suppliedBaseUrl = null) {
             var pluralEntityName = modelType.GetPluralEntityName();
             var properties = modelType.GetPropertyNameList();
             var additionalParameters = modelType.GetAdditionalParameters();
-            var request = $"{pluralEntityName}?opt_fields={properties}&limit=50&workspace={Workspace.Default.Gid}";
+            return ToRetrieveAllUrl(pluralEntityName, properties, additionalParameters);
+        }
+
+        public static string ToRetrieveAllUrl(this string baseUrl,
+                                              string properties = null,
+                                              string additionalParameters = null,
+                                              DateTime? modifiedSince = null) {
+            var requestBuilder = new StringBuilder();
+            requestBuilder.Append($"{baseUrl}?workspace={Workspace.Default.Gid}"); //limit=99&
+
+            if (properties != null) 
+                requestBuilder.Append($"&opt_fields={properties}");
             if (!string.IsNullOrEmpty(additionalParameters))
-                request += $"&{additionalParameters}";
+                requestBuilder.Append($"&{additionalParameters}");
             if (modifiedSince.HasValue) {
                 var dt = modifiedSince.Value;
-                request += $"&modified_since={dt.Year}-{dt.Month}-{dt.Day}T{dt.Hour}:{dt.Minute}:{dt.Second}";
+                requestBuilder.Append($"&modified_since={dt.Year}-{dt.Month}-{dt.Day}T{dt.Hour}:{dt.Minute}:{dt.Second}");
             }
-            return request;
+            return requestBuilder.ToString();
         }
 
         public static string ToPersistUrl(this Type modelType) {

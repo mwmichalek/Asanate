@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Model {
 
+    public interface IAsanaEntity {
+
+        public string Gid { get; }
+    }
+
     public abstract class NamedAsanaEntity : AsanaEntity {
 
         [JsonProperty("name")]
@@ -15,7 +20,7 @@ namespace Mwm.Asanate.Model {
         public string Name { get; set; }
     }
 
-    public abstract class AsanaEntity {
+    public abstract class AsanaEntity : IAsanaEntity {
 
         [JsonProperty("gid")]
         [AsanaProperty("gid")]

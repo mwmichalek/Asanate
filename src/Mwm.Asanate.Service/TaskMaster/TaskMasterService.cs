@@ -17,10 +17,13 @@ namespace Mwm.Asanate.Service.TaskMaster {
 
     public class TaskMasterService : ITaskMasterService {
 
-        private IAsanaService asanaService;
+        private IAsanaService<Tsk> tskService;
+        private IAsanaService<Project> projectService;
 
-        public TaskMasterService(IAsanaService asanaService) {
-            this.asanaService = asanaService;
+        public TaskMasterService(IAsanaService<Tsk> tskService, 
+                                 IAsanaService<Project> projectService) {
+            this.tskService = tskService;
+            this.projectService = projectService;
         }
 
         public async Task Test() {
@@ -31,7 +34,7 @@ namespace Mwm.Asanate.Service.TaskMaster {
             var sw = new Stopwatch();
             sw.Start();
 
-            var tskResult = await asanaService.RetrieveAll<Tsk>();
+            var tskResult = await tskService.RetrieveAll();
 
             if (tskResult.IsSuccess) {
                 var atasks = tskResult.Value
