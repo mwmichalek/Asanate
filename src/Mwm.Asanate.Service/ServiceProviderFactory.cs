@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace Mwm.Asanate.Service {
-    public class ServiceFactory {
+    public class ServiceProviderFactory {
 
         public static IServiceProvider Build() { 
             var serviceProvider = new ServiceCollection()

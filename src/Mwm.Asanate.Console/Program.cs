@@ -16,7 +16,7 @@ namespace Mwm.Asanate.Console {
     class Program {
         static async Task Main(string[] args) {
 
-            var serviceProvider = ServiceFactory.Build();
+            var serviceProvider = ServiceProviderFactory.Build();
 
             var service = serviceProvider.GetService<ITaskMasterService>();
             await service.Test();
