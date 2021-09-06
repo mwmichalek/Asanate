@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Clients.Blazor"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Service.Tests", "test\Mwm.Asanate.Service.Tests\Mwm.Asanate.Service.Tests.csproj", "{939C7F25-3EAD-4925-A8D0-903E0E32A89A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.Asanate.Data", "src\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj", "{D9A1E5B1-965C-4641-B4C9-805FD9E423F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Data", "src\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj", "{D9A1E5B1-965C-4641-B4C9-805FD9E423F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

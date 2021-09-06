@@ -7,12 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Service.AsanaApi {
-    public static class AsanaHttpClientFactory {
+
+    public interface IAsanaHttpClientFactory {
+
+        HttpClient CreateClient();
+    }
+
+    public class AsanaHttpClientFactory : IAsanaHttpClientFactory {
 
         private const string token = "1/1153313240116893:e88b2654eff760fb62c702fd4f5502e4";
         private const string base_url = "https://app.asana.com/api/1.0/";
 
-        public static HttpClient CreateClient() {
+        public HttpClient CreateClient() {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);

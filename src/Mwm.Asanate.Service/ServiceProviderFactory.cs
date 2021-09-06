@@ -16,7 +16,7 @@ namespace Mwm.Asanate.Service {
         public static IServiceProvider Build() { 
             var serviceProvider = new ServiceCollection()
             .AddLogging()
-            .AddScoped<HttpClient>(sp => AsanaHttpClientFactory.CreateClient())
+            .AddScoped<IAsanaHttpClientFactory, AsanaHttpClientFactory>()
             .AddSingleton<IAsanaService<Tsk>, MemoryCacheAsanaService<Tsk>>()
             .AddSingleton<IAsanaService<Project>, MemoryCacheAsanaService<Project>>()
             .AddSingleton<ISectionAsanaService, SectionMemoryCacheAsanaService>()

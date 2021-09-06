@@ -12,6 +12,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Consol = System.Console;
 
+// Syncfusion Key: NDk3NTY2QDMxMzkyZTMyMmUzMEtidFArTFZsYWhvNGlHcXpaRHkwc0xqZGV3T3EyK0hFWVhHamtzOUVKRVU9
+
 namespace Mwm.Asanate.Console {
     class Program {
         static async Task Main(string[] args) {

@@ -19,12 +19,10 @@ namespace Mwm.Asanate.Service .AsanaApi {
 
         protected Dictionary<string, TEntity> entitiesLookup;
 
-        public MemoryCacheAsanaService(HttpClient httpClient, bool initialize = true) : base(httpClient) {
-            if (initialize)
-                Task.WaitAll(Initialize());
+        public MemoryCacheAsanaService(IAsanaHttpClientFactory httpClientFactory) : base(httpClientFactory) {
         }
 
-        public virtual async Task<Result> Initialize() {
+        public override async Task<Result> Initialize() {
             var allEntitiesResult = await base.RetrieveAll();
             if (allEntitiesResult.IsSuccess) {
                 entitiesLookup = allEntitiesResult.Value.ToDictionary(e => e.Gid);

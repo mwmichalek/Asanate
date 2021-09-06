@@ -19,10 +19,9 @@ namespace Mwm.Asanate.Service.AsanaApi {
 
         private IAsanaService<Project> projectService;
 
-        public SectionMemoryCacheAsanaService(HttpClient httpClient, IAsanaService<Project> projectService) :
-            base(httpClient, false) {
+        public SectionMemoryCacheAsanaService(IAsanaHttpClientFactory httpClientFactory, IAsanaService<Project> projectService) :
+            base(httpClientFactory) {
             this.projectService = projectService;
-            Task.WaitAll(Initialize());
         }
 
         public override async Task<Result> Initialize() {
@@ -45,7 +44,7 @@ namespace Mwm.Asanate.Service.AsanaApi {
                 } else
                     throw new ConfigurationErrorsException($"Unable to retrieve {typeof(Project)}");
 
-            } catch (Exception ex) {
+            } catch (Exception) {
                 throw new ConfigurationErrorsException($"Unable to retrieve {typeof(Project)}");
             }
         }

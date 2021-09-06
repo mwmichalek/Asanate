@@ -21,14 +21,16 @@ namespace Mwm.Asanate.Service.AsanaApi {
 
         Task<Result<TEntity>> Persist(TEntity entity);
 
+        Task<Result> Initialize();
+
     }
 
     public class AsanaService<TEntity> : IAsanaService<TEntity> where TEntity : IAsanaEntity {
 
         protected HttpClient httpClient;
 
-        public AsanaService(HttpClient httpClient) {
-            this.httpClient = httpClient;
+        public AsanaService(IAsanaHttpClientFactory httpClientFactory) {
+            this.httpClient = httpClientFactory.CreateClient();
         }
 
         public virtual async Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null) {
@@ -63,6 +65,8 @@ namespace Mwm.Asanate.Service.AsanaApi {
                     .WithError(ex.ToString());
             }
         }
+
+        public virtual Task<Result> Initialize() => Task.FromResult(Result.Ok());
 
     }
 }

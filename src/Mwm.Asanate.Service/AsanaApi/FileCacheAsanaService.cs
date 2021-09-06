@@ -19,11 +19,11 @@ namespace Mwm.Asanate.Service .AsanaApi {
 
         private Dictionary<string, TEntity> entitiesLookup;
 
-        public FileCacheAsanaService(HttpClient httpClient) : base(httpClient) {
+        public FileCacheAsanaService(IAsanaHttpClientFactory httpClientFactory) : base(httpClientFactory) {
             Task.WaitAll(Initialize());
         }
 
-        private async Task Initialize() {
+        public override async Task<Result> Initialize() {
             var jsonPath = Path.Join(CACHE_DIRECTORY, $"{typeof(TEntity)}.json");
             if (File.Exists(jsonPath)) {
                 var entitiesLookupJson = await File.ReadAllTextAsync(jsonPath);
@@ -42,6 +42,7 @@ namespace Mwm.Asanate.Service .AsanaApi {
                     await File.WriteAllTextAsync(jsonPath, entitiesLookupJson);
                 }
             }
+            return Result.Ok();
         }
 
         public override Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null) {
