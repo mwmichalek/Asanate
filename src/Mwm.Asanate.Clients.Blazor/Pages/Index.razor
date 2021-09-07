@@ -1,14 +1,24 @@
 ﻿@page "/"
-    @using Syncfusion.Blazor.Kanban
-    <SfKanban TValue="TasksModel" KeyField="Company" DataSource="Tasks">
-        <KanbanColumns>
-            @foreach (var company in Companies) {
-                <KanbanColumn HeaderText="@company" KeyField="@(new List<string>() {company})">
-                </KanbanColumn>
-            }
+@using Syncfusion.Blazor.Kanban
+<SfKanban TValue="TasksModel" KeyField="Company" DataSource="Tasks">
+    <KanbanColumns>
+        @foreach (var company in Companies) {
+            <KanbanColumn HeaderText="@company" KeyField="@(new List<string>() {company})">
+            </KanbanColumn>
+        }
 
-        </KanbanColumns>
-        <KanbanCardSettings HeaderField="Title" ContentField="Summary"></KanbanCardSettings>
-        <KanbanSwimlaneSettings  KeyField="Status"></KanbanSwimlaneSettings>
-    </SfKanban>
+    </KanbanColumns>
+    <KanbanCardSettings HeaderField="Title" ContentField="Summary"></KanbanCardSettings>
+    <KanbanSwimlaneSettings KeyField="StatusRank"></KanbanSwimlaneSettings>
+</SfKanban>
+
+[3:45 PM] Nagesar, Padma
+
+
+https://blackstone.zoom.us/j/309648688?pwd=UTRYU1pNVG0yL0wvVWhNcGJQVHg3UT09
+
+
+Meeting ID: 309 648 688
+Computer Password: 183240
+
 

@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Service.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Data", "src\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj", "{D9A1E5B1-965C-4641-B4C9-805FD9E423F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.Asanate.Server", "src\Mwm.Asanate.Server\Mwm.Asanate.Server.csproj", "{76927701-CD9E-42F0-BFC1-3B343670BC30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{D9A1E5B1-965C-4641-B4C9-805FD9E423F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9A1E5B1-965C-4641-B4C9-805FD9E423F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9A1E5B1-965C-4641-B4C9-805FD9E423F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76927701-CD9E-42F0-BFC1-3B343670BC30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76927701-CD9E-42F0-BFC1-3B343670BC30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76927701-CD9E-42F0-BFC1-3B343670BC30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76927701-CD9E-42F0-BFC1-3B343670BC30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{B73F54B2-F601-491C-A696-BA5A35F7BE11} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 		{939C7F25-3EAD-4925-A8D0-903E0E32A89A} = {0354F159-A241-4289-9A73-8BE4BEF410CE}
 		{D9A1E5B1-965C-4641-B4C9-805FD9E423F5} = {11110D20-0CFF-4F72-9099-01E85F5B3E99}
+		{76927701-CD9E-42F0-BFC1-3B343670BC30} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAEC8625-EDFB-456B-96CF-330C9CC36C39}

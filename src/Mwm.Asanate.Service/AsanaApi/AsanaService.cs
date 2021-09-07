@@ -66,8 +66,30 @@ namespace Mwm.Asanate.Service.AsanaApi {
             }
         }
 
+        public virtual Task<Result> SubscribeToUpdates() {
+            return Task.FromResult(Result.Ok());
+        }
+
         public virtual Task<Result> Initialize() => Task.FromResult(Result.Ok());
 
     }
 }
+
+
+//public class Rootobject {
+//    public Data data { get; set; }
+//}
+
+//public class Data {
+//    public Filter[] filters { get; set; }
+//    public string resource { get; set; }
+//    public string target { get; set; }
+//}
+
+//public class Filter {
+//    public string action { get; set; }
+//    public string[] fields { get; set; }
+//    public string resource_subtype { get; set; }
+//    public string resource_type { get; set; }
+//}
 

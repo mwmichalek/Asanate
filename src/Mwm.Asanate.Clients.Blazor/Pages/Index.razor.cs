@@ -68,9 +68,30 @@ namespace Mwm.Asanate.Clients.Blazor.Pages {
     }
 
     public class TasksModel {
+
+        private static Dictionary<string, string> _statusRanked = new Dictionary<string, string> {
+            {"Open", "1"},
+            {"Planned", "2"},
+            {"Queued", "3"},
+            {"Ready To Start", "4"},
+            {"In Progress", "5"},
+            {"Pending", "6"},
+            {"Done", "7" }
+        };
+
+
         public string Id { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
+
+        public string StatusRank {
+            get {
+                if (_statusRanked.TryGetValue(Status, out string statusRank))
+                    return $"[{statusRank}] {Status}";
+                return "";
+            }
+        }
+
         public string Summary { get; set; }
         public string Assignee { get; set; }
 
