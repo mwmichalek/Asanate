@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Model {
 
-    public class Membership : AsanaEntity {
+    public class AsanaMembership : AsanaEntity {
 
         [JsonProperty("section")]
-        [JsonConverter(typeof(EntityConverter<Section>))]
-        public Section Section { get; set; }
+        [JsonConverter(typeof(EntityConverter<AsanaSection>))]
+        public AsanaSection Section { get; set; }
 
         [JsonProperty("project")]
-        [JsonConverter(typeof(EntityConverter<Project>))]
-        public Project Project { get; set; }
+        [JsonConverter(typeof(EntityConverter<AsanaProject>))]
+        public AsanaProject Project { get; set; }
 
     }
 }

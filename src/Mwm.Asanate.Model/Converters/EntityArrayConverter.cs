@@ -12,7 +12,7 @@ namespace Mwm.Asanate.Model.Converters {
     public class EntityArrayConverter<TEntity> : Newtonsoft.Json.JsonConverter where TEntity : AsanaEntity {
 
         public override bool CanConvert(Type objectType) {
-            return (objectType == typeof(Project[]));
+            return (objectType == typeof(AsanaProject[]));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {

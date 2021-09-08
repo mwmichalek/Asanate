@@ -20,7 +20,7 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
         // ********************************** TSKS ***************************************************
         [Fact]
         public async Task RetrieveAllTsks() {
-            var tsks = await RetrieveAllAndAssertResults<Tsk>();
+            var tsks = await RetrieveAllAndAssertResults<AsanaTsk>();
             Assert.True(tsks.Count > 0);
 
             foreach (var tsk in tsks)

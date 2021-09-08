@@ -12,18 +12,18 @@ namespace Mwm.Asanate.Model.Converters {
     public class ProjectsConverter : Newtonsoft.Json.JsonConverter {
 
         public override bool CanConvert(Type objectType) {
-            return (objectType == typeof(Project[]));
+            return (objectType == typeof(AsanaProject[]));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.Array) 
-                return token.ToObject<Project[]>();
+                return token.ToObject<AsanaProject[]>();
             return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            if (value is Project[] projects) {
+            if (value is AsanaProject[] projects) {
                 var idArray = projects.Select(p => p.Gid).ToArray();
                 serializer.Serialize(writer, idArray);
             }

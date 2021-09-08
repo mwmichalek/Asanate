@@ -21,9 +21,9 @@ namespace Mwm.Asanate.Clients.Blazor {
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddSingleton<IAsanaHttpClientFactory, AsanaHttpClientFactory>();
-            builder.Services.AddSingleton<IAsanaService<Tsk>, MemoryCacheAsanaService<Tsk>>();
-            builder.Services.AddSingleton<IAsanaService<Project>, MemoryCacheAsanaService<Project>>();
-            builder.Services.AddSingleton<IAsanaService<Section>, SectionMemoryCacheAsanaService>();
+            builder.Services.AddSingleton<IAsanaService<AsanaTsk>, MemoryCacheAsanaService<AsanaTsk>>();
+            builder.Services.AddSingleton<IAsanaService<AsanaProject>, MemoryCacheAsanaService<AsanaProject>>();
+            builder.Services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
             builder.Services.AddSingleton<ITaskMasterService, TaskMasterService>();
             builder.Services.AddSyncfusionBlazor();
             builder.Services.AddMsalAuthentication(options => {
@@ -31,9 +31,9 @@ namespace Mwm.Asanate.Clients.Blazor {
             });
 
             var host = builder.Build();
-            await host.Services.GetService<IAsanaService<Tsk>>().Initialize();
-            await host.Services.GetService<IAsanaService<Project>>().Initialize();
-            await host.Services.GetService<IAsanaService<Section>>().Initialize();
+            await host.Services.GetService<IAsanaService<AsanaTsk>>().Initialize();
+            await host.Services.GetService<IAsanaService<AsanaProject>>().Initialize();
+            await host.Services.GetService<IAsanaService<AsanaSection>>().Initialize();
 
             await host.RunAsync();
         }

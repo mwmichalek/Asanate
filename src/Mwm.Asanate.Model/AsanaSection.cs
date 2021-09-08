@@ -9,7 +9,7 @@ using Mwm.Asanate.Model.Attributes;
 namespace Mwm.Asanate.Model {
 
     [AsanaEntity(PluralEntityName = "sections")]
-    public class Section : NamedAsanaEntity {
+    public class AsanaSection : NamedAsanaEntity {
 
     }
 }

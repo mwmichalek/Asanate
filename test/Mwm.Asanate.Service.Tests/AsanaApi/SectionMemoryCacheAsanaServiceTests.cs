@@ -29,18 +29,18 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
 
         //************************************************************************************************
 
-        private async Task<List<Section>> RetrieveAllAndAssertResults(DateTime? modifiedSince = null) {
+        private async Task<List<AsanaSection>> RetrieveAllAndAssertResults(DateTime? modifiedSince = null) {
             var httpClientFactory = new AsanaHttpClientFactory();
-            var projectService = new MemoryCacheAsanaService<Project>(httpClientFactory);
+            var projectService = new MemoryCacheAsanaService<AsanaProject>(httpClientFactory);
             var sectionService = new SectionMemoryCacheAsanaService(httpClientFactory, projectService);
             var result = await sectionService.RetrieveAll(modifiedSince);
             Assert.True(result.IsSuccess);
             return result.Value;
         }
 
-        private async Task<Section> PersistAndAssertResults(Section entity) {
+        private async Task<AsanaSection> PersistAndAssertResults(AsanaSection entity) {
             var httpClientFactory = new AsanaHttpClientFactory();
-            var projectService = new MemoryCacheAsanaService<Project>(httpClientFactory);
+            var projectService = new MemoryCacheAsanaService<AsanaProject>(httpClientFactory);
             var sectionService = new SectionMemoryCacheAsanaService(httpClientFactory, projectService);
             var result = await sectionService.Persist(entity);
             Assert.True(result.IsSuccess);

@@ -28,8 +28,8 @@ namespace Mwm.Asanate.Service.Tests.TaskMaster {
 
         [Fact]
         public async Task RetrieveAllStuff() {
-            var tskService = serviceProvider.GetService<IAsanaService<Tsk>>();
-            var projectService = serviceProvider.GetService<IAsanaService<Project>>();
+            var tskService = serviceProvider.GetService<IAsanaService<AsanaTsk>>();
+            var projectService = serviceProvider.GetService<IAsanaService<AsanaProject>>();
             var sectionService = serviceProvider.GetService<ISectionAsanaService>();
 
             var tsksResult = await tskService.RetrieveAll();

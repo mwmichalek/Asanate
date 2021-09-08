@@ -12,18 +12,18 @@ namespace Mwm.Asanate.Model.Converters {
     public class WorkspaceConverter : Newtonsoft.Json.JsonConverter {
 
         public override bool CanConvert(Type objectType) {
-            return (objectType == typeof(Workspace));
+            return (objectType == typeof(AsanaWorkspace));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
             var token = JToken.Load(reader);
             if (token.Type == JTokenType.Object) 
-                return token.ToObject<Workspace>();
+                return token.ToObject<AsanaWorkspace>();
             return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            if (value is Workspace workspace) 
+            if (value is AsanaWorkspace workspace) 
                 serializer.Serialize(writer, workspace.Gid);
         }
     }

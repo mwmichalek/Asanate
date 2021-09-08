@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Model {
 
     [AsanaEntity(PluralEntityName = "workspaces")]
-    public class Workspace : NamedAsanaEntity {
+    public class AsanaWorkspace : NamedAsanaEntity {
 
         private const string workspaceId = "1153313287544364";
 
-        public static Workspace Default => new Workspace { Gid = workspaceId };
+        public static AsanaWorkspace Default => new AsanaWorkspace { Gid = workspaceId };
     }
 }

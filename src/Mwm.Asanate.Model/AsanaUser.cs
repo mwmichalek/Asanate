@@ -10,9 +10,9 @@ namespace Mwm.Asanate.Model {
     // User Gid: 1153313240116893, Name: Mark Michalek
 
     [AsanaEntity(PluralEntityName = "users")]
-    public class User : NamedAsanaEntity {
+    public class AsanaUser : NamedAsanaEntity {
 
-        public static User Me => new User { Gid = "1153313240116893" };
+        public static AsanaUser Me => new AsanaUser { Gid = "1153313240116893" };
 
     }
 }

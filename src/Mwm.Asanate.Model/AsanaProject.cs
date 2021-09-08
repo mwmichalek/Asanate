@@ -17,7 +17,7 @@ namespace Mwm.Asanate.Model {
     //Project Gid: 1200874933882307, Company: Blackstone, Name: HedgeHog, Workspace.Gid: 1153313287544364
 
     [AsanaEntity(PluralEntityName = "projects")]
-    public class Project : AsanaEntity {
+    public class AsanaProject : AsanaEntity {
 
         [JsonProperty("color")]
         [AsanaProperty("color")]
@@ -48,10 +48,10 @@ namespace Mwm.Asanate.Model {
         [JsonProperty("workspace")]
         [AsanaProperty("workspace")]
         [JsonConverter(typeof(WorkspaceConverter))]
-        public Workspace Workspace => Workspace.Default;
+        public AsanaWorkspace Workspace => AsanaWorkspace.Default;
 
-        public static Project[] ToProjectArray(params string[] projectGids) {
-            return projectGids.Select(pg => new Project { Gid = pg }).ToArray();
+        public static AsanaProject[] ToProjectArray(params string[] projectGids) {
+            return projectGids.Select(pg => new AsanaProject { Gid = pg }).ToArray();
         }
 
     }

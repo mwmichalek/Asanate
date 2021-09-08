@@ -35,7 +35,7 @@ namespace Mwm.Asanate.Model {
     [AsanaEntity(
         PluralEntityName = "tasks",
         AdditionalParameters = "assignee=1153313240116893")]
-    public class Tsk : AsanaEntity {
+    public class AsanaTsk : AsanaEntity {
 
         [JsonProperty("notes")]
         [AsanaProperty("notes")]
@@ -67,15 +67,15 @@ namespace Mwm.Asanate.Model {
 
         [JsonProperty("memberships")]
         [AsanaProperty("memberships.section.name")]
-        public Membership[] Memberships { get; set; }
+        public AsanaMembership[] Memberships { get; set; }
 
         [JsonIgnore]
         public string Status => Memberships?.FirstOrDefault()?.Section?.Name ?? string.Empty;
                 
         [JsonProperty("projects")]
         [AsanaProperty("projects.name")]
-        [JsonConverter(typeof(EntityArrayConverter<Project>))]
-        public Project[] Projects { get; set; }
+        [JsonConverter(typeof(EntityArrayConverter<AsanaProject>))]
+        public AsanaProject[] Projects { get; set; }
 
         [JsonIgnore]
         public string ProjectName => Projects?.FirstOrDefault()?.Name ?? string.Empty;
@@ -105,16 +105,16 @@ namespace Mwm.Asanate.Model {
 
         [JsonProperty("assignee")]
         [AsanaProperty("assignee.name")]
-        [JsonConverter(typeof(EntityConverter<User>))]
-        public User AssignedTo { get; set; }
+        [JsonConverter(typeof(EntityConverter<AsanaUser>))]
+        public AsanaUser AssignedTo { get; set; }
 
         [JsonIgnore]
         public string SubProjectName { get; private set; }
 
         [JsonProperty("workspace")]
         [AsanaProperty("workspace")]
-        [JsonConverter(typeof(EntityConverter<Workspace>))]
-        public Workspace Workspace => Workspace.Default;
+        [JsonConverter(typeof(EntityConverter<AsanaWorkspace>))]
+        public AsanaWorkspace Workspace => AsanaWorkspace.Default;
 
         public override string ToString() {
             return $"Name: {Name:-20}, Status: {Status: -20}, ModifiedAt: {ModifiedAt: -20}, ProjectName: {ProjectName}, SubProjectName: {SubProjectName}, ProjectCompany: {ProjectCompany}";

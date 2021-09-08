@@ -22,7 +22,7 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
         // ********************************** TSKS ***************************************************
         [Fact]
         public async Task RetrieveAllTsks() {
-            var tsks = await RetrieveAllAndAssertResults<Tsk>(DateTime.Now.AddHours(-3));
+            var tsks = await RetrieveAllAndAssertResults<AsanaTsk>(DateTime.Now.AddHours(-3));
             Assert.True(tsks.Count > 0);
 
             foreach (var tsk in tsks)
@@ -32,16 +32,16 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
         [Fact]
         public async Task PersistTsk() {
             var tskName = $"Test {DateTime.Now.Hour}:{DateTime.Now.Minute}";
-            var tsk = new Tsk {
+            var tsk = new AsanaTsk {
                 Name = tskName,
-                AssignedTo = User.Me,
+                AssignedTo = AsanaUser.Me,
                 Notes = "This rocks!" + Environment.NewLine +
                         "Right?",
                 DueAt = DateTime.UtcNow.AddHours(5).ToUtcIsoDate(),
-                Memberships = new Membership[] {
-                    new Membership {
-                        Section = new Section { Gid = "1200874933882312" },
-                        Project = new Project { Gid = "1200874933882307"}
+                Memberships = new AsanaMembership[] {
+                    new AsanaMembership {
+                        Section = new AsanaSection { Gid = "1200874933882312" },
+                        Project = new AsanaProject { Gid = "1200874933882307"}
                     }
                 }
                 //Projects = Project.ToProjectArray("1200874933882307")
@@ -54,7 +54,7 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
         // ********************************** PROJECTS ***********************************************
         [Fact]
         public async Task RetrieveAllProjects() {
-            var projects = await RetrieveAllAndAssertResults<Project>();
+            var projects = await RetrieveAllAndAssertResults<AsanaProject>();
             foreach (var prj in projects)
                 output.WriteLine($"Project Gid: {prj.Gid}, Company: {prj.Company}, Name: {prj.Name}, Workspace.Gid: {prj.Workspace.Gid}");
             Assert.True(projects.Count > 0);
@@ -63,7 +63,7 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
         // ********************************** USERS ***************************************************
         [Fact]
         public async Task RetrieveAllUsers() {
-            var users = await RetrieveAllAndAssertResults<User>();
+            var users = await RetrieveAllAndAssertResults<AsanaUser>();
             Assert.True(users.Count > 0);
 
             foreach (var user in users)
@@ -73,7 +73,7 @@ namespace Mwm.Asanate.Service.Tests.AsanaApi {
         // ********************************** SECTIONS ***************************************************
         [Fact]
         public async Task RetrieveAllSections() {
-            var sections = await RetrieveAllAndAssertResults<Section>();
+            var sections = await RetrieveAllAndAssertResults<AsanaSection>();
             Assert.True(sections.Count > 0);
 
             foreach (var section in sections)

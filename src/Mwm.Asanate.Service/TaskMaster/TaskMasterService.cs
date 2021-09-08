@@ -17,11 +17,11 @@ namespace Mwm.Asanate.Service.TaskMaster {
 
     public class TaskMasterService : ITaskMasterService {
 
-        private IAsanaService<Tsk> tskService;
-        private IAsanaService<Project> projectService;
+        private IAsanaService<AsanaTsk> tskService;
+        private IAsanaService<AsanaProject> projectService;
 
-        public TaskMasterService(IAsanaService<Tsk> tskService, 
-                                 IAsanaService<Project> projectService) {
+        public TaskMasterService(IAsanaService<AsanaTsk> tskService, 
+                                 IAsanaService<AsanaProject> projectService) {
             this.tskService = tskService;
             this.projectService = projectService;
         }

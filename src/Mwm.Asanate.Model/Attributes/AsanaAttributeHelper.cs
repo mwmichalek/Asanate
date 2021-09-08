@@ -26,7 +26,7 @@ namespace Mwm.Asanate.Model.Attributes {
                                               string additionalParameters = null,
                                               DateTime? modifiedSince = null) {
             var requestBuilder = new StringBuilder();
-            requestBuilder.Append($"{baseUrl}?workspace={Workspace.Default.Gid}"); //limit=99&
+            requestBuilder.Append($"{baseUrl}?workspace={AsanaWorkspace.Default.Gid}"); //limit=99&
 
             if (properties != null) 
                 requestBuilder.Append($"&opt_fields={properties}");
