@@ -19,7 +19,7 @@ namespace Mwm.Asanate.Clients.Blazor.Pages {
         protected override async Task OnInitializedAsync() {
             var taskResult = await TskService.RetrieveAll();
             if (taskResult.IsSuccess) {
-                Tasks = taskResult.Value.Where(tsk => tsk.Projects.Length > 0)
+                Tasks = taskResult.Value.Where(tsk => tsk.Projects.Length > 0 && !tsk.IsCompleted)
                                         .Select(tsk => new TasksModel {
                                             Id = tsk.Gid,
                                             Title = tsk.Name,

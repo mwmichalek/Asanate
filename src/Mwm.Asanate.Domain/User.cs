@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Model {
-    //public class Workspace : NamedEntity {
-    //}
+namespace Mwm.Asanate.Domain {
+    public class User : NamedEntity {
+
+    }
 }

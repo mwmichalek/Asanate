@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Model {
+namespace Mwm.Asanate.Domain {
     public class Tsk : NamedEntity {
 
         public Status Status { get; set; }

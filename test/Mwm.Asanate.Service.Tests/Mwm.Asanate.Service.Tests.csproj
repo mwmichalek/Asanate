@@ -35,6 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Mwm.Asanate.Common\Mwm.Asanate.Common.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj" />
+    <ProjectReference Include="..\..\src\Mwm.Asanate.Domain\Mwm.Asanate.Domain.csproj" />
   </ItemGroup>
 
 </Project>

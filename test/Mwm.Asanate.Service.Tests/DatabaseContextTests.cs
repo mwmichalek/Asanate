@@ -1,10 +1,10 @@
-using Mwm.Asanate.Data;
+using Mwm.Asanate.Domain;
 using Mwm.Asanate.Data.Utils;
-using Mwm.Asanate.Model;
 using System;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
+using Mwm.Asanate.Data;
 
 namespace Mwm.Asanate.Service.Tests {
 

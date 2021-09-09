@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Model {
-    public class Company : NamedEntity {
+namespace Mwm.Asanate.Domain {
+    public class Project : NamedEntity {
 
         public string Color { get; set; }
 
-        public virtual List<Project> Projects { get; set; }
+        public Company Company { get; set; }
+
+        // public Workspace Workspace { get; set; }
 
     }
 }

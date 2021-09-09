@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mwm.Asana.Model;
-using Mwm.Asanate.Model;
+using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
