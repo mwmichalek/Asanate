@@ -12,8 +12,4 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Mwm.Asanate.Model\Mwm.Asana.Model.csproj" />
-  </ItemGroup>
-
 </Project>

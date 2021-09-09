@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using Mwm.Asana.Model;
+using Mwm.Asanate.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,21 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Data {
     public interface IDatabaseContext {
-        //DbSet<Member> Members { get; set; }
+        DbSet<User> Users { get; set; }
 
-        //DbSet<CreditGrant> CreditGrants { get; set; }
+        DbSet<Project> Projects { get; set; }
 
-        //DbSet<CreditTransaction> CreditTransactions { get; set; }
+        DbSet<Company> Companies { get; set; }
 
-        //DbSet<T> Set<T>() where T : class, IAsanaEntity;
+        DbSet<Initiative> Initiatives { get; set; }
+
+        DbSet<Status> Statuses { get; set; }
+
+        DbSet<Tsk> Tsks { get; set; }
+
+        //DbSet<Workspace> Workspaces { get; set; }
+
+        DbSet<T> Set<T>() where T : class, IAsanateEntity;
 
         void Save();
     }
@@ -29,13 +38,25 @@ namespace Mwm.Asanate.Data {
             IsExternallyConfigured = true;
         }
 
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<Company> Companies { get; set; }
+
+        public DbSet<Initiative> Initiatives { get; set; }
+
+        public DbSet<Status> Statuses { get; set; }
+
+        public DbSet<Tsk> Tsks { get; set; }
+
         public void Save() {
             this.SaveChanges();
         }
 
-        //public new DbSet<T> Set<T>() where T : class, IAsanaEntity {
-        //    return base.Set<T>();
-        //}
+        public new DbSet<T> Set<T>() where T : class, IAsanateEntity {
+            return base.Set<T>();
+        }
     }
 }
 

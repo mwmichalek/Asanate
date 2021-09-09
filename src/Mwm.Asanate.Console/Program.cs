@@ -13,7 +13,7 @@ using Consol = System.Console;
 
 namespace Mwm.Asanate.Console {
     class Program {
-        static async Task Main(string[] args) {
+        static void Main(string[] args) {
 
             //var serviceProvider = ServiceProviderFactory.Build();
 
