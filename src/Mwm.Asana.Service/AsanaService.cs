@@ -1,7 +1,7 @@
 ﻿using FluentResults;
-using Mwm.Asanate.Model;
-using Mwm.Asanate.Model.Attributes;
-using Mwm.Asanate.Model.Converters;
+using Mwm.Asana.Model;
+using Mwm.Asana.Model.Attributes;
+using Mwm.Asana.Model.Converters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Service.AsanaApi {
+namespace Mwm.Asana.Service {
 
     public interface IAsanaService<TEntity> where TEntity : IAsanaEntity {
 

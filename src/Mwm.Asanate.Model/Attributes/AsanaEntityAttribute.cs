@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Model.Attributes {
+namespace Mwm.Asana.Model.Attributes {
     public class AsanaEntityAttribute : Attribute {
 
         public AsanaEntityAttribute() {

@@ -1,5 +1,6 @@
 ﻿using FluentResults;
-using Mwm.Asanate.Model;
+using Mwm.Asana.Model;
+using Mwm.Asana.Service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Service .AsanaApi {
+namespace Mwm.Asanate.Service {
 
     public class MemoryCacheAsanaService<TEntity> : AsanaService<TEntity> where TEntity : IAsanaEntity {
 

@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Service.AsanaApi {
+namespace Mwm.Asana.Service {
 
     public interface IAsanaHttpClientFactory {
 

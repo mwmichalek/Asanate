@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mwm.Asanate.Model.Attributes;
+using Mwm.Asana.Model.Attributes;
 
-namespace Mwm.Asanate.Model {
+namespace Mwm.Asana.Model {
 
     // User Gid: 1153313240116893, Name: Mark Michalek
 

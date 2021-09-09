@@ -1,5 +1,5 @@
-﻿using Mwm.Asanate.Model;
-using Mwm.Asanate.Service.AsanaApi;
+﻿using Mwm.Asana.Model;
+using Mwm.Asana.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;

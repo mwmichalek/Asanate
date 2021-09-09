@@ -1,11 +1,11 @@
-﻿using Mwm.Asanate.Model.Attributes;
-using Mwm.Asanate.Model.Converters;
+﻿using Mwm.Asana.Model.Attributes;
+using Mwm.Asana.Model.Converters;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace Mwm.Asanate.Model {
+namespace Mwm.Asana.Model {
 
     //Project Gid: 1199690891861721, Company: MWM, Name: Home, Workspace.Gid: 1153313287544364
     //Project Gid: 1199690891861732, Company: MWM, Name: BFV Hardware, Workspace.Gid: 1153313287544364

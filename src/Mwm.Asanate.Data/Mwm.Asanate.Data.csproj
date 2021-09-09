@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mwm.Asanate.Model\Mwm.Asanate.Model.csproj" />
+    <ProjectReference Include="..\Mwm.Asanate.Model\Mwm.Asana.Model.csproj" />
   </ItemGroup>
 
 </Project>

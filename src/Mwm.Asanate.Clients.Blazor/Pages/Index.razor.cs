@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Mwm.Asanate.Model;
-using Mwm.Asanate.Service.AsanaApi;
+using Mwm.Asana.Model;
+using Mwm.Asana.Service;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,20 +19,17 @@ namespace Mwm.Asanate.Clients.Blazor.Pages {
         protected override async Task OnInitializedAsync() {
             var taskResult = await TskService.RetrieveAll();
             if (taskResult.IsSuccess) {
-                var tsks = taskResult.Value;
+                Tasks = taskResult.Value.Where(tsk => tsk.Projects.Length > 0)
+                                        .Select(tsk => new TasksModel {
+                                            Id = tsk.Gid,
+                                            Title = tsk.Name,
+                                            Status = tsk.Status,
+                                            Summary = tsk.Notes,
+                                            Project = tsk.ProjectName,
+                                            Company = tsk.ProjectCompany
+                                        }).ToList();
 
-                Companies = tsks.Select(tsk => tsk.ProjectCompany).Distinct().ToList();
-
-                foreach (var tsk in tsks) {
-                    Tasks.Add(new TasksModel {
-                        Id = tsk.Gid,
-                        Title = tsk.Name,
-                        Status = tsk.Status,
-                        Summary = tsk.Notes,
-                        Project = tsk.ProjectName,
-                        Company = tsk.ProjectCompany
-                    });
-                }
+                Companies = Tasks.Select(tsk => tsk.Company).Distinct().ToList();
             }
         }
 

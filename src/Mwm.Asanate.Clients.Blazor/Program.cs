@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Mwm.Asanate.Model;
-using Mwm.Asanate.Service.AsanaApi;
-using Mwm.Asanate.Service.TaskMaster;
+using Mwm.Asana.Model;
+using Mwm.Asana.Service;
+using Mwm.Asanate.Service;
 using Syncfusion.Blazor;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,8 @@ namespace Mwm.Asanate.Clients.Blazor {
             builder.Services.AddSingleton<IAsanaService<AsanaTsk>, MemoryCacheAsanaService<AsanaTsk>>();
             builder.Services.AddSingleton<IAsanaService<AsanaProject>, MemoryCacheAsanaService<AsanaProject>>();
             builder.Services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
-            builder.Services.AddSingleton<ITaskMasterService, TaskMasterService>();
+
+
             builder.Services.AddSyncfusionBlazor();
             builder.Services.AddMsalAuthentication(options => {
                 builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);

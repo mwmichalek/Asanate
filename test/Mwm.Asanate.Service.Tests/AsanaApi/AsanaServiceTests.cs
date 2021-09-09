@@ -1,7 +1,7 @@
 ﻿using FluentResults;
-using Mwm.Asanate.Model;
-using Mwm.Asanate.Model.Converters;
-using Mwm.Asanate.Service.AsanaApi;
+using Mwm.Asana.Model;
+using Mwm.Asana.Model.Converters;
+using Mwm.Asana.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;

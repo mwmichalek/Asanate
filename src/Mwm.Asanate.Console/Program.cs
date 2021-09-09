@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Mwm.Asanate.Model;
-using Mwm.Asanate.Service;
-using Mwm.Asanate.Service.AsanaApi;
-using Mwm.Asanate.Service.TaskMaster;
+using Mwm.Asana.Model;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -18,10 +15,10 @@ namespace Mwm.Asanate.Console {
     class Program {
         static async Task Main(string[] args) {
 
-            var serviceProvider = ServiceProviderFactory.Build();
+            //var serviceProvider = ServiceProviderFactory.Build();
 
-            var service = serviceProvider.GetService<ITaskMasterService>();
-            await service.Test();
+            //var service = serviceProvider.GetService<ITaskMasterService>();
+            //await service.Test();
 
         }
     }

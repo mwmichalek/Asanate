@@ -1,4 +1,4 @@
-﻿using Mwm.Asanate.Model;
+﻿using Mwm.Asana.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Model.Converters {
+namespace Mwm.Asana.Model.Converters {
     public class ProjectsConverter : Newtonsoft.Json.JsonConverter {
 
         public override bool CanConvert(Type objectType) {

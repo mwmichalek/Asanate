@@ -9,6 +9,25 @@
 
     </KanbanColumns>
     <KanbanCardSettings HeaderField="Title" ContentField="Summary"></KanbanCardSettings>
-    <KanbanSwimlaneSettings KeyField="StatusRank"></KanbanSwimlaneSettings>
+    <KanbanSwimlaneSettings KeyField="StatusRank">
+        <Template>
+            @{
+                SwimlaneSettingsModel swimlane = (SwimlaneSettingsModel)context;
+                <div class="swimlane-template e-swimlane-template-table">
+                    <div class="e-swimlane-row-text">
+                        <span>@SwimLaneName(swimlane.KeyField)</span>
+                    </div>
+                </div>
+            }
+        </Template>
+
+    </KanbanSwimlaneSettings>
 </SfKanban>
 
+@code {
+    public string SwimLaneName(string keyField) {
+        var keyAndStatus = keyField.Split("] ");
+        if (keyAndStatus.Length > 0) return keyAndStatus[1];
+        return keyField;
+    }
+}

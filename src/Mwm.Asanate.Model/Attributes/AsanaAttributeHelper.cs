@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Model.Attributes {
+namespace Mwm.Asana.Model.Attributes {
     public static class AsanaAttributeHelper {
 
         // modified_since=2021-09-04T12:00:00

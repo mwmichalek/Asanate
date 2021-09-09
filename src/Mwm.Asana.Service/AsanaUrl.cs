@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Service.AsanaApi {
+namespace Mwm.Asana.Service {
     public class AsanaUrl {
 
         [JsonProperty("offset")]

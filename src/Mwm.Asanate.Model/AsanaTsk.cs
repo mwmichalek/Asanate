@@ -1,14 +1,14 @@
 ﻿using Newtonsoft.Json;
-using Mwm.Asanate.Model.Attributes;
+using Mwm.Asana.Model.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using Mwm.Asanate.Model.Converters;
+using Mwm.Asana.Model.Converters;
 
-namespace Mwm.Asanate.Model {
+namespace Mwm.Asana.Model {
 
     //{
     //  "data": {
