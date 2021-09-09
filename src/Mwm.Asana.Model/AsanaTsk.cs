@@ -1,15 +1,14 @@
-﻿using Newtonsoft.Json;
-using Mwm.Asana.Model.Attributes;
+﻿using Mwm.Asana.Model.Attributes;
+using Mwm.Asana.Model.Converters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using Mwm.Asana.Model.Converters;
 
 namespace Mwm.Asana.Model {
-
     //{
     //  "data": {
     //    "name": "Buy catnip 9",
@@ -71,7 +70,7 @@ namespace Mwm.Asana.Model {
 
         [JsonIgnore]
         public string Status => Memberships?.FirstOrDefault()?.Section?.Name ?? string.Empty;
-                
+
         [JsonProperty("projects")]
         [AsanaProperty("projects.name")]
         [JsonConverter(typeof(EntityArrayConverter<AsanaProject>))]

@@ -9,22 +9,22 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Mwm.Asana.Model.Converters {
-    public class EntityConverter<TEntity> : Newtonsoft.Json.JsonConverter where TEntity : AsanaEntity {
+    public class WorkspaceConverter : Newtonsoft.Json.JsonConverter {
 
         public override bool CanConvert(Type objectType) {
-            return (objectType == typeof(TEntity));
+            return (objectType == typeof(AsanaWorkspace));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
             var token = JToken.Load(reader);
-            if (token.Type == JTokenType.Object) 
-                return token.ToObject<TEntity>();
+            if (token.Type == JTokenType.Object)
+                return token.ToObject<AsanaWorkspace>();
             return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            if (value is TEntity entity) 
-                serializer.Serialize(writer, entity.Gid);
+            if (value is AsanaWorkspace workspace)
+                serializer.Serialize(writer, workspace.Gid);
         }
     }
 }

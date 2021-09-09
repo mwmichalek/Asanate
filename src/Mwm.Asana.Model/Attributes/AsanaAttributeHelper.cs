@@ -12,7 +12,7 @@ namespace Mwm.Asana.Model.Attributes {
 
         // modified_since=2021-09-04T12:00:00
 
-        public static string ToRetrieveAllUrl(this Type modelType, 
+        public static string ToRetrieveAllUrl(this Type modelType,
                                               DateTime? modifiedSince = null,
                                               string suppliedBaseUrl = null) {
             var pluralEntityName = modelType.GetPluralEntityName();
@@ -28,7 +28,7 @@ namespace Mwm.Asana.Model.Attributes {
             var requestBuilder = new StringBuilder();
             requestBuilder.Append($"{baseUrl}?workspace={AsanaWorkspace.Default.Gid}"); //limit=99&
 
-            if (properties != null) 
+            if (properties != null)
                 requestBuilder.Append($"&opt_fields={properties}");
             if (!string.IsNullOrEmpty(additionalParameters))
                 requestBuilder.Append($"&{additionalParameters}");
@@ -41,7 +41,7 @@ namespace Mwm.Asana.Model.Attributes {
 
         public static string ToPersistUrl(this Type modelType) {
             var pluralEntityName = modelType.GetPluralEntityName();
-            return $"{pluralEntityName}"; 
+            return $"{pluralEntityName}";
         }
 
         public static List<string> GetPropertyNames(this Type modelType) {

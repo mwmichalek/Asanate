@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asana.Model {
-
     public interface IAsanaEntity {
 
         public string Gid { get; }

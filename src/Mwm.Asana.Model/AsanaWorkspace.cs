@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asana.Model {
-
     [AsanaEntity(PluralEntityName = "workspaces")]
     public class AsanaWorkspace : NamedAsanaEntity {
 

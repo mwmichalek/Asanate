@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mwm.Asana.Model;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Mwm.Asanate.Data {
 
         //DbSet<CreditTransaction> CreditTransactions { get; set; }
 
-        DbSet<T> Set<T>() where T : class, IAsanaEntity;
+        //DbSet<T> Set<T>() where T : class, IAsanaEntity;
 
         void Save();
     }
@@ -33,9 +33,9 @@ namespace Mwm.Asanate.Data {
             this.SaveChanges();
         }
 
-        public new DbSet<T> Set<T>() where T : class, IAsanaEntity {
-            return base.Set<T>();
-        }
+        //public new DbSet<T> Set<T>() where T : class, IAsanaEntity {
+        //    return base.Set<T>();
+        //}
     }
 }
 

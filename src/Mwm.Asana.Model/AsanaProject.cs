@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Mwm.Asana.Model {
-
     //Project Gid: 1199690891861721, Company: MWM, Name: Home, Workspace.Gid: 1153313287544364
     //Project Gid: 1199690891861732, Company: MWM, Name: BFV Hardware, Workspace.Gid: 1153313287544364
     //Project Gid: 1199693027751925, Company: MWM, Name: BFV Software, Workspace.Gid: 1153313287544364

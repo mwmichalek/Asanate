@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Mwm.Asanate.Service.Tests.AsanaApi {
+namespace Mwm.Asanate.Service.Tests {
     public class SectionMemoryCacheAsanaServiceTests {
 
         private readonly ITestOutputHelper output;
