@@ -10,7 +10,7 @@ namespace Mwm.Asanate.Domain {
 
         public uint Id { get; }
 
-        public string Gid { get; }
+        public string? Gid { get; }
 
     }
 
@@ -18,9 +18,10 @@ namespace Mwm.Asanate.Domain {
 
         public uint Id { get; set; }
 
-        public string Gid { get; set; }
-
+        public string? Gid { get; set; }
     }
+
+
 
 
 }

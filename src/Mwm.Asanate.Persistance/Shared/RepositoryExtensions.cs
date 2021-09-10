@@ -13,6 +13,13 @@ namespace Mwm.Asanate.Persistance.Shared {
 
         public static IServiceCollection AddRepositories(this IServiceCollection services) {
             services.AddScoped<IRepository<Project>, Repository<Project>>();
+            services.AddScoped<IRepository<Company>, Repository<Company>>();
+            services.AddScoped<IRepository<Initiative>, Repository<Initiative>>();
+            services.AddScoped<IRepository<Tsk>, Repository<Tsk>>();
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<Project>, Repository<Project>>();
+            //services.AddScoped<IRepository<Workspace>, Repository<Workspace>>();
+
             return services;
         }
     }

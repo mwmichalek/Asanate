@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using System.Threading;
+using FluentResults;
 
 namespace Mwm.Asanate.Application.Utils {
     public static class MediatrExtensions {
@@ -16,6 +17,17 @@ namespace Mwm.Asanate.Application.Utils {
             var applicationAsm = typeof(MediatrExtensions).Assembly;
             services.AddMediatR(new System.Reflection.Assembly[] { applicationAsm });
             return services;
+        }
+
+        public static bool TryUsing<TResult>(this Result<TResult> result, out TResult value) where TResult : class {
+            if (result.IsSuccess) {
+                value = result.Value;
+                return true;
+            } else {
+                value = default;
+                return false;
+            }
+            
         }
 
     }

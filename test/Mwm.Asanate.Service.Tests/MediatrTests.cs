@@ -34,10 +34,15 @@ namespace Mwm.Asanate.Service.Tests {
             };
 
             var result = await _mediator.Send(command);
+            Assert.True(result.IsSuccess, $"SynchronizeAsanaEntitiesCommand failed: {result}");
 
             var projects = _databaseContext.Projects.ToList();
-
             Assert.True(projects.Count > 0);
+            projects.ForEach(p => Assert.NotNull(p.Company));
+
+            var companies = _databaseContext.Companies.ToList();
+            Assert.True(companies.Count > 0);
+            companies.ForEach(c => Assert.True(c.Projects.Count > 0));
 
         }
     }
