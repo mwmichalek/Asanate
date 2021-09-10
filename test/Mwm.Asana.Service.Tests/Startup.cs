@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Olive.LRP.Application.Tests {
+namespace Mwm.Asana.Service.Tests {
     public class Startup {
 
         public void ConfigureServices(IServiceCollection services) {

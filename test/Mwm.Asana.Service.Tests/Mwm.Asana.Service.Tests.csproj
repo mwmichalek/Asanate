@@ -23,7 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Mwm.Asana.Model\Mwm.Asana.Model.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asana.Service\Mwm.Asana.Service.csproj" />
-    <ProjectReference Include="..\..\src\Mwm.Asanate.Service\Mwm.Asanate.Service.csproj" />
   </ItemGroup>
 
 </Project>
