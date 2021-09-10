@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mwm.Asanate.Domain;
+using Mwm.Asanate.Persistance.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,25 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Data {
-    public interface IDatabaseContext {
-        DbSet<User> Users { get; set; }
-
-        DbSet<Project> Projects { get; set; }
-
-        DbSet<Company> Companies { get; set; }
-
-        DbSet<Initiative> Initiatives { get; set; }
-
-        DbSet<Status> Statuses { get; set; }
-
-        DbSet<Tsk> Tsks { get; set; }
-
-        //DbSet<Workspace> Workspaces { get; set; }
-
-        DbSet<T> Set<T>() where T : class, IAsanateEntity;
-
-        void Save();
-    }
+    
     public class DatabaseContext : DbContext, IDatabaseContext {
         private readonly bool IsExternallyConfigured = false;
 
@@ -53,7 +36,7 @@ namespace Mwm.Asanate.Data {
             this.SaveChanges();
         }
 
-        public new DbSet<T> Set<T>() where T : class, IAsanateEntity {
+        public new DbSet<T> Set<T>() where T : class, IEntity {
             return base.Set<T>();
         }
     }

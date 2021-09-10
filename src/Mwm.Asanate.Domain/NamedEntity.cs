@@ -10,7 +10,7 @@ namespace Mwm.Asanate.Domain {
         public string Name { get; }
 
     }
-    public class NamedEntity : AsanateEntity {
+    public class NamedEntity : Entity {
 
         public string Name { get; set; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Domain {
 
-    public interface IAsanateEntity {
+    public interface IEntity {
 
         public uint Id { get; }
 
@@ -14,7 +14,7 @@ namespace Mwm.Asanate.Domain {
 
     }
 
-    public class AsanateEntity : IAsanateEntity {
+    public class Entity : IEntity {
 
         public uint Id { get; set; }
 
