@@ -22,8 +22,8 @@ namespace Mwm.Asanate.Service.Tests {
         }
 
         [Fact]
-        public void Test1() {
-            var id = Guid.NewGuid().ToString();
+        public void AddUser() {
+            uint id = 9999;
 
             var me = _databaseContext.Add(new User {
                 Id = id,
@@ -35,6 +35,29 @@ namespace Mwm.Asanate.Service.Tests {
             var users = _databaseContext.Users.ToList();
 
             Assert.Equal(id, users.First().Id);
+        }
+
+        [Fact]
+        public void AddTask() {
+            var tsk = new Tsk {
+                Name = "Sample Tsk",
+                Initiative = new Initiative {
+                    Name = "Sample Initiative",
+                    Project = new Project {
+                        Name = "Sample Project",
+                        Company = new Company {
+                            Name = "Sample Company"
+                        }
+                    }
+                }
+            };
+            var initialId = tsk.Id;
+
+            _databaseContext.Add(tsk);
+            _databaseContext.SaveChanges();
+
+            Assert.NotEqual(initialId, tsk.Id);
+
         }
     }
 }

@@ -32,8 +32,8 @@ namespace Mwm.Asanate.Server.Controllers {
 
         }
 
-        private async Task HandleWebhookAuth(string secret) {
-
+        private Task HandleWebhookAuth(string secret) {
+            return Task.CompletedTask;
         }
     }
 }

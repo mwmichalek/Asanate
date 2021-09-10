@@ -8,13 +8,17 @@ namespace Mwm.Asanate.Domain {
 
     public interface IAsanateEntity {
 
-        public string Id { get; }
+        public uint Id { get; }
+
+        public string Gid { get; }
 
     }
 
     public class AsanateEntity : IAsanateEntity {
 
-        public string Id { get; set; }
+        public uint Id { get; set; }
+
+        public string Gid { get; set; }
 
     }
 
