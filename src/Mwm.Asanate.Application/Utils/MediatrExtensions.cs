@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using System.Threading;
 
-namespace Application.Utils {
+namespace Mwm.Asanate.Application.Utils {
     public static class MediatrExtensions {
 
         public static IServiceCollection AddMediatR(this IServiceCollection services) {

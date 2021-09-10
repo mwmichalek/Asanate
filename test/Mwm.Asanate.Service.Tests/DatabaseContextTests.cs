@@ -8,7 +8,7 @@ using Mwm.Asanate.Data;
 
 namespace Mwm.Asanate.Service.Tests {
 
-    [Collection("DatabaseContextTests")]
+    [Collection("Generic")]
     public class DatabaseContextTests {
 
         private readonly DatabaseContext _databaseContext;
