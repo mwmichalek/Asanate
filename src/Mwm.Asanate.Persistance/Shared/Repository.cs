@@ -15,7 +15,7 @@ namespace Mwm.Asanate.Persistance.Shared {
             return _database.Set<T>();
         }
 
-        public virtual T Get(int id) {
+        public virtual T Get(uint id) {
             return _database.Set<T>()
                 .SingleOrDefault(p => p.Id == id);
         }

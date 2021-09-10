@@ -6,10 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Interfaces.Persistance {
+namespace Mwm.Asanate.Application.Interfaces.Persistance {
     public interface IProjectRepository : IRepository<Project> {
-
-        Project GetOrCreate(uint projectId);
 
         List<Project> GetStarredProjects();
     }

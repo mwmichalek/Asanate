@@ -8,7 +8,7 @@ namespace Mwm.Asanate.Application.Interfaces.Persistance {
     public interface IRepository<T> {
         IQueryable<T> GetAll();
 
-        T Get(int id);
+        T Get(uint id);
 
         void Add(T entity);
 
