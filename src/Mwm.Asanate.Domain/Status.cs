@@ -18,5 +18,20 @@ namespace Mwm.Asanate.Domain {
         public static Status Pending => new Status { Value = "Pending" };
         public static Status Done => new Status { Value = "Done" };
 
+        public static List<Status> Statuses = new List<Status> {
+            Open,
+            Planned,
+            ReadyToStart,
+            InProgress,
+            Pending,
+            Done
+        };
+    }
+
+    public static class StatusExtensions {
+
+        public static Status ToStatus(this string statusName) {
+            return Status.Statuses.SingleOrDefault(s => s.Value == statusName);
+        }
     }
 }
