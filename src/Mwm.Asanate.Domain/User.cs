@@ -7,5 +7,9 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Domain {
     public class User : NamedEntity {
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
     }
 }
