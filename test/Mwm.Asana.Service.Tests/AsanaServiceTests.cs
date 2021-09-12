@@ -37,7 +37,7 @@ namespace Mwm.Asanate.Service.Tests {
                 AssignedTo = AsanaUser.Me,
                 Notes = "This rocks!" + Environment.NewLine +
                         "Right?",
-                DueAt = DateTime.UtcNow.AddHours(5).ToUtcIsoDate(),
+                DueAt = DateTime.UtcNow.AddHours(5).ToUtcIsoDateString(),
                 Memberships = new AsanaMembership[] {
                     new AsanaMembership {
                         Section = new AsanaSection { Gid = "1200874933882312" },

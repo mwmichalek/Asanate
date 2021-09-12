@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Domain {
 
-    public interface INamedEntity {
+    public interface INamedEntity : IEntity {
         public string Name { get; }
 
     }
-    public class NamedEntity : Entity {
+    public class NamedEntity : Entity, INamedEntity {
 
         public string Name { get; set; }
 

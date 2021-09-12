@@ -29,7 +29,5 @@ namespace Mwm.Asanate.Domain {
 
         public string CompanyName => Initiative?.Project?.Company?.Name ?? string.Empty;
 
-
-
     }
 }

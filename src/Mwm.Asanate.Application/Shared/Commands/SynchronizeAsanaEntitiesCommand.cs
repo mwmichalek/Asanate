@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using MediatR;
 using Mwm.Asana.Model;
+using Mwm.Asana.Model.Converters;
 using Mwm.Asana.Service;
 using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Utils;
@@ -72,7 +73,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     var requiresSaving = false;
 
                     foreach (var asanaInitiativeName in asanaTsks.Select(at => at.SubProjectName).Distinct()) {
-                        var existingInitiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == asanaInitiativeName);
+                        var existingInitiative = _initiativeRepository.GetByName(asanaInitiativeName);
                         if (existingInitiative == null) {
                             _initiativeRepository.Add(new Initiative {
                                 Name = asanaInitiativeName
@@ -91,13 +92,23 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                                 Name = asanaTsk.Name,
                                 Status = asanaTsk.Status.ToStatus(),
                                 Notes = asanaTsk.Notes,
-                                //CompletedDate = asanaTsk.CompletedAt,
-                                //CreatedDate = asanaTsk.CreatedAt,
-                                //DueDate = asanaTsk.CreatedAt,
-                                //StartedDate = asanaTsk.StartedOn,
-                                Initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == asanaTsk.SubProjectName),
-                                AssignedTo = _userRepository.GetAll().SingleOrDefault(u => u.Name == asanaTsk.AssignedTo.Name)
+                                CompletedDate = asanaTsk.CompletedAt.ToDateTime(),
+                                CreatedDate = asanaTsk.CreatedAt.ToDateTime(),
+                                DueDate = asanaTsk.CreatedAt.ToDateTime(),
+                                StartedDate = asanaTsk.StartedOn.ToDateTime(),
+                                Initiative = _initiativeRepository.GetByName(asanaTsk.SubProjectName),
+                                AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name)
                             });
+                        } else {
+                            existingTsk.Name = asanaTsk.Name;
+                            existingTsk.Status = asanaTsk.Status.ToStatus();
+                            existingTsk.Notes = asanaTsk.Notes;
+                            existingTsk.CompletedDate = asanaTsk.CompletedAt.ToDateTime();
+                            existingTsk.CreatedDate = asanaTsk.CreatedAt.ToDateTime();
+                            existingTsk.DueDate = asanaTsk.CreatedAt.ToDateTime();
+                            existingTsk.StartedDate = asanaTsk.StartedOn.ToDateTime();
+                            existingTsk.Initiative = _initiativeRepository.GetByName(asanaTsk.SubProjectName);
+                            existingTsk.AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name);
                         }
                     }
 
@@ -117,7 +128,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     var requiresSaving = false;
 
                     foreach (var asanaUser in asanaUsers) {
-                        var existingUser = _userRepository.GetAll().SingleOrDefault(u => u.Gid == asanaUser.Gid);
+                        var existingUser = _userRepository.GetByGid(asanaUser.Gid);
                         var firstAndLast = asanaUser.Name.Split(" ");
                         if (existingUser == null) {
                             _userRepository.Add(new User {
@@ -149,7 +160,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     var requiresSaving = false;
 
                     foreach (var asanaCompanyName in asanaProjects.Select(ap => ap.Company).Distinct()) {
-                        var existingCompany = _companyRepository.GetAll().SingleOrDefault(c => c.Name == asanaCompanyName);
+                        var existingCompany = _companyRepository.GetByName(asanaCompanyName);
                         if (existingCompany == null) {
                             _companyRepository.Add(new Company {
                                 Name = asanaCompanyName
@@ -163,12 +174,12 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     requiresSaving = false;
 
                     foreach (var asanaProject in asanaProjects) {
-                        var existingProject = _projectRepository.GetAll().SingleOrDefault(p => p.Gid == asanaProject.Gid);
+                        var existingProject = _projectRepository.GetByGid(asanaProject.Gid);
                         if (existingProject == null) {
                             _projectRepository.Add(new Project {
                                 Name = asanaProject.Name,
                                 Gid = asanaProject.Gid,
-                                Company = _companyRepository.GetAll().SingleOrDefault(c => c.Name == asanaProject.Company)
+                                Company = _companyRepository.GetByName(asanaProject.Company)
                             });
                             requiresSaving = true;
                         } else {

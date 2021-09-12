@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Mwm.Asanate.Persistance.Shared {
-    public class Repository<T> : IRepository<T> where T : class, IEntity {
+
+    public class Repository<T> : IRepository<T> where T : class, INamedEntity {
         protected readonly IDatabaseContext _database;
 
         public Repository(IDatabaseContext database) {
@@ -13,6 +14,14 @@ namespace Mwm.Asanate.Persistance.Shared {
 
         public virtual IQueryable<T> GetAll() {
             return _database.Set<T>();
+        }
+
+        public T GetByName(string name) {
+            return GetAll().SingleOrDefault(e => e.Name == name);
+        }
+
+        public T GetByGid(string gid) {
+            return GetAll().SingleOrDefault(e => e.Gid == gid);
         }
 
         public virtual T Get(uint id) {
@@ -31,5 +40,7 @@ namespace Mwm.Asanate.Persistance.Shared {
         public virtual void Save() {
             _database.Save();
         }
+
+       
     }
 }
