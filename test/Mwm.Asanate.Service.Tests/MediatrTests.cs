@@ -44,6 +44,14 @@ namespace Mwm.Asanate.Service.Tests {
             Assert.True(companies.Count > 0);
             companies.ForEach(c => Assert.True(c.Projects.Count > 0));
 
+            var initiatives = _databaseContext.Initiatives.ToList();
+            Assert.True(initiatives.Count > 0);
+            initiatives.ForEach(i => Assert.True(i.Tsks.Count > 0));
+
+            var tsks = _databaseContext.Tsks.ToList();
+            Assert.True(tsks.Count > 0);
+            tsks.ForEach(t => Assert.NotNull(t.Initiative));
+
         }
     }
 }

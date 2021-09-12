@@ -55,13 +55,13 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                 if (userResult.IsFailed)
                     return userResult;
 
-                var taskAndInitiativesResult = SyncTaskAndInitiatives();
-                if (taskAndInitiativesResult.IsFailed)
-                    return taskAndInitiativesResult;
-
                 var projectsAndCompaniesResult = SyncProjectsAndCompanies();
                 if (projectsAndCompaniesResult.IsFailed)
                     return projectsAndCompaniesResult;
+
+                var taskAndInitiativesResult = SyncTaskAndInitiatives();
+                if (taskAndInitiativesResult.IsFailed)
+                    return taskAndInitiativesResult;
 
                 return Result.Ok();
             }

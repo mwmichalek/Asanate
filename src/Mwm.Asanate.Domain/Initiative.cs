@@ -12,5 +12,7 @@ namespace Mwm.Asanate.Domain {
         public int PercentCompleted { get; set; }
 
         public Project Project { get; set; }
+
+        public virtual List<Tsk> Tsks { get; set; }
     }
 }

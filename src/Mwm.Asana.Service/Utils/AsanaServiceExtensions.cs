@@ -15,6 +15,8 @@ namespace Mwm.Asana.Service.Utils {
             services.AddSingleton<IAsanaService<AsanaTsk>, MemoryCacheAsanaService<AsanaTsk>>();
             services.AddSingleton<IAsanaService<AsanaProject>, MemoryCacheAsanaService<AsanaProject>>();
             services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
+            services.AddSingleton<IAsanaService<AsanaUser>, MemoryCacheAsanaService<AsanaUser>>();
+
             return services;
         }
 
@@ -23,6 +25,7 @@ namespace Mwm.Asana.Service.Utils {
             await provider.GetService<IAsanaService<AsanaTsk>>().Initialize();
             await provider.GetService<IAsanaService<AsanaProject>>().Initialize();
             await provider.GetService<IAsanaService<AsanaSection>>().Initialize();
+            await provider.GetService<IAsanaService<AsanaUser>>().Initialize();
         }
     }
 }
