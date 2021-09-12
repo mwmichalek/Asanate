@@ -25,6 +25,7 @@ namespace Mwm.Asanate.Service.Tests {
             _output = output;
 
             _databaseContext.RecreateDatabase();
+            //_databaseContext.Database.EnsureCreated();
         }
 
         [Fact]

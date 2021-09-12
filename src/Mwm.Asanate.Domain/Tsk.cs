@@ -21,7 +21,7 @@ namespace Mwm.Asanate.Domain {
 
         public DateTime? StartedDate { get; set; }
 
-        public Initiative? Initiative { get; set; }
+        public Initiative Initiative { get; set; }
 
         public User? AssignedTo { get; set; }
 

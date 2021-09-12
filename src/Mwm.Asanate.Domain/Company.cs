@@ -9,7 +9,7 @@ namespace Mwm.Asanate.Domain {
 
         public string Color { get; set; }
 
-        public virtual List<Project> Projects { get; set; }
+        public virtual List<Project> Projects { get; set; } = new List<Project>();
 
     }
 }

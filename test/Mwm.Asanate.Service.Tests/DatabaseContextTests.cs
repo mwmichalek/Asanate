@@ -23,7 +23,7 @@ namespace Mwm.Asanate.Service.Tests {
 
         [Fact]
         public void AddUser() {
-            uint id = 9999;
+            int id = 9999;
 
             var me = _databaseContext.Add(new User {
                 Id = id,

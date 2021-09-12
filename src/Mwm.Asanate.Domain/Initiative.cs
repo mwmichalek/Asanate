@@ -13,6 +13,6 @@ namespace Mwm.Asanate.Domain {
 
         public Project Project { get; set; }
 
-        public virtual List<Tsk> Tsks { get; set; }
+        public virtual List<Tsk> Tsks { get; set; } = new List<Tsk>();
     }
 }

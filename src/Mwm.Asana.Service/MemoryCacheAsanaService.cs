@@ -26,6 +26,7 @@ namespace Mwm.Asanate.Service {
         public override async Task<Result> Initialize() {
             var allEntitiesResult = await base.RetrieveAll();
             if (allEntitiesResult.IsSuccess) {
+
                 entitiesLookup = allEntitiesResult.Value.ToDictionary(e => e.Gid);
                 return Result.Ok();
             }
@@ -33,6 +34,8 @@ namespace Mwm.Asanate.Service {
         }
 
         public override Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null) {
+            if (entitiesLookup == null)
+                throw new ConfigurationErrorsException("AsanaService was never initialized!");
             return Task.FromResult(Result.Ok(entitiesLookup.Values.ToList()));
         }
 

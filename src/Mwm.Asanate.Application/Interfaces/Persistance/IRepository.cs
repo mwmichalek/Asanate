@@ -12,7 +12,7 @@ namespace Mwm.Asanate.Application.Interfaces.Persistance {
 
         T GetByName(string name);
 
-        T Get(uint id);
+        T Get(int id);
 
         void Add(T entity);
 
