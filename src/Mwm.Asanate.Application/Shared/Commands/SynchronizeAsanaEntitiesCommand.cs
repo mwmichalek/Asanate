@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Mwm.Asana.Model;
 using Mwm.Asana.Model.Converters;
 using Mwm.Asana.Service;
@@ -20,6 +21,8 @@ namespace Mwm.Asanate.Application.Shared.Commands {
 
         public class Handler : RequestHandler<Command, Result> {
 
+            private ILogger<Handler> _logger;
+
             private readonly IRepository<Project> _projectRepository;
             private readonly IRepository<Company> _companyRepository;
             private readonly IRepository<User> _userRepository;
@@ -30,7 +33,8 @@ namespace Mwm.Asanate.Application.Shared.Commands {
             private readonly IAsanaService<AsanaUser> _asanaUserService;
             private readonly IAsanaService<AsanaTsk> _asanaTskService;
 
-            public Handler(IRepository<Project> projectRepository,
+            public Handler(ILogger<Handler> logger,
+                           IRepository<Project> projectRepository,
                            IRepository<Company> companyRepository,
                            IRepository<User> userRepository,
                            IRepository<Tsk> tskRepository,
@@ -38,6 +42,8 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                            IAsanaService<AsanaProject> asanaProjectService,
                            IAsanaService<AsanaUser> asanaUserService,
                            IAsanaService<AsanaTsk> asanaTskService) {
+                _logger = logger;
+
                 _projectRepository = projectRepository;
                 _companyRepository = companyRepository;
                 _userRepository = userRepository;
