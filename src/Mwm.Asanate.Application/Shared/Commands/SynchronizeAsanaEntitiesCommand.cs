@@ -160,7 +160,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                 if (tskResults.TryUsing(out List<AsanaTsk> asanaTsks)) {
                     var requiresSaving = false;
 
-                    foreach (var asanaTsk in asanaTsks) {
+                    foreach (var asanaTsk in asanaTsks.Where(t => t.ProjectName != null)) {
                         var initiativeName = asanaTsk.SubProjectName ?? "Triage";
                         var existingInitiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == initiativeName &&
                                                                                                 i.Project.Name == asanaTsk.ProjectName);
