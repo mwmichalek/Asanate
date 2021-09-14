@@ -97,7 +97,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     }
 
                     if (requiresSaving)
-                        _userRepository.Save();
+                        
 
                     return Result.Ok();
                 }
@@ -160,27 +160,33 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                 if (tskResults.TryUsing(out List<AsanaTsk> asanaTsks)) {
                     var requiresSaving = false;
 
-                    foreach (var asanaTsk in asanaTsks.Where(t => t.ProjectName != null)) {
-                        var initiativeName = asanaTsk.SubProjectName ?? "Triage";
+                    foreach (var asanaTsk in asanaTsks.Where(t => !string.IsNullOrEmpty(t.ProjectName))) {
+                        var initiativeName = string.IsNullOrEmpty(asanaTsk.SubProjectName) ? "Triage" : asanaTsk.SubProjectName;
                         var existingInitiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == initiativeName &&
                                                                                                 i.Project.Name == asanaTsk.ProjectName);
                         if (existingInitiative == null) {
                             var existingProject = _projectRepository.GetByName(asanaTsk.ProjectName);
+
+                            _logger.LogDebug($"New Initiative: {existingProject?.Name}");
                             existingInitiative = new Initiative {
                                 Name = asanaTsk.SubProjectName,
                                 Project = existingProject
                             };
                             _initiativeRepository.Add(existingInitiative);
                             requiresSaving = true;
-                        } 
+                        }
+                        if (requiresSaving)
+                            _tskRepository.Save();
+                        requiresSaving = false;
 
-                        var existingTsk = _tskRepository.GetAll().SingleOrDefault(t => t.Gid == asanaTsk.Gid);
+                        var existingTsk = _tskRepository.GetByGid(asanaTsk.Gid);
                         if (existingTsk == null) {
                             _tskRepository.Add(new Tsk {
                                 Name = asanaTsk.Name,
                                 Status = asanaTsk.Status.ToStatus(),
                                 Notes = asanaTsk.Notes,
                                 CompletedDate = asanaTsk.CompletedAt.ToDateTime(),
+                                IsCompleted = asanaTsk.IsCompleted,
                                 CreatedDate = asanaTsk.CreatedAt.ToDateTime(),
                                 DueDate = asanaTsk.CreatedAt.ToDateTime(),
                                 StartedDate = asanaTsk.StartedOn.ToDateTime(),
@@ -193,6 +199,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                             existingTsk.Status = asanaTsk.Status.ToStatus();
                             existingTsk.Notes = asanaTsk.Notes;
                             existingTsk.CompletedDate = asanaTsk.CompletedAt.ToDateTime();
+                            existingTsk.IsCompleted = asanaTsk.IsCompleted;
                             existingTsk.CreatedDate = asanaTsk.CreatedAt.ToDateTime();
                             existingTsk.DueDate = asanaTsk.CreatedAt.ToDateTime();
                             existingTsk.StartedDate = asanaTsk.StartedOn.ToDateTime();
@@ -200,10 +207,12 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                             existingTsk.AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name);
                             requiresSaving = true;
                         }
+
+                        if (requiresSaving)
+                            _tskRepository.Save();
                     }
 
-                    if (requiresSaving)
-                        _tskRepository.Save();
+                    
 
                     return Result.Ok();
                 }
