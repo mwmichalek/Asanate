@@ -13,6 +13,7 @@ namespace Mwm.Asanate.Domain {
 
         public string? Gid { get; }
 
+        public DateTime? ModifiedDate { get; }
     }
 
     public class Entity : IEntity {
@@ -21,6 +22,8 @@ namespace Mwm.Asanate.Domain {
         public int Id { get; set; }
 
         public string? Gid { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
     }
 
 

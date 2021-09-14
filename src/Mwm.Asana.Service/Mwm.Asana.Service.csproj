@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mwm.Asana.Model\Mwm.Asana.Model.csproj" />
+    <ProjectReference Include="..\Mwm.Asanate.Common\Mwm.Asanate.Common.csproj" />
   </ItemGroup>
 
 </Project>

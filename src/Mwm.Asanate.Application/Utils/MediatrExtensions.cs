@@ -19,17 +19,6 @@ namespace Mwm.Asanate.Application.Utils {
             return services;
         }
 
-        public static bool TryUsing<TResult>(this Result<TResult> result, out TResult value) where TResult : class {
-            if (result.IsSuccess) {
-                value = result.Value;
-                return true;
-            } else {
-                value = default;
-                return false;
-            }
-            
-        }
-
     }
 
     public abstract class AsyncRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse> {

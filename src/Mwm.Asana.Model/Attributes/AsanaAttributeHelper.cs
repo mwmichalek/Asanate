@@ -18,7 +18,7 @@ namespace Mwm.Asana.Model.Attributes {
             var pluralEntityName = modelType.GetPluralEntityName();
             var properties = modelType.GetPropertyNameList();
             var additionalParameters = modelType.GetAdditionalParameters();
-            return ToRetrieveAllUrl(pluralEntityName, properties, additionalParameters);
+            return ToRetrieveAllUrl(pluralEntityName, properties, additionalParameters, modifiedSince);
         }
 
         public static string ToRetrieveAllUrl(this string baseUrl,
@@ -29,9 +29,13 @@ namespace Mwm.Asana.Model.Attributes {
             requestBuilder.Append($"{baseUrl}?workspace={AsanaWorkspace.Default.Gid}"); //limit=99&
 
             if (properties != null)
-                requestBuilder.Append($"&opt_fields={properties}");
+                requestBuilder.Append($"&opt_fields=modified_at,{properties}");
+            else
+                requestBuilder.Append($"&opt_fields=modified_at");
+
             if (!string.IsNullOrEmpty(additionalParameters))
                 requestBuilder.Append($"&{additionalParameters}");
+
             if (modifiedSince.HasValue) {
                 var dt = modifiedSince.Value;
                 requestBuilder.Append($"&modified_since={dt.Year}-{dt.Month}-{dt.Day}T{dt.Hour}:{dt.Minute}:{dt.Second}");

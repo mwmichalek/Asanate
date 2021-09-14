@@ -6,6 +6,7 @@ using Mwm.Asana.Model.Converters;
 using Mwm.Asana.Service;
 using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Utils;
+using Mwm.Asanate.Common.Utils;
 using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
@@ -56,24 +57,25 @@ namespace Mwm.Asanate.Application.Shared.Commands {
             }
 
             protected override Result Handle(Command command) {
+                _logger.LogDebug("$Its getting hot in here!");
 
-                var userResult = SyncUsers();
+                var userResult = SyncUsers(command);
                 if (userResult.IsFailed)
                     return userResult;
 
-                var projectsAndCompaniesResult = SyncProjectsAndCompanies();
+                var projectsAndCompaniesResult = SyncProjectsAndCompanies(command);
                 if (projectsAndCompaniesResult.IsFailed)
                     return projectsAndCompaniesResult;
 
-                var taskAndInitiativesResult = SyncTaskAndInitiatives();
+                var taskAndInitiativesResult = SyncTaskAndInitiatives(command);
                 if (taskAndInitiativesResult.IsFailed)
                     return taskAndInitiativesResult;
 
                 return Result.Ok();
             }
 
-            private Result SyncUsers() {
-                var userResults = _asanaUserService.RetrieveAll().Result;
+            private Result SyncUsers(Command command) {
+                var userResults = _asanaUserService.RetrieveAll(command.Since).Result;
 
                 if (userResults.TryUsing(out List<AsanaUser> asanaUsers)) {
                     var requiresSaving = false;
@@ -82,16 +84,21 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                         var existingUser = _userRepository.GetByGid(asanaUser.Gid);
                         var firstAndLast = asanaUser.Name.Split(" ");
                         if (existingUser == null) {
+                            _logger.LogDebug($"Adding User: {asanaUser.Name}");
                             _userRepository.Add(new User {
                                 Name = asanaUser.Name,
+                                Gid = asanaUser.Gid,
+                                ModifiedDate = asanaUser.ModifiedAt,
                                 FirstName = firstAndLast[0],
                                 LastName = firstAndLast[1]
                             });
                             requiresSaving = true;
                         } else {
+                            _logger.LogDebug($"Updating User: {asanaUser.Name}");
                             existingUser.Name = asanaUser.Name;
                             existingUser.FirstName = firstAndLast[0];
                             existingUser.LastName = firstAndLast[1];
+                            existingUser.ModifiedDate = asanaUser.ModifiedAt;
                             requiresSaving = true;
                         }
                     }
@@ -105,8 +112,8 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                 return Result.Fail("Unable to retreive Asana User");
             }
 
-            private Result SyncProjectsAndCompanies() {
-                var projectResults = _asanaProjectService.RetrieveAll().Result;
+            private Result SyncProjectsAndCompanies(Command command) {
+                var projectResults = _asanaProjectService.RetrieveAll(command.Since).Result;
 
                 if (projectResults.TryUsing(out List<AsanaProject> asanaProjects)) {
                     var requiresSaving = false;
@@ -114,8 +121,10 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     foreach (var asanaCompanyName in asanaProjects.Select(ap => ap.Company).Distinct()) {
                         var existingCompany = _companyRepository.GetByName(asanaCompanyName);
                         if (existingCompany == null) {
+                            _logger.LogDebug($"Adding Company: {asanaCompanyName}");
                             _companyRepository.Add(new Company {
                                 Name = asanaCompanyName
+                                //TODO:(MWM) Need to rewire to get project modified date;
                             });
                             requiresSaving = true;
                         }
@@ -128,9 +137,11 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     foreach (var asanaProject in asanaProjects) {
                         var existingProject = _projectRepository.GetByGid(asanaProject.Gid);
                         if (existingProject == null) {
+                            _logger.LogDebug($"Adding Project: {asanaProject.Name}");
                             var newProject = new Project {
                                 Name = asanaProject.Name,
                                 Gid = asanaProject.Gid,
+                                ModifiedDate = asanaProject.ModifiedAt,                                
                                 Company = _companyRepository.GetByName(asanaProject.Company),
                             };
                             newProject.Initiatives.Add(new Initiative {
@@ -139,8 +150,10 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                             _projectRepository.Add(newProject);
                             requiresSaving = true;
                         } else {
+                            _logger.LogDebug($"Updating Project: {asanaProject.Name}");
                             existingProject.Name = asanaProject.Name;
                             existingProject.Color = asanaProject.Color;
+                            existingProject.ModifiedDate = asanaProject.ModifiedAt;
                             requiresSaving = true;
                         }
                     }
@@ -154,8 +167,8 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                 return Result.Fail("Unable to retreive Asana Projects");
             }
 
-            private Result SyncTaskAndInitiatives() {
-                var tskResults = _asanaTskService.RetrieveAll().Result;
+            private Result SyncTaskAndInitiatives(Command command) {
+                var tskResults = _asanaTskService.RetrieveAll(command.Since).Result;
 
                 if (tskResults.TryUsing(out List<AsanaTsk> asanaTsks)) {
                     var requiresSaving = false;
@@ -181,6 +194,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
 
                         var existingTsk = _tskRepository.GetByGid(asanaTsk.Gid);
                         if (existingTsk == null) {
+                            _logger.LogDebug($"Adding Tsk: {asanaTsk.Name}");
                             _tskRepository.Add(new Tsk {
                                 Name = asanaTsk.Name,
                                 Status = asanaTsk.Status.ToStatus(),
@@ -191,10 +205,12 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                                 DueDate = asanaTsk.CreatedAt.ToDateTime(),
                                 StartedDate = asanaTsk.StartedOn.ToDateTime(),
                                 Initiative = existingInitiative,
-                                AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name)
+                                AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name),
+                                ModifiedDate = asanaTsk.ModifiedAt
                             });
                             requiresSaving = true;
                         } else {
+                            _logger.LogDebug($"Updating Tsk: {asanaTsk.Name}");
                             existingTsk.Name = asanaTsk.Name;
                             existingTsk.Status = asanaTsk.Status.ToStatus();
                             existingTsk.Notes = asanaTsk.Notes;
@@ -205,6 +221,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                             existingTsk.StartedDate = asanaTsk.StartedOn.ToDateTime();
                             existingTsk.Initiative = existingInitiative;
                             existingTsk.AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name);
+                            existingTsk.ModifiedDate = asanaTsk.ModifiedAt;
                             requiresSaving = true;
                         }
 

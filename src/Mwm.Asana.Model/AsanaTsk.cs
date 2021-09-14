@@ -82,9 +82,6 @@ namespace Mwm.Asana.Model {
         [JsonIgnore]
         public string ProjectCompany => Projects?.FirstOrDefault()?.Company ?? string.Empty;
 
-        [JsonProperty("modified_at")]
-        [AsanaProperty("modified_at")]
-        public DateTime? ModifiedAt { get; set; }
 
         private string name;
 

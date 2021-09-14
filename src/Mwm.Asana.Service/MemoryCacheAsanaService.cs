@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Mwm.Asanate.Common.Utils;
 
 namespace Mwm.Asanate.Service {
 
@@ -28,15 +29,30 @@ namespace Mwm.Asanate.Service {
             if (allEntitiesResult.IsSuccess) {
 
                 entitiesLookup = allEntitiesResult.Value.ToDictionary(e => e.Gid);
+                previousFetchTime = DateTime.Now;
                 return Result.Ok();
             }
             throw new ConfigurationErrorsException($"Unable to retrieve {typeof(TEntity)}");
         }
 
-        public override Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null) {
+        public override async Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null) {
             if (entitiesLookup == null)
                 throw new ConfigurationErrorsException("AsanaService was never initialized!");
-            return Task.FromResult(Result.Ok(entitiesLookup.Values.ToList()));
+
+            // Retreive mods since previous fetch.
+            var updatedEntitiesResult = await base.RetrieveAll(previousFetchTime);
+            previousFetchTime = DateTime.Now;
+
+            // Update cache with new values
+            if (updatedEntitiesResult.TryUsing(out List<TEntity> entities)) {
+                foreach (var entity in entities)
+                    entitiesLookup[entity.Gid] = entity;
+            }
+
+            // Only return entities after modifiedSince
+            if (modifiedSince != null)
+                return Result.Ok(entitiesLookup.Values.Where(e => e.ModifiedAt >= modifiedSince).ToList());
+            return Result.Ok(entitiesLookup.Values.ToList());
         }
 
     }

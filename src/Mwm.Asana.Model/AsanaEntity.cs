@@ -10,13 +10,8 @@ namespace Mwm.Asana.Model {
     public interface IAsanaEntity {
 
         public string Gid { get; }
-    }
 
-    public abstract class NamedAsanaEntity : AsanaEntity {
-
-        [JsonProperty("name")]
-        [AsanaProperty("name")]
-        public string Name { get; set; }
+        public DateTime? ModifiedAt { get; }
     }
 
     public abstract class AsanaEntity : IAsanaEntity {
@@ -25,5 +20,16 @@ namespace Mwm.Asana.Model {
         [AsanaProperty("gid")]
         public string Gid { get; set; }
 
+        [JsonProperty("modified_at")]
+        [AsanaProperty("modified_at")]
+        public DateTime? ModifiedAt { get; set; }
+
+    }
+
+    public abstract class NamedAsanaEntity : AsanaEntity {
+
+        [JsonProperty("name")]
+        [AsanaProperty("name")]
+        public string Name { get; set; }
     }
 }

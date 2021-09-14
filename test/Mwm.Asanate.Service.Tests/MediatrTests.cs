@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Extensions.Logging;
 
 namespace Mwm.Asanate.Service.Tests {
 
@@ -24,7 +25,7 @@ namespace Mwm.Asanate.Service.Tests {
             _mediator = mediator;
             _output = output;
 
-            _databaseContext.RecreateDatabase();
+            //_databaseContext.RecreateDatabase();
             //_databaseContext.Database.EnsureCreated();
         }
 

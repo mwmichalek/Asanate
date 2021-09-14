@@ -1,7 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Mwm.Asana.Model;
+using Mwm.Asana.Service.Utils;
 using Mwm.Asanate.Application.Shared.Commands;
+using Mwm.Asanate.Application.Utils;
+using Mwm.Asanate.Common.Utils;
+using Mwm.Asanate.Data;
+using Mwm.Asanate.Data.Utils;
+using Mwm.Asanate.Persistance.Shared;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -14,19 +21,37 @@ using Consol = System.Console;
 
 namespace Mwm.Asanate.Console {
     class Program {
-        static void Main(string[] args) {
+        static async Task Main(string[] args) {
 
-            //var serviceProvider = ServiceProviderFactory.Build();
+            var provider = BuildServiceProvider();
+            var mediator = provider.GetService<IMediator>();
+            var databaseContext = provider.GetService<DatabaseContext>();
 
-            //var service = serviceProvider.GetService<ITaskMasterService>();
-            //await service.Test();
+            databaseContext.RecreateDatabase();
 
-            //var command = new SynchronizeAsanaEntitiesCommand.Command {
-            //    Since = DateTime.Now.AddDays(-10)
-            //};
+            var command = new SynchronizeAsanaEntitiesCommand.Command {
+                Since = DateTime.Now.AddDays(-1)
+            };
 
-            //var result = await _mediator.Send(command);
+            var result = await mediator.Send(command);
+        }
 
+        private static ServiceProvider BuildServiceProvider() {
+            var services = new ServiceCollection();
+
+            var configuration = services.AddConfigurationWithUserSecrets();
+            services.AddLogging(opt => {
+                opt.AddConsole();
+            });
+            services.AddDatabaseContext(configuration);
+            services.AddRepositories();
+            services.AddAsanaServices();
+            services.AddMediatR();
+
+            var provider = services.BuildServiceProvider();
+            Task.WaitAll(provider.ConfigureAsanaServices());
+
+            return provider;
         }
     }
 
