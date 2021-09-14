@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Mwm.Asana.Model;
+using Mwm.Asanate.Application.Shared.Commands;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -19,6 +20,12 @@ namespace Mwm.Asanate.Console {
 
             //var service = serviceProvider.GetService<ITaskMasterService>();
             //await service.Test();
+
+            //var command = new SynchronizeAsanaEntitiesCommand.Command {
+            //    Since = DateTime.Now.AddDays(-10)
+            //};
+
+            //var result = await _mediator.Send(command);
 
         }
     }

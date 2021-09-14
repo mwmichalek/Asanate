@@ -97,7 +97,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     }
 
                     if (requiresSaving)
-                        
+                        _userRepository.Save();
 
                     return Result.Ok();
                 }
