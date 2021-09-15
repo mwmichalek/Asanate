@@ -10,10 +10,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using Mwm.Asana.Service.Utils;
+using Mwm.Asanate.Application.Utils;
+using Mwm.Asanate.Common.Utils;
+using Mwm.Asanate.Persistance.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mwm.Asanate.Data.Utils;
 
 namespace Mwm.Asanate.Server {
     public class Startup {
@@ -25,8 +30,16 @@ namespace Mwm.Asanate.Server {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+
+            var configuration = services.AddConfigurationWithUserSecrets();
+            services.AddLogging();
+            services.AddDatabaseContext(configuration);
+            services.AddRepositories();
+            services.AddAsanaServices();
+            services.AddMediatR();
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
             services.AddControllers();
             services.AddSwaggerGen(c => {
@@ -46,8 +59,8 @@ namespace Mwm.Asanate.Server {
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

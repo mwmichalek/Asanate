@@ -19,20 +19,19 @@ namespace Mwm.Asanate.Service.Tests {
         private readonly DatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-
         public MediatrTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _mediator = mediator;
             _output = output;
 
-            //_databaseContext.RecreateDatabase();
+            _databaseContext.RecreateDatabase();
             //_databaseContext.Database.EnsureCreated();
         }
 
         [Fact]
         public async Task SynchronizeAsanaEntities() {
             var command = new SynchronizeAsanaEntitiesCommand.Command {
-                Since = DateTime.Now.AddDays(-10)
+                //Since = DateTime.Now.AddDays(-10)
             };
 
             var result = await _mediator.Send(command);

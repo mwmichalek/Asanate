@@ -40,9 +40,11 @@ namespace Mwm.Asanate.Console {
             var services = new ServiceCollection();
 
             var configuration = services.AddConfigurationWithUserSecrets();
-            services.AddLogging(opt => {
-                opt.AddConsole();
-            });
+            //services.AddLogging(opt => {
+            //    opt.ClearProviders();
+            //    opt.AddConsole();
+            //});
+            services.AddLogging();
             services.AddDatabaseContext(configuration);
             services.AddRepositories();
             services.AddAsanaServices();
