@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-Mwm.Asanate.Server-D9C023DD-4270-4818-B369-C78148D813DB</UserSecretsId>
+    <UserSecretsId>7e91521f-8053-4ae3-b00a-8424cb20e0f6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

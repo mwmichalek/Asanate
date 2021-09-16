@@ -17,7 +17,7 @@ namespace Mwm.Asanate.Client.Blazor {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            var myCloneApiUrl = ConfigurationManager.AppSettings["MyClone.Api.Url"];
+            var myCloneApiUrl = ConfigurationManager.AppSettings["MyClone:Api:Url"];
             Console.WriteLine($"Middle Tier: {myCloneApiUrl}");
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44326") });
 
