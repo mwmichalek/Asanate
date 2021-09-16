@@ -46,7 +46,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2) Server", "2) Server", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Persistance", "src\Mwm.Asanate.Persistance\Mwm.Asanate.Persistance.csproj", "{E45635FD-E505-4306-ACF0-10BF25750C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.Asanate.Client.Blazor", "src\Mwm.Asanate.Client.Blazor\Mwm.Asanate.Client.Blazor.csproj", "{408C3676-F83E-49BE-8B35-F4FA5041BAA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Blazor", "src\Mwm.Asanate.Client.Blazor\Mwm.Asanate.Client.Blazor.csproj", "{408C3676-F83E-49BE-8B35-F4FA5041BAA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

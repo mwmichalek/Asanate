@@ -33,7 +33,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             
 
 
-            StateHasChanged();
+            //StateHasChanged();
 
             //var taskResult = await TskService.RetrieveAll();
             //if (taskResult.IsSuccess) {
