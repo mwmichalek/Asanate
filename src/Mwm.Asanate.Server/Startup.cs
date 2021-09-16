@@ -38,6 +38,17 @@ namespace Mwm.Asanate.Server {
             services.AddAsanaServices();
             services.AddMediatR();
 
+
+            //TODO:(MWM) - policy.WithOrigins("http://localhost:5000", "https://localhost:5001")
+            services.AddCors(opt => {
+                opt.AddPolicy("DevCorsPolicy", builder => {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
@@ -58,6 +69,8 @@ namespace Mwm.Asanate.Server {
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("DevCorsPolicy");
 
             //app.UseAuthentication();
             //app.UseAuthorization();

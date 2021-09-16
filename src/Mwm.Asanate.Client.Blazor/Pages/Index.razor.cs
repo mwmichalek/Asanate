@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using Mwm.Asanate.Domain;
 using Newtonsoft.Json;
 using System;
@@ -10,27 +11,31 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Pages {
     public partial class Index {
-        //[Inject]
-        //protected HttpClient HttpClient { get; set; }
+        [Inject]
+        protected HttpClient HttpClient { get; set; }
 
 
         public List<Company> Companies = new List<Company>();
 
         public List<Tsk> Tsks = new List<Tsk>();
 
+        [Inject]
+        public IConfiguration Configuration { get; set; }
+
 
         protected override async Task OnInitializedAsync() {
-            try {
-                var httpClient = new HttpClient();
-                var tskJson = await httpClient.GetStringAsync("https://localhost:44326/Tsk");
-                Tsks.AddRange(JsonConvert.DeserializeObject<List<Tsk>>(tskJson));
 
+            Console.WriteLine($"Hi [{HttpClient.BaseAddress}]");
+
+
+            try {
+                var tskJson = await HttpClient.GetStringAsync("Tsk");
+                Console.WriteLine($"TskJson [{tskJson}]");
+                Tsks.AddRange(JsonConvert.DeserializeObject<List<Tsk>>(tskJson));
             } catch (Exception ex) {
+                Console.WriteLine("Why did you fail, you suck! " + ex);
                 Tsks.Add(new Tsk { Name = $"You suck: {ex}" });
             }
-            //var companyJson = await HttpClient.GetStringAsync("https://localhost:44326/Company");
-            //Companies.AddRange(JsonConvert.DeserializeObject<List<Company>>(tskJson));
-            
 
 
             //StateHasChanged();
@@ -49,6 +54,12 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
             //    Companies = Tasks.Select(tsk => tsk.Company).Distinct().ToList();
 
+        }
+
+        public string SwimLaneName(string keyField) {
+            var keyAndStatus = keyField.Split("] ");
+            if (keyAndStatus.Length > 0) return keyAndStatus[1];
+            return keyField;
         }
 
     }

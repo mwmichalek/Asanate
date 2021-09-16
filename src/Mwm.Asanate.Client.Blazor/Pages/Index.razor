@@ -26,14 +26,12 @@
 
 Hello Bitches
 
+<h2>CONFIG</h2>
+@Configuration["MyClone:Api:Url"]
+
+<h2>TSKS</h2>
+
 @foreach (var tsk in Tsks) {
     <b>tsk: @tsk.Name</b>
 } 
 
-@code {
-    public string SwimLaneName(string keyField) {
-        var keyAndStatus = keyField.Split("] ");
-        if (keyAndStatus.Length > 0) return keyAndStatus[1];
-        return keyField;
-    }
-}
