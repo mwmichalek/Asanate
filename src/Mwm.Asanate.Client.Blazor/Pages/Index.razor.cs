@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Mwm.Asana.Model;
-using Mwm.Asana.Service;
+using Mwm.Asanate.Domain;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,20 +8,32 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Clients.Blazor.Pages {
+namespace Mwm.Asanate.Client.Blazor.Pages {
     public partial class Index {
-        [Inject]
-        protected HttpClient HttpClient { get; set; }
+        //[Inject]
+        //protected HttpClient HttpClient { get; set; }
 
 
+        public List<Company> Companies = new List<Company>();
 
-        public List<TasksModel> Tasks = new List<TasksModel>();
-        public List<string> Companies = new List<string>();
+        public List<Tsk> Tsks = new List<Tsk>();
+
 
         protected override async Task OnInitializedAsync() {
+            try {
+                var httpClient = new HttpClient();
+                var tskJson = await httpClient.GetStringAsync("https://localhost:44326/Tsk");
+                Tsks.AddRange(JsonConvert.DeserializeObject<List<Tsk>>(tskJson));
 
-            var tsksJson = await HttpClient.GetStringAsync("/Tsk");
+            } catch (Exception ex) {
+                Tsks.Add(new Tsk { Name = $"You suck: {ex}" });
+            }
+            //var companyJson = await HttpClient.GetStringAsync("https://localhost:44326/Company");
+            //Companies.AddRange(JsonConvert.DeserializeObject<List<Company>>(tskJson));
+            
 
+
+            StateHasChanged();
 
             //var taskResult = await TskService.RetrieveAll();
             //if (taskResult.IsSuccess) {
@@ -36,7 +48,7 @@ namespace Mwm.Asanate.Clients.Blazor.Pages {
             //                            }).ToList();
 
             //    Companies = Tasks.Select(tsk => tsk.Company).Distinct().ToList();
-            
+
         }
 
     }

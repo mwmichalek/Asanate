@@ -8,6 +8,7 @@ using Mwm.Asanate.Service;
 using Syncfusion.Blazor;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,8 @@ namespace Mwm.Asanate.Clients.Blazor {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddSingleton<IAsanaHttpClientFactory, AsanaHttpClientFactory>();
-            builder.Services.AddSingleton<IAsanaService<AsanaTsk>, MemoryCacheAsanaService<AsanaTsk>>();
-            builder.Services.AddSingleton<IAsanaService<AsanaProject>, MemoryCacheAsanaService<AsanaProject>>();
-            builder.Services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
-
+            var myCloneApiUrl = ConfigurationManager.AppSettings["MyClone.Api.Url"];
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(myCloneApiUrl) });
 
             builder.Services.AddSyncfusionBlazor();
             builder.Services.AddMsalAuthentication(options => {
@@ -32,9 +29,7 @@ namespace Mwm.Asanate.Clients.Blazor {
             });
 
             var host = builder.Build();
-            await host.Services.GetService<IAsanaService<AsanaTsk>>().Initialize();
-            await host.Services.GetService<IAsanaService<AsanaProject>>().Initialize();
-            await host.Services.GetService<IAsanaService<AsanaSection>>().Initialize();
+
 
             await host.RunAsync();
         }

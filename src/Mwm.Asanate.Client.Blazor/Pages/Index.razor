@@ -1,0 +1,39 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Kanban
+@*<SfKanban TValue="TasksModel" KeyField="Company" DataSource="Tasks">
+    <KanbanColumns>
+        @foreach (var company in Companies) {
+            <KanbanColumn HeaderText="@company" KeyField="@(new List<string>() {company})">
+            </KanbanColumn>
+        }
+
+    </KanbanColumns>
+    <KanbanCardSettings HeaderField="Title" ContentField="Summary"></KanbanCardSettings>
+    <KanbanSwimlaneSettings KeyField="StatusRank">
+        <Template>
+            @{
+                SwimlaneSettingsModel swimlane = (SwimlaneSettingsModel)context;
+                <div class="swimlane-template e-swimlane-template-table">
+                    <div class="e-swimlane-row-text">
+                        <span>@SwimLaneName(swimlane.KeyField)</span>
+                    </div>
+                </div>
+            }
+        </Template>
+
+    </KanbanSwimlaneSettings>
+</SfKanban>*@
+
+Hello Bitches
+
+@foreach (var tsk in Tsks) {
+    <b>tsk: @tsk.Name</b>
+} 
+
+@code {
+    public string SwimLaneName(string keyField) {
+        var keyAndStatus = keyField.Split("] ");
+        if (keyAndStatus.Length > 0) return keyAndStatus[1];
+        return keyField;
+    }
+}
