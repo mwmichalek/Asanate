@@ -15,9 +15,9 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         protected HttpClient HttpClient { get; set; }
 
 
-        public List<Company> Companies = new List<Company>();
+        public List<string> Companies = new List<string>();
 
-        public List<Tsk> Tsks = new List<Tsk>();
+        public List<TasksModel> Tasks = new List<TasksModel>();
 
         [Inject]
         public IConfiguration Configuration { get; set; }
@@ -30,30 +30,35 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
             try {
                 var tskJson = await HttpClient.GetStringAsync("Tsk");
-                Console.WriteLine($"TskJson [{tskJson}]");
-                Tsks.AddRange(JsonConvert.DeserializeObject<List<Tsk>>(tskJson));
+                var tsks = JsonConvert.DeserializeObject<List<Tsk>>(tskJson);
+
+                Console.WriteLine(tskJson);
+                Console.WriteLine($"Tsk Count: {tsks?.Count}");
+
+                Tasks = tsks.Where(tsk => !tsk.IsArchived)
+                            .Select(tsk => new TasksModel {
+                                Id = tsk.Gid,
+                                Title = tsk.Name,
+                                Status = tsk.Status != null ? tsk.Status.Name : "Open",
+                                Summary = tsk.Notes,
+                                Project = tsk.ProjectName,
+                                Company = tsk.CompanyName
+                            }).ToList();
+
+                Console.WriteLine($"Tasks Count: {Tasks.Count}");
+                Console.WriteLine($"Status: [{string.Join(", ", tsks.Select(t => t.Status?.Value).Distinct())}]");
+
+                var companiesJson = await HttpClient.GetStringAsync("Company");
+                var companies = JsonConvert.DeserializeObject<List<Company>>(companiesJson);
+                Console.WriteLine($"Company Count: {companies?.Count}");
+
+                Companies = companies.Select(c => c.Name).ToList();
+ 
             } catch (Exception ex) {
                 Console.WriteLine("Why did you fail, you suck! " + ex);
-                Tsks.Add(new Tsk { Name = $"You suck: {ex}" });
             }
 
-
             //StateHasChanged();
-
-            //var taskResult = await TskService.RetrieveAll();
-            //if (taskResult.IsSuccess) {
-            //    Tasks = taskResult.Value.Where(tsk => tsk.Projects.Length > 0 && !tsk.IsCompleted)
-            //                            .Select(tsk => new TasksModel {
-            //                                Id = tsk.Gid,
-            //                                Title = tsk.Name,
-            //                                Status = tsk.Status,
-            //                                Summary = tsk.Notes,
-            //                                Project = tsk.ProjectName,
-            //                                Company = tsk.ProjectCompany
-            //                            }).ToList();
-
-            //    Companies = Tasks.Select(tsk => tsk.Company).Distinct().ToList();
-
         }
 
         public string SwimLaneName(string keyField) {

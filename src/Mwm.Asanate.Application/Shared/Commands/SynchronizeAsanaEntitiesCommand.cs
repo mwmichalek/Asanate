@@ -200,7 +200,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                                 Status = asanaTsk.Status.ToStatus(),
                                 Notes = asanaTsk.Notes,
                                 CompletedDate = asanaTsk.CompletedAt.ToDateTime(),
-                                IsCompleted = asanaTsk.IsCompleted,
+                                IsArchived = asanaTsk.IsCompleted,
                                 CreatedDate = asanaTsk.CreatedAt.ToDateTime(),
                                 DueDate = asanaTsk.CreatedAt.ToDateTime(),
                                 StartedDate = asanaTsk.StartedOn.ToDateTime(),
@@ -215,7 +215,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                             existingTsk.Status = asanaTsk.Status.ToStatus();
                             existingTsk.Notes = asanaTsk.Notes;
                             existingTsk.CompletedDate = asanaTsk.CompletedAt.ToDateTime();
-                            existingTsk.IsCompleted = asanaTsk.IsCompleted;
+                            existingTsk.IsArchived = asanaTsk.IsCompleted;
                             existingTsk.CreatedDate = asanaTsk.CreatedAt.ToDateTime();
                             existingTsk.DueDate = asanaTsk.CreatedAt.ToDateTime();
                             existingTsk.StartedDate = asanaTsk.StartedOn.ToDateTime();

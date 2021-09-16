@@ -9,7 +9,7 @@ namespace Mwm.Asanate.Domain {
 
         public Status Status { get; set; }
 
-        public bool IsCompleted { get; set; }
+        public bool IsArchived { get; set; }
 
         public string Notes { get; set; }
 

@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Syncfusion.Blazor;
 
 namespace Mwm.Asanate.Client.Blazor {
     public class Program {
@@ -23,6 +24,7 @@ namespace Mwm.Asanate.Client.Blazor {
             Console.WriteLine($"Middle Tier: [{myCloneApiUrl}]");
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(myCloneApiUrl) });
 
+            builder.Services.AddSyncfusionBlazor();
 
             await builder.Build().RunAsync();
         }

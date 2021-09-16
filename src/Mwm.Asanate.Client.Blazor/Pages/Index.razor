@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Syncfusion.Blazor.Kanban
-@*<SfKanban TValue="TasksModel" KeyField="Company" DataSource="Tasks">
+
+<SfKanban TValue="TasksModel" KeyField="Company" DataSource="Tasks">
     <KanbanColumns>
         @foreach (var company in Companies) {
             <KanbanColumn HeaderText="@company" KeyField="@(new List<string>() {company})">
@@ -22,16 +23,4 @@
         </Template>
 
     </KanbanSwimlaneSettings>
-</SfKanban>*@
-
-Hello Bitches
-
-<h2>CONFIG</h2>
-@Configuration["MyClone:Api:Url"]
-
-<h2>TSKS</h2>
-
-@foreach (var tsk in Tsks) {
-    <b>tsk: @tsk.Name</b>
-} 
-
+</SfKanban>

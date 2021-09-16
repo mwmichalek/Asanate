@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Persistance.Members {
     public class ProjectRepository : Repository<Project>, IProjectRepository {
-        public ProjectRepository(IDatabaseContext database)
-            : base(database) { }
+        public ProjectRepository(IDatabaseContext databaseContext)
+            : base(databaseContext) { }
 
       
         public List<Project> GetStarredProjects() {
