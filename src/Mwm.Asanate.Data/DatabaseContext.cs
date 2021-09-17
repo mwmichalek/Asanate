@@ -29,8 +29,6 @@ namespace Mwm.Asanate.Data {
 
         public DbSet<Initiative> Initiatives { get; set; }
 
-        public DbSet<Status> Statuses { get; set; }
-
         public DbSet<Tsk> Tsks { get; set; }
 
         public void Save() {

@@ -12,8 +12,6 @@ namespace Mwm.Asanate.Persistance.Shared {
 
         DbSet<Initiative> Initiatives { get; set; }
 
-        DbSet<Status> Statuses { get; set; }
-
         DbSet<Tsk> Tsks { get; set; }
 
         //DbSet<Workspace> Workspaces { get; set; }

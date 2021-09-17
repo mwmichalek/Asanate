@@ -14,7 +14,7 @@ namespace Mwm.Asanate.Persistance {
 
         // Overriding to include Status
         public override IQueryable<Tsk> GetAll() {
-            return _database.Tsks.Include(t => t.Status);
+            return _database.Tsks.Include(t => t.Initiative.Project.Company);
         }
     }
 }

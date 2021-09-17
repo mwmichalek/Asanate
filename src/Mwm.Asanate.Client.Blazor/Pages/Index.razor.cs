@@ -39,14 +39,14 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                             .Select(tsk => new TasksModel {
                                 Id = tsk.Gid,
                                 Title = tsk.Name,
-                                Status = tsk.Status != null ? tsk.Status.Name : "Open",
+                                Status = tsk.Status.ToString(),
                                 Summary = tsk.Notes,
                                 Project = tsk.ProjectName,
                                 Company = tsk.CompanyName
                             }).ToList();
 
                 Console.WriteLine($"Tasks Count: {Tasks.Count}");
-                Console.WriteLine($"Status: [{string.Join(", ", tsks.Select(t => t.Status?.Value).Distinct())}]");
+                Console.WriteLine($"Status: [{string.Join(", ", tsks.Select(t => t.Status).Distinct())}]");
 
                 var companiesJson = await HttpClient.GetStringAsync("Company");
                 var companies = JsonConvert.DeserializeObject<List<Company>>(companiesJson);
@@ -61,38 +61,20 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             //StateHasChanged();
         }
 
-        public string SwimLaneName(string keyField) {
-            var keyAndStatus = keyField.Split("] ");
-            if (keyAndStatus.Length > 0) return keyAndStatus[1];
-            return keyField;
-        }
+        //public string SwimLaneName(string keyField) {
+        //    var keyAndStatus = keyField.Split("] ");
+        //    if (keyAndStatus.Length > 0) return keyAndStatus[1];
+        //    return keyField;
+        //}
 
     }
 
     public class TasksModel {
 
-        private static Dictionary<string, string> _statusRanked = new Dictionary<string, string> {
-            {"Open", "1"},
-            {"Planned", "2"},
-            {"Queued", "3"},
-            {"Ready To Start", "4"},
-            {"In Progress", "5"},
-            {"Pending", "6"},
-            {"Done", "7" }
-        };
-
-
+  
         public string Id { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
-
-        public string StatusRank {
-            get {
-                if (_statusRanked.TryGetValue(Status, out string statusRank))
-                    return $"[{statusRank}] {Status}";
-                return "";
-            }
-        }
 
         public string Summary { get; set; }
         public string Assignee { get; set; }
