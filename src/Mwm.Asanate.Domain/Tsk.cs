@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Domain {
     public class Tsk : NamedEntity {
 
+        //Jira
+        public string ExternalId { get; set; }
+
         public Status Status { get; set; }
 
         public bool IsArchived { get; set; }

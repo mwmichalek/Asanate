@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Domain {
     public class Company : NamedEntity {
 
+        public bool IsPersonal { get; set; }
+
         public string Color { get; set; }
 
         public virtual List<Project> Projects { get; set; } = new List<Project>();

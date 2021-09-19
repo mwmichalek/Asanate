@@ -123,7 +123,8 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                         if (existingCompany == null) {
                             _logger.LogDebug($"Adding Company: {asanaCompanyName}");
                             _companyRepository.Add(new Company {
-                                Name = asanaCompanyName
+                                Name = asanaCompanyName,
+                                IsPersonal = asanaCompanyName == "MWM"
                                 //TODO:(MWM) Need to rewire to get project modified date;
                             });
                             requiresSaving = true;
