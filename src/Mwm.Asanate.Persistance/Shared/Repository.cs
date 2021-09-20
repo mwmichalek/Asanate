@@ -29,8 +29,8 @@ namespace Mwm.Asanate.Persistance.Shared {
                 .SingleOrDefault(p => p.Id == id);
         }
 
-        public virtual void Add(T entity) {
-            _database.Set<T>().Add(entity);
+        public virtual T Add(T entity) {
+            return _database.Set<T>().Add(entity).Entity;
         }
 
         public virtual void Remove(T entity) {

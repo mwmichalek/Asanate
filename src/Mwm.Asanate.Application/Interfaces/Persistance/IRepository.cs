@@ -14,7 +14,7 @@ namespace Mwm.Asanate.Application.Interfaces.Persistance {
 
         T Get(int id);
 
-        void Add(T entity);
+        T Add(T entity);
 
         void Remove(T entity);
 

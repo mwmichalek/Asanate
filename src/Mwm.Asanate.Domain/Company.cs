@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Domain {
     public class Company : NamedEntity {
 
+        public static readonly string PersonalCompanyName = "MWM";
+
         public bool IsPersonal { get; set; }
 
         public string Color { get; set; }

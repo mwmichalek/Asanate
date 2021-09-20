@@ -124,7 +124,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                             _logger.LogDebug($"Adding Company: {asanaCompanyName}");
                             _companyRepository.Add(new Company {
                                 Name = asanaCompanyName,
-                                IsPersonal = asanaCompanyName == "MWM"
+                                IsPersonal = asanaCompanyName == Company.PersonalCompanyName
                                 //TODO:(MWM) Need to rewire to get project modified date;
                             });
                             requiresSaving = true;
@@ -146,7 +146,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                                 Company = _companyRepository.GetByName(asanaProject.Company),
                             };
                             newProject.Initiatives.Add(new Initiative {
-                                Name = "Triage"
+                                Name = Initiative.DefaultInitiativeName
                             });
                             _projectRepository.Add(newProject);
                             requiresSaving = true;
@@ -158,6 +158,8 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                             requiresSaving = true;
                         }
                     }
+
+
 
                     if (requiresSaving)
                         _projectRepository.Save();
@@ -175,7 +177,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
                     var requiresSaving = false;
 
                     foreach (var asanaTsk in asanaTsks.Where(t => !string.IsNullOrEmpty(t.ProjectName))) {
-                        var initiativeName = string.IsNullOrEmpty(asanaTsk.SubProjectName) ? "Triage" : asanaTsk.SubProjectName;
+                        var initiativeName = string.IsNullOrEmpty(asanaTsk.SubProjectName) ? Initiative.DefaultInitiativeName : asanaTsk.SubProjectName;
                         var existingInitiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == initiativeName &&
                                                                                                 i.Project.Name == asanaTsk.ProjectName);
                         if (existingInitiative == null) {

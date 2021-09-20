@@ -10,7 +10,9 @@ namespace Mwm.Asanate.Application.Credits.Commands {
     public class CreateInitiativeCommand {
 
         public class Command : IRequest<Result> {
-            public int ProjectId { get; set; }
+            public int? ProjectId { get; set; }
+
+            public string? ExternalId { get; set; }
 
             public string Name { get; set; }
 

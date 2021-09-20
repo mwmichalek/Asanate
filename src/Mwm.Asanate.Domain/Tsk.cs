@@ -26,6 +26,8 @@ namespace Mwm.Asanate.Domain {
 
         public Initiative Initiative { get; set; }
 
+        public int InitiativeId { get; set; }
+
         public User? AssignedTo { get; set; }
 
         public string ProjectName => Initiative?.Project?.Name ?? string.Empty;
