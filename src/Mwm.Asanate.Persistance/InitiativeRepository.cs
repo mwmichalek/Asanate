@@ -1,0 +1,20 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Mwm.Asanate.Domain;
+using Mwm.Asanate.Persistance.Shared;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Mwm.Asanate.Persistance {
+    public class InitiativeRepository : Repository<Initiative> {
+
+        public InitiativeRepository(IDatabaseContext databaseContext) : base(databaseContext) { }
+
+        // Overriding to include Status
+        public override IQueryable<Initiative> GetAll() {
+            return _database.Initiatives.Include(t => t.Project.Company);
+        }
+    }
+}

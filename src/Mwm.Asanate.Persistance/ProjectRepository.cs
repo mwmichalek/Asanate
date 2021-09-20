@@ -13,7 +13,10 @@ namespace Mwm.Asanate.Persistance.Members {
         public ProjectRepository(IDatabaseContext databaseContext)
             : base(databaseContext) { }
 
-      
+        public override IQueryable<Project> GetAll() {
+            return _database.Projects.Include(t => t.Company);
+        }
+
         public List<Project> GetStarredProjects() {
             throw new NotImplementedException();
         }

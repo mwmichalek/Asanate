@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Domain {
     public class Project : NamedEntity {
 
-        public readonly static string DefaultProjectName = "Generic";
+        public readonly static string DefaultProjectName = "General";
 
         public string Color { get; set; }
 

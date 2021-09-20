@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
+using Mwm.Asanate.Application.Utils;
 using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
     public class CreateTskCommand {
 
         public class Command : IRequest<Result> {
+
+            public string Name { get; set; }
 
             public string ExternalId { get; set; }
 
@@ -58,27 +61,56 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             protected override Result Handle(Command command) {
 
-                Initiative initiative;
+                if (string.IsNullOrEmpty(command.Name))
+                    return Result.Fail("Tsk Name can't be null.");
 
-                if (command.InitiativeId.HasValue) 
-                    initiative = _initiativeRepository.Get(command.InitiativeId.Value);
-                else if (!string.IsNullOrEmpty(command.NewInitiativeName) &&
-                         command.ProjectId.HasValue) {
-                    initiative = new Initiative {
-                        ProjectId = command.ProjectId.Value,
-                        Name = command.NewInitiativeName
+                try {
+                    Initiative initiative;
+                    Success initiativeSuccess = null;
+
+                    if (command.InitiativeId.HasValue) {
+                        initiative = _initiativeRepository.Get(command.InitiativeId.Value);
+                        initiativeSuccess = initiative.ToSuccess(ResultAction.Find);
+                    } else if (!string.IsNullOrEmpty(command.NewInitiativeName) &&
+                              command.ProjectId.HasValue) {
+                        initiative = new Initiative {
+                            ProjectId = command.ProjectId.Value,
+                            Name = command.NewInitiativeName
+                        };
+                        _initiativeRepository.Add(initiative);
+                        _initiativeRepository.Save();
+                        initiativeSuccess = initiative.ToSuccess(ResultAction.Add);
+                    } else {
+                        // Default "Generic" - "Triage"
+                        initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == Initiative.DefaultInitiativeName &&
+                                                                                         i.Project.Name == Project.DefaultProjectName);
+                        initiativeSuccess = initiative.ToSuccess(ResultAction.Find);
+                    }
+
+                    var tsk = new Tsk {
+                        Name = command.Name,
+                        ExternalId = command.ExternalId,
+                        Notes = command.Notes,
+                        CompletedDate = command.CompletedDate,
+                        CreatedDate = DateTime.Now,
+                        DueDate = command.DueDate,
+                        StartedDate = command.StartDate,
+                        Initiative = initiative,
+                        AssignedToId = User.MeId
                     };
-                    _initiativeRepository.Add(initiative);
-                    _initiativeRepository.Save();
-                } else {
-                    initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == Initiative.DefaultInitiativeName &&
-                                                                                     i.Project.Name == Project.DefaultProjectName);
+                    if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;
+                    if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;
+
+                    _tskRepository.Add(tsk);
+                    _tskRepository.Save();
+
+                    return Result.Ok()
+                                 .WithSuccess(tsk.ToSuccess(ResultAction.Add))
+                                 .WithSuccess(initiativeSuccess);
+                } catch (Exception ex) {
+                    return Result.Fail(ex.ToString());
                 }
 
-                //TODO:(MWM) Set other Tsk properties.
-
-
-                return Result.Ok();
             }
         }
     }

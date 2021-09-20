@@ -30,6 +30,8 @@ namespace Mwm.Asanate.Domain {
 
         public User? AssignedTo { get; set; }
 
+        public int AssignedToId { get; set; }
+
         public string ProjectName => Initiative?.Project?.Name ?? string.Empty;
 
         public string CompanyName => Initiative?.Project?.Company?.Name ?? string.Empty;

@@ -11,25 +11,39 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Logging;
 
-namespace Mwm.Asanate.Service.Tests {
+namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
     [Collection("Generic")]
-    public class MediatrTests {
+    public class SynchronizeAsanaEntitiesCommandTests {
         private readonly IMediator _mediator;
         private readonly DatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public MediatrTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
+        public SynchronizeAsanaEntitiesCommandTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _mediator = mediator;
             _output = output;
-
-            _databaseContext.RecreateDatabase();
-            //_databaseContext.Database.EnsureCreated();
         }
 
         [Fact]
-        public async Task SynchronizeAsanaEntities() {
+        public void CreateNewDatabase() {
+            _databaseContext.RecreateDatabase();
+        }
+
+        [Fact]
+        public async Task ReRunSynch() {
+            _databaseContext.Database.EnsureCreated();
+            await RunSynch();
+        }
+
+            [Fact]
+        public async Task CreateNewDatabaseAndRunSynch() {
+            _databaseContext.RecreateDatabase();
+            await RunSynch();
+        }
+
+
+        private async Task RunSynch() {
             var command = new SynchronizeAsanaEntitiesCommand.Command {
                 //Since = DateTime.Now.AddDays(-10)
             };
@@ -47,7 +61,7 @@ namespace Mwm.Asanate.Service.Tests {
 
             var initiatives = _databaseContext.Initiatives.ToList();
             Assert.True(initiatives.Count > 0);
-           
+
             var tsks = _databaseContext.Tsks.ToList();
             Assert.True(tsks.Count > 0);
             tsks.ForEach(t => Assert.NotNull(t.Initiative));

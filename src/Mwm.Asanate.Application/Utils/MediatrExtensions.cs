@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using System.Threading;
 using FluentResults;
+using Mwm.Asanate.Domain;
 
 namespace Mwm.Asanate.Application.Utils {
     public static class MediatrExtensions {
@@ -17,6 +18,17 @@ namespace Mwm.Asanate.Application.Utils {
             var applicationAsm = typeof(MediatrExtensions).Assembly;
             services.AddMediatR(new System.Reflection.Assembly[] { applicationAsm });
             return services;
+        }
+
+        
+
+        public static Success ToSuccess<TEntity>(this TEntity entity, ResultAction action = ResultAction.Unknown, string msg = null)
+            where TEntity : NamedEntity {
+            var compsiteMsg = $"Successfully performed {action} on {nameof(TEntity)}";
+            if (msg != null) compsiteMsg += $": {msg}";
+            return new Success(msg).WithMetadata("Id", entity.Id)
+                                   .WithMetadata("Name", entity.Name)
+                                   .WithMetadata("EntityType", entity.GetType());
         }
 
     }
@@ -36,4 +48,15 @@ namespace Mwm.Asanate.Application.Utils {
         protected abstract Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken);
 
     }
+
+    public enum ResultAction {
+        Add,
+        Edit,
+        Delete,
+        Find,
+        Unknown
+    }
+
+
+
 }
