@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Mwm.Asanate.Application.Tsks.Commands;
+using Mwm.Asanate.Application.Utils;
 using Mwm.Asanate.Data;
+using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +50,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
             Assert.True(result.IsSuccess, $"AddSimpleTriageAsync failed: {result}");
 
-            //var id = result.Successes.Where(s => s.Metadata.Where(kv => kv.Key == "EntityType" && kv.Value == "Mwm.Asanate.Domain.Tsk"));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == name));
 
 
             _output.WriteLine(result.ToString());

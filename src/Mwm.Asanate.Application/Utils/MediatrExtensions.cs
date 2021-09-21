@@ -20,17 +20,6 @@ namespace Mwm.Asanate.Application.Utils {
             return services;
         }
 
-        
-
-        public static Success ToSuccess<TEntity>(this TEntity entity, ResultAction action = ResultAction.Unknown, string msg = null)
-            where TEntity : NamedEntity {
-            var compsiteMsg = $"Successfully performed {action} on {nameof(TEntity)}";
-            if (msg != null) compsiteMsg += $": {msg}";
-            return new Success(msg).WithMetadata("Id", entity.Id)
-                                   .WithMetadata("Name", entity.Name)
-                                   .WithMetadata("EntityType", entity.GetType());
-        }
-
     }
 
     public abstract class AsyncRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse> {
@@ -48,15 +37,5 @@ namespace Mwm.Asanate.Application.Utils {
         protected abstract Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken);
 
     }
-
-    public enum ResultAction {
-        Add,
-        Edit,
-        Delete,
-        Find,
-        Unknown
-    }
-
-
 
 }

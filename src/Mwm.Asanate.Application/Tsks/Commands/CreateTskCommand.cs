@@ -108,7 +108,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                                  .WithSuccess(tsk.ToSuccess(ResultAction.Add))
                                  .WithSuccess(initiativeSuccess);
                 } catch (Exception ex) {
-                    return Result.Fail(ex.ToString());
+                    return Result.Fail(new Error("Unable to create Tsk").CausedBy(ex));
                 }
 
             }
