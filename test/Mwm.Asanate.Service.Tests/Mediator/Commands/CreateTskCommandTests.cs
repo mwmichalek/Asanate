@@ -27,20 +27,20 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         }
 
         [Fact]
-        public async Task AddSimpleTriageAsync() {
+        public async Task AddSimpleTskToTriage() {
             var name = $"SimpleTsk_{DateTime.Now}";
             var command = new CreateTskCommand.Command {
                 Name = name
             };
 
             var result = await _mediator.Send(command);
-            Assert.True(result.IsSuccess, $"AddSimpleTriageAsync failed: {result}");
+            Assert.True(result.IsSuccess, $"AddComplexTskToTriage failed: {result}");
 
             _output.WriteLine(result.ToString());
         }
 
         [Fact]
-        public async Task AddCompleteTriageAsync() {
+        public async Task AddComplexTskToTriage() {
             var name = $"ComplexTsk_{DateTime.Now}";
             var command = new CreateTskCommand.Command {
                 Name = name
@@ -48,13 +48,15 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
             var result = await _mediator.Send(command);
 
-            Assert.True(result.IsSuccess, $"AddSimpleTriageAsync failed: {result}");
+            Assert.True(result.IsSuccess, $"AddComplexTskToTriage failed: {result}");
 
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == name));
 
 
             _output.WriteLine(result.ToString());
         }
+
+        // This doesn't work well unless you can edit!
 
     }
 }

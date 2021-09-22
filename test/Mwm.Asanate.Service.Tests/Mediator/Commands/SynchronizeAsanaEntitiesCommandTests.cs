@@ -36,7 +36,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             await RunSynch();
         }
 
-            [Fact]
+        [Fact]
         public async Task CreateNewDatabaseAndRunSynch() {
             _databaseContext.RecreateDatabase();
             await RunSynch();

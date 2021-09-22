@@ -30,7 +30,7 @@ namespace Mwm.Asanate.Application.Utils {
             Entity = entity;
             Action = action;
 
-            var compsiteMsg = $"Successfully performed {action} on {nameof(TEntity)}";
+            var compsiteMsg = $"Successfully performed {action} on {typeof(TEntity)}, Id: {entity.Id}";
             if (msg != null) compsiteMsg += $": {msg}";
             Message = compsiteMsg;
         }
