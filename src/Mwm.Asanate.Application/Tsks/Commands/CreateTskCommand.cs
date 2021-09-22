@@ -29,7 +29,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public DateTime? DueDate { get; set; }
 
-            public DateTime? StartDate { get; set; }
+            public DateTime? StartedDate { get; set; }
 
             public int? InitiativeId { get; set; }
 
@@ -108,8 +108,10 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                         Notes = command.Notes,
                         CompletedDate = command.CompletedDate,
                         CreatedDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now,
                         DueDate = command.DueDate,
-                        StartedDate = command.StartDate,
+                        StartedDate = command.StartedDate,
+                        Status = command.Status,
                         InitiativeId = 1,
                         AssignedToId = User.MeId
                     };

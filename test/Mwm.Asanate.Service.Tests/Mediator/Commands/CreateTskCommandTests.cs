@@ -41,16 +41,28 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
         [Fact]
         public async Task AddComplexTskToTriage() {
-            var name = $"ComplexTsk_{DateTime.Now}";
+
             var command = new CreateTskCommand.Command {
-                Name = name
+                Name = $"ComplexTsk_{DateTime.Now}",
+                Status = Status.Done,
+                Notes = "Notes and notes and notes",
+                StartedDate = DateTime.Today.AddDays(-2),
+                DueDate = DateTime.Today.AddDays(5),
+                CompletedDate = DateTime.Today.AddDays(3),
+                IsArchived = true,
             };
 
             var result = await _mediator.Send(command);
 
             Assert.True(result.IsSuccess, $"AddComplexTskToTriage failed: {result}");
 
-            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == name));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Status == command.Status));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Notes == command.Notes));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.DueDate == command.DueDate));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.StartedDate == command.StartedDate));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.CompletedDate == command.CompletedDate));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.IsArchived == command.IsArchived));
 
 
             _output.WriteLine(result.ToString());
