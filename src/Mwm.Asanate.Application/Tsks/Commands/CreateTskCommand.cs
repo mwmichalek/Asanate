@@ -84,7 +84,8 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                                 command.ProjectId.HasValue) {
                         var initiative = new Initiative {
                             ProjectId = command.ProjectId.Value,
-                            Name = command.NewInitiativeName
+                            Name = command.NewInitiativeName,
+                            ModifiedDate = DateTime.Now
                         };
                         _initiativeRepository.Add(initiative);
                         _initiativeRepository.Save();

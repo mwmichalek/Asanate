@@ -35,6 +35,8 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
             var result = await _mediator.Send(command);
             Assert.True(result.IsSuccess, $"AddComplexTskToTriage failed: {result}");
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Action == ResultAction.Add));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
 
             _output.WriteLine(result.ToString());
         }
@@ -56,6 +58,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
             Assert.True(result.IsSuccess, $"AddComplexTskToTriage failed: {result}");
 
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Action == ResultAction.Add));
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Status == command.Status));
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Notes == command.Notes));
@@ -64,11 +67,63 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.CompletedDate == command.CompletedDate));
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.IsArchived == command.IsArchived));
 
+            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Find));
+            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == Initiative.DefaultInitiativeName &&
+                                                                          t.Entity.Project.Name == Project.DefaultProjectName));
 
             _output.WriteLine(result.ToString());
         }
 
-        // This doesn't work well unless you can edit!
+        [Fact]
+        public async Task AddSimpleTskToNewInitiativeInExistingProject() {
 
+            var command = new CreateTskCommand.Command {
+                Name = $"SimpleTsk_{DateTime.Now}",
+                Status = Status.Open,
+                Notes = "Notes and notes and notes",
+                ProjectId = 8,
+                NewInitiativeName = $"TestInitiative_{DateTime.Now}"
+            };
+
+            var result = await _mediator.Send(command);
+
+            Assert.True(result.IsSuccess, $"AddSimpleTskToNewInitiativeInExistingProject failed: {result}");
+
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Action == ResultAction.Add));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Status == command.Status));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Notes == command.Notes));
+
+            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Add));
+            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == command.NewInitiativeName &&
+                                                                         t.Entity.ProjectId == command.ProjectId));
+
+            _output.WriteLine(result.ToString());
+        }
+
+        [Fact]
+        public async Task AddSimpleTskToExistingInitiative() {
+
+            var command = new CreateTskCommand.Command {
+                Name = $"SimpleTsk_{DateTime.Now}",
+                Status = Status.Open,
+                Notes = "Notes and notes and notes",
+                InitiativeId = 64
+            };
+
+            var result = await _mediator.Send(command);
+
+            Assert.True(result.IsSuccess, $"AddSimpleTskToExistingInitiative failed: {result}");
+
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Action == ResultAction.Add));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Status == command.Status));
+            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Notes == command.Notes));
+
+            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Find));
+            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Id == command.InitiativeId));
+
+            _output.WriteLine(result.ToString());
+        }
     }
 }

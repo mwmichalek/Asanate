@@ -17,6 +17,12 @@ namespace Mwm.Asanate.Persistance.Members {
             return _database.Projects.Include(t => t.Company);
         }
 
+        public override Project Get(int id) {
+            return _database.Set<Project>()
+                .Include(t => t.Company)
+                .SingleOrDefault(p => p.Id == id);
+        }
+
         public List<Project> GetStarredProjects() {
             throw new NotImplementedException();
         }

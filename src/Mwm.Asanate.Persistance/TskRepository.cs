@@ -16,5 +16,12 @@ namespace Mwm.Asanate.Persistance {
         public override IQueryable<Tsk> GetAll() {
             return _database.Tsks.Include(t => t.Initiative.Project.Company);
         }
+
+        public override Tsk Get(int id) {
+            return _database.Set<Tsk>()
+                .Include(t => t.Initiative.Project.Company)
+                .SingleOrDefault(p => p.Id == id);
+        }
+
     }
 }
