@@ -113,7 +113,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                         DueDate = command.DueDate,
                         StartedDate = command.StartedDate,
                         Status = command.Status,
-                        InitiativeId = 1,
+                        InitiativeId = initiativeId,
                         AssignedToId = User.MeId
                     };
                     if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;
