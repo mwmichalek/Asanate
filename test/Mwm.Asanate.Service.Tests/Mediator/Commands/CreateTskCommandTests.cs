@@ -30,7 +30,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddSimpleTskToTriage() {
             var name = $"SimpleTsk_{DateTime.Now}";
-            var command = new CreateTskCommand.Command {
+            var command = new AddTskCommand {
                 Name = name
             };
 
@@ -48,7 +48,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddComplexTskToTriage() {
 
-            var command = new CreateTskCommand.Command {
+            var command = new AddTskCommand {
                 Name = $"ComplexTsk_{DateTime.Now}",
                 Status = Status.Done,
                 Notes = "Notes and notes and notes",
@@ -84,7 +84,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddSimpleTskToNewInitiativeInExistingProject() {
 
-            var command = new CreateTskCommand.Command {
+            var command = new AddTskCommand {
                 Name = $"SimpleTsk_{DateTime.Now}",
                 Status = Status.Open,
                 Notes = "Notes and notes and notes",
@@ -117,7 +117,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddSimpleTskToExistingInitiative() {
 
-            var command = new CreateTskCommand.Command {
+            var command = new AddTskCommand {
                 Name = $"SimpleTsk_{DateTime.Now}",
                 Status = Status.Open,
                 Notes = "Notes and notes and notes",

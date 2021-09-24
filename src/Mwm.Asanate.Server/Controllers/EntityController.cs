@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Server.Controllers {
-    public abstract class EntityController<TEntity> : ControllerBase where TEntity : IEntity {
+    public abstract class EntityController<TEntity> : ControllerBase where TEntity : NamedEntity {
 
         protected readonly IRepository<TEntity> _repository;
         protected readonly ILogger<EntityController<TEntity>> _logger;
@@ -29,6 +29,15 @@ namespace Mwm.Asanate.Server.Controllers {
         public async Task<List<TEntity>> All() {
             return await _repository.GetAll().ToListAsync();
         }
+
+        //[HttpPost("[controller]/Add")]
+        //public async Task<IActionResult> Create(IEntityCommand<TEntity, Add> command) {
+        //    var result = await _mediator.Send(command);
+
+        //    if (result.IsSuccess)
+        //        return Ok();
+        //    return BadRequest();
+        //}
     }
 
 
@@ -62,14 +71,16 @@ namespace Mwm.Asanate.Server.Controllers {
 
         public TskController(ILogger<EntityController<Tsk>> logger, IMediator mediator, IRepository<Tsk> repository) : base(logger, mediator, repository) { }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateTskCommand.Command command) {
-            var result = await _mediator.Send(command);
+        //[HttpPost]
+        //public async Task<IActionResult> Create(AddTsk.Command command) {
+        //    var result = await _mediator.Send(command);
 
-            if (result.IsSuccess)
-                return Ok();
-            return BadRequest();
-        }
+        //    if (result.IsSuccess)
+        //        return Ok();
+        //    return BadRequest();
+        //}
+
+     
 
     }
 
