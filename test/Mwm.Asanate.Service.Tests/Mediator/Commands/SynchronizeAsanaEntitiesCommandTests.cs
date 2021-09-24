@@ -44,7 +44,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
 
         private async Task RunSynch() {
-            var command = new SynchronizeAsanaEntitiesCommand.Command {
+            var command = new AsanaEntitiesSynch.Command {
                 //Since = DateTime.Now.AddDays(-10)
             };
 

@@ -15,12 +15,12 @@ using Xunit.Abstractions;
 namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
     [Collection("Generic")]
-    public class CreateTskCommandTests {
+    public class TskAddTests {
         private readonly IMediator _mediator;
         private readonly DatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public CreateTskCommandTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
+        public TskAddTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _mediator = mediator;
             _output = output;
@@ -30,7 +30,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddSimpleTskToTriage() {
             var name = $"SimpleTsk_{DateTime.Now}";
-            var command = new AddTskCommand {
+            var command = new TskAdd.Command {
                 Name = name
             };
 
@@ -48,7 +48,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddComplexTskToTriage() {
 
-            var command = new AddTskCommand {
+            var command = new TskAdd.Command {
                 Name = $"ComplexTsk_{DateTime.Now}",
                 Status = Status.Done,
                 Notes = "Notes and notes and notes",
@@ -84,7 +84,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddSimpleTskToNewInitiativeInExistingProject() {
 
-            var command = new AddTskCommand {
+            var command = new TskAdd.Command {
                 Name = $"SimpleTsk_{DateTime.Now}",
                 Status = Status.Open,
                 Notes = "Notes and notes and notes",
@@ -117,7 +117,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         [Fact]
         public async Task AddSimpleTskToExistingInitiative() {
 
-            var command = new AddTskCommand {
+            var command = new TskAdd.Command {
                 Name = $"SimpleTsk_{DateTime.Now}",
                 Status = Status.Open,
                 Notes = "Notes and notes and notes",

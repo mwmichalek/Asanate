@@ -17,7 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mwm.Asanate.Application\Mwm.Asanate.Application.csproj" />
+    <ProjectReference Include="..\Mwm.Asanate.Common\Mwm.Asanate.Common.csproj" />
+    <ProjectReference Include="..\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj" />
     <ProjectReference Include="..\Mwm.Asanate.Domain\Mwm.Asanate.Domain.csproj" />
+    <ProjectReference Include="..\Mwm.Asanate.Persistance\Mwm.Asanate.Persistance.csproj" />
   </ItemGroup>
 
   <ItemGroup>

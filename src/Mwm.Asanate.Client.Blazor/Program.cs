@@ -10,6 +10,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Syncfusion.Blazor;
+using Mwm.Asanate.Common.Utils;
+using Mwm.Asanate.Data.Utils;
+using Mwm.Asanate.Persistance.Shared;
+using Mwm.Asana.Service.Utils;
+using Mwm.Asanate.Application.Utils;
 
 namespace Mwm.Asanate.Client.Blazor {
     public class Program {
@@ -22,7 +27,17 @@ namespace Mwm.Asanate.Client.Blazor {
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];
             Console.WriteLine($"Middle Tier: [{myCloneApiUrl}]");
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(myCloneApiUrl) });
+
+            var services = builder.Services;
+
+            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(myCloneApiUrl) });
+
+            var configuration = services.AddConfigurationWithUserSecrets();
+            services.AddLogging();
+            services.AddDatabaseContext(configuration);
+            services.AddRepositories();
+            services.AddAsanaServices();
+            services.AddMediatR();
 
             builder.Services.AddSyncfusionBlazor();
 

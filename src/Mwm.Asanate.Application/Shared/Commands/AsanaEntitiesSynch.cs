@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Mwm.Asanate.Application.Shared.Commands {
-    public class SynchronizeAsanaEntitiesCommand {
+    public class AsanaEntitiesSynch {
 
         public class Command : IRequest<Result> {
             public DateTime? Since { get; set; }

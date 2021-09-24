@@ -29,7 +29,7 @@ namespace Mwm.Asanate.Console {
 
             databaseContext.RecreateDatabase();
 
-            var command = new SynchronizeAsanaEntitiesCommand.Command {
+            var command = new AsanaEntitiesSynch.Command {
                 Since = DateTime.Now.AddDays(-1)
             };
 

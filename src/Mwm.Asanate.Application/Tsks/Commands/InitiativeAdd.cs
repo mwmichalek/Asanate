@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Application.Credits.Commands {
-    public class CreateInitiativeCommand {
+    public class InitiativeAdd {
 
         public class Command : IRequest<Result> {
             public int? ProjectId { get; set; }

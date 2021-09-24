@@ -22,7 +22,6 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         [Inject]
         public IConfiguration Configuration { get; set; }
 
-
         protected override async Task OnInitializedAsync() {
 
             Console.WriteLine($"Hi [{HttpClient.BaseAddress}]");
