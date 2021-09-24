@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Application.Utils;
 using Mwm.Asanate.Data;
@@ -38,6 +39,9 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Action == ResultAction.Add));
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
 
+            var tsk = _databaseContext.Tsks.Find(result.GetSuccess<Tsk>().Entity.Id);
+            Assert.Equal(command.Name, tsk.Name);
+
             _output.WriteLine(result.ToString());
         }
 
@@ -71,6 +75,9 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == Initiative.DefaultInitiativeName &&
                                                                           t.Entity.Project.Name == Project.DefaultProjectName));
 
+            var tsk = _databaseContext.Tsks.Find(result.GetSuccess<Tsk>().Entity.Id);
+            Assert.Equal(command.Name, tsk.Name);
+
             _output.WriteLine(result.ToString());
         }
 
@@ -96,7 +103,13 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
             Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Add));
             Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == command.NewInitiativeName &&
-                                                                         t.Entity.ProjectId == command.ProjectId));
+                                                                          t.Entity.ProjectId == command.ProjectId));
+
+            var tsk = _databaseContext.Tsks.Include(t => t.Initiative.Project).SingleOrDefault(t => t.Id == result.GetSuccess<Tsk>().Entity.Id);
+            Assert.Equal(command.Name, tsk.Name);
+            Assert.Equal(command.NewInitiativeName, tsk.Initiative.Name);
+            Assert.Equal(command.ProjectId, tsk.Initiative.ProjectId);
+            Assert.Equal(command.ProjectId, tsk.Initiative.Project.Id);
 
             _output.WriteLine(result.ToString());
         }
@@ -122,6 +135,10 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
             Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Find));
             Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Id == command.InitiativeId));
+
+            var tsk = _databaseContext.Tsks.Find(result.GetSuccess<Tsk>().Entity.Id);
+            Assert.Equal(command.Name, tsk.Name);
+            Assert.Equal(command.InitiativeId, tsk.Initiative.Id);
 
             _output.WriteLine(result.ToString());
         }

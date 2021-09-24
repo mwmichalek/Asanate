@@ -13,6 +13,10 @@ namespace Mwm.Asanate.Application.Utils {
             where TEntity : NamedEntity {
             return new EntitySuccess<TEntity>(entity, action, msg); 
         }
+
+        public static EntitySuccess<TEntity> GetSuccess<TEntity>(this Result result) where TEntity : NamedEntity {
+            return (EntitySuccess<TEntity>)result.Successes.SingleOrDefault(s => s.GetType() == typeof(EntitySuccess<TEntity>));
+        }
         
     }
 
