@@ -9,36 +9,22 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Application.Shared.Commands {
 
+    public interface IEntityCommand<TEntity> where TEntity : INamedEntity { }
 
+    public interface IPostEntityCommand<TEntity> : IEntityCommand<TEntity>, IRequest<Result> where TEntity : INamedEntity { }
 
-    public abstract class CommandType { }
+    public interface IAddEntityCommand<TEntity> : IPostEntityCommand<TEntity> where TEntity : INamedEntity { }
 
-    public abstract class PostCommandType : CommandType { }
+    public interface IUpdateEntityCommand<TEntity> : IPostEntityCommand<TEntity> where TEntity : INamedEntity { }
 
-    public class Add : PostCommandType { }
+    public interface IDeleteEntityCommand<TEntity> : IPostEntityCommand<TEntity> where TEntity : INamedEntity { }
 
-    public class Update : PostCommandType { }
+    public interface INotSupportedEntityCommand { }
 
+    public class AddNotSupportedEntityCommand<TEntity> : IAddEntityCommand<TEntity>, INotSupportedEntityCommand where TEntity : INamedEntity { }
 
+    public class UpdateNotSupportedEntityCommand<TEntity> : IUpdateEntityCommand<TEntity>, INotSupportedEntityCommand where TEntity : INamedEntity { }
 
-    public interface ICommandType { }
+    public class DeleteNotSupportedEntityCommand<TEntity> : IDeleteEntityCommand<TEntity>, INotSupportedEntityCommand where TEntity : INamedEntity { }
 
-    public interface IPostCommandType : ICommandType { }
-
-    public interface IAdd : IPostCommandType { }
-
-    public interface IUpdate : IPostCommandType { }
-
-
-    public class EntityCommand<TEntity, TCommandType> : IRequest<Result> where TEntity : NamedEntity where TCommandType : CommandType {
-    }
-
-    public interface IEntityCommand<TEntity, TCommandType> : IRequest<Result> where TEntity : NamedEntity where TCommandType : CommandType {
-    }
-
-    public interface IEntityAddCommand<TEntity, Add> : IRequest<Result> where TEntity : NamedEntity {
-    }
-
-    public interface IEntityUpdateCommand<TEntity, Update> : IRequest<Result> where TEntity : NamedEntity {
-    }
 }

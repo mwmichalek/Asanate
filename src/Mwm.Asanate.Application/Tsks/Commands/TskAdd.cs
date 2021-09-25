@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
+using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Application.Utils;
 using Mwm.Asanate.Domain;
 using System;
@@ -14,7 +15,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
     public class TskAdd {
 
-        public class Command : IRequest<Result> {
+        public class Command : IAddEntityCommand<Tsk> {
 
             public string Name { get; set; }
 
