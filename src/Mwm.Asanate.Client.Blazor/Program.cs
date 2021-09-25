@@ -26,7 +26,9 @@ namespace Mwm.Asanate.Client.Blazor {
             builder.RootComponents.Add<App>("#app");
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];
+            var connectionString = builder.Configuration["ConnectionStrings:DatabaseContext"];
             Console.WriteLine($"Middle Tier: [{myCloneApiUrl}]");
+            Console.WriteLine($"Database: [{connectionString}]");
 
             var services = builder.Services;
 
@@ -34,7 +36,7 @@ namespace Mwm.Asanate.Client.Blazor {
 
             var configuration = services.AddConfigurationWithUserSecrets();
             services.AddLogging();
-            services.AddDatabaseContext(configuration);
+            services.AddDatabaseContext(connectionString);
             services.AddRepositories();
             services.AddAsanaServices();
             services.AddMediatR();

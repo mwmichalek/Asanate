@@ -15,21 +15,27 @@ namespace Mwm.Asanate.Data.Utils {
     public static class DatabaseContextExtensions {
 
         public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration) {
+            var connectionString = configuration.GetConnectionString("DatabaseContext");
+            services.AddDatabaseContext(connectionString);
+            return services;
+        }
+
+        public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string connectionString) {
             services.AddDbContext<DatabaseContext>(
                 opt => {
-                    if (configuration.GetConnectionString("DatabaseContext") == "InMemory") {
+                    if (connectionString == "InMemory") {
                         opt.UseInMemoryDatabase("Asanate.db");
-                    } else if (configuration.GetConnectionString("DatabaseContext") == "SQLite") {
+                        Console.WriteLine("Using InMemoryDatabase.");
+                    } else if (connectionString == "SQLite") {
                         opt.UseSqlite(@"Data Source=Asanate.db;Cache=Shared");
+                        Console.WriteLine("Using Sqlite.");
                     } else {
-                        var connectionString = configuration.GetConnectionString("DatabaseContext");
+                        Console.WriteLine($"Using Database: {connectionString}.");
                         opt.UseSqlServer(connectionString);
                     }
                     //opt.EnableSensitiveDataLogging();
                 }
             );
-
-            services.AddScoped<IDatabaseContext>((serviceProvider) => serviceProvider.GetService<DatabaseContext>());
             return services;
         }
 

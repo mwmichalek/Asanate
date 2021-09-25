@@ -27,35 +27,35 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             Console.WriteLine($"Hi [{HttpClient.BaseAddress}]");
 
 
-            try {
-                var tskJson = await HttpClient.GetStringAsync("Tsk");
-                var tsks = JsonConvert.DeserializeObject<List<Tsk>>(tskJson);
+            //try {
+            //    var tskJson = await HttpClient.GetStringAsync("Tsk");
+            //    var tsks = JsonConvert.DeserializeObject<List<Tsk>>(tskJson);
 
-                Console.WriteLine(tskJson);
-                Console.WriteLine($"Tsk Count: {tsks?.Count}");
+            //    Console.WriteLine(tskJson);
+            //    Console.WriteLine($"Tsk Count: {tsks?.Count}");
 
-                Tasks = tsks.Where(tsk => !tsk.IsArchived)
-                            .Select(tsk => new TasksModel {
-                                Id = tsk.Gid,
-                                Title = tsk.Name,
-                                Status = tsk.Status.ToString(),
-                                Summary = tsk.Notes,
-                                Project = tsk.ProjectName,
-                                Company = tsk.CompanyName
-                            }).ToList();
+            //    Tasks = tsks.Where(tsk => !tsk.IsArchived)
+            //                .Select(tsk => new TasksModel {
+            //                    Id = tsk.Gid,
+            //                    Title = tsk.Name,
+            //                    Status = tsk.Status.ToString(),
+            //                    Summary = tsk.Notes,
+            //                    Project = tsk.ProjectName,
+            //                    Company = tsk.CompanyName
+            //                }).ToList();
 
-                Console.WriteLine($"Tasks Count: {Tasks.Count}");
-                Console.WriteLine($"Status: [{string.Join(", ", tsks.Select(t => t.Status).Distinct())}]");
+            //    Console.WriteLine($"Tasks Count: {Tasks.Count}");
+            //    Console.WriteLine($"Status: [{string.Join(", ", tsks.Select(t => t.Status).Distinct())}]");
 
-                var companiesJson = await HttpClient.GetStringAsync("Company");
-                var companies = JsonConvert.DeserializeObject<List<Company>>(companiesJson);
-                Console.WriteLine($"Company Count: {companies?.Count}");
+            //    var companiesJson = await HttpClient.GetStringAsync("Company");
+            //    var companies = JsonConvert.DeserializeObject<List<Company>>(companiesJson);
+            //    Console.WriteLine($"Company Count: {companies?.Count}");
 
-                Companies = companies.Select(c => c.Name).ToList();
+            //    Companies = companies.Select(c => c.Name).ToList();
  
-            } catch (Exception ex) {
-                Console.WriteLine("Why did you fail, you suck! " + ex);
-            }
+            //} catch (Exception ex) {
+            //    Console.WriteLine("Why did you fail, you suck! " + ex);
+            //}
 
             //StateHasChanged();
         }

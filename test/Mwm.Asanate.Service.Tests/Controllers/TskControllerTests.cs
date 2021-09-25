@@ -23,13 +23,14 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
             _databaseContext = databaseContext;
             _output = output;
 
-            Task.Run(() => Mwm.Asanate.Server.Program.CreateHostBuilder().Build().Run());
+            
         }
 
         [Fact]
         public async Task CreateSimpleTsk() {
+            //Task.Run(() => Mwm.Asanate.Server.Program.CreateHostBuilder().Build().Run());
 
-            Thread.Sleep(1000000);
+            //var httpClient = new Htt
 
         }
     }
