@@ -40,4 +40,8 @@
     <ProjectReference Include="..\..\src\Mwm.Asanate.Server\Mwm.Asanate.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Fake\" />
+  </ItemGroup>
+
 </Project>

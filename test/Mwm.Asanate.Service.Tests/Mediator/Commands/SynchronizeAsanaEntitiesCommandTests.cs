@@ -2,14 +2,18 @@
 using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Data;
 using Mwm.Asanate.Data.Utils;
+using Mwm.Asanate.Domain;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Logging;
+using Mwm.Asana.Model.Converters;
 
 namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
@@ -40,6 +44,18 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         public async Task CreateNewDatabaseAndRunSynch() {
             _databaseContext.RecreateDatabase();
             await RunSynch();
+        }
+
+        [Fact]
+        public void SaveEntitiesAsJsonFiles() {
+            SaveEntitiesToJsonFile<Tsk>(_databaseContext.Tsks.ToList());
+            //SaveEntitiesToJsonFile<Initiative>(_databaseContext.Initiatives.ToList());
+            //SaveEntitiesToJsonFile<Project>(_databaseContext.Projects.ToList());
+            //SaveEntitiesToJsonFile<Company>(_databaseContext.Companies.ToList());
+        }
+
+        private void SaveEntitiesToJsonFile<TEntity>(List<TEntity> entities) where TEntity : INamedEntity {
+            File.WriteAllText($"../../../../../data/{typeof(TEntity).Name}.json", entities.ToJson());
         }
 
 
