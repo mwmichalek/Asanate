@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Pages {
-    public partial class Index {
+    public partial class Index : ComponentBase {
         [Inject]
         protected HttpClient HttpClient { get; set; }
 
@@ -24,9 +24,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
         protected override async Task OnInitializedAsync() {
 
-            Console.WriteLine($"Hi [{HttpClient.BaseAddress}]");
-
-
+            await Task.Run(() => { Console.WriteLine($"Hi [{HttpClient.BaseAddress}]"); });
             //try {
             //    var tskJson = await HttpClient.GetStringAsync("Tsk");
             //    var tsks = JsonConvert.DeserializeObject<List<Tsk>>(tskJson);
@@ -52,7 +50,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             //    Console.WriteLine($"Company Count: {companies?.Count}");
 
             //    Companies = companies.Select(c => c.Name).ToList();
- 
+
             //} catch (Exception ex) {
             //    Console.WriteLine("Why did you fail, you suck! " + ex);
             //}

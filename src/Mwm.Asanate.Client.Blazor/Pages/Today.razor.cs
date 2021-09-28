@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Pages {
-    public partial class Today {
+    public partial class Today : ComponentBase {
 
         [Inject]
         public DatabaseContext DatabaseContext { get; set; }
@@ -15,7 +15,10 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public List<Tsk> Tsks { get; set; }
 
         protected override async Task OnInitializedAsync() {
-            Tsks = DatabaseContext.Tsks.ToList();
+
+            await Task.Run(() => { Tsks = DatabaseContext.Tsks.ToList(); });
+
+
         }
     }
 }

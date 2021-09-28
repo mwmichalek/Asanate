@@ -15,6 +15,9 @@ using Mwm.Asanate.Data.Utils;
 using Mwm.Asanate.Persistance.Shared;
 using Mwm.Asana.Service.Utils;
 using Mwm.Asanate.Application.Utils;
+using Fluxor;
+using System.Reflection;
+using Mwm.Asanate.Client.Blazor.Services;
 
 namespace Mwm.Asanate.Client.Blazor {
     public class Program {
@@ -22,15 +25,22 @@ namespace Mwm.Asanate.Client.Blazor {
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDk3NTY2QDMxMzkyZTMyMmUzMEtidFArTFZsYWhvNGlHcXpaRHkwc0xqZGV3T3EyK0hFWVhHamtzOUVKRVU9");
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
             builder.RootComponents.Add<App>("#app");
+            var services = builder.Services;
+
+            services.AddFluxor(options => {
+                options.ScanAssemblies(Assembly.GetExecutingAssembly());
+                options.UseReduxDevTools();
+            });
+
+            services.AddScoped<StateFacade>();
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];
             var connectionString = builder.Configuration["ConnectionStrings:DatabaseContext"];
             Console.WriteLine($"Middle Tier: [{myCloneApiUrl}]");
             Console.WriteLine($"Database: [{connectionString}]");
 
-            var services = builder.Services;
+            
 
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(myCloneApiUrl) });
 
