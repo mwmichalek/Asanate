@@ -33,16 +33,15 @@ namespace Mwm.Asanate.Client.Blazor {
                 options.UseReduxDevTools();
             });
 
-            services.AddScoped<StateFacade>();
+            services.AddScoped<StateFacade>();  
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];
             var connectionString = builder.Configuration["ConnectionStrings:DatabaseContext"];
             Console.WriteLine($"Middle Tier: [{myCloneApiUrl}]");
             Console.WriteLine($"Database: [{connectionString}]");
 
-            
-
-            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(myCloneApiUrl) });
+            services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://jsonplaceholder.typicode.com") });
+            //services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(myCloneApiUrl) });
 
             var configuration = services.AddConfigurationWithUserSecrets();
             services.AddLogging();
