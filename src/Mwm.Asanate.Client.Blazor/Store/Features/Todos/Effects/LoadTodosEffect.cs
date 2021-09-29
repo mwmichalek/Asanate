@@ -1,10 +1,12 @@
 ﻿using Fluxor;
 using Microsoft.Extensions.Logging;
+using Mwm.Asanate.Client.Blazor.Models.Todos;
 using Mwm.Asanate.Client.Blazor.Store.Features.Todos.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Store.Features.Todos.Effects {
@@ -15,7 +17,7 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Todos.Effects {
         public LoadTodosEffect(ILogger<LoadTodosEffect> logger, HttpClient httpClient) =>
             (_logger, _httpClient) = (logger, httpClient);
 
-        protected override async Task HandleAsync(LoadTodosAction action, IDispatcher dispatcher) {
+        public override async Task HandleAsync(LoadTodosAction action, IDispatcher dispatcher) {
             try {
                 _logger.LogInformation("Loading todos...");
 
