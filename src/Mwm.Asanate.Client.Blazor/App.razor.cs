@@ -9,6 +9,8 @@ namespace Mwm.Asanate.Client.Blazor {
 
         private readonly IStore Store;
 
+        public App() { }
+
         public App(IStore store) {
             Store = store;
         }
