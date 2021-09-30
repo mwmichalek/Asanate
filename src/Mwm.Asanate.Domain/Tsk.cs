@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Domain {
     public class Tsk : NamedEntity {
 
+        public Tsk() { }
+
         //Jira
         public string ExternalId { get; set; }
 

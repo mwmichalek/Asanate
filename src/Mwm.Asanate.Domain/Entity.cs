@@ -9,9 +9,9 @@ namespace Mwm.Asanate.Domain {
 
     public interface IEntity {
 
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string? Gid { get; }
+        public string? Gid { get; set; }
 
         public DateTime? ModifiedDate { get; }
     }

@@ -33,7 +33,8 @@ namespace Mwm.Asanate.Client.Blazor {
                 options.UseReduxDevTools();
             });
 
-            services.AddScoped<StateFacade>();  
+            services.AddScoped<StateFacade>();
+            services.AddScoped<EntityService>();
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];
             var connectionString = builder.Configuration["ConnectionStrings:DatabaseContext"];

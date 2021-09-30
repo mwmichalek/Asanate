@@ -5,14 +5,21 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Actions {
-    public class LoadAction<TEntity> where TEntity : NamedEntity {
+    public class LoadAction<TEntity> where TEntity : INamedEntity {
     }
 
-    public class LoadSuccessAction<TEntity> where TEntity : NamedEntity {
+    public class LoadSuccessAction<TEntity> where TEntity : INamedEntity {
+
+        public LoadSuccessAction(IEnumerable<TEntity> entities) =>
+            Entities = entities;
+
+        public IEnumerable<TEntity> Entities { get; }
 
     }
 
-    public class LoadFailureAction<TEntity> where TEntity : NamedEntity {
+    public class LoadFailureAction<TEntity> : FailureAction where TEntity : INamedEntity {
 
+        public LoadFailureAction(string errorMessage) : base(errorMessage) { }
     }
+
 }

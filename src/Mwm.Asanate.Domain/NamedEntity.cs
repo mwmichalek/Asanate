@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Domain {
 
     public interface INamedEntity : IEntity {
-        public string Name { get; }
+        public string Name { get; set; }
 
     }
     public class NamedEntity : Entity, INamedEntity {
