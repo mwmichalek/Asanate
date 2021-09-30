@@ -33,6 +33,8 @@
 
   <ItemGroup>
     <Folder Include="Components\Today\" />
+    <Folder Include="Store\Features\Tsks\Effects\" />
+    <Folder Include="Store\Features\Tsks\Reducers\" />
   </ItemGroup>
 
   <ItemGroup>
