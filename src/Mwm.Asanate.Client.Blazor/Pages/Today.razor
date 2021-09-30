@@ -12,7 +12,8 @@
     </div>
 } else if (TsksState.Value.HasCurrentErrors) {
     <span>Whoops! Looks like an issue occurred loading todos :(</span>
-} else if (!(TsksState.Value.CurrentEntity is null) && TsksState.Value.Entities.Any()) {
+} else if (TsksState.Value.Entities.Any()) {
+
     <table class="table table-hover">
         <thead>
             <tr>
