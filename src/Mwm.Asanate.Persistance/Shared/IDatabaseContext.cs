@@ -19,6 +19,12 @@ namespace Mwm.Asanate.Persistance.Shared {
         DbSet<T> Set<T>() where T : class, IEntity;
 
         void Save();
+
+        void RecreateDatabase();
+
+        void EnsureCreated();
+
+        void EnsureDeleted();
     }
 }
 

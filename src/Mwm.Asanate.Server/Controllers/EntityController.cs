@@ -15,7 +15,9 @@ namespace Mwm.Asanate.Server.Controllers {
 
     public interface IEntityController<TEntity> where TEntity : INamedEntity { }
 
-    public abstract class EntityController<TEntity, TAddEntityCommand, TUpdateEntityCommand, TDeleteEntityCommand> : 
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EntityController<TEntity, TAddEntityCommand, TUpdateEntityCommand, TDeleteEntityCommand> : 
                           ControllerBase, IEntityController<TEntity>
                           where TEntity : NamedEntity 
                           where TAddEntityCommand : IAddEntityCommand<TEntity>
@@ -39,7 +41,7 @@ namespace Mwm.Asanate.Server.Controllers {
             return await _repository.GetAll().ToListAsync();
         }
 
-        [HttpPost("[controller]/Add")]
+        [HttpPost("Add")]
         public async Task<IActionResult> Add(TAddEntityCommand command) {
             var result = await _mediator.Send(command);
 
@@ -48,7 +50,7 @@ namespace Mwm.Asanate.Server.Controllers {
             return BadRequest();
         }
 
-        [HttpPost("[controller]/Update")]
+        [HttpPost("Update")]
         public async Task<IActionResult> Update(TUpdateEntityCommand command) {
             var result = await _mediator.Send(command);
 
@@ -57,7 +59,7 @@ namespace Mwm.Asanate.Server.Controllers {
             return BadRequest();
         }
 
-        [HttpPost("[controller]/Delete")]
+        [HttpPost("Delete")]
         public async Task<IActionResult> Delete(TDeleteEntityCommand command) {
             var result = await _mediator.Send(command);
 
@@ -67,9 +69,8 @@ namespace Mwm.Asanate.Server.Controllers {
         }
     }
 
-
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class ProjectController : EntityController<Project, 
                                                       AddNotSupportedEntityCommand<Project>,
                                                       UpdateNotSupportedEntityCommand<Project>,
@@ -79,8 +80,8 @@ namespace Mwm.Asanate.Server.Controllers {
 
     }
 
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class CompanyController : EntityController<Company,
                                                       AddNotSupportedEntityCommand<Company>,
                                                       UpdateNotSupportedEntityCommand<Company>,
@@ -90,8 +91,8 @@ namespace Mwm.Asanate.Server.Controllers {
 
     }
 
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class InitiativeController : EntityController<Initiative, 
                                                          AddNotSupportedEntityCommand<Initiative>,
                                                          UpdateNotSupportedEntityCommand<Initiative>,
@@ -102,8 +103,8 @@ namespace Mwm.Asanate.Server.Controllers {
 
     }
 
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class TskController : EntityController<Tsk, 
                                                   TskAdd.Command,
                                                   UpdateNotSupportedEntityCommand<Tsk>,
@@ -111,26 +112,5 @@ namespace Mwm.Asanate.Server.Controllers {
 
         public TskController(ILogger<IEntityController<Tsk>> logger, IMediator mediator, IRepository<Tsk> repository) : base(logger, mediator, repository) { }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create(AddTsk.Command command) {
-        //    var result = await _mediator.Send(command);
-
-        //    if (result.IsSuccess)
-        //        return Ok();
-        //    return BadRequest();
-        //}
-
-     
-
     }
-
-    //    [HttpGet("people/all")]
-    //public ActionResult<IEnumerable<Person>> GetAll() {
-    //        return new[]
-    //        {
-    //        new Person { Name = "Ana" },
-    //        new Person { Name = "Felipe" },
-    //        new Person { Name = "Emillia" }
-    //    };
-
 }

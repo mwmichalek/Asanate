@@ -21,7 +21,7 @@ namespace Mwm.Asanate.Data.Utils {
         }
 
         public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string connectionString) {
-            services.AddDbContext<DatabaseContext>(
+            services.AddDbContext<IDatabaseContext, DatabaseContext>(
                 opt => {
                     if (connectionString == "InMemory") {
                         opt.UseInMemoryDatabase("Asanate.db");
@@ -40,11 +40,11 @@ namespace Mwm.Asanate.Data.Utils {
         }
 
 
-        public static DatabaseContext RecreateDatabase(this DatabaseContext databaseContext) {
-            databaseContext.Database.EnsureDeleted();
-            databaseContext.Database.EnsureCreated();
-            return databaseContext;
-        }
+        //public static DatabaseContext RecreateDatabase(this DatabaseContext databaseContext) {
+        //    databaseContext.Database.EnsureDeleted();
+        //    databaseContext.Database.EnsureCreated();
+        //    return databaseContext;
+        //}
 
     }
 }

@@ -52,6 +52,18 @@ namespace Mwm.Asanate.Data {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
         }
+
+        public void EnsureCreated() {
+            Database.EnsureCreated();
+        }
+
+        public void EnsureDeleted() {
+            Database.EnsureDeleted();
+        }
+        public void RecreateDatabase() {
+            EnsureDeleted();
+            EnsureCreated();
+        }
     }
 
     public class ProjectConfiguration : IEntityTypeConfiguration<Project> {

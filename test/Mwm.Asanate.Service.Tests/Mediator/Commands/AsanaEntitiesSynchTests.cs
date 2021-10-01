@@ -14,16 +14,17 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Logging;
 using Mwm.Asana.Model.Converters;
+using Mwm.Asanate.Persistance.Shared;
 
 namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
-    [Collection("Generic")]
+   
     public class AsanaEntitiesSynchTests {
         private readonly IMediator _mediator;
-        private readonly DatabaseContext _databaseContext;
+        private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public AsanaEntitiesSynchTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
+        public AsanaEntitiesSynchTests(IMediator mediator, IDatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _mediator = mediator;
             _output = output;
@@ -36,7 +37,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
         [Fact]
         public async Task ReRunSynch() {
-            _databaseContext.Database.EnsureCreated();
+            _databaseContext.EnsureCreated();
             await RunSynch();
         }
 

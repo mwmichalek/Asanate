@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.Extensions.Logging;
+using Mwm.Asanate.Client.Blazor.Services.Storage;
 using Mwm.Asanate.Client.Blazor.Store.Features.Shared.Actions;
 using Mwm.Asanate.Domain;
 using System;
@@ -13,10 +14,10 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Effects {
     public abstract class LoadEffect<TEntity> : Effect<LoadAction<TEntity>> where TEntity : INamedEntity {
 
         protected readonly ILogger<LoadEffect<TEntity>> _logger;
-        protected readonly HttpClient _httpClient;
+        protected readonly IEntityStorage _entityStorage;
 
-        public LoadEffect(ILogger<LoadEffect<TEntity>> logger, HttpClient httpClient) =>
-            (_logger, _httpClient) = (logger, httpClient);
+        public LoadEffect(ILogger<LoadEffect<TEntity>> logger, IEntityStorage entityStorage) =>
+            (_logger, _entityStorage) = (logger, entityStorage);
 
         public override async Task HandleAsync(LoadAction<TEntity> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
@@ -25,13 +26,16 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Effects {
 
                 // Add a little extra latency for dramatic effect...
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
+
+                var response = await _entityStorage.GetAll<TEntity>();
+
                 //var response = await _httpClient.GetFromJsonAsync<IEnumerable<TEntity>>(entityName);
-                var response = Enumerable.Range(0, 100).Select(i => {
-                    var entity = Activator.CreateInstance<TEntity>();
-                    entity.Id = i;
-                    entity.Name = $"{typeof(TEntity).Name} {i}";
-                    return entity;
-                }).ToList();
+                //var response = Enumerable.Range(0, 100).Select(i => {
+                //    var entity = Activator.CreateInstance<TEntity>();
+                //    entity.Id = i;
+                //    entity.Name = $"{typeof(TEntity).Name} {i}";
+                //    return entity;
+                //}).ToList();
 
                 _logger.LogInformation($"Loaded {response.Count} {entityName}(s) successfully!");
                 dispatcher.Dispatch(new LoadSuccessAction<TEntity>(response));

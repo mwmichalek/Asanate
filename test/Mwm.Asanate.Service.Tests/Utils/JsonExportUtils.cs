@@ -14,14 +14,15 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.Logging;
 using Mwm.Asana.Model.Converters;
+using Mwm.Asanate.Persistance.Shared;
 
-namespace Mwm.Asanate.Service.Tests.Json {
+namespace Mwm.Asanate.Service.Tests.Utils {
 
-    public class JsonExportTests {
-        private readonly DatabaseContext _databaseContext;
+    public class JsonExportUtils {
+        private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public JsonExportTests(DatabaseContext databaseContext, ITestOutputHelper output) {
+        public JsonExportUtils(IDatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _output = output;
         }
@@ -48,6 +49,7 @@ namespace Mwm.Asanate.Service.Tests.Json {
 
         private void SaveEntitiesToJsonFile<TEntity>(List<TEntity> entities) where TEntity : INamedEntity {
             File.WriteAllText($"../../../../../data/{typeof(TEntity).Name}.json", entities.ToJson());
+            File.WriteAllText($"../../../../../src/Mwm.Asanate.Client.Blazor/Data/{typeof(TEntity).Name}.json", entities.ToJson());
         }
 
     }
