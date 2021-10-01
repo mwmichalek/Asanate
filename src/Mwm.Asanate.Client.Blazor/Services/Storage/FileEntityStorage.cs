@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Services.Storage {
 
-    public interface IEntityStorage {
-
-        Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity;
-    
-    }
     public class FileEntityStorage : IEntityStorage {
 
         public async Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity {

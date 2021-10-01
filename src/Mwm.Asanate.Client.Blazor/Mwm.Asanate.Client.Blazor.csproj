@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Store\Features\Tsks\Actions\**" />
+    <Compile Remove="Store\Features\Tsks\Effects\**" />
+    <Compile Remove="Store\Features\Tsks\Reducers\**" />
+    <Content Remove="Store\Features\Tsks\Actions\**" />
+    <Content Remove="Store\Features\Tsks\Effects\**" />
+    <Content Remove="Store\Features\Tsks\Reducers\**" />
+    <EmbeddedResource Remove="Store\Features\Tsks\Actions\**" />
+    <EmbeddedResource Remove="Store\Features\Tsks\Effects\**" />
+    <EmbeddedResource Remove="Store\Features\Tsks\Reducers\**" />
+    <None Remove="Store\Features\Tsks\Actions\**" />
+    <None Remove="Store\Features\Tsks\Effects\**" />
+    <None Remove="Store\Features\Tsks\Reducers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fluxor" Version="4.1.0" />
     <PackageReference Include="Fluxor.Blazor.Web" Version="4.1.0" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="4.1.0" />
@@ -33,9 +48,6 @@
 
   <ItemGroup>
     <Folder Include="Components\Today\" />
-    <Folder Include="Store\Features\Tsks\Actions\" />
-    <Folder Include="Store\Features\Tsks\Effects\" />
-    <Folder Include="Store\Features\Tsks\Reducers\" />
   </ItemGroup>
 
   <ItemGroup>

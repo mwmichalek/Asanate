@@ -18,12 +18,29 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public IState<EntityState<Tsk>> TsksState { get; set; }
 
         [Inject]
+        public IState<EntityState<Initiative>> InitiativeState { get; set; }
+
+        [Inject]
+        public IState<EntityState<Company>> CompanyState { get; set; }
+
+        [Inject]
+        public IState<EntityState<Project>> ProjectState { get; set; }
+
+        [Inject]
         public EntityStateService EntityService { get; set; }
 
+
+
         protected override void OnInitialized() {
-            if (TsksState.Value.Entities is null) {
+            if (TsksState.Value.Entities is null) 
                 EntityService.Load<Tsk>();
-            }
+            if (InitiativeState.Value.Entities is null)
+                EntityService.Load<Initiative>();
+            if (CompanyState.Value.Entities is null)
+                EntityService.Load<Company>();
+            if (ProjectState.Value.Entities is null)
+                EntityService.Load<Project>();
+
 
             base.OnInitialized();
         }

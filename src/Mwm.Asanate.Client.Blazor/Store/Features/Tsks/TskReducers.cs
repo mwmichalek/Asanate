@@ -18,7 +18,7 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Tsks {
             new EntityState<Tsk>(false, null, action.Entities, state.CurrentEntity);
 
         [ReducerMethod]
-        public static EntityState<Tsk> ReduceLoadTasksFailureAction(EntityState<Tsk> state, LoadFailureAction<Tsk> action) =>
+        public static EntityState<Tsk> ReduceLoadTsksFailureAction(EntityState<Tsk> state, LoadFailureAction<Tsk> action) =>
             new EntityState<Tsk>(false, action.ErrorMessage, null, state.CurrentEntity);
     }
 }
