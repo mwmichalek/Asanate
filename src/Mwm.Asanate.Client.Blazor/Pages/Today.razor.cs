@@ -2,6 +2,7 @@
 using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
 using Mwm.Asanate.Client.Blazor.Services;
+using Mwm.Asanate.Client.Blazor.Services.State;
 using Mwm.Asanate.Client.Blazor.Store.State.Shared;
 using Mwm.Asanate.Data;
 using Mwm.Asanate.Domain;
@@ -17,7 +18,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public IState<EntityState<Tsk>> TsksState { get; set; }
 
         [Inject]
-        public EntityService EntityService { get; set; }
+        public EntityStateService EntityService { get; set; }
 
         protected override void OnInitialized() {
             if (TsksState.Value.Entities is null) {

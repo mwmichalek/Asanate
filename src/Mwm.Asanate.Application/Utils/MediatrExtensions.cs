@@ -13,9 +13,9 @@ namespace Mwm.Asanate.Application.Utils {
     public static class MediatrExtensions {
 
         public static IServiceCollection AddMediatR(this IServiceCollection services) {
-            //var applicationAsm = AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.FullName.Contains("Application"));
+            var applicationAsm = AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.FullName.Contains("Application"));
 
-            var applicationAsm = typeof(MediatrExtensions).Assembly;
+            //var applicationAsm = typeof(MediatrExtensions).Assembly;
             services.AddMediatR(new System.Reflection.Assembly[] { applicationAsm });
             return services;
         }

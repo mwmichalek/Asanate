@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Client.Blazor.Services {
-    public class EntityService {
+namespace Mwm.Asanate.Client.Blazor.Services.State {
+    public class EntityStateService {
 
-        private readonly ILogger<EntityService> _logger;
+        private readonly ILogger<EntityStateService> _logger;
         private readonly IDispatcher _dispatcher;
 
-        public EntityService(ILogger<EntityService> logger, IDispatcher dispatcher) =>
+        public EntityStateService(ILogger<EntityStateService> logger, IDispatcher dispatcher) =>
             (_logger, _dispatcher) = (logger, dispatcher);
 
         public void Load<TEntity>() where TEntity : INamedEntity {

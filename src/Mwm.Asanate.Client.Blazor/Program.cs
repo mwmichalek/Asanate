@@ -18,6 +18,7 @@ using Mwm.Asanate.Application.Utils;
 using Fluxor;
 using System.Reflection;
 using Mwm.Asanate.Client.Blazor.Services;
+using Mwm.Asanate.Client.Blazor.Services.State;
 
 namespace Mwm.Asanate.Client.Blazor {
     public class Program {
@@ -34,7 +35,7 @@ namespace Mwm.Asanate.Client.Blazor {
             });
 
             services.AddScoped<StateFacade>();
-            services.AddScoped<EntityService>();
+            services.AddScoped<EntityStateService>();
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];
             var connectionString = builder.Configuration["ConnectionStrings:DatabaseContext"];

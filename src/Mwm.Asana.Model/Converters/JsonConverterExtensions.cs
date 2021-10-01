@@ -14,9 +14,11 @@ namespace Mwm.Asana.Model.Converters {
 
         public static string ToJson(this object obj) {
             return JsonConvert.SerializeObject(obj,
-                Newtonsoft.Json.Formatting.None,
+                Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings {
-                    NullValueHandling = NullValueHandling.Ignore
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.None
                 });
         }
     }

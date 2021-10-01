@@ -13,10 +13,13 @@ namespace Mwm.Asanate.Persistance.Shared {
     public static class RepositoryExtensions {
 
         public static IServiceCollection AddRepositories(this IServiceCollection services) {
-            services.AddScoped<IRepository<Project>, ProjectRepository>();
+            services.AddScoped<IRepository<Project>, Repository<Project>>();
+            //services.AddScoped<IRepository<Project>, ProjectRepository>();
             services.AddScoped<IRepository<Company>, Repository<Company>>();
-            services.AddScoped<IRepository<Initiative>, InitiativeRepository>();
-            services.AddScoped<IRepository<Tsk>, TskRepository>(); // Includes Initiative.Project.Company
+            services.AddScoped<IRepository<Initiative>, Repository<Initiative>>();
+            //services.AddScoped<IRepository<Initiative>, InitiativeRepository>();
+            services.AddScoped<IRepository<Tsk>, Repository<Tsk>>();
+            //services.AddScoped<IRepository<Tsk>, TskRepository>(); // Includes Initiative.Project.Company
             services.AddScoped<IRepository<User>, Repository<User>>();
 
 

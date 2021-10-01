@@ -18,12 +18,12 @@ using Mwm.Asana.Model.Converters;
 namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
     [Collection("Generic")]
-    public class SynchronizeAsanaEntitiesCommandTests {
+    public class AsanaEntitiesSynchTests {
         private readonly IMediator _mediator;
         private readonly DatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public SynchronizeAsanaEntitiesCommandTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
+        public AsanaEntitiesSynchTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _mediator = mediator;
             _output = output;
@@ -45,19 +45,6 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             _databaseContext.RecreateDatabase();
             await RunSynch();
         }
-
-        [Fact]
-        public void SaveEntitiesAsJsonFiles() {
-            SaveEntitiesToJsonFile<Tsk>(_databaseContext.Tsks.ToList());
-            //SaveEntitiesToJsonFile<Initiative>(_databaseContext.Initiatives.ToList());
-            //SaveEntitiesToJsonFile<Project>(_databaseContext.Projects.ToList());
-            //SaveEntitiesToJsonFile<Company>(_databaseContext.Companies.ToList());
-        }
-
-        private void SaveEntitiesToJsonFile<TEntity>(List<TEntity> entities) where TEntity : INamedEntity {
-            File.WriteAllText($"../../../../../data/{typeof(TEntity).Name}.json", entities.ToJson());
-        }
-
 
         private async Task RunSynch() {
             var command = new AsanaEntitiesSynch.Command {

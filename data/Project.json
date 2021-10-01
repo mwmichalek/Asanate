@@ -1,0 +1,64 @@
+[
+  {
+    "Initiatives": [],
+    "Name": "BFV Software",
+    "Id": 1,
+    "Gid": "1199693027751925",
+    "ModifiedDate": "2021-05-04T15:35:06.39"
+  },
+  {
+    "Initiatives": [],
+    "Name": "BFV Hardware",
+    "Id": 2,
+    "Gid": "1199690891861732",
+    "ModifiedDate": "2021-04-06T20:09:23.51"
+  },
+  {
+    "Initiatives": [],
+    "Name": "Home",
+    "Id": 3,
+    "Gid": "1199690891861721",
+    "ModifiedDate": "2021-09-08T00:33:09.725"
+  },
+  {
+    "Initiatives": [],
+    "Name": "Command Launcher",
+    "Id": 4,
+    "Gid": "1199693007159902",
+    "ModifiedDate": "2021-04-06T20:09:47.803"
+  },
+  {
+    "Initiatives": [],
+    "Name": "CDPHP",
+    "Id": 5,
+    "Gid": "1153313118644116",
+    "ModifiedDate": "2021-09-20T13:25:44.835"
+  },
+  {
+    "Initiatives": [],
+    "Name": "BOT",
+    "Id": 6,
+    "Gid": "1199693027751923",
+    "ModifiedDate": "2021-04-06T20:09:54.66"
+  },
+  {
+    "Initiatives": [],
+    "Name": "General",
+    "Id": 7,
+    "Gid": "1200598172934807",
+    "ModifiedDate": "2021-09-20T13:27:14.866"
+  },
+  {
+    "Initiatives": [],
+    "Name": "HedgeHog",
+    "Id": 8,
+    "Gid": "1200874933882307",
+    "ModifiedDate": "2021-09-20T18:15:52.643"
+  },
+  {
+    "Initiatives": [],
+    "Id": 9,
+    "Gid": "1201019372935953",
+    "ModifiedDate": "2021-09-20T14:05:32.387"
+  }
+]
