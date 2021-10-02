@@ -50,6 +50,8 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             if (ProjectsState.Value.Entities is null)
                 EntityService.Load<Project>();
 
+            //TODO:(MWM) Perhaps Make the Entities Lists a Lookup for fast access.
+
             //ActionSubscriber.SubscribeToAction<LoadSuccessAction<Tsk>>(this, (action) => LoadModels());
             base.OnInitialized();
         }
