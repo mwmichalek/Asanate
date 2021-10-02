@@ -14,13 +14,11 @@
     } else if (HasErrors()) {
         <span>Whoops! Looks like an issue occurred loading TskModels</span>
     } else {
-        <SfKanban KeyField="StatusName" DataSource="@TskModels">
+        <SfKanban @ref="KanbanBoard" KeyField="StatusName" DataSource="@TskModels" >
             <KanbanColumns>
-                @foreach (var status in TskModels.Select(t => t.Status).Distinct().OrderBy(s => (int)s).Select(s => s.ToString())) {
-                    <KanbanColumn HeaderText="@status" KeyField="@status.ToKeyFields()">
-                    </KanbanColumn>
+                @foreach (var status in Statuses) {
+                    <KanbanColumn HeaderText="@status" KeyField="@status.ToKeyFields()"></KanbanColumn>
                 }
-
             </KanbanColumns>
             <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
             <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">

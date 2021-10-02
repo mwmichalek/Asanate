@@ -10,6 +10,7 @@ using Mwm.Asanate.Client.Blazor.Store.Features.Shared.Helpers;
 using Mwm.Asanate.Client.Blazor.Store.State.Shared;
 using Mwm.Asanate.Data;
 using Mwm.Asanate.Domain;
+using Syncfusion.Blazor.Kanban;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Pages {
     public partial class Today : FluxorComponent {
+
+        public SfKanban<TskModel> KanbanBoard;
 
         [Inject]
         ILogger<Today> Logger { get; set; }
@@ -47,7 +50,9 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             }
         }
 
+        public List<string> Companies => TskModels.Select(t => t.CompanyName).Distinct().ToList();
 
+        public List<string> Statuses => TskModels.Select(t => t.Status).Distinct().OrderBy(s => (int)s).Select(s => s.ToString()).ToList();
 
         [Inject]
         public IActionSubscriber ActionSubscriber { get; set; }
