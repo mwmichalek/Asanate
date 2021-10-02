@@ -8,6 +8,7 @@ using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,7 +39,10 @@ namespace Mwm.Asanate.Server.Controllers {
 
         [HttpGet]
         public async Task<List<TEntity>> All() {
-            return await _repository.GetAll().ToListAsync();
+            var sw = Stopwatch.StartNew();
+            var result = await _repository.GetAll().ToListAsync();
+            _logger.LogInformation($"Loaded {result.Count} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
+            return result;
         }
 
         [HttpPost("Add")]

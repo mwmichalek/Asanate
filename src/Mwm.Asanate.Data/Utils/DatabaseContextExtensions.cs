@@ -20,17 +20,26 @@ namespace Mwm.Asanate.Data.Utils {
             return services;
         }
 
+        private static bool LoggedDatabaseMessage;
+
+        private static void LogDatabaseMessage(string msg) {
+            if (!LoggedDatabaseMessage) {
+                LoggedDatabaseMessage = true;
+                Console.WriteLine(msg);
+            }
+        }
+
         public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string connectionString) {
             services.AddDbContext<IDatabaseContext, DatabaseContext>(
                 opt => {
                     if (connectionString == "InMemory") {
                         opt.UseInMemoryDatabase("Asanate.db");
-                        Console.WriteLine("Using InMemoryDatabase.");
+                        LogDatabaseMessage("Using InMemoryDatabase.");
                     } else if (connectionString == "SQLite") {
                         opt.UseSqlite(@"Data Source=Asanate.db;Cache=Shared");
-                        Console.WriteLine("Using Sqlite.");
+                        LogDatabaseMessage("Using Sqlite.");
                     } else {
-                        Console.WriteLine($"Using Database: {connectionString}.");
+                        LogDatabaseMessage($"Using Database: {connectionString}.");
                         opt.UseSqlServer(connectionString);
                     }
                     //opt.EnableSensitiveDataLogging();

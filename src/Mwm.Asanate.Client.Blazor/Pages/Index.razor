@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Syncfusion.Blazor.Kanban
 
+ 
 <SfKanban TValue="TasksModel" KeyField="Company" DataSource="Tasks">
     <KanbanColumns>
         @foreach (var company in Companies) {

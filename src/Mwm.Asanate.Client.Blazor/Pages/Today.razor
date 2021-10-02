@@ -1,45 +1,116 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Mwm.Asanate.Client.Blazor.Helpers;
 
 @page "/today"
 
 <h3 class="text-center mb-3">Today</h3>
 
-@if (TsksState.Value.IsLoading || 
-     InitiativesState.Value.IsLoading ||
-     ProjectsState.Value.IsLoading ||
-     CompaniesState.Value.IsLoading) {
+@using Syncfusion.Blazor.Kanban
 <div class="d-flex flex-row justify-content-center">
-    <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</div>
-} else if (TsksState.Value.HasCurrentErrors ||
-           InitiativesState.Value.HasCurrentErrors ||
-           ProjectsState.Value.HasCurrentErrors ||
-           CompaniesState.Value.HasCurrentErrors) {
-<span>Whoops! Looks like an issue occurred loading Tsks</span>
-} else if (TskModels.Any()) {
+    @if (IsLoading()) {
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    } else if (HasErrors()) {
+        <span>Whoops! Looks like an issue occurred loading TskModels</span>
+    } else {
+        <SfKanban KeyField="StatusName" DataSource="@TskModels">
+            <KanbanColumns>
+                @foreach (var status in TskModels.Select(t => t.Status).Distinct().OrderBy(s => (int)s).Select(s => s.ToString())) {
+                    <KanbanColumn HeaderText="@status" KeyField="@status.ToKeyFields()">
+                    </KanbanColumn>
+                }
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Initiative Name</th>
-            <th scope="col">Project Name</th>
-            <th scope="col">Company Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tskModel in TskModels) {
-        <tr>
-            <td>@tskModel.Id</td>
-            <td>@tskModel.Name</td>
-            <td>@tskModel.InitiativeName</td>
-            <td>@tskModel.ProjectName</td>
-            <td>@tskModel.CompanyName</td>
-        </tr>
-            }
-    </tbody>
-</table>
-}
+            </KanbanColumns>
+            <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
+            <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
+            </KanbanSwimlaneSettings>
+
+        </SfKanban>
+
+        @*<SfKanban KeyField="CompanyName" DataSource="@TskModels">
+            <KanbanColumns>
+                @foreach (var companyName in TskModels.Select(t => t.CompanyName).Distinct()) {
+                    <KanbanColumn HeaderText="@companyName" KeyField="@companyName.ToKeyFields()">
+                    </KanbanColumn>
+                }
+
+            </KanbanColumns>
+            <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
+            <KanbanSwimlaneSettings KeyField="StatusId" TextField="StatusName" SortDirection="SortDirection.Ascending">
+            </KanbanSwimlaneSettings>
+
+        </SfKanban>*@
+
+
+    }
+
+</div>
+
+
+
+
+
+
+
+
+@*<KanbanSwimlaneSettings KeyField="StatusName" SortDirection="SortDirection.Ascending">
+    <Template>
+        @{
+            SwimlaneSettingsModel swimlane = (SwimlaneSettingsModel)context;
+            <div class="swimlane-template e-swimlane-template-table">
+                <div class="e-swimlane-row-text">
+                    <span>@swimlane.KeyField.ToString()</span>
+                </div>
+            </div>
+        }
+    </Template>
+
+</KanbanSwimlaneSettings>*@
+
+
+
+
+
+
+
+
+@*@if (TsksState.Value.IsLoading ||
+         InitiativesState.Value.IsLoading ||
+         ProjectsState.Value.IsLoading ||
+         CompaniesState.Value.IsLoading) {
+    <div class="d-flex flex-row justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    } else if (TsksState.Value.HasCurrentErrors ||
+               InitiativesState.Value.HasCurrentErrors ||
+               ProjectsState.Value.HasCurrentErrors ||
+               CompaniesState.Value.HasCurrentErrors) {
+    <span>Whoops! Looks like an issue occurred loading Tsks</span>
+    } else if (TskModels.Any()) {
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Initiative Name</th>
+                <th scope="col">Project Name</th>
+                <th scope="col">Company Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tskModel in TskModels) {
+            <tr>
+                <td>@tskModel.Id</td>
+                <td>@tskModel.Name</td>
+                <td>@tskModel.InitiativeName</td>
+                <td>@tskModel.ProjectName</td>
+                <td>@tskModel.CompanyName</td>
+            </tr>
+                }
+        </tbody>
+    </table>
+    }*@

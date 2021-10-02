@@ -15,6 +15,10 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
 
         public Status Status { get; set; }
 
+        public int StatusId => (int)Status;
+
+        public string? StatusName => Status.ToString();
+
         public bool IsArchived { get; set; }
 
         public string Notes { get; set; }

@@ -25,7 +25,7 @@ namespace Mwm.Asanate.Client.Blazor {
     public class Program {
         public static async Task Main(string[] args) {
 
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDk3NTY2QDMxMzkyZTMyMmUzMEtidFArTFZsYWhvNGlHcXpaRHkwc0xqZGV3T3EyK0hFWVhHamtzOUVKRVU9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTA5OTE4QDMxMzkyZTMzMmUzMGZ4QnFHbGNEVFI4ZUcwYzZnVUJnQkFEcmxKUlFmQWl4RDc4VDdKcFRmcE09");
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
             var services = builder.Services;

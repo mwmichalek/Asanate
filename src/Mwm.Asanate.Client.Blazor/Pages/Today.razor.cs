@@ -6,6 +6,7 @@ using Mwm.Asanate.Client.Blazor.Models.Tsks;
 using Mwm.Asanate.Client.Blazor.Services;
 using Mwm.Asanate.Client.Blazor.Services.State;
 using Mwm.Asanate.Client.Blazor.Store.Features.Shared.Actions;
+using Mwm.Asanate.Client.Blazor.Store.Features.Shared.Helpers;
 using Mwm.Asanate.Client.Blazor.Store.State.Shared;
 using Mwm.Asanate.Data;
 using Mwm.Asanate.Domain;
@@ -35,41 +36,79 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         [Inject]
         public EntityStateService EntityService { get; set; }
 
-        public List<TskModel> TskModels => BuildTskModels();
+        private bool rebuildTskModels = false;
+        private List<TskModel> tskModels;
+
+        public List<TskModel> TskModels {
+            get {
+                if (rebuildTskModels || tskModels == null) 
+                    BuildTskModels();
+                return tskModels;
+            }
+        }
+
+
 
         [Inject]
         public IActionSubscriber ActionSubscriber { get; set; }
 
+        public bool IsLoading() => TsksState.IsLoading() ||
+                                   InitiativesState.IsLoading() ||
+                                   ProjectsState.IsLoading() ||
+                                   CompaniesState.IsLoading();
+
+        public bool HasErrors() => TsksState.HasErrors() ||
+                                   InitiativesState.HasErrors() ||
+                                   ProjectsState.HasErrors() ||
+                                   CompaniesState.HasErrors();
+
+        public bool HasValues() => TsksState.HasValue(true) &&
+                                   InitiativesState.HasValue(true) &&
+                                   ProjectsState.HasValue(true) &&
+                                   CompaniesState.HasValue(true);
+
+
+
         protected override void OnInitialized() {
-            if (TsksState.Value.Entities is null) 
+            if (!TsksState.HasValue()) 
                 EntityService.Load<Tsk>();
-            if (InitiativesState.Value.Entities is null)
+            if (!InitiativesState.HasValue())
                 EntityService.Load<Initiative>();
-            if (CompaniesState.Value.Entities is null)
+            if (!CompaniesState.HasValue())
                 EntityService.Load<Company>();
-            if (ProjectsState.Value.Entities is null)
+            if (!ProjectsState.HasValue())
                 EntityService.Load<Project>();
 
             //TODO:(MWM) Perhaps Make the Entities Lists a Lookup for fast access.
 
-            //ActionSubscriber.SubscribeToAction<LoadSuccessAction<Tsk>>(this, (action) => LoadModels());
+            //NOTE:(MWM) These actions get triggered BEFORE the state gets updated.  WTF?!?!?
+            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Tsk>>(this, (action) => rebuildTskModels = true);
+            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Initiative>>(this, (action) => rebuildTskModels = true);
+            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Project>>(this, (action) => rebuildTskModels = true);
+            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Company>>(this, (action) => rebuildTskModels = true);
             base.OnInitialized();
         }
 
-        private List<TskModel> BuildTskModels() {
-            return TsksState.Value.Entities.Select(t => {
-                Initiative initiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.Id == t.InitiativeId);
-                Project project = (initiative != null) ? ProjectsState.Value.Entities.SingleOrDefault(p => p.Id == initiative.ProjectId) : null;
-                Company company = (project != null) ? CompaniesState.Value.Entities.SingleOrDefault(c => c.Id == project.CompanyId) : null;
+        
+        private void BuildTskModels(string triggerBy = null) {
+            if (HasValues()) {
+                tskModels = TsksState.Value.Entities?.Where(t => !t.IsArchived).Select(t => {
+                    Initiative initiative = InitiativesState.FindById(t.InitiativeId);
+                    Project project = (initiative != null) ? ProjectsState.FindById(initiative.ProjectId) : null;
+                    Company company = (project != null) ? CompaniesState.FindById(project.CompanyId) : null;
 
-                return new TskModel {
-                    Id = t.Id,
-                    Name = t.Name,
-                    InitiativeName = initiative?.Name,
-                    ProjectName = project?.Name,
-                    CompanyName = company?.Name
-                };
-            }).ToList();
+                    return new TskModel {
+                        Id = t.Id,
+                        Name = t.Name,
+                        Status = t.Status,
+                        InitiativeName = initiative?.Name,
+                        ProjectName = project?.Name,
+                        CompanyName = company?.Name
+                    };
+                }).ToList();
+                rebuildTskModels = false;
+                Logger.LogInformation($"Built {TskModels.Count} TskModels");
+            }
         }
     }
 }
