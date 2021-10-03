@@ -115,5 +115,44 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                 Logger.LogInformation($"Built {TskModels.Count} TskModels");
             }
         }
+
+        public void ActionCompleteHandler(ActionEventArgs<TskModel> args) {
+            Logger.LogInformation($"ChangedRecords: {args.ChangedRecords.Count()}, EventName: {args.RequestType}");
+        }
+
+        public void DragStopHandler(DragEventArgs<TskModel> args) {
+            Logger.LogInformation($"MovedRecords: {args.Data.Count}, EventName: {args.PreviousCardData.Count}");
+            Logger.LogInformation($"MovedRecords: {args.Data.FirstOrDefault()?.Status}, EventName: {args.PreviousCardData.FirstOrDefault()?.Status}");
+        }
+
+        //
+        //// Summary:
+        ////     Returns the appropriate added data based on the action.
+        //public IEnumerable<TValue> AddedRecords { get; set; }
+        ////
+        //// Summary:
+        ////     Defines the cancel option for the action taking place.
+        //public bool Cancel { get; set; }
+        ////
+        //// Summary:
+        ////     Returns the appropriate changed data based on the action.
+        //public IEnumerable<TValue> ChangedRecords { get; set; }
+        ////
+        //// Summary:
+        ////     Returns the appropriate deleted data based on the action.
+        //public IEnumerable<TValue> DeletedRecords { get; set; }
+        ////
+        //// Summary:
+        ////     Specifies the name of the event.
+        //[Obsolete("This event argument is deprecated and will no longer be used.")]
+        //public string Name { get; set; }
+        ////
+        //// Summary:
+        ////     Returns the request type of the current action.
+        //public string RequestType { get; set; }
+        ////
+        //// Summary:
+        ////     Returns the failure exceptions.
+        //public Exception Exception { get; set; }
     }
 }
