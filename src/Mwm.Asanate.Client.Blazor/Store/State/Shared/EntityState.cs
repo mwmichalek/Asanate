@@ -13,7 +13,11 @@ namespace Mwm.Asanate.Client.Blazor.Store.State.Shared {
 
         public IEnumerable<TEntity>? Entities { get; }
 
+        public TEntity FindById(int id) => _lookup[id].SingleOrDefault();
+
         public TEntity? CurrentEntity { get; }
+
+        private ILookup<int, TEntity> _lookup;
 
         public EntityState() : this(false, null, null, default) {
         }
@@ -21,6 +25,7 @@ namespace Mwm.Asanate.Client.Blazor.Store.State.Shared {
         public EntityState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<TEntity>? entities = null, TEntity? currentEntity = default) {
             IsLoading = isLoading;
             CurrentErrorMessage = currentErrorMessage;
+            _lookup = entities.ToLookup(e => e.Id);
             Entities = entities;
             CurrentEntity = currentEntity;
         }

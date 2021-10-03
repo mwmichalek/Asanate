@@ -40,11 +40,11 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public EntityStateService EntityService { get; set; }
 
         private bool rebuildTskModels = false;
-        private List<TskModel> tskModels;
+        private List<TskModel> tskModels = new List<TskModel>();
 
         public List<TskModel> TskModels {
             get {
-                if (rebuildTskModels || tskModels == null) 
+                if (rebuildTskModels) 
                     BuildTskModels();
                 return tskModels;
             }

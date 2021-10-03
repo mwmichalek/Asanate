@@ -10,6 +10,7 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Helpers {
     public static class FeatureExtensions {
 
         public static TEntity FindById<TEntity>(this IState<EntityState<TEntity>> entitiesState, int id) where TEntity : INamedEntity {
+            //return (entitiesState.Value.Entities != null) ? entitiesState.Value.FindById(id) : default;
             return (entitiesState.Value.Entities != null) ? entitiesState.Value.Entities.SingleOrDefault(e => e.Id == id) : default;
         }
 
