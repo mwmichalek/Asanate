@@ -30,7 +30,7 @@ namespace Mwm.Asanate.Domain {
 
         //private static Dictionary<string, Status> lookup = new Dictionary<string, Status> {
         //    { Status.Open, "Open" },
-   
+
         //    { "Planned", Status.Planned },
         //    { "Ready To Start", Status.ReadyToStart },
         //    { "In Progress", Status.InProgress },
@@ -40,7 +40,8 @@ namespace Mwm.Asanate.Domain {
 
         public static Status ToStatus(this string statusStr) => (Status)Enum.Parse(typeof(Status), statusStr.Replace(" ", "_"));
 
-        public static string ToString(this Status status) => status.ToString().Replace("_", " ");
+        public static string ToStr(this Status status) => status.ToString().Replace("_", " ");
+
     }
 
     //public class Status : NamedEntity {

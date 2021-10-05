@@ -1,6 +1,6 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Mwm.Asanate.Client.Blazor.Helpers;
-
+@using Mwm.Asanate.Domain; 
 @page "/"
 
 <h3 class="text-center mb-3">Today</h3>
@@ -17,8 +17,8 @@
 
 <SfKanban @ref="KanbanBoard" KeyField="StatusName" DataSource="@TskModels">
     <KanbanColumns>
-        @foreach (var status in Statuses) {
-            <KanbanColumn HeaderText="@status" KeyField="@status.ToKeyFields()"></KanbanColumn>
+        @foreach (var statusName in StatusNames) {
+            <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
         }
     </KanbanColumns>
     <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>

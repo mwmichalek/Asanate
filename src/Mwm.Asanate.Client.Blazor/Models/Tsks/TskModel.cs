@@ -23,7 +23,7 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
 
         public string StatusName {
             get {
-                return Status.ToString();
+                return Status.ToStr();
             }
             set {
                 Status = value.ToStatus();
