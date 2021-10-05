@@ -51,7 +51,6 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
             private readonly IRepository<Initiative> _initiativeRepository;
             private readonly IRepository<Tsk> _tskRepository;
 
-
             public Handler(ILogger<Handler> logger,
                            IRepository<User> userRepository,
                            IRepository<Initiative> initiativeRepository,
@@ -80,6 +79,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 try {
                     if (command.InitiativeId.HasValue) {
                         var initiative = _initiativeRepository.Get(command.InitiativeId.Value);
+                        _logger.LogInformation($"Initiative Found: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
 
                     } else if (!string.IsNullOrEmpty(command.NewInitiativeName) &&
@@ -91,14 +91,17 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                         };
                         _initiativeRepository.Add(initiative);
                         _initiativeRepository.Save();
+                        _logger.LogInformation($"Initiative Added: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Add));
                     } else {
                         // Default "Generic" - "Triage"
                         var initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == Initiative.DefaultInitiativeName &&
                                                                                             i.Project.Name == Project.DefaultProjectName);
+                        _logger.LogInformation($"Initiative Found: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
                     }
                 } catch (Exception ex) {
+                    _logger.LogError($"Initiative Add/Find Failure: {ex}");
                     return Result.Fail(new Error("Unable to create Initiative").CausedBy(ex));
                 }
             }
@@ -120,11 +123,13 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                     };
                     if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;
                     if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;
-
+                    _logger.LogInformation($"Tsk Added: {tsk.Name}");
                     _tskRepository.Add(tsk);
                     _tskRepository.Save();
+
                     return Result.Ok(tsk.Id).WithSuccess(tsk.ToSuccess(ResultAction.Add));
                 } catch (Exception ex) {
+                    _logger.LogError($"Tsk Addition Failure: {ex}");
                     return Result.Fail(new Error("Unable to create Tsk").CausedBy(ex));
                 }
             }
