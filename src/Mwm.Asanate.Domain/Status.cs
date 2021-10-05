@@ -10,27 +10,37 @@ namespace Mwm.Asanate.Domain {
         Unknown,
         Open,
         Planned,
-        ReadyToStart,
-        InProgress,
+        Ready_To_Start,
+        In_Progress,
         Pending,
         Done
     }
 
     public static class StatusExtensions {
 
-        private static Dictionary<string, Status> lookup = new Dictionary<string, Status> {
-            { "Open", Status.Open },
-            { "Queued", Status.Open },
-            { "Planned", Status.Planned },
-            { "Ready To Start", Status.ReadyToStart },
-            { "In Progress", Status.InProgress },
-            { "Pending", Status.Pending },
-            { "Done", Status.Done },
-        };
+        //private static Dictionary<string, Status> lookup = new Dictionary<string, Status> {
+        //    { "Open", Status.Open },
+        //    { "Queued", Status.Open },
+        //    { "Planned", Status.Planned },
+        //    { "Ready To Start", Status.ReadyToStart },
+        //    { "In Progress", Status.InProgress },
+        //    { "Pending", Status.Pending },
+        //    { "Done", Status.Done },
+        //};
 
-        public static Status ToStatus(this string statusStr) {
-            return lookup.TryGetValue(statusStr, out Status status) ? status : Status.Unknown;
-        }
+        //private static Dictionary<string, Status> lookup = new Dictionary<string, Status> {
+        //    { Status.Open, "Open" },
+   
+        //    { "Planned", Status.Planned },
+        //    { "Ready To Start", Status.ReadyToStart },
+        //    { "In Progress", Status.InProgress },
+        //    { "Pending", Status.Pending },
+        //    { "Done", Status.Done },
+        //};
+
+        public static Status ToStatus(this string statusStr) => (Status)Enum.Parse(typeof(Status), statusStr.Replace(" ", "_"));
+
+        public static string ToString(this Status status) => status.ToString().Replace("_", " ");
     }
 
     //public class Status : NamedEntity {
