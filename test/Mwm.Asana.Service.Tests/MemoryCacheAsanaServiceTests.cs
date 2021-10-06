@@ -18,7 +18,7 @@ namespace Mwm.Asanate.Service.Tests {
         }
 
         // ********************************** TSKS ***************************************************
-        [Fact]
+        [Fact(Skip = "On longer in use.")]
         public async Task RetrieveAllTsks() {
             var tsks = await RetrieveAllAndAssertResults<AsanaTsk>();
             Assert.True(tsks.Count > 0);

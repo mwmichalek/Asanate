@@ -38,8 +38,13 @@ namespace Mwm.Asanate.Domain {
         //    { "Done", Status.Done },
         //};
 
-        public static Status ToStatus(this string statusStr) => (Status)Enum.Parse(typeof(Status), statusStr.Replace(" ", "_"));
-
+        public static Status ToStatus(this string statusStr) {
+            if (Enum.TryParse(typeof(Status), statusStr.Replace(" ", "_"), true, out object? statusObj))
+                return (Status)statusObj;
+            if (statusStr == "Queued")
+                return Status.Open;
+            return Status.Unknown;
+        }
         public static string ToStr(this Status status) => status.ToString().Replace("_", " ");
 
     }

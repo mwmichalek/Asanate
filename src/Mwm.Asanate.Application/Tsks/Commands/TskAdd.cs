@@ -35,9 +35,9 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public int? InitiativeId { get; set; }
 
-            public string NewInitiativeName { get; set; }
+            //public string NewInitiativeName { get; set; }
 
-            public int? ProjectId { get; set; }
+            //public int? ProjectId { get; set; }
 
             public int? AssignedToId { get; set; }
 
@@ -70,8 +70,9 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
                 if (initiativeResult.IsFailed)
                     return initiativeResult.ToResult();
+                command.InitiativeId = initiativeResult.Value;
 
-                var tskResult = CreateTsk(command, initiativeResult.Value);
+                var tskResult = CreateTsk(command);
 
                 return Result.Merge(initiativeResult.ToResult(), tskResult.ToResult());
             }
@@ -82,16 +83,17 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                         var initiative = _initiativeRepository.Get(command.InitiativeId.Value);
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
 
-                    } else if (!string.IsNullOrEmpty(command.NewInitiativeName) &&
-                                command.ProjectId.HasValue) {
-                        var initiative = new Initiative {
-                            ProjectId = command.ProjectId.Value,
-                            Name = command.NewInitiativeName,
-                            ModifiedDate = DateTime.Now
-                        };
-                        _initiativeRepository.Add(initiative);
-                        _initiativeRepository.Save();
-                        return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Add));
+                    // NOTE:(MWM) This should be moved to Initiative creation, a seperate step
+                    //} else if (!string.IsNullOrEmpty(command.NewInitiativeName) &&
+                    //            command.ProjectId.HasValue) {
+                    //    var initiative = new Initiative {
+                    //        ProjectId = command.ProjectId.Value,
+                    //        Name = command.NewInitiativeName,
+                    //        ModifiedDate = DateTime.Now
+                    //    };
+                    //    _initiativeRepository.Add(initiative);
+                    //    _initiativeRepository.Save();
+                    //    return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Add));
                     } else {
                         // Default "Generic" - "Triage"
                         var initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == Initiative.DefaultInitiativeName &&
@@ -103,7 +105,10 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 }
             }
 
-            private Result<int> CreateTsk(Command command, int initiativeId) {
+
+            private Result<int> CreateTsk(Command command) {
+
+                //private Result<int> CreateTsk(Command command, int initiativeId) {
                 try {
                     var tsk = new Tsk {
                         Name = command.Name,
@@ -115,7 +120,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                         DueDate = command.DueDate,
                         StartedDate = command.StartedDate,
                         Status = command.Status,
-                        InitiativeId = initiativeId,
+                        InitiativeId = command.InitiativeId.Value,
                         AssignedToId = User.MeId
                     };
                     if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;

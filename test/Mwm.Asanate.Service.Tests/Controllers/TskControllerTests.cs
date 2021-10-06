@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Hosting;
 using Mwm.Asanate.Data;
+using Mwm.Asanate.Persistance.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,10 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
     public class TskControllerTests {
 
         private readonly IMediator _mediator;
-        private readonly DatabaseContext _databaseContext;
+        private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public TskControllerTests(DatabaseContext databaseContext, ITestOutputHelper output) {
+        public TskControllerTests(IDatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _output = output;
 
@@ -28,6 +29,9 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
 
         [Fact]
         public async Task CreateSimpleTsk() {
+
+
+            Assert.True(true);
             //Task.Run(() => Mwm.Asanate.Server.Program.CreateHostBuilder().Build().Run());
 
             //var httpClient = new Htt
