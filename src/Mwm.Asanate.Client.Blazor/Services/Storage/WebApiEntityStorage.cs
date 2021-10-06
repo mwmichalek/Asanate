@@ -25,5 +25,12 @@ namespace Mwm.Asanate.Client.Blazor.Services.Storage {
             return await _httpClient.GetFromJsonAsync<List<TEntity>>($"/api/{typeof(TEntity).Name}");
         }
 
+        public async Task<TEntity> Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Update", entity);
+
+            // TODO(MWM) Check response!
+            return entity;
+        }
+
     }
 }

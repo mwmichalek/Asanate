@@ -45,6 +45,14 @@ namespace Mwm.Asanate.Server.Controllers {
             return result;
         }
 
+        [HttpGet("Get/{id}")]
+        public async Task<TEntity> Get(int id) {
+            var sw = Stopwatch.StartNew();
+            var result = await _repository.GetAll().SingleOrDefaultAsync(e => e.Id == id);
+            _logger.LogInformation($"Loaded {result.Name} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
+            return result;
+        }
+
         [HttpPost("Add")]
         public async Task<IActionResult> Add(TAddEntityCommand command) {
             var result = await _mediator.Send(command);
