@@ -7,6 +7,7 @@ using System;
 using Mwm.Asanate.Persistance.Shared;
 using Mwm.Asana.Service.Utils;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Mwm.Asanate.Service.Tests {
     public class Startup {
@@ -16,10 +17,12 @@ namespace Mwm.Asanate.Service.Tests {
             //var outputPath = Environment.CurrentDirectory;
 
             var configuration = services.AddConfigurationWithUserSecrets();
+            services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
             services.AddLogging();
             services.AddDatabaseContext(configuration);
             services.AddRepositories();
             services.AddAsanaServices();
+            services.AddMediatR(includeAsana:true);
             services.AddMediatR();
         }
 

@@ -97,7 +97,8 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                     } else {
                         // Default "Generic" - "Triage"
                         var initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == Initiative.DefaultInitiativeName &&
-                                                                                            i.Project.Name == Project.DefaultProjectName);
+                                                                                            i.Project.Name == Project.DefaultProjectName &&
+                                                                                            i.Project.Company.Name == Company.DefaultCompanyName);
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
                     }
                 } catch (Exception ex) {

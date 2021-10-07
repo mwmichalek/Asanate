@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mwm.Asana.Model\Mwm.Asana.Model.csproj" />
+    <ProjectReference Include="..\Mwm.Asanate.Application.Asanate\Mwm.Asanate.Application.Asanate.csproj" />
     <ProjectReference Include="..\Mwm.Asanate.Application\Mwm.Asanate.Application.csproj" />
     <ProjectReference Include="..\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj" />
     <ProjectReference Include="..\Mwm.Asanate.Persistance\Mwm.Asanate.Persistance.csproj" />

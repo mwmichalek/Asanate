@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Fake\**" />
+    <EmbeddedResource Remove="Fake\**" />
+    <None Remove="Fake\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
 
@@ -34,14 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Mwm.Asanate.Application.Asanate\Mwm.Asanate.Application.Asanate.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Common\Mwm.Asanate.Common.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Domain\Mwm.Asanate.Domain.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Server\Mwm.Asanate.Server.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Fake\" />
   </ItemGroup>
 
 </Project>
