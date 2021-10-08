@@ -19,27 +19,27 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public string Name { get; set; }
 
-            public string? ExternalId { get; set; } = null;
+            public string? ExternalId { get; set; } 
 
-            public Status Status { get; set; } = Status.Open;
+            public Status Status { get; set; } 
 
-            public bool? IsArchived { get; set; } = null;
+            public bool? IsArchived { get; set; }
 
-            public string? Notes { get; set; } = null;
+            public string? Notes { get; set; } 
 
-            public DateTime? CompletedDate { get; set; } = null;
+            public DateTime? CompletedDate { get; set; } 
 
-            public DateTime? DueDate { get; set; } = null;
+            public DateTime? DueDate { get; set; } 
 
-            public DateTime? StartedDate { get; set; } = null;
+            public DateTime? StartedDate { get; set; } 
 
-            public int? InitiativeId { get; set; } = null;
+            public int? InitiativeId { get; set; } 
 
             //public string NewInitiativeName { get; set; }
 
             //public int? ProjectId { get; set; }
 
-            public int? AssignedToId { get; set; } = null;
+            public int? AssignedToId { get; set; } 
 
         }
 
@@ -55,6 +55,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                            IRepository<User> userRepository,
                            IRepository<Initiative> initiativeRepository,
                            IRepository<Tsk> tskRepository) {
+                _logger = logger;
                 _userRepository = userRepository;
                 _initiativeRepository = initiativeRepository;
                 _tskRepository = tskRepository;

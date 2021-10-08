@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Hosting;
+using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Data;
 using Mwm.Asanate.Domain;
 using Mwm.Asanate.Persistance.Shared;
@@ -48,7 +49,7 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
 
         [Fact]
         public async Task Add() {
-            var tsk = new Tsk {
+            var tsk = new TskAdd.Command {
                 Name = "This is a test",
                 Status = Status.Open
             };
