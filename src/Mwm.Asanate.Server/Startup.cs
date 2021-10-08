@@ -35,7 +35,7 @@ namespace Mwm.Asanate.Server {
             services.AddLogging();
             services.AddDatabaseContext(configuration);
             services.AddRepositories();
-            services.AddAsanaServices();
+            //services.AddAsanaServices();
             services.AddMediatR();
 
 

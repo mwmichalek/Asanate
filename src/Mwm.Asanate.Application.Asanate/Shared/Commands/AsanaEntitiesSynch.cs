@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mwm.Asanate.Application.Shared.Commands {
+namespace Mwm.Asanate.Application.Asana.Commands {
     public class AsanaEntitiesSynch {
 
         public class Command : IRequest<Result> {

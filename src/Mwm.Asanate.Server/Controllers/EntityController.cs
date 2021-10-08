@@ -41,7 +41,16 @@ namespace Mwm.Asanate.Server.Controllers {
         public async Task<List<TEntity>> All() {
             var sw = Stopwatch.StartNew();
             var result = await _repository.GetAll().ToListAsync();
+
             _logger.LogInformation($"Loaded {result.Count} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
+            return result;
+        }
+
+        [HttpGet("Get/{id}")]
+        public async Task<TEntity> Get(int id) {
+            var sw = Stopwatch.StartNew();
+            var result = await _repository.GetAll().SingleOrDefaultAsync(e => e.Id == id);
+            _logger.LogInformation($"Loaded {result.Name} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
             return result;
         }
 
@@ -50,8 +59,8 @@ namespace Mwm.Asanate.Server.Controllers {
             var result = await _mediator.Send(command);
 
             if (result.IsSuccess)
-                return Ok();
-            return BadRequest();
+                return Ok(result);
+            return BadRequest(result);
         }
 
         [HttpPost("Update")]
@@ -59,8 +68,8 @@ namespace Mwm.Asanate.Server.Controllers {
             var result = await _mediator.Send(command);
 
             if (result.IsSuccess)
-                return Ok();
-            return BadRequest();
+                return Ok(result);
+            return BadRequest(result);
         }
 
         [HttpPost("Delete")]
@@ -68,8 +77,8 @@ namespace Mwm.Asanate.Server.Controllers {
             var result = await _mediator.Send(command);
 
             if (result.IsSuccess)
-                return Ok();
-            return BadRequest();
+                return Ok(result);
+            return BadRequest(result);
         }
     }
 

@@ -1,9 +1,12 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Hosting;
 using Mwm.Asanate.Data;
+using Mwm.Asanate.Persistance.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,26 +15,28 @@ using Xunit.Abstractions;
 
 namespace Mwm.Asanate.Service.Tests.Controllers {
 
-    [Collection("Generic")]
+    [Collection("Controllers")]
     public class TskControllerTests {
 
         private readonly IMediator _mediator;
-        private readonly DatabaseContext _databaseContext;
+        private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
+        private readonly HttpClient _httpClient;
 
-        public TskControllerTests(DatabaseContext databaseContext, ITestOutputHelper output) {
+        public TskControllerTests(IDatabaseContext databaseContext, ITestOutputHelper output, HttpClient httpClient) {
             _databaseContext = databaseContext;
             _output = output;
-
+            _httpClient = httpClient;
             
         }
 
         [Fact]
-        public async Task CreateSimpleTsk() {
-            //Task.Run(() => Mwm.Asanate.Server.Program.CreateHostBuilder().Build().Run());
+        public async Task All() {
 
-            //var httpClient = new Htt
+            var response = await _httpClient.GetFromJsonAsync<List<TskControllerTests>>($"/api/Tsk");
 
+            Assert.NotNull(response);
+            Assert.True(response.Count > 0);
         }
     }
 }

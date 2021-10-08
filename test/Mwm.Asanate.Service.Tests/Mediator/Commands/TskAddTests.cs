@@ -4,6 +4,7 @@ using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Application.Utils;
 using Mwm.Asanate.Data;
 using Mwm.Asanate.Domain;
+using Mwm.Asanate.Persistance.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,10 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
     [Collection("Generic")]
     public class TskAddTests {
         private readonly IMediator _mediator;
-        private readonly DatabaseContext _databaseContext;
+        private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public TskAddTests(IMediator mediator, DatabaseContext databaseContext, ITestOutputHelper output) {
+        public TskAddTests(IMediator mediator, IDatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _mediator = mediator;
             _output = output;
@@ -71,9 +72,9 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.CompletedDate == command.CompletedDate));
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.IsArchived == command.IsArchived));
 
-            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Find));
-            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == Initiative.DefaultInitiativeName &&
-                                                                          t.Entity.Project.Name == Project.DefaultProjectName));
+            //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Find));
+            //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == Initiative.DefaultInitiativeName &&
+            //                                                              t.Entity.Project.Name == Project.DefaultProjectName));
 
             var tsk = _databaseContext.Tsks.Find(result.GetSuccess<Tsk>().Entity.Id);
             Assert.Equal(command.Name, tsk.Name);
@@ -81,15 +82,15 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             _output.WriteLine(result.ToString());
         }
 
-        [Fact]
+        [Fact(Skip ="No longer creating Initiative in this manor")]
         public async Task AddSimpleTskToNewInitiativeInExistingProject() {
 
             var command = new TskAdd.Command {
                 Name = $"SimpleTsk_{DateTime.Now}",
                 Status = Status.Open,
                 Notes = "Notes and notes and notes",
-                ProjectId = 8,
-                NewInitiativeName = $"TestInitiative_{DateTime.Now}"
+                //ProjectId = 8,
+                //NewInitiativeName = $"TestInitiative_{DateTime.Now}"
             };
 
             var result = await _mediator.Send(command);
@@ -101,15 +102,15 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Status == command.Status));
             Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Notes == command.Notes));
 
-            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Add));
-            Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == command.NewInitiativeName &&
-                                                                          t.Entity.ProjectId == command.ProjectId));
+            //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Add));
+            //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == command.NewInitiativeName &&
+            //                                                              t.Entity.ProjectId == command.ProjectId));
 
             var tsk = _databaseContext.Tsks.Include(t => t.Initiative.Project).SingleOrDefault(t => t.Id == result.GetSuccess<Tsk>().Entity.Id);
             Assert.Equal(command.Name, tsk.Name);
-            Assert.Equal(command.NewInitiativeName, tsk.Initiative.Name);
-            Assert.Equal(command.ProjectId, tsk.Initiative.ProjectId);
-            Assert.Equal(command.ProjectId, tsk.Initiative.Project.Id);
+            //Assert.Equal(command.NewInitiativeName, tsk.Initiative.Name);
+            //Assert.Equal(command.ProjectId, tsk.Initiative.ProjectId);
+            //Assert.Equal(command.ProjectId, tsk.Initiative.Project.Id);
 
             _output.WriteLine(result.ToString());
         }

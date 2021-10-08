@@ -52,7 +52,11 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
         public List<string> Companies => TskModels.Select(t => t.CompanyName).Distinct().ToList();
 
-        public List<string> Statuses => TskModels.Select(t => t.Status).Distinct().OrderBy(s => (int)s).Select(s => s.ToString()).ToList();
+        public List<string> StatusNames => TskModels.Select(t => t.Status)
+                                                    .Distinct()
+                                                    .OrderBy(s => (int)s)
+                                                    .Select(s => s.ToStr())
+                                                    .ToList();
 
         [Inject]
         public IActionSubscriber ActionSubscriber { get; set; }
@@ -117,12 +121,14 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         }
 
         public void ActionCompleteHandler(ActionEventArgs<TskModel> args) {
-            Logger.LogInformation($"ChangedRecords: {args.ChangedRecords.Count()}, EventName: {args.RequestType}");
+            Logger.LogInformation("Hi");
+            Logger.LogInformation($"ChangedRecords: {args.ChangedRecords?.Count()}, EventName: {args.RequestType}");
         }
 
         public void DragStopHandler(DragEventArgs<TskModel> args) {
-            Logger.LogInformation($"MovedRecords: {args.Data.Count}, EventName: {args.PreviousCardData.Count}");
-            Logger.LogInformation($"MovedRecords: {args.Data.FirstOrDefault()?.Status}, EventName: {args.PreviousCardData.FirstOrDefault()?.Status}");
+            foreach (var tskModel in args.Data) 
+                Logger.LogInformation($"Moved: {tskModel.Name}, Status: {tskModel.Status}");
+            
         }
 
         //

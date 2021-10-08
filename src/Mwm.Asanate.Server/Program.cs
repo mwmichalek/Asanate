@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Server {
     public class Program {
-        public static void Main(string[] args) {
+        public static void Main(string[] args = null) {
             CreateHostBuilder(args).Build().Run();
         }
 

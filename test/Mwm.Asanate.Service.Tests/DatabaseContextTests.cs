@@ -5,16 +5,17 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using Mwm.Asanate.Data;
+using Mwm.Asanate.Persistance.Shared;
 
 namespace Mwm.Asanate.Service.Tests {
 
     [Collection("Generic")]
     public class DatabaseContextTests {
 
-        private readonly DatabaseContext _databaseContext;
+        private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
 
-        public DatabaseContextTests(DatabaseContext databaseContext, ITestOutputHelper output) {
+        public DatabaseContextTests(IDatabaseContext databaseContext, ITestOutputHelper output) {
             _databaseContext = databaseContext;
             _output = output;
 
@@ -23,24 +24,23 @@ namespace Mwm.Asanate.Service.Tests {
 
         [Fact]
         public void AddUser() {
-            int id = 9999;
+            var me = _databaseContext.Users.Add(new User {
+                Id = 0,
+                Name = "Some Dude"
+            });
 
-            var me = _databaseContext.Add(new User {
-                Id = id,
-                Name = "Michalek"
-            }); 
-
-            _databaseContext.SaveChanges();
+            _databaseContext.Save();
 
             var users = _databaseContext.Users.ToList();
 
-            Assert.Equal(id, users.First().Id);
+            Assert.NotEqual(0, users.First().Id);
         }
 
         [Fact]
         public void AddTask() {
             var tsk = new Tsk {
                 Name = "Sample Tsk",
+                AssignedTo = new User {  Name = "TheMan"},
                 Initiative = new Initiative {
                     Name = "Sample Initiative",
                     Project = new Project {
@@ -53,8 +53,8 @@ namespace Mwm.Asanate.Service.Tests {
             };
             var initialId = tsk.Id;
 
-            _databaseContext.Add(tsk);
-            _databaseContext.SaveChanges();
+            _databaseContext.Tsks.Add(tsk);
+            _databaseContext.Save();
 
             Assert.NotEqual(initialId, tsk.Id);
 

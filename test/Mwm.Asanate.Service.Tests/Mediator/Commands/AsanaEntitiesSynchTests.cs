@@ -15,6 +15,7 @@ using Xunit.Abstractions;
 using Xunit.Extensions.Logging;
 using Mwm.Asana.Model.Converters;
 using Mwm.Asanate.Persistance.Shared;
+using Mwm.Asanate.Application.Asana.Commands;
 
 namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
