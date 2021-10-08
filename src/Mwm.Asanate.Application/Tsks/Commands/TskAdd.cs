@@ -19,27 +19,27 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public string Name { get; set; }
 
-            public string ExternalId { get; set; }
+            public string? ExternalId { get; set; } = null;
 
             public Status Status { get; set; } = Status.Open;
 
-            public bool? IsArchived { get; set; }
+            public bool? IsArchived { get; set; } = null;
 
-            public string? Notes { get; set; }
+            public string? Notes { get; set; } = null;
 
-            public DateTime? CompletedDate { get; set; }
+            public DateTime? CompletedDate { get; set; } = null;
 
-            public DateTime? DueDate { get; set; }
+            public DateTime? DueDate { get; set; } = null;
 
-            public DateTime? StartedDate { get; set; }
+            public DateTime? StartedDate { get; set; } = null;
 
-            public int? InitiativeId { get; set; }
+            public int? InitiativeId { get; set; } = null;
 
             //public string NewInitiativeName { get; set; }
 
             //public int? ProjectId { get; set; }
 
-            public int? AssignedToId { get; set; }
+            public int? AssignedToId { get; set; } = null;
 
         }
 
@@ -82,7 +82,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                         var initiative = _initiativeRepository.Get(command.InitiativeId.Value);
                         _logger.LogInformation($"Initiative Found: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
-
+                    // ##########################################################################################
                     // NOTE:(MWM) This should be moved to Initiative creation, a seperate step
                     //} else if (!string.IsNullOrEmpty(command.NewInitiativeName) &&
                     //            command.ProjectId.HasValue) {
@@ -94,10 +94,11 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                     //    _initiativeRepository.Add(initiative);
                     //    _initiativeRepository.Save();
                     //    return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Add));
+                    // ##########################################################################################
                     } else {
                         // Default "Generic" - "Triage"
                         var initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == Initiative.DefaultInitiativeName &&
-                                                                                            i.Project.Name == Project.DefaultProjectName);
+                                                                                             i.Project.Name == Project.DefaultProjectName);
                         _logger.LogInformation($"Initiative Found: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
                     }

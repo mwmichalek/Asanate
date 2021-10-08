@@ -20,12 +20,28 @@ namespace Mwm.Asana.Service {
 
 		private IAsanaService<AsanaProject> projectService;
 
-		public SectionMemoryCacheAsanaService(IAsanaHttpClientFactory httpClientFactory, IAsanaService<AsanaProject> projectService) :
+		private bool delayInit;
+		private bool isInit;
+
+		public SectionMemoryCacheAsanaService(IAsanaHttpClientFactory httpClientFactory, IAsanaService<AsanaProject> projectService, bool delayInit = false) :
 			base(httpClientFactory) {
 			this.projectService = projectService;
+			this.delayInit = delayInit;
 		}
 
 		public override async Task<Result> Initialize() {
+			if (!delayInit)
+				return await Init();
+			return Result.Ok();
+		}
+
+        public override async Task<Result<List<AsanaSection>>> RetrieveAll(DateTime? modifiedSince = null) {
+			if (entitiesLookup == null)
+				await Init();
+            return await base.RetrieveAll(modifiedSince);
+        }
+
+        private async Task<Result> Init() {
 			try {
 				var resultList = new List<AsanaSection>();
 				var projectsResult = await projectService.RetrieveAll();
@@ -49,6 +65,8 @@ namespace Mwm.Asana.Service {
 				throw new ConfigurationErrorsException($"Unable to retrieve {typeof(AsanaProject)}");
 			}
 		}
+
+		
 
 	}
 }

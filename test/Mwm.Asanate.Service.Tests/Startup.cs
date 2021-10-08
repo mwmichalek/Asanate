@@ -21,7 +21,7 @@ namespace Mwm.Asanate.Service.Tests {
             services.AddLogging();
             services.AddDatabaseContext(configuration);
             services.AddRepositories();
-            services.AddAsanaServices();
+            services.AddAsanaServices(delayInit:true);
             services.AddMediatR(includeAsana:true);
             services.AddMediatR();
         }

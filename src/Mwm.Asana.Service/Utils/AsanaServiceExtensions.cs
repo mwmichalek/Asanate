@@ -10,11 +10,20 @@ using System.Threading.Tasks;
 namespace Mwm.Asana.Service.Utils {
     public static class AsanaServiceExtensions {
 
-        public static IServiceCollection AddAsanaServices(this IServiceCollection services) {
+        public static IServiceCollection AddAsanaServices(this IServiceCollection services, bool delayInit = false) {
             services.AddSingleton<IAsanaHttpClientFactory, AsanaHttpClientFactory>();
             services.AddSingleton<IAsanaService<AsanaTsk>, MemoryCacheAsanaService<AsanaTsk>>();
             services.AddSingleton<IAsanaService<AsanaProject>, MemoryCacheAsanaService<AsanaProject>>();
-            services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
+
+            if (delayInit)
+                services.AddSingleton<IAsanaService<AsanaSection>>((serviceProvider) => {
+                    var httpClientFactory = serviceProvider.GetService<IAsanaHttpClientFactory>();
+                    var projectService = serviceProvider.GetService<IAsanaService<AsanaProject>>();
+                    return new SectionMemoryCacheAsanaService(httpClientFactory, projectService, true);
+                });
+            else
+                services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
+
             services.AddSingleton<IAsanaService<AsanaUser>, MemoryCacheAsanaService<AsanaUser>>();
 
             return services;

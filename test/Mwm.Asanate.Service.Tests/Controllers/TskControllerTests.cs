@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Hosting;
 using Mwm.Asanate.Data;
+using Mwm.Asanate.Domain;
 using Mwm.Asanate.Persistance.Shared;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,28 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
 
         [Fact]
         public async Task All() {
-
-            var response = await _httpClient.GetFromJsonAsync<List<TskControllerTests>>($"/api/Tsk");
+            var response = await _httpClient.GetFromJsonAsync<List<Tsk>>("/api/Tsk");
 
             Assert.NotNull(response);
             Assert.True(response.Count > 0);
+        }
+
+        [Fact]
+        public async Task Get() {
+            var response = await _httpClient.GetFromJsonAsync<Tsk>("/api/Tsk/Get/1");
+
+            Assert.NotNull(response);
+        }
+
+        [Fact]
+        public async Task Add() {
+            var tsk = new Tsk {
+                Name = "This is a test",
+                Status = Status.Open
+            };
+            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Add", tsk);
+
+            Assert.True(response.IsSuccessStatusCode);
         }
     }
 }
