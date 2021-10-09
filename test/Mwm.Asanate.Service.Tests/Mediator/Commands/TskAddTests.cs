@@ -25,7 +25,6 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             _databaseContext = databaseContext;
             _mediator = mediator;
             _output = output;
-
         }
 
         [Fact]

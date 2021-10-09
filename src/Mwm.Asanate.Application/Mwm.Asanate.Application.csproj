@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Initiatives\Workflows\" />
-    <Folder Include="Shared\Workflows\" />
     <Folder Include="Tsks\Workflows\" />
   </ItemGroup>
 

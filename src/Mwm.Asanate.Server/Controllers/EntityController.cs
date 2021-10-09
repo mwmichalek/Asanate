@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Shared.Commands;
+using Mwm.Asanate.Application.Shared.Workflows;
 using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Domain;
 using System;
@@ -57,6 +58,9 @@ namespace Mwm.Asanate.Server.Controllers {
         [HttpPost("Add")]
         public async Task<IActionResult> Add(TAddEntityCommand command) {
             var result = await _mediator.Send(command);
+
+            // look up entity
+            //var success = new EntityCommandSuccess<TEntity, TAddEntityCommand>(result.Value, command);
 
             if (result.IsSuccess)
                 return Ok(result);
