@@ -10,6 +10,7 @@ using Mwm.Asanate.Domain;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Utils;
+using System.Threading;
 
 namespace Mwm.Asanate.Application.Initiatives.Commands {
     public class InitiativeAdd {
@@ -41,7 +42,7 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
 
         }
 
-        public class Handler : RequestHandler<Command, Result> {
+        public class Handler : IRequestHandler<Command, Result> {
 
             private ILogger<Handler> _logger;
 
@@ -57,11 +58,13 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
                 _initiativeRepository = initiativeRepository;
             }
 
-            protected override Result Handle(Command command) {
-                return CreateInitiative(command).ToResult(); 
+
+            public async Task<Result> Handle(Command command, CancellationToken cancellationToken) {
+                var createInitiativeResult = await CreateInitiative(command);
+                return createInitiativeResult.ToResult();
             }
 
-            private Result<int> CreateInitiative(Command command) {
+            private async Task<Result<int>> CreateInitiative(Command command) {
                 if (string.IsNullOrEmpty(command.Name))
                     return Result.Fail("Initiative Name can't be null.");
                 if (!command.ProjectId.HasValue)
@@ -74,7 +77,8 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
                         ModifiedDate = DateTime.Now
                     };
                     _initiativeRepository.Add(initiative);
-                    _initiativeRepository.Save();
+                    await _initiativeRepository.SaveAsync();
+                    _logger.LogInformation($"Initiative Added: {initiative.Name}");
                     return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Add));
                        
                 } catch (Exception ex) {
@@ -83,6 +87,7 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
                 }
             }
 
+            
         }
     }
 }

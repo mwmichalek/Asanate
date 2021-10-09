@@ -35,6 +35,10 @@ namespace Mwm.Asanate.Data {
             this.SaveChanges();
         }
 
+        public Task SaveAsync() {
+            return this.SaveChangesAsync();
+        }
+
         public new DbSet<T> Set<T>() where T : class, IEntity {
             return base.Set<T>();
         }

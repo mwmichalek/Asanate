@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mwm.Asanate.Domain;
+using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Persistance.Shared {
 
@@ -19,6 +20,8 @@ namespace Mwm.Asanate.Persistance.Shared {
         DbSet<T> Set<T>() where T : class, IEntity;
 
         void Save();
+
+        Task SaveAsync();
 
         void RecreateDatabase();
 

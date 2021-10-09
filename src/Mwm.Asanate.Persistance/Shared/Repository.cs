@@ -1,7 +1,11 @@
-﻿using Mwm.Asanate.Application.Interfaces.Persistance;
+﻿using Microsoft.EntityFrameworkCore;
+using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Persistance.Shared {
 
@@ -16,17 +20,36 @@ namespace Mwm.Asanate.Persistance.Shared {
             return _database.Set<T>();
         }
 
+        public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> pred) {
+            return _database.Set<T>().SingleOrDefaultAsync(pred);
+        }
+
+        public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> pred) {
+            return _database.Set<T>().FirstOrDefaultAsync(pred);
+        }
+
         public T GetByName(string name) {
-            return GetAll().SingleOrDefault(e => e.Name == name);
+            return _database.Set<T>().SingleOrDefault(e => e.Name == name);
+        }
+
+        public Task<T> GetByNameAsync(string name) {
+            return _database.Set<T>().SingleOrDefaultAsync(e => e.Name == name);
         }
 
         public T GetByGid(string gid) {
-            return GetAll().SingleOrDefault(e => e.Gid == gid);
+            return _database.Set<T>().SingleOrDefault(e => e.Gid == gid);
+        }
+
+        public Task<T> GetByGidAsync(string gid) {
+            return _database.Set<T>().SingleOrDefaultAsync(e => e.Gid == gid);
         }
 
         public virtual T Get(int id) {
-            return _database.Set<T>()
-                .SingleOrDefault(p => p.Id == id);
+            return _database.Set<T>().SingleOrDefault(p => p.Id == id);
+        }
+
+        public virtual Task<T> GetAsync(int id) {
+            return _database.Set<T>().SingleOrDefaultAsync(p => p.Id == id);
         }
 
         public virtual T Add(T entity) {
@@ -39,6 +62,10 @@ namespace Mwm.Asanate.Persistance.Shared {
 
         public virtual void Save() {
             _database.Save();
+        }
+
+        public virtual Task SaveAsync() {
+            return _database.SaveAsync();
         }
 
        

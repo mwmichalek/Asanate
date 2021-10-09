@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace Mwm.Asanate.Application.Tsks.Commands {
 
@@ -43,7 +45,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
         }
 
-        public class Handler : RequestHandler<Command, Result> {
+        public class Handler : IRequestHandler<Command, Result> {
 
             private ILogger<Handler> _logger;
 
@@ -61,44 +63,31 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 _tskRepository = tskRepository;
             }
 
-            protected override Result Handle(Command command) {
+            public async Task<Result> Handle(Command command, CancellationToken cancellationToken) {
 
                 if (string.IsNullOrEmpty(command.Name))
                     return Result.Fail("Tsk Name can't be null.");
 
-                var initiativeResult = FindOrCreateInitiative(command);
+                var initiativeResult = await FindOrCreateInitiative(command);
 
                 if (initiativeResult.IsFailed)
                     return initiativeResult.ToResult();
                 command.InitiativeId = initiativeResult.Value;
 
-                var tskResult = CreateTsk(command);
+                var tskResult = await CreateTsk(command);
 
                 return Result.Merge(initiativeResult.ToResult(), tskResult.ToResult());
             }
 
-            private Result<int> FindOrCreateInitiative(Command command) {
+            private async Task<Result<int>> FindOrCreateInitiative(Command command) {
                 try {
                     if (command.InitiativeId.HasValue) {
-                        var initiative = _initiativeRepository.Get(command.InitiativeId.Value);
+                        var initiative = await _initiativeRepository.GetAsync(command.InitiativeId.Value);
                         _logger.LogInformation($"Initiative Found: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
-                    // ##########################################################################################
-                    // NOTE:(MWM) This should be moved to Initiative creation, a seperate step
-                    //} else if (!string.IsNullOrEmpty(command.NewInitiativeName) &&
-                    //            command.ProjectId.HasValue) {
-                    //    var initiative = new Initiative {
-                    //        ProjectId = command.ProjectId.Value,
-                    //        Name = command.NewInitiativeName,
-                    //        ModifiedDate = DateTime.Now
-                    //    };
-                    //    _initiativeRepository.Add(initiative);
-                    //    _initiativeRepository.Save();
-                    //    return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Add));
-                    // ##########################################################################################
                     } else {
                         // Default "Generic" - "Triage"
-                        var initiative = _initiativeRepository.GetAll().SingleOrDefault(i => i.Name == Initiative.DefaultInitiativeName &&
+                        var initiative = await _initiativeRepository.SingleOrDefaultAsync(i => i.Name == Initiative.DefaultInitiativeName &&
                                                                                              i.Project.Name == Project.DefaultProjectName);
                         _logger.LogInformation($"Initiative Found: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
@@ -110,9 +99,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
             }
 
 
-            private Result<int> CreateTsk(Command command) {
-
-                //private Result<int> CreateTsk(Command command, int initiativeId) {
+            private async Task<Result<int>> CreateTsk(Command command) {
                 try {
                     var tsk = new Tsk {
                         Name = command.Name,
@@ -129,10 +116,9 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                     };
                     if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;
                     if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;
-                    _logger.LogInformation($"Tsk Added: {tsk.Name}");
                     _tskRepository.Add(tsk);
-                    _tskRepository.Save();
-
+                    await _tskRepository.SaveAsync();
+                    _logger.LogInformation($"Tsk Added: {tsk.Name}");
                     return Result.Ok(tsk.Id).WithSuccess(tsk.ToSuccess(ResultAction.Add));
                 } catch (Exception ex) {
                     _logger.LogError($"Tsk Addition Failure: {ex}");
