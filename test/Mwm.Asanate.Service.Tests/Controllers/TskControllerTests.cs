@@ -20,7 +20,6 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
     [Collection("Controllers")]
     public class TskControllerTests {
 
-        private readonly IMediator _mediator;
         private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
         private readonly HttpClient _httpClient;

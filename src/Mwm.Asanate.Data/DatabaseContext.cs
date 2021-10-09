@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Data {
     
     public class DatabaseContext : DbContext, IDatabaseContext {
-        private readonly bool IsExternallyConfigured = false;
+        //private readonly bool IsExternallyConfigured = false;
 
         public DatabaseContext() : base() {
             Console.WriteLine("Migration In The Hayouse!");
         }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {
-            IsExternallyConfigured = true;
+            //IsExternallyConfigured = true;
         }
 
         public DbSet<User> Users { get; set; }

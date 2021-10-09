@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Mwm.Asanate.Domain\Mwm.Asanate.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Initiatives\Workflows\" />
+    <Folder Include="Shared\Workflows\" />
+    <Folder Include="Tsks\Workflows\" />
+  </ItemGroup>
+
 </Project>

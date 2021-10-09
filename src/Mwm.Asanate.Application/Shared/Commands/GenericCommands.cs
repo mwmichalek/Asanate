@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Application.Shared.Commands {
 
-    public interface IEntityCommand<TEntity> where TEntity : INamedEntity { }
+    public interface ICommand { }
+
+    public interface IEntityCommand<TEntity> : ICommand where TEntity : INamedEntity { }
 
     public interface IPostEntityCommand<TEntity> : IEntityCommand<TEntity>, IRequest<Result> where TEntity : INamedEntity { }
 

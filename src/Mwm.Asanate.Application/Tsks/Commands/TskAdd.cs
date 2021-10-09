@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Shared.Commands;
@@ -15,6 +16,76 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Application.Tsks.Commands {
 
+
+    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> {
+        private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+
+        public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger) {
+            _logger = logger;
+        }
+
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next) {
+            _logger.LogInformation($">>>>>>>  {typeof(TRequest).Name}");
+            var response = await next();
+            _logger.LogInformation($"<<<<<<<<  {typeof(TResponse).Name}");
+
+            return response;
+        }
+    }
+
+
+    // https://github.com/jbogard/MediatR.Extensions.Microsoft.DependencyInjection
+
+    public class EntityCommandPostProcessor<TRequest, TResult> : IRequestPostProcessor<TRequest, TResult> where TRequest : ICommand {
+
+        private IMediator _mediator;
+
+        public EntityCommandPostProcessor(IMediator mediator) {
+            _mediator = mediator;
+        }
+
+        public Task Process(TRequest command, TResult response, CancellationToken cancellationToken) {
+
+
+            if (command is TskAdd.Command tskAdd)
+                Console.WriteLine("NUTS!");
+                //_mediator.Send()
+
+
+            return Task.CompletedTask;
+        }
+    }
+
+
+    //public class Success<IAddEntityCommand<Tsk>> where TEntity : INamedEntity {
+    //}
+
+
+    //public class SuccessEventHandler
+
+
+
+//    public class Pong2 : INotificationHandler<Ping> {
+//        public Task Handle(Ping notification, CancellationToken cancellationToken) {
+//            Debug.WriteLine("Pong 2");
+//            return Task.CompletedTask;
+//        }
+//    }
+//    Finally, publish your message via the mediator:
+
+//await mediator.Publish(new Ping());
+
+
+//    Open generics
+//If you have an open generic not listed above, you'll need to register it explicitly. For example, if you have an open generic request handler, register the open generic types explicitly:
+
+//services.AddTransient(typeof(IRequestHandler<,>), typeof(GenericHandlerBase<,>));
+//This won't work with generic constraints, so you're better off creating an abstract base class and concrete closed generic classes that fill in the right types.
+
+
+
+
+
     public class TskAdd {
 
         public class Command : IAddEntityCommand<Tsk> {
@@ -27,21 +98,31 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public bool? IsArchived { get; set; }
 
-            public string? Notes { get; set; } 
+            public bool? IsCompleted { get; set; }
 
-            public DateTime? CompletedDate { get; set; } 
+            public int? DurationEstimate { get; set; }
 
-            public DateTime? DueDate { get; set; } 
+            public int? DuractionCompleted { get; set; }
 
-            public DateTime? StartedDate { get; set; } 
+            public int? PercentageCompleted { get; set; }
 
-            public int? InitiativeId { get; set; } 
+            public string? Notes { get; set; }
 
-            //public string NewInitiativeName { get; set; }
+            public DateTime? DueDate { get; set; }
 
-            //public int? ProjectId { get; set; }
+            public DateTime? StartDate { get; set; }
 
-            public int? AssignedToId { get; set; } 
+            public DateTime? StartedDate { get; set; }
+
+            public DateTime? CompletedDate { get; set; }
+
+            public int? AssignedToId { get; set; }
+
+            public int? CreatedById { get; set; } 
+
+            public int? ModifiedById { get; set; } 
+
+            public int? InitiativeId { get; set; }
 
         }
 

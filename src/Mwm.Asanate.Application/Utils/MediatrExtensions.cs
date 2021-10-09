@@ -8,11 +8,21 @@ using MediatR;
 using System.Threading;
 using FluentResults;
 using Mwm.Asanate.Domain;
+using Mwm.Asanate.Application.Tsks.Commands;
+using MediatR.Pipeline;
+using Mwm.Asanate.Application.Shared.Commands;
 
 namespace Mwm.Asanate.Application.Utils {
     public static class MediatrExtensions {
 
         public static IServiceCollection AddMediatR(this IServiceCollection services, bool includeAsana = false) {
+
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            //services.AddTransient(typeof(IRequestPostProcessor<IEntityCommand<>, Result>), typeof(EntityCommandPostProcessor<>));
+
+            services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(EntityCommandPostProcessor<,>));
+
+
             var asms = new List<System.Reflection.Assembly>();
 
             asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.Asanate.Application"));
@@ -23,22 +33,6 @@ namespace Mwm.Asanate.Application.Utils {
             services.AddMediatR(asms.ToArray());
             return services;
         }
-
-    }
-
-    public abstract class AsyncRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse> {
-        async Task<TResponse> IRequestHandler<TRequest, TResponse>.Handle(TRequest request, CancellationToken cancellationToken) {
-            var response = await Handle(request, cancellationToken);
-            return response;
-        }
-
-        /// <summary>
-        /// Override in a derived class for the handler logic
-        /// </summary>
-        /// <param name="request">Request</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>Response</returns>
-        protected abstract Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken);
 
     }
 
