@@ -47,6 +47,19 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
         }
 
         [Fact]
+        public async Task AddSimpleTskToTriageWithoutName() {
+            var name = $"SimpleTsk_{DateTime.Now}";
+            var command = new TskAdd.Command {
+            };
+
+            var result = await _mediator.Send(command);
+            Assert.True(result.IsFailed, $"AddSimpleTskToTriageWithoutName succeeded, loser: {result}");
+            Assert.True(result.HasError(e => e.Message == "Tsk Name can't be null."));
+
+            _output.WriteLine(result.ToString());
+        }
+
+        [Fact]
         public async Task AddComplexTskToTriage() {
 
             var command = new TskAdd.Command {
@@ -82,38 +95,38 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             _output.WriteLine(result.ToString());
         }
 
-        [Fact(Skip ="No longer creating Initiative in this manor")]
-        public async Task AddSimpleTskToNewInitiativeInExistingProject() {
+        //[Fact(Skip ="No longer creating Initiative in this manor")]
+        //public async Task AddSimpleTskToNewInitiativeInExistingProject() {
 
-            var command = new TskAdd.Command {
-                Name = $"SimpleTsk_{DateTime.Now}",
-                Status = Status.Open,
-                Notes = "Notes and notes and notes",
-                //ProjectId = 8,
-                //NewInitiativeName = $"TestInitiative_{DateTime.Now}"
-            };
+        //    var command = new TskAdd.Command {
+        //        Name = $"SimpleTsk_{DateTime.Now}",
+        //        Status = Status.Open,
+        //        Notes = "Notes and notes and notes",
+        //        //ProjectId = 8,
+        //        //NewInitiativeName = $"TestInitiative_{DateTime.Now}"
+        //    };
 
-            var result = await _mediator.Send(command);
+        //    var result = await _mediator.Send(command);
 
-            Assert.True(result.IsSuccess, $"AddSimpleTskToNewInitiativeInExistingProject failed: {result}");
+        //    Assert.True(result.IsSuccess, $"AddSimpleTskToNewInitiativeInExistingProject failed: {result}");
 
-            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Action == ResultAction.Add));
-            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
-            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Status == command.Status));
-            Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Notes == command.Notes));
+        //    Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Action == ResultAction.Add));
+        //    Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Name == command.Name));
+        //    Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Status == command.Status));
+        //    Assert.True(result.HasSuccess<EntitySuccess<Tsk>>(t => t.Entity.Notes == command.Notes));
 
-            //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Add));
-            //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == command.NewInitiativeName &&
-            //                                                              t.Entity.ProjectId == command.ProjectId));
+        //    //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Add));
+        //    //Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == command.NewInitiativeName &&
+        //    //                                                              t.Entity.ProjectId == command.ProjectId));
 
-            var tsk = _databaseContext.Tsks.Include(t => t.Initiative.Project).SingleOrDefault(t => t.Id == result.GetSuccess<Tsk>().Entity.Id);
-            Assert.Equal(command.Name, tsk.Name);
-            //Assert.Equal(command.NewInitiativeName, tsk.Initiative.Name);
-            //Assert.Equal(command.ProjectId, tsk.Initiative.ProjectId);
-            //Assert.Equal(command.ProjectId, tsk.Initiative.Project.Id);
+        //    var tsk = _databaseContext.Tsks.Include(t => t.Initiative.Project).SingleOrDefault(t => t.Id == result.GetSuccess<Tsk>().Entity.Id);
+        //    Assert.Equal(command.Name, tsk.Name);
+        //    //Assert.Equal(command.NewInitiativeName, tsk.Initiative.Name);
+        //    //Assert.Equal(command.ProjectId, tsk.Initiative.ProjectId);
+        //    //Assert.Equal(command.ProjectId, tsk.Initiative.Project.Id);
 
-            _output.WriteLine(result.ToString());
-        }
+        //    _output.WriteLine(result.ToString());
+        //}
 
         [Fact]
         public async Task AddSimpleTskToExistingInitiative() {
