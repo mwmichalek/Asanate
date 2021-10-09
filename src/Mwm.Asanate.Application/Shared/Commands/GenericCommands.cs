@@ -13,7 +13,7 @@ namespace Mwm.Asanate.Application.Shared.Commands {
 
     public interface IEntityCommand<TEntity> : ICommand where TEntity : INamedEntity { }
 
-    public interface IPostEntityCommand<TEntity> : IEntityCommand<TEntity>, IRequest<Result> where TEntity : INamedEntity { }
+    public interface IPostEntityCommand<TEntity> : IEntityCommand<TEntity>, IRequest<Result<int>> where TEntity : INamedEntity { }
 
     public interface IAddEntityCommand<TEntity> : IPostEntityCommand<TEntity> where TEntity : INamedEntity { }
 

@@ -42,7 +42,7 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
 
         }
 
-        public class Handler : IRequestHandler<Command, Result> {
+        public class Handler : IRequestHandler<Command, Result<int>> {
 
             private ILogger<Handler> _logger;
 
@@ -59,9 +59,8 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
             }
 
 
-            public async Task<Result> Handle(Command command, CancellationToken cancellationToken) {
-                var createInitiativeResult = await CreateInitiative(command);
-                return createInitiativeResult.ToResult();
+            public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken) {
+                return await CreateInitiative(command);
             }
 
             private async Task<Result<int>> CreateInitiative(Command command) {

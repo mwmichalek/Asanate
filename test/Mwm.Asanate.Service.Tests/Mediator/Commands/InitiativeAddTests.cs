@@ -42,7 +42,7 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
             Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Action == ResultAction.Add));
             Assert.True(result.HasSuccess<EntitySuccess<Initiative>>(t => t.Entity.Name == command.Name));
 
-            var initiative = _databaseContext.Initiatives.Find(result.GetSuccess<Initiative>().Entity.Id);
+            var initiative = _databaseContext.Initiatives.Find(result.Value);
             Assert.Equal(command.Name, initiative.Name);
             Assert.Equal(command.ProjectId, initiative.ProjectId);
 

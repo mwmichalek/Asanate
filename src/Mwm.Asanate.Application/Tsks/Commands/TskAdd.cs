@@ -126,7 +126,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
         }
 
-        public class Handler : IRequestHandler<Command, Result> {
+        public class Handler : IRequestHandler<Command, Result<int>> {
 
             private ILogger<Handler> _logger;
 
@@ -144,7 +144,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 _tskRepository = tskRepository;
             }
 
-            public async Task<Result> Handle(Command command, CancellationToken cancellationToken) {
+            public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken) {
 
                 if (string.IsNullOrEmpty(command.Name))
                     return Result.Fail("Tsk Name can't be null.");
@@ -154,10 +154,12 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 if (initiativeResult.IsFailed)
                     return initiativeResult.ToResult();
                 command.InitiativeId = initiativeResult.Value;
+                var initiativeSuccess = initiativeResult.Successes.FirstOrDefault();
 
                 var tskResult = await CreateTsk(command);
+                tskResult.Successes.Add(initiativeSuccess);
 
-                return Result.Merge(initiativeResult.ToResult(), tskResult.ToResult());
+                return tskResult;
             }
 
             private async Task<Result<int>> FindOrCreateInitiative(Command command) {
@@ -169,7 +171,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                     } else {
                         // Default "Generic" - "Triage"
                         var initiative = await _initiativeRepository.SingleOrDefaultAsync(i => i.Name == Initiative.DefaultInitiativeName &&
-                                                                                             i.Project.Name == Project.DefaultProjectName);
+                                                                                               i.Project.Name == Project.DefaultProjectName);
                         _logger.LogInformation($"Initiative Found: {initiative.Name}");
                         return Result.Ok(initiative.Id).WithSuccess(initiative.ToSuccess(ResultAction.Find));
                     }
