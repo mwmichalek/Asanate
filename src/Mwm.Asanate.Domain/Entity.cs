@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Domain {
@@ -13,7 +14,7 @@ namespace Mwm.Asanate.Domain {
 
         public string? Gid { get; set; }
 
-        public DateTime? ModifiedDate { get; }
+        
     }
 
     public class Entity : IEntity {
@@ -23,10 +24,7 @@ namespace Mwm.Asanate.Domain {
 
         public string? Gid { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
+        
     }
-
-
-
 
 }

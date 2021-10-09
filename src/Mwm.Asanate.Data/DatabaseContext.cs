@@ -50,7 +50,7 @@ namespace Mwm.Asanate.Data {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new TskConfiguration());
         }
 
         public void EnsureCreated() {
@@ -66,10 +66,9 @@ namespace Mwm.Asanate.Data {
         }
     }
 
-    public class ProjectConfiguration : IEntityTypeConfiguration<Project> {
-        public void Configure(EntityTypeBuilder<Project> builder) {
-            //builder.HasKey(m => m.Id);
-            //builder.Property(m => m.Id).ValueGeneratedNever();
+    public class TskConfiguration : IEntityTypeConfiguration<Tsk> {
+        public void Configure(EntityTypeBuilder<Tsk> builder) {
+            //builder.Property<User>("C".WithMany().IsRequired().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

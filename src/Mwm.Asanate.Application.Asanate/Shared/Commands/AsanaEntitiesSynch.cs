@@ -88,7 +88,6 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             _userRepository.Add(new User {
                                 Name = asanaUser.Name,
                                 Gid = asanaUser.Gid,
-                                ModifiedDate = asanaUser.ModifiedAt,
                                 FirstName = firstAndLast[0],
                                 LastName = firstAndLast[1]
                             });
@@ -98,7 +97,6 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             existingUser.Name = asanaUser.Name;
                             existingUser.FirstName = firstAndLast[0];
                             existingUser.LastName = firstAndLast[1];
-                            existingUser.ModifiedDate = asanaUser.ModifiedAt;
                             requiresSaving = true;
                         }
                     }
@@ -141,8 +139,7 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             _logger.LogDebug($"Adding Project: {asanaProject.Name}");
                             var newProject = new Project {
                                 Name = asanaProject.Name,
-                                Gid = asanaProject.Gid,
-                                ModifiedDate = asanaProject.ModifiedAt,                                
+                                Gid = asanaProject.Gid,                                
                                 Company = _companyRepository.GetByName(asanaProject.Company),
                             };
                             newProject.Initiatives.Add(new Initiative {
@@ -154,7 +151,6 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             _logger.LogDebug($"Updating Project: {asanaProject.Name}");
                             existingProject.Name = asanaProject.Name;
                             existingProject.Color = asanaProject.Color;
-                            existingProject.ModifiedDate = asanaProject.ModifiedAt;
                             requiresSaving = true;
                         }
                     }
@@ -187,6 +183,7 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             existingInitiative = new Initiative {
                                 Name = asanaTsk.SubProjectName,
                                 Project = existingProject
+
                             };
                             _initiativeRepository.Add(existingInitiative);
                             requiresSaving = true;
@@ -204,12 +201,12 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                                 Notes = asanaTsk.Notes,
                                 CompletedDate = asanaTsk.CompletedAt.ToDateTime(),
                                 IsArchived = asanaTsk.IsCompleted,
-                                CreatedDate = asanaTsk.CreatedAt.ToDateTime(),
+                                CreatedDate = asanaTsk.CreatedAt.ToDateTime().Value,
                                 DueDate = asanaTsk.CreatedAt.ToDateTime(),
                                 StartedDate = asanaTsk.StartedOn.ToDateTime(),
                                 Initiative = existingInitiative,
                                 AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name),
-                                ModifiedDate = asanaTsk.ModifiedAt
+                                ModifiedDate = asanaTsk.ModifiedAt.Value
                             });
                             requiresSaving = true;
                         } else {
@@ -219,12 +216,12 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             existingTsk.Notes = asanaTsk.Notes;
                             existingTsk.CompletedDate = asanaTsk.CompletedAt.ToDateTime();
                             existingTsk.IsArchived = asanaTsk.IsCompleted;
-                            existingTsk.CreatedDate = asanaTsk.CreatedAt.ToDateTime();
+                            existingTsk.CreatedDate = asanaTsk.CreatedAt.ToDateTime().Value;
                             existingTsk.DueDate = asanaTsk.CreatedAt.ToDateTime();
                             existingTsk.StartedDate = asanaTsk.StartedOn.ToDateTime();
                             existingTsk.Initiative = existingInitiative;
                             existingTsk.AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name);
-                            existingTsk.ModifiedDate = asanaTsk.ModifiedAt;
+                            existingTsk.ModifiedDate = asanaTsk.ModifiedAt.Value;
                             requiresSaving = true;
                         }
 
