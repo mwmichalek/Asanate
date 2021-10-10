@@ -1,31 +1,20 @@
-﻿using FluentResults;
-using MediatR;
-using MediatR.Pipeline;
-using Microsoft.Extensions.Logging;
-using Mwm.Asanate.Application.Interfaces.Persistance;
-using Mwm.Asanate.Application.Shared.Commands;
-using Mwm.Asanate.Application.Shared.Workflows;
-using Mwm.Asanate.Application.Utils;
+﻿using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Mwm.Asanate.Application.Tsks.Commands {
-
-    public partial class TskAdd {
-
-        public class Command : IAddEntityCommand<Tsk> {
+    public partial class TskUpdate {
+        public class Command : IUpdateEntityCommand<Tsk> {
 
             public string Name { get; set; }
 
-            public string? ExternalId { get; set; } 
+            public string? ExternalId { get; set; }
 
-            public Status Status { get; set; } 
+            public Status Status { get; set; }
 
             public bool? IsArchived { get; set; }
 
@@ -33,7 +22,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public int? DurationEstimate { get; set; }
 
-            public int? DurationCompleted { get; set; }
+            public int? DuractionCompleted { get; set; }
 
             public int? PercentageCompleted { get; set; }
 
@@ -47,11 +36,11 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public DateTime? CompletedDate { get; set; }
 
-            public int? AssignedToId { get; set; } = User.MeId;
+            public int? AssignedToId { get; set; }
 
-            public int? CreatedById { get; set; } = User.MeId;
+            public int? CreatedById { get; set; }
 
-            public int? ModifiedById { get; set; } = User.MeId;
+            public int? ModifiedById { get; set; }
 
             public int? InitiativeId { get; set; }
 

@@ -63,12 +63,17 @@ namespace Mwm.Asanate.Service.Tests.Mediator.Commands {
 
             var command = new TskAdd.Command {
                 Name = $"ComplexTsk_{DateTime.Now}",
+                ExternalId = Guid.NewGuid().ToString(),
                 Status = Status.Done,
+                IsArchived = false,
+                IsCompleted = false,
+                DurationEstimate = 3,
+                DurationCompleted = 1,
                 Notes = "Notes and notes and notes",
-                StartedDate = DateTime.Today.AddDays(-2),
                 DueDate = DateTime.Today.AddDays(5),
-                CompletedDate = DateTime.Today.AddDays(3),
-                IsArchived = true,
+                StartDate = DateTime.Today.AddDays(-10),
+                StartedDate = DateTime.Today.AddDays(-2),
+                CompletedDate = DateTime.Today.AddDays(3)
             };
 
             var result = await _mediator.Send(command);

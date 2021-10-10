@@ -21,11 +21,12 @@ namespace Mwm.Asanate.Domain {
 
         public int? DurationEstimate { get; set; }
 
-        public int? DuractionCompleted { get; set; }
+        public int? DurationCompleted { get; set; }
 
-        public int PercentageCompleted { get; set; }
 
         public string Notes { get; set; }
+
+        
 
         public DateTime? DueDate { get; set; }
 
@@ -47,6 +48,7 @@ namespace Mwm.Asanate.Domain {
 
         public int? CreatedById { get; set; } = User.MeId;
 
+
         public DateTime ModifiedDate { get; set; } = DateTime.Now;
 
         [JsonIgnore]
@@ -58,6 +60,17 @@ namespace Mwm.Asanate.Domain {
         public Initiative Initiative { get; set; }
 
         public int InitiativeId { get; set; }
+
+        [JsonIgnore]
+        public int PercentageCompleted {
+            get {
+                if (IsCompleted) return 100;
+                if (DurationEstimate.HasValue && DurationCompleted.HasValue) {
+                    return (DurationEstimate.Value / DurationCompleted.Value) * 100;
+                }
+                return 0;
+            }
+        }
 
         [JsonIgnore]
         public string ProjectName => Initiative?.Project?.Name ?? string.Empty;

@@ -1,10 +1,8 @@
 ﻿using FluentResults;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Shared.Commands;
-using Mwm.Asanate.Application.Shared.Workflows;
 using Mwm.Asanate.Application.Utils;
 using Mwm.Asanate.Domain;
 using System;
@@ -14,10 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Mwm.Asanate.Application.Tsks.Commands {
-
-    public partial class TskAdd {
+    public partial class TskUpdate {
 
         public class Handler : IRequestHandler<Command, Result<int>> {
 
@@ -49,7 +45,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 command.InitiativeId = initiativeResult.Value;
                 var initiativeSuccess = initiativeResult.Successes.FirstOrDefault();
 
-                var tskResult = await CreateTsk(command);
+                var tskResult = await UpdateTsk(command);
                 tskResult.Successes.Add(initiativeSuccess);
 
                 return tskResult;
@@ -74,31 +70,21 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 }
             }
 
-
-            private async Task<Result<int>> CreateTsk(Command command) {
+            
+            private async Task<Result<int>> UpdateTsk(Command command) {
                 try {
                     var tsk = new Tsk {
                         Name = command.Name,
                         ExternalId = command.ExternalId,
-                        Status = command.Status,
-                        IsArchived = command.IsArchived.HasValue ? command.IsArchived.Value : false,
-                        IsCompleted = command.IsCompleted.HasValue ? command.IsCompleted.Value : false,
-                        DurationEstimate = command.DurationEstimate,
-                        DurationCompleted = command.DurationCompleted,
                         Notes = command.Notes,
-                        
-                        DueDate = command.DueDate,
-                        StartDate = command.StartDate,
-                        StartedDate = command.StartedDate,
                         CompletedDate = command.CompletedDate,
-                        AssignedToId = command.AssignedToId,
-
                         CreatedDate = DateTime.Now,
-                        CreatedById = command.CreatedById,
                         ModifiedDate = DateTime.Now,
-                        ModifiedById = command.ModifiedById,
-
-                        InitiativeId = command.InitiativeId.Value
+                        DueDate = command.DueDate,
+                        StartedDate = command.StartedDate,
+                        Status = command.Status,
+                        InitiativeId = command.InitiativeId.Value,
+                        AssignedToId = User.MeId
                     };
                     if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;
                     if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;
@@ -112,5 +98,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 }
             }
         }
+
+        
     }
 }
