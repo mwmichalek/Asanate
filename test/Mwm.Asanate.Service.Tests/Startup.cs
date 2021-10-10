@@ -27,7 +27,7 @@ namespace Mwm.Asanate.Service.Tests {
         }
 
         public void Configure(IServiceProvider provider) {
-            Task.WaitAll(provider.ConfigureAsanaServices());
+            //Task.WaitAll(provider.ConfigureAsanaServices());
         }
 
     }

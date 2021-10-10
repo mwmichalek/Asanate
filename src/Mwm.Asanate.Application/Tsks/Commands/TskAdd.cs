@@ -4,6 +4,7 @@ using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Shared.Commands;
+using Mwm.Asanate.Application.Shared.Workflows;
 using Mwm.Asanate.Application.Utils;
 using Mwm.Asanate.Domain;
 using System;
@@ -56,6 +57,12 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
         }
     }
 
+    public class TestListener : INotificationHandler<EntityCommandSuccessEvent<Tsk, IAddEntityCommand<Tsk>>> {
+        public Task Handle(EntityCommandSuccessEvent<Tsk, IAddEntityCommand<Tsk>> notification, CancellationToken cancellationToken) {
+            throw new NotImplementedException();
+        }
+    }
+
 
     //public class Success<IAddEntityCommand<Tsk>> where TEntity : INamedEntity {
     //}
@@ -65,22 +72,22 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
 
 
-//    public class Pong2 : INotificationHandler<Ping> {
-//        public Task Handle(Ping notification, CancellationToken cancellationToken) {
-//            Debug.WriteLine("Pong 2");
-//            return Task.CompletedTask;
-//        }
-//    }
-//    Finally, publish your message via the mediator:
+    //    public class Pong2 : INotificationHandler<Ping> {
+    //        public Task Handle(Ping notification, CancellationToken cancellationToken) {
+    //            Debug.WriteLine("Pong 2");
+    //            return Task.CompletedTask;
+    //        }
+    //    }
+    //    Finally, publish your message via the mediator:
 
-//await mediator.Publish(new Ping());
+    //await mediator.Publish(new Ping());
 
 
-//    Open generics
-//If you have an open generic not listed above, you'll need to register it explicitly. For example, if you have an open generic request handler, register the open generic types explicitly:
+    //    Open generics
+    //If you have an open generic not listed above, you'll need to register it explicitly. For example, if you have an open generic request handler, register the open generic types explicitly:
 
-//services.AddTransient(typeof(IRequestHandler<,>), typeof(GenericHandlerBase<,>));
-//This won't work with generic constraints, so you're better off creating an abstract base class and concrete closed generic classes that fill in the right types.
+    //services.AddTransient(typeof(IRequestHandler<,>), typeof(GenericHandlerBase<,>));
+    //This won't work with generic constraints, so you're better off creating an abstract base class and concrete closed generic classes that fill in the right types.
 
 
 

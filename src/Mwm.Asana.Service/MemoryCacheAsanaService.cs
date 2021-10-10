@@ -37,7 +37,7 @@ namespace Mwm.Asanate.Service {
 
         public override async Task<Result<List<TEntity>>> RetrieveAll(DateTime? modifiedSince = null) {
             if (entitiesLookup == null)
-                throw new ConfigurationErrorsException("AsanaService was never initialized!");
+                await Initialize();
 
             // Retreive mods since previous fetch.
             var updatedEntitiesResult = await base.RetrieveAll(previousFetchTime);

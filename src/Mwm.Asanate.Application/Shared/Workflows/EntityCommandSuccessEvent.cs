@@ -1,4 +1,5 @@
-﻿using Mwm.Asanate.Application.Shared.Commands;
+﻿using MediatR;
+using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Application.Shared.Workflows {
-    public class EntityCommandSuccessEvent<TEntity, IEntityCommand> where TEntity : INamedEntity {
+    public class EntityCommandSuccessEvent<TEntity, IEntityCommand> : INotification where TEntity : INamedEntity {
 
         public IEntityCommand<TEntity> Command { get; private set; }
 

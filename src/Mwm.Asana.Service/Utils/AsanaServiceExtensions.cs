@@ -14,16 +14,7 @@ namespace Mwm.Asana.Service.Utils {
             services.AddSingleton<IAsanaHttpClientFactory, AsanaHttpClientFactory>();
             services.AddSingleton<IAsanaService<AsanaTsk>, MemoryCacheAsanaService<AsanaTsk>>();
             services.AddSingleton<IAsanaService<AsanaProject>, MemoryCacheAsanaService<AsanaProject>>();
-
-            if (delayInit)
-                services.AddSingleton<IAsanaService<AsanaSection>>((serviceProvider) => {
-                    var httpClientFactory = serviceProvider.GetService<IAsanaHttpClientFactory>();
-                    var projectService = serviceProvider.GetService<IAsanaService<AsanaProject>>();
-                    return new SectionMemoryCacheAsanaService(httpClientFactory, projectService, true);
-                });
-            else
-                services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
-
+            services.AddSingleton<IAsanaService<AsanaSection>, SectionMemoryCacheAsanaService>();
             services.AddSingleton<IAsanaService<AsanaUser>, MemoryCacheAsanaService<AsanaUser>>();
 
             return services;
