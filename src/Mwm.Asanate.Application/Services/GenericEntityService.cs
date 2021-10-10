@@ -5,6 +5,7 @@ using Mwm.Asanate.Application.Interfaces.Persistance;
 using Mwm.Asanate.Application.Services;
 using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Application.Shared.Workflows;
+using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
@@ -47,11 +48,50 @@ namespace Mwm.Asanate.Application.Services {
             if (result.IsSuccess) {
                 var entity = _repository.Get(result.Value);
 
-                if (entity == null)
-                    await _mediator.Publish(new EntityCommandSuccessEvent<TEntity, IPostEntityCommand<TEntity>>(entity, command));
+                if (entity != null)
+                    await _mediator.Publish(new EntityCommandSuccessEvent<TEntity>(entity, command));
             }
 
             return result;
         }
     }
+
+    //public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> {
+    //    private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+
+    //    public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger) {
+    //        _logger = logger;
+    //    }
+
+    //    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next) {
+    //        _logger.LogInformation($">>>>>>>  {typeof(TRequest).Name}");
+    //        var response = await next();
+    //        _logger.LogInformation($"<<<<<<<<  {typeof(TResponse).Name}");
+
+    //        return response;
+    //    }
+    //}
+
+
+    //// https://github.com/jbogard/MediatR.Extensions.Microsoft.DependencyInjection
+
+    //public class EntityCommandPostProcessor<TRequest, TResult> : IRequestPostProcessor<TRequest, TResult> where TRequest : ICommand {
+
+    //    private IMediator _mediator;
+
+    //    public EntityCommandPostProcessor(IMediator mediator) {
+    //        _mediator = mediator;
+    //    }
+
+    //    public Task Process(TRequest command, TResult response, CancellationToken cancellationToken) {
+
+
+    //        if (command is TskAdd.Command tskAdd)
+    //            Console.WriteLine("NUTS!");
+    //        //_mediator.Send()
+
+
+    //        return Task.CompletedTask;
+    //    }
+    //}
 }

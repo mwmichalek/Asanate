@@ -9,6 +9,8 @@ namespace Mwm.Asanate.Application.Interfaces.Persistance {
     public interface IRepository<T> {
         IQueryable<T> GetAll();
 
+        Task<List<T>> WhereAsync(Expression<Func<T, bool>> pred);
+
         Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> pred);
 
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> pred);

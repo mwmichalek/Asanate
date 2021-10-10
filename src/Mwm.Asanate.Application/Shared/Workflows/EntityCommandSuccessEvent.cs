@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Application.Shared.Workflows {
-    public class EntityCommandSuccessEvent<TEntity, IEntityCommand> : INotification where TEntity : INamedEntity {
+    public class EntityCommandSuccessEvent<TEntity> : INotification where TEntity : INamedEntity {
 
         public IEntityCommand<TEntity> Command { get; private set; }
 
@@ -19,5 +19,17 @@ namespace Mwm.Asanate.Application.Shared.Workflows {
             Command = command;
         }
     }
+
+    //public class EntityCommandSuccessEvent<TEntity, IEntityCommand> : INotification where TEntity : INamedEntity {
+
+    //    public IEntityCommand<TEntity> Command { get; private set; }
+
+    //    public TEntity Entity { get; private set; }
+
+    //    public EntityCommandSuccessEvent(TEntity entity, IEntityCommand<TEntity> command) {
+    //        Entity = entity;
+    //        Command = command;
+    //    }
+    //}
 
 }

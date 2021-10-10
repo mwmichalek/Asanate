@@ -12,28 +12,34 @@ using Mwm.Asanate.Application.Tsks.Commands;
 using MediatR.Pipeline;
 using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Application.Services;
+using Mwm.Asanate.Application.Shared.Workflows;
 
 namespace Mwm.Asanate.Application.Utils {
     public static class MediatrExtensions {
 
         public static IServiceCollection AddMediatR(this IServiceCollection services, bool includeAsana = false) {
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            //services.AddTransient(typeof(IRequestPostProcessor<IEntityCommand<>, Result>), typeof(EntityCommandPostProcessor<>));
-            //services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(EntityCommandPostProcessor<,>));
+
 
             services.AddTransient(typeof(IEntityService<>), typeof(GenericEntityService<>));
 
             var asms = new List<System.Reflection.Assembly>();
 
             asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.Asanate.Application"));
-            if (includeAsana)
-                asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.Asanate.Application.Asanate"));
+            //if (includeAsana)
+            //    asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.Asanate.Application.Asanate"));
 
-            //var applicationAsm = typeof(MediatrExtensions).Assembly;
             services.AddMediatR(asms.ToArray());
+
             return services;
         }
 
     }
 
 }
+
+
+//services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+//services.AddTransient(typeof(IRequestPostProcessor<IEntityCommand<>, Result>), typeof(EntityCommandPostProcessor<>));
+//services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(EntityCommandPostProcessor<,>));
+//services.AddTransient(typeof(INotificationHandler<EntityCommandSuccessEvent<>>), )
+//services.AddTransient<INotificationHandler<EntityCommandSuccessEvent<Tsk, IAddEntityCommand<Tsk>>>, TestListener>();

@@ -20,6 +20,10 @@ namespace Mwm.Asanate.Persistance.Shared {
             return _database.Set<T>();
         }
 
+        public virtual Task<List<T>> WhereAsync(Expression<Func<T, bool>> pred) {
+            return _database.Set<T>().Where(pred).ToListAsync();
+        }
+
         public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> pred) {
             return _database.Set<T>().SingleOrDefaultAsync(pred);
         }
