@@ -11,17 +11,17 @@ using Mwm.Asanate.Domain;
 using Mwm.Asanate.Application.Tsks.Commands;
 using MediatR.Pipeline;
 using Mwm.Asanate.Application.Shared.Commands;
+using Mwm.Asanate.Application.Services;
 
 namespace Mwm.Asanate.Application.Utils {
     public static class MediatrExtensions {
 
         public static IServiceCollection AddMediatR(this IServiceCollection services, bool includeAsana = false) {
-
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             //services.AddTransient(typeof(IRequestPostProcessor<IEntityCommand<>, Result>), typeof(EntityCommandPostProcessor<>));
+            //services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(EntityCommandPostProcessor<,>));
 
-            services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(EntityCommandPostProcessor<,>));
-
+            services.AddTransient(typeof(IEntityService<>), typeof(GenericEntityService<>));
 
             var asms = new List<System.Reflection.Assembly>();
 

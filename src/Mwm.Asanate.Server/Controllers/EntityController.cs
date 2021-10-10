@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mwm.Asanate.Application.Interfaces.Persistance;
+using Mwm.Asanate.Application.Services;
 using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Application.Shared.Workflows;
 using Mwm.Asanate.Application.Tsks.Commands;
@@ -28,13 +29,13 @@ namespace Mwm.Asanate.Server.Controllers {
 
         protected readonly IRepository<TEntity> _repository;
         protected readonly ILogger<IEntityController<TEntity>> _logger;
-        protected readonly IMediator _mediator;
+        protected readonly IEntityService<TEntity> _entityService;
 
         public EntityController(ILogger<IEntityController<TEntity>> logger,
-                                IMediator mediator,
-                                IRepository<TEntity> repository) {
+                                IRepository<TEntity> repository,
+                                IEntityService<TEntity> entityService) {
             _repository = repository;
-            _mediator = mediator;
+            _entityService = entityService;
             _logger = logger;
         }
 
@@ -57,10 +58,7 @@ namespace Mwm.Asanate.Server.Controllers {
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add(TAddEntityCommand command) {
-            var result = await _mediator.Send(command);
-
-            // look up entity
-            //var success = new EntityCommandSuccess<TEntity, TAddEntityCommand>(result.Value, command);
+            var result = await _entityService.ExecuteAddCommand(command);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -69,7 +67,7 @@ namespace Mwm.Asanate.Server.Controllers {
 
         [HttpPost("Update")]
         public async Task<IActionResult> Update(TUpdateEntityCommand command) {
-            var result = await _mediator.Send(command);
+            var result = await _entityService.ExecuteUpdateCommand(command);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -78,7 +76,7 @@ namespace Mwm.Asanate.Server.Controllers {
 
         [HttpPost("Delete")]
         public async Task<IActionResult> Delete(TDeleteEntityCommand command) {
-            var result = await _mediator.Send(command);
+            var result = await _entityService.ExecuteDeleteCommand(command);
 
             if (result.IsSuccess)
                 return Ok(result);
@@ -93,7 +91,8 @@ namespace Mwm.Asanate.Server.Controllers {
                                                       UpdateNotSupportedEntityCommand<Project>,
                                                       DeleteNotSupportedEntityCommand<Project>> {
 
-        public ProjectController(ILogger<IEntityController<Project>> logger, IMediator mediator, IRepository<Project> repository) : base(logger, mediator, repository) { }
+        public ProjectController(ILogger<IEntityController<Project>> logger, IRepository<Project> repository, IEntityService<Project> entityService) 
+            : base(logger, repository, entityService) { }
 
     }
 
@@ -104,7 +103,8 @@ namespace Mwm.Asanate.Server.Controllers {
                                                       UpdateNotSupportedEntityCommand<Company>,
                                                       DeleteNotSupportedEntityCommand<Company>> {
 
-        public CompanyController(ILogger<IEntityController<Company>> logger, IMediator mediator, IRepository<Company> repository) : base(logger, mediator, repository) { }
+        public CompanyController(ILogger<IEntityController<Company>> logger, IRepository<Company> repository, IEntityService<Company> entityService)
+            : base(logger, repository, entityService) { }
 
     }
 
@@ -116,7 +116,8 @@ namespace Mwm.Asanate.Server.Controllers {
                                                          DeleteNotSupportedEntityCommand<Initiative>> {
 
 
-        public InitiativeController(ILogger<IEntityController<Initiative>> logger, IMediator mediator, IRepository<Initiative> repository) : base(logger, mediator, repository) { }
+        public InitiativeController(ILogger<IEntityController<Initiative>> logger, IRepository<Initiative> repository, IEntityService<Initiative> entityService) 
+            : base(logger, repository, entityService) { }
 
     }
 
@@ -127,7 +128,8 @@ namespace Mwm.Asanate.Server.Controllers {
                                                   UpdateNotSupportedEntityCommand<Tsk>,
                                                   DeleteNotSupportedEntityCommand<Tsk>> {
 
-        public TskController(ILogger<IEntityController<Tsk>> logger, IMediator mediator, IRepository<Tsk> repository) : base(logger, mediator, repository) { }
+        public TskController(ILogger<IEntityController<Tsk>> logger, IRepository<Tsk> repository, IEntityService<Tsk> entityService) 
+            : base(logger, repository, entityService) { }
 
     }
 }
