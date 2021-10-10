@@ -23,7 +23,6 @@ namespace Mwm.Asanate.Service.Tests {
             services.AddRepositories();
             services.AddAsanaServices(delayInit:true);
             services.AddMediatR(includeAsana:true);
-            services.AddMediatR();
         }
 
         public void Configure(IServiceProvider provider) {

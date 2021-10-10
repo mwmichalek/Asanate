@@ -25,8 +25,8 @@ namespace Mwm.Asanate.Application.Utils {
             var asms = new List<System.Reflection.Assembly>();
 
             asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.Asanate.Application"));
-            //if (includeAsana)
-            //    asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.Asanate.Application.Asanate"));
+            if (includeAsana)
+                asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.Asanate.Application.Asanate"));
 
             services.AddMediatR(asms.ToArray());
 

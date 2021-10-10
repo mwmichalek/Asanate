@@ -27,12 +27,13 @@ namespace Mwm.Asanate.Application.Initiatives.Workflows {
 
         public async Task Handle(EntityCommandSuccessEvent<Tsk> successEvent, CancellationToken cancellationToken) {
             var initiative = _initiativeRepository.Get(successEvent.Entity.InitiativeId);
-
-            _logger.LogInformation($"Updating progress for Initiate {successEvent.Entity.Name}!!!!!");
             var tsksFromThisInitiative = await _tskRepository.WhereAsync(t => t.InitiativeId == initiative.Id);
 
+            _logger.LogInformation($"Updating progress for Initiate: {initiative.Name}, Task Count: {tsksFromThisInitiative.Count}");
+            
+
             foreach (var tsk in tsksFromThisInitiative) {
-                _logger.LogInformation($"Task in Initiative: {tsk.Id} {tsk.Name}");
+                //_logger.LogInformation($"Task in Initiative: {tsk.Id} {tsk.Name}");
             }
         }
 
