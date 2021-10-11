@@ -22,7 +22,7 @@ namespace Mwm.Asanate.Application.Utils {
 
     public enum ResultAction {
         Add,
-        Edit,
+        Update,
         Delete,
         Find,
         Unknown

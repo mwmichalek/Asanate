@@ -34,14 +34,18 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
             }
 
             public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken) {
-
+                if (command.Id == 0)
+                    return Result.Fail("Id can't be zero.");
                 if (string.IsNullOrEmpty(command.Name))
                     return Result.Fail("Tsk Name can't be null.");
+                if (command.InitiativeId == null)
+                    return Result.Fail("Tsk updates require an InitiativeId");
 
                 var initiativeResult = await FindOrCreateInitiative(command);
 
                 if (initiativeResult.IsFailed)
                     return initiativeResult.ToResult();
+
                 command.InitiativeId = initiativeResult.Value;
                 var initiativeSuccess = initiativeResult.Successes.FirstOrDefault();
 
@@ -51,6 +55,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 return tskResult;
             }
 
+            //TODO:(MWM) Move this to a base class.
             private async Task<Result<int>> FindOrCreateInitiative(Command command) {
                 try {
                     if (command.InitiativeId.HasValue) {
@@ -73,29 +78,47 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
             
             private async Task<Result<int>> UpdateTsk(Command command) {
                 try {
-                    var tsk = new Tsk {
-                        Name = command.Name,
-                        ExternalId = command.ExternalId,
-                        Notes = command.Notes,
-                        CompletedDate = command.CompletedDate,
-                        CreatedDate = DateTime.Now,
-                        ModifiedDate = DateTime.Now,
-                        DueDate = command.DueDate,
-                        StartedDate = command.StartedDate,
-                        Status = command.Status,
-                        InitiativeId = command.InitiativeId.Value,
-                        AssignedToId = User.MeId
-                    };
-                    if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;
-                    if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;
-                    _tskRepository.Add(tsk);
+                    var tsk = _tskRepository.Get(command.Id);
+
+                    if (tsk == null)
+                        return Result.Fail(new Error($"Couldn't locate existing Tsk with Id:{command.Id}."));
+
+                    if (command.Name != null) tsk.Name = command.Name;
+                    if (command.ExternalId != null) tsk.ExternalId = command.ExternalId;
+                    //TODO:(MWM) Keep setting.
+
                     await _tskRepository.SaveAsync();
-                    _logger.LogInformation($"Tsk Added: {tsk.Name}");
-                    return Result.Ok(tsk.Id).WithSuccess(tsk.ToSuccess(ResultAction.Add));
+                    _logger.LogInformation($"Tsk Updated: {tsk.Name}");
+                    return Result.Ok(tsk.Id).WithSuccess(tsk.ToSuccess(ResultAction.Update));
                 } catch (Exception ex) {
                     _logger.LogError($"Tsk Addition Failure: {ex}");
-                    return Result.Fail(new Error("Unable to create Tsk").CausedBy(ex));
+                    return Result.Fail(new Error("Unable to update Tsk").CausedBy(ex));
                 }
+
+                //try {
+                //    var tsk = new Tsk {
+                //        Name = command.Name,
+                //        ExternalId = command.ExternalId,
+                //        Notes = command.Notes,
+                //        CompletedDate = command.CompletedDate,
+                //        CreatedDate = DateTime.Now,
+                //        ModifiedDate = DateTime.Now,
+                //        DueDate = command.DueDate,
+                //        StartedDate = command.StartedDate,
+                //        Status = command.Status,
+                //        InitiativeId = command.InitiativeId.Value,
+                //        AssignedToId = User.MeId
+                //    };
+                //    if (command.AssignedToId.HasValue) tsk.AssignedToId = command.AssignedToId.Value;
+                //    if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;
+                //    _tskRepository.Add(tsk);
+                //    await _tskRepository.SaveAsync();
+                //    _logger.LogInformation($"Tsk Added: {tsk.Name}");
+                //    return Result.Ok(tsk.Id).WithSuccess(tsk.ToSuccess(ResultAction.Add));
+                //} catch (Exception ex) {
+                //    _logger.LogError($"Tsk Addition Failure: {ex}");
+                //    return Result.Fail(new Error("Unable to create Tsk").CausedBy(ex));
+                //}
             }
         }
 

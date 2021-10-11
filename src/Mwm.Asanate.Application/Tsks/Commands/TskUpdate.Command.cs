@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Application.Tsks.Commands {
     public partial class TskUpdate {
-        public class Command : TskBase.Command, IUpdateEntityCommand<Tsk> { }
+        public class Command : TskBase.Command, IUpdateEntityCommand<Tsk> { 
+        
+            public int Id {  get; set; }        
+        
+        }
 
     }
 }
