@@ -17,7 +17,7 @@ namespace Mwm.Asanate.Service {
     public class FileCacheAsanaService<TEntity> : AsanaService<TEntity> where TEntity : IAsanaEntity {
 
         private const string CACHE_DIRECTORY = @"C:\Projects\MWM\Asanate\Mwm.Asanate\data";
-        private DateTime previousFetchTime;
+        //private DateTime previousFetchTime;
 
         private Dictionary<string, TEntity> entitiesLookup;
 

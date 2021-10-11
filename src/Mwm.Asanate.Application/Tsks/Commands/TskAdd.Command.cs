@@ -19,42 +19,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
     public partial class TskAdd {
 
-        public class Command : IAddEntityCommand<Tsk> {
+        public class Command : TskBase.Command, IAddEntityCommand<Tsk> {  }
 
-            public string Name { get; set; }
-
-            public string? ExternalId { get; set; } 
-
-            public Status Status { get; set; } 
-
-            public bool? IsArchived { get; set; }
-
-            public bool? IsCompleted { get; set; }
-
-            public int? DurationEstimate { get; set; }
-
-            public int? DurationCompleted { get; set; }
-
-            public int? PercentageCompleted { get; set; }
-
-            public string? Notes { get; set; }
-
-            public DateTime? DueDate { get; set; }
-
-            public DateTime? StartDate { get; set; }
-
-            public DateTime? StartedDate { get; set; }
-
-            public DateTime? CompletedDate { get; set; }
-
-            public int? AssignedToId { get; set; } = User.MeId;
-
-            public int? CreatedById { get; set; } = User.MeId;
-
-            public int? ModifiedById { get; set; } = User.MeId;
-
-            public int? InitiativeId { get; set; }
-
-        }
     }
 }
