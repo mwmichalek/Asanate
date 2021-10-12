@@ -23,7 +23,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public string Name { get; set; }
 
-            public string? ExternalId { get; set; } 
+            public string ExternalId { get; set; } 
 
             public Status Status { get; set; } 
 
@@ -35,9 +35,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public int? DurationCompleted { get; set; }
 
-            public int? PercentageCompleted { get; set; }
-
-            public string? Notes { get; set; }
+            public string Notes { get; set; }
 
             public DateTime? DueDate { get; set; }
 
