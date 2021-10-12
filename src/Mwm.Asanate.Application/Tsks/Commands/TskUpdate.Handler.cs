@@ -73,7 +73,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                     _logger.LogInformation($"Tsk Updated: {tsk.Name}");
                     return Result.Ok(tsk.Id).WithSuccess(tsk.ToSuccess(ResultAction.Update));
                 } catch (Exception ex) {
-                    _logger.LogError($"Tsk Addition Failure: {ex}");
+                    _logger.LogError($"Tsk Update Failure: {ex}");
                     return Result.Fail(new Error("Unable to update Tsk").CausedBy(ex));
                 }
 
