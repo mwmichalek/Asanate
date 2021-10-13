@@ -9,9 +9,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Store.Features.Tsks {
-    public class LoadCompanyEffect : LoadEffect<Company> {
+    public class CompanyLoadEffect : LoadEffect<Company> {
 
-        public LoadCompanyEffect(ILogger<LoadEffect<Company>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public CompanyLoadEffect(ILogger<LoadEffect<Company>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
 

@@ -126,8 +126,11 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         }
 
         public void DragStopHandler(DragEventArgs<TskModel> args) {
-            foreach (var tskModel in args.Data) 
+            foreach (var tskModel in args.Data) {
                 Logger.LogInformation($"Moved: {tskModel.Name}, Status: {tskModel.Status}");
+                //EntityService.
+
+            }
             
         }
 

@@ -20,5 +20,10 @@ namespace Mwm.Asanate.Client.Blazor.Services.State {
             _logger.LogInformation($"Issuing action to load { typeof(TEntity).Name}(s) ...");
             _dispatcher.Dispatch(new LoadAction<TEntity>());
         }
+
+        public void Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            _logger.LogInformation($"Issuing action to update { typeof(TEntity).Name}(s) ...");
+            _dispatcher.Dispatch(new UpdateAction<TEntity>(entity));
+        }
     }
 }

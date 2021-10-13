@@ -9,10 +9,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Store.Features.Tsks {
-    public class LoadTsksEffect : LoadEffect<Tsk> {
+    public class TskLoadEffect : LoadEffect<Tsk> {
 
-        public LoadTsksEffect(ILogger<LoadEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public TskLoadEffect(ILogger<LoadEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
+
+    //public class LoadTsksEffect : LoadEffect<Tsk> {
+
+    //    public LoadTsksEffect(ILogger<LoadEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+
+    //}
 
 }

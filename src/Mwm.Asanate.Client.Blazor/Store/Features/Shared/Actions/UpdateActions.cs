@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Actions {
     public class UpdateAction<TEntity> where TEntity : INamedEntity {
+
+        public TEntity Entity {  get; }
+
+        public UpdateAction(TEntity entity) => Entity = entity;
     }
 
     public class UpdateSuccessAction<TEntity> where TEntity : INamedEntity {
 
-        public UpdateSuccessAction(IEnumerable<TEntity> entities) =>
-            Entities = entities;
+        public UpdateSuccessAction(TEntity entity) => Entity = entity;
 
-        public IEnumerable<TEntity> Entities { get; }
+        public TEntity Entity { get; }
 
     }
 
