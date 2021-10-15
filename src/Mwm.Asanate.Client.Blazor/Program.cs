@@ -36,7 +36,7 @@ namespace Mwm.Asanate.Client.Blazor {
             });
 
             services.AddScoped<StateFacade>();
-            services.AddScoped<EntityStateService>();
+            services.AddScoped<EntityStateFacade>();
             services.AddScoped<IEntityStorage, WebApiEntityStorage>();
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];

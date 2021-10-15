@@ -11,7 +11,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Effects {
-    public abstract class UpdateEffect<TEntity> : Effect<LoadAction<TEntity>> where TEntity : INamedEntity {
+    public abstract class UpdateEffect<TEntity> : Effect<UpdateAction<TEntity>> where TEntity : INamedEntity {
 
         protected readonly ILogger<UpdateEffect<TEntity>> _logger;
         protected readonly IEntityStorage _entityStorage;
@@ -19,16 +19,14 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Effects {
         public UpdateEffect(ILogger<UpdateEffect<TEntity>> logger, IEntityStorage entityStorage) =>
             (_logger, _entityStorage) = (logger, entityStorage);
 
-        public override async Task HandleAsync(LoadAction<TEntity> action, IDispatcher dispatcher) {
+        public override async Task HandleAsync(UpdateAction<TEntity> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
             try {
                 _logger.LogInformation($"Updating {entityName} ...");
 
-                
-
-                //var response = await _entityStorage.<TEntity>();
+                var id = await _entityStorage.Update(action.Entity);
                 _logger.LogInformation($"Updated {entityName} successfully!");
-                dispatcher.Dispatch(new UpdateSuccessAction<TEntity>(0));
+                dispatcher.Dispatch(new UpdateSuccessAction<TEntity>(id));
             } catch (Exception e) {
                 _logger.LogError($"Error updating {entityName}(s), reason: {e}");
                 dispatcher.Dispatch(new UpdateFailureAction<TEntity>(e.Message));

@@ -15,10 +15,16 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Tsks {
 
     }
 
-    //public class LoadTsksEffect : LoadEffect<Tsk> {
+    public class TskAddEffect : AddEffect<Tsk> {
 
-    //    public LoadTsksEffect(ILogger<LoadEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public TskAddEffect(ILogger<AddEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
-    //}
+    }
+
+    public class TskUpdateEffect : UpdateEffect<Tsk> {
+
+        public TskUpdateEffect(ILogger<UpdateEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+
+    }
 
 }

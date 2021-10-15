@@ -37,7 +37,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public IState<EntityState<Project>> ProjectsState { get; set; }
 
         [Inject]
-        public EntityStateService EntityService { get; set; }
+        public EntityStateFacade EntityService { get; set; }
 
         private bool rebuildTskModels = false;
         private List<TskModel> tskModels = new List<TskModel>();

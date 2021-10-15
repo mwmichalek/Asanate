@@ -8,12 +8,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Blazor.Services.State {
-    public class EntityStateService {
+    public class EntityStateFacade {
 
-        private readonly ILogger<EntityStateService> _logger;
+        private readonly ILogger<EntityStateFacade> _logger;
         private readonly IDispatcher _dispatcher;
 
-        public EntityStateService(ILogger<EntityStateService> logger, IDispatcher dispatcher) =>
+        public EntityStateFacade(ILogger<EntityStateFacade> logger, IDispatcher dispatcher) =>
             (_logger, _dispatcher) = (logger, dispatcher);
 
         public void Load<TEntity>() where TEntity : INamedEntity {

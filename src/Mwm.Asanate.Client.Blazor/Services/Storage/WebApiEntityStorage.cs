@@ -13,7 +13,13 @@ namespace Mwm.Asanate.Client.Blazor.Services.Storage {
     public interface IEntityStorage {
 
         Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity;
-    
+
+        Task<int> Add<TEntity>(TEntity entity) where TEntity : INamedEntity;
+
+        Task<int> Update<TEntity>(TEntity entity) where TEntity : INamedEntity;
+
+        Task<int> Delete<TEntity>(TEntity entity) where TEntity : INamedEntity;
+
     }
     public class WebApiEntityStorage : IEntityStorage {
 
@@ -25,12 +31,34 @@ namespace Mwm.Asanate.Client.Blazor.Services.Storage {
             return await _httpClient.GetFromJsonAsync<List<TEntity>>($"/api/{typeof(TEntity).Name}");
         }
 
-        public async Task<TEntity> Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
+        public async Task<int> Add<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Add", entity);
+
+            if (response.IsSuccessStatusCode &&
+                int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
+                return id;
+            throw new Exception(response.ReasonPhrase);
+        }
+
+        public async Task<int> Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
             var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Update", entity);
 
-            // TODO(MWM) Check response!
-            return entity;
+            if (response.IsSuccessStatusCode &&
+                int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
+                return id;
+            throw new Exception(response.ReasonPhrase);
         }
+
+        public async Task<int> Delete<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Delete", entity);
+
+            if (response.IsSuccessStatusCode &&
+                int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
+                return id;
+            throw new Exception(response.ReasonPhrase);
+        }
+
+
 
     }
 }

@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Client.Blazor.Services.Storage {
 
     public class FileEntityStorage : IEntityStorage {
+        public Task<int> Add<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> Delete<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            throw new NotImplementedException();
+        }
 
         public async Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity {
 
@@ -19,5 +26,8 @@ namespace Mwm.Asanate.Client.Blazor.Services.Storage {
             return JsonConvert.DeserializeObject<List<TEntity>>(json);
         }
 
+        public Task<int> Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            throw new NotImplementedException();
+        }
     }
 }
