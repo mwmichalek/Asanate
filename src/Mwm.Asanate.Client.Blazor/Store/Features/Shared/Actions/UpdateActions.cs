@@ -14,9 +14,9 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Actions {
 
     public class UpdateSuccessAction<TEntity> where TEntity : INamedEntity {
 
-        public UpdateSuccessAction(TEntity entity) => Entity = entity;
+        public UpdateSuccessAction(int id) => Id = id;
 
-        public TEntity Entity { get; }
+        public int Id { get; }
 
     }
 

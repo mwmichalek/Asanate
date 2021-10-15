@@ -58,29 +58,38 @@ namespace Mwm.Asanate.Server.Controllers {
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add(TAddEntityCommand command) {
+            var sw = Stopwatch.StartNew();
             var result = await _entityService.ExecuteAddCommand(command);
 
-            if (result.IsSuccess)
-                return Ok(result);
-            return BadRequest(result);
+            if (result.IsSuccess) {
+                _logger.LogInformation($"Added {command} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
+                return Ok(result.Value);
+            }
+            return BadRequest(result.Errors.FirstOrDefault().Message);
         }
 
         [HttpPost("Update")]
         public async Task<IActionResult> Update(TUpdateEntityCommand command) {
+            var sw = Stopwatch.StartNew();
             var result = await _entityService.ExecuteUpdateCommand(command);
 
-            if (result.IsSuccess)
-                return Ok(result);
-            return BadRequest(result);
+            if (result.IsSuccess) {
+                _logger.LogInformation($"Updated {command} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
+                return Ok(result.Value);
+            }
+            return BadRequest(result.Errors.FirstOrDefault().Message);
         }
 
         [HttpPost("Delete")]
         public async Task<IActionResult> Delete(TDeleteEntityCommand command) {
+            var sw = Stopwatch.StartNew();
             var result = await _entityService.ExecuteDeleteCommand(command);
 
-            if (result.IsSuccess)
-                return Ok(result);
-            return BadRequest(result);
+            if (result.IsSuccess) {
+                _logger.LogInformation($"Deleted {command} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
+                return Ok(result.Value);
+            }
+            return BadRequest(result.Errors.FirstOrDefault().Message);
         }
     }
 
@@ -125,8 +134,8 @@ namespace Mwm.Asanate.Server.Controllers {
     [ApiController]
     public class TskController : EntityController<Tsk, 
                                                   TskAdd.Command,
-                                                  UpdateNotSupportedEntityCommand<Tsk>,
-                                                  DeleteNotSupportedEntityCommand<Tsk>> {
+                                                  TskUpdate.Command,
+                                                  TskDelete.Command> {
 
         public TskController(ILogger<IEntityController<Tsk>> logger, IRepository<Tsk> repository, IEntityService<Tsk> entityService) 
             : base(logger, repository, entityService) { }

@@ -53,8 +53,43 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
                 Status = Status.Open
             };
             var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Add", tsk);
+            
+            Assert.True(response.IsSuccessStatusCode);
+            var result = await response.Content.ReadAsStringAsync(); 
+            _output.WriteLine(result);
+            Assert.True(int.TryParse(result, out int intResult));
+            Assert.True(intResult > 0);
+        }
+
+        [Fact]
+        public async Task Update() {
+            var tsk = new TskUpdate.Command {
+                Name = "This is a test againmmmmm",
+                Status = Status.Done,
+                IsCompleted = true,
+                Id = 213
+            };
+            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Update", tsk);
 
             Assert.True(response.IsSuccessStatusCode);
+            var result = await response.Content.ReadAsStringAsync();
+            _output.WriteLine(result);
+            Assert.True(int.TryParse(result, out int intResult));
+            Assert.Equal(tsk.Id, intResult);
+        }
+
+        [Fact]
+        public async Task Delete() {
+            var tsk = new TskDelete.Command {
+                Id = 10
+            };
+            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Delete", tsk);
+
+            Assert.True(response.IsSuccessStatusCode);
+            var result = await response.Content.ReadAsStringAsync();
+            _output.WriteLine(result);
+            Assert.True(int.TryParse(result, out int intResult));
+            Assert.Equal(tsk.Id, intResult);
         }
     }
 }

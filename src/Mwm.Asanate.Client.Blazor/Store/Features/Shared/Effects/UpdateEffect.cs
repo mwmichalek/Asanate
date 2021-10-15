@@ -24,9 +24,11 @@ namespace Mwm.Asanate.Client.Blazor.Store.Features.Shared.Effects {
             try {
                 _logger.LogInformation($"Updating {entityName} ...");
 
-                var response = await _entityStorage.GetAll<TEntity>();
+                
+
+                //var response = await _entityStorage.<TEntity>();
                 _logger.LogInformation($"Updated {entityName} successfully!");
-                dispatcher.Dispatch(new LoadSuccessAction<TEntity>(response));
+                dispatcher.Dispatch(new UpdateSuccessAction<TEntity>(0));
             } catch (Exception e) {
                 _logger.LogError($"Error updating {entityName}(s), reason: {e}");
                 dispatcher.Dispatch(new UpdateFailureAction<TEntity>(e.Message));
