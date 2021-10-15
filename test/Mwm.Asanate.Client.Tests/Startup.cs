@@ -20,9 +20,6 @@ namespace Mwm.Asanate.Client.Tests {
             services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
             services.AddLogging();
             services.AddDatabaseContext(configuration);
-            services.AddRepositories();
-            services.AddAsanaServices(delayInit:true);
-            services.AddMediatR(includeAsana:true);
         }
 
         public void Configure(IServiceProvider provider) {

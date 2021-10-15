@@ -17,9 +17,8 @@ using Mwm.Asana.Service.Utils;
 using Mwm.Asanate.Application.Utils;
 using Fluxor;
 using System.Reflection;
-using Mwm.Asanate.Client.Blazor.Services;
-using Mwm.Asanate.Client.Blazor.Services.State;
-using Mwm.Asanate.Client.Blazor.Services.Storage;
+using Mwm.Asanate.Client.Service.Facades;
+using Mwm.Asanate.Client.Service.Storage;
 
 namespace Mwm.Asanate.Client.Blazor {
     public class Program {
@@ -35,7 +34,6 @@ namespace Mwm.Asanate.Client.Blazor {
                 options.UseReduxDevTools();
             });
 
-            services.AddScoped<StateFacade>();
             services.AddScoped<EntityStateFacade>();
             services.AddScoped<IEntityStorage, WebApiEntityStorage>();
 

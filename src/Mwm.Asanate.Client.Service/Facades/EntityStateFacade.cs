@@ -1,0 +1,29 @@
+﻿using Fluxor;
+using Microsoft.Extensions.Logging;
+using Mwm.Asanate.Client.Service.Store.Features.Shared.Actions;
+using Mwm.Asanate.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Mwm.Asanate.Client.Service.Facades {
+    public class EntityStateFacade {
+
+        private readonly ILogger<EntityStateFacade> _logger;
+        private readonly IDispatcher _dispatcher;
+
+        public EntityStateFacade(ILogger<EntityStateFacade> logger, IDispatcher dispatcher) =>
+            (_logger, _dispatcher) = (logger, dispatcher);
+
+        public void Load<TEntity>() where TEntity : INamedEntity {
+            _logger.LogInformation($"Issuing action to load { typeof(TEntity).Name}(s) ...");
+            _dispatcher.Dispatch(new LoadAction<TEntity>());
+        }
+
+        public void Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
+            _logger.LogInformation($"Issuing action to update { typeof(TEntity).Name}(s) ...");
+            _dispatcher.Dispatch(new UpdateAction<TEntity>(entity));
+        }
+    }
+}
