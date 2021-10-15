@@ -41,9 +41,12 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
 
         [Fact]
         public async Task Get() {
-            var response = await _httpClient.GetFromJsonAsync<Tsk>("/api/Tsk/Get/1");
+            var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault();
+
+            var response = await _httpClient.GetFromJsonAsync<Tsk>($"/api/Tsk/Get/{lastId}");
 
             Assert.NotNull(response);
+            Assert.Equal(lastId, response.Id);
         }
 
         [Fact]
@@ -63,11 +66,13 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
 
         [Fact]
         public async Task Update() {
+            var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault();
+
             var tsk = new TskUpdate.Command {
                 Name = "This is a test againmmmmm",
                 Status = Status.Done,
                 IsCompleted = true,
-                Id = 213
+                Id = lastId
             };
             var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Update", tsk);
 
@@ -80,8 +85,10 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
 
         [Fact]
         public async Task Delete() {
+            var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault(); 
+
             var tsk = new TskDelete.Command {
-                Id = 10
+                Id = lastId
             };
             var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Delete", tsk);
 
