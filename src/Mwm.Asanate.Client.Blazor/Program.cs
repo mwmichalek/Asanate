@@ -19,6 +19,7 @@ using Fluxor;
 using System.Reflection;
 using Mwm.Asanate.Client.Service.Facades;
 using Mwm.Asanate.Client.Service.Storage;
+using Mwm.Asanate.Client.Service.Utils;
 
 namespace Mwm.Asanate.Client.Blazor {
     public class Program {
@@ -29,27 +30,22 @@ namespace Mwm.Asanate.Client.Blazor {
             builder.RootComponents.Add<App>("#app");
             var services = builder.Services;
 
-            services.AddFluxor(options => {
-                options.ScanAssemblies(Assembly.GetExecutingAssembly());
-                options.UseReduxDevTools();
-            });
-
-            services.AddScoped<EntityStateFacade>();
-            services.AddScoped<IEntityStorage, WebApiEntityStorage>();
+            
 
             var myCloneApiUrl = builder.Configuration["MyClone:Api:Url"];
-            var connectionString = builder.Configuration["ConnectionStrings:DatabaseContext"];
+            //var connectionString = builder.Configuration["ConnectionStrings:DatabaseContext"];
             Console.WriteLine($"Middle Tier: [{myCloneApiUrl}]");
-            Console.WriteLine($"Database: [{connectionString}]");
+            //Console.WriteLine($"Database: [{connectionString}]");
 
             services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
 
             var configuration = services.AddConfigurationWithUserSecrets();
             services.AddLogging();
-            services.AddDatabaseContext(connectionString);
-            services.AddRepositories();
-            services.AddAsanaServices();
-            services.AddMediatR();
+            //services.AddDatabaseContext(connectionString);
+            //services.AddRepositories();
+            //services.AddAsanaServices();
+            //services.AddMediatR();
+            services.AddClientServices();
 
             builder.Services.AddSyncfusionBlazor();
 
