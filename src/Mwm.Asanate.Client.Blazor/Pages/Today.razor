@@ -3,42 +3,40 @@
 @using Mwm.Asanate.Domain; 
 @page "/"
 
-<h3 class="text-center mb-3">Today</h3>
-
-@using Syncfusion.Blazor.Kanban
-<div class="d-flex flex-row justify-content-center">
-    @if (IsLoading()) {
+<h3 class="text-center mb-3">Today
+     @if (IsLoading()) {
         <div class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
         </div>
-    } else if (HasErrors()) {
+     }
+</h3>
+
+@using Syncfusion.Blazor.Kanban
+<div class="d-flex flex-row justify-content-center">
+    @if (HasErrors()) {
         <span>Whoops! Looks like an issue occurred loading TskModels</span>
     } else if (HasValues()) {
-
-<SfKanban @ref="KanbanBoard" KeyField="StatusName" DataSource="@TskModels">
-    <KanbanColumns>
-        @foreach (var statusName in StatusNames) {
-            <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
-        }
-    </KanbanColumns>
-    <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
-    <KanbanDialogSettings>
-        <KanbanDialogSettingsFields>
-            <KanbanDialogSettingsField Text="Status" Key="Status" Type=DialogFieldType.DropDown></KanbanDialogSettingsField>
-            <KanbanDialogSettingsField Text="Notes" Key="Notes" Type=DialogFieldType.TextArea></KanbanDialogSettingsField>
-            <KanbanDialogSettingsField Text="ID" Key="Id" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-            <KanbanDialogSettingsField Text="Estimated Hours" Key="EstimatedHours" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-            <KanbanDialogSettingsField Text="Actual Hours" Key="ActualHours" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-        </KanbanDialogSettingsFields>
-    </KanbanDialogSettings>
-    <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
-    </KanbanSwimlaneSettings>
-    <KanbanEvents ActionComplete="@ActionCompleteHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-    <KanbanEvents DragStop="@DragStopHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-</SfKanban>
-
-
-
+        <SfKanban @ref="KanbanBoard" KeyField="StatusName" DataSource="@TskModels">
+            <KanbanColumns>
+                @foreach (var statusName in StatusNames) {
+                    <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
+                }
+            </KanbanColumns>
+            <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
+            <KanbanDialogSettings>
+                <KanbanDialogSettingsFields>
+                    <KanbanDialogSettingsField Text="Status" Key="Status" Type=DialogFieldType.DropDown></KanbanDialogSettingsField>
+                    <KanbanDialogSettingsField Text="Notes" Key="Notes" Type=DialogFieldType.TextArea></KanbanDialogSettingsField>
+                    <KanbanDialogSettingsField Text="ID" Key="Id" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
+                    <KanbanDialogSettingsField Text="Estimated Hours" Key="EstimatedHours" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
+                    <KanbanDialogSettingsField Text="Actual Hours" Key="ActualHours" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
+                </KanbanDialogSettingsFields>
+            </KanbanDialogSettings>
+            <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
+            </KanbanSwimlaneSettings>
+            <KanbanEvents ActionComplete="@ActionCompleteHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+            <KanbanEvents DragStop="@DragStopHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+        </SfKanban>
     }
 
 </div>
