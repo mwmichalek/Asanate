@@ -48,7 +48,7 @@ namespace Mwm.Asanate.Server.Controllers {
             return result;
         }
 
-        [HttpGet("Get/{id}")]
+        [HttpGet("{id}")]
         public async Task<TEntity> Get(int id) {
             var sw = Stopwatch.StartNew();
             var result = await _repository.GetAll().SingleOrDefaultAsync(e => e.Id == id);

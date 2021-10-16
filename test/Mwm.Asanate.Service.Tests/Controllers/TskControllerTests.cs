@@ -43,7 +43,7 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
         public async Task Get() {
             var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault();
 
-            var response = await _httpClient.GetFromJsonAsync<Tsk>($"/api/Tsk/Get/{lastId}");
+            var response = await _httpClient.GetFromJsonAsync<Tsk>($"/api/Tsk/{lastId}");
 
             Assert.NotNull(response);
             Assert.Equal(lastId, response.Id);

@@ -28,67 +28,63 @@ namespace Mwm.Asanate.Client.Tests.WebApiEntityService {
 
         [Fact]
         public async Task All() {
-
             var tsks = await _entityStorage.GetAll<Tsk>();
             Assert.NotNull(tsks);
-            //Assert.True(response.Count > 0);
+            Assert.True(tsks.Count > 0);
+        }
+
+        [Fact]
+        public async Task Get() {
+            var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault();
+            
+            var tsk = await _entityStorage.Get<Tsk>(lastId);
+            Assert.NotNull(tsk);
+            Assert.Equal(lastId, tsk.Id);
         }
 
         [Fact]
         public async Task Add() {
-
             var tskCommand = new TskAdd.Command {
                 Name = "This is a test",
                 Status = Status.Open
             };
 
             var id = await _entityStorage.Add<Tsk, TskAdd.Command>(tskCommand);
-
             Assert.True(id > 0);
 
-
-            //var tsk = new TskAdd.Command {
-            //    Name = "This is a test",
-            //    Status = Status.Open
-            //};
-            //var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Add", tsk);
-
-            //Assert.True(response.IsSuccessStatusCode);
-            //var result = await response.Content.ReadAsStringAsync();
-            //_output.WriteLine(result);
-            //Assert.True(int.TryParse(result, out int intResult));
-            //Assert.True(intResult > 0);
+            var tsk = _databaseContext.Set<Tsk>().SingleOrDefault(t => t.Id == id);
+            Assert.Equal(tskCommand.Name, tsk.Name);
+            Assert.Equal(tskCommand.Status, tsk.Status);
         }
 
         [Fact]
         public async Task Update() {
-            //var tsk = new TskUpdate.Command {
-            //    Name = "This is a test againmmmmm",
-            //    Status = Status.Done,
-            //    IsCompleted = true,
-            //    Id = 213
-            //};
-            //var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Update", tsk);
+            var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault();
 
-            //Assert.True(response.IsSuccessStatusCode);
-            //var result = await response.Content.ReadAsStringAsync();
-            //_output.WriteLine(result);
-            //Assert.True(int.TryParse(result, out int intResult));
-            //Assert.Equal(tsk.Id, intResult);
+            var tskCommand = new TskUpdate.Command {
+                Name = "This is a test againmmmmm",
+                Status = Status.Done,
+                IsCompleted = true,
+                Id = lastId
+            };
+
+            var id = await _entityStorage.Update<Tsk, TskUpdate.Command>(tskCommand);
+            var tsk = _databaseContext.Set<Tsk>().SingleOrDefault(t => t.Id == id);
+            Assert.Equal(tskCommand.Name, tsk.Name);
+            Assert.Equal(tskCommand.Status, tsk.Status);
         }
 
         [Fact]
         public async Task Delete() {
-            //var tsk = new TskDelete.Command {
-            //    Id = 10
-            //};
-            //var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Delete", tsk);
+            var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault();
 
-            //Assert.True(response.IsSuccessStatusCode);
-            //var result = await response.Content.ReadAsStringAsync();
-            //_output.WriteLine(result);
-            //Assert.True(int.TryParse(result, out int intResult));
-            //Assert.Equal(tsk.Id, intResult);
+            var tskCommand = new TskDelete.Command {
+                Id = lastId
+            };
+
+            var id = await _entityStorage.Delete<Tsk, TskDelete.Command>(tskCommand);
+            var tsk = _databaseContext.Set<Tsk>().SingleOrDefault(t => t.Id == id);
+            Assert.Null(tsk);
         }
     }
 }
