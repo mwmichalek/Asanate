@@ -7,6 +7,7 @@ using Mwm.Asanate.Client.Service.Facades;
 using Mwm.Asanate.Client.Service.Store.Features.Shared.Actions;
 using Mwm.Asanate.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.Asanate.Client.Service.Store.State.Shared;
+using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Data;
 using Mwm.Asanate.Domain;
 using Syncfusion.Blazor.Kanban;
@@ -36,7 +37,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public IState<EntityState<Project>> ProjectsState { get; set; }
 
         [Inject]
-        public EntityStateFacade EntityService { get; set; }
+        public EntityStateFacade EntityStateFacade { get; set; }
 
         private bool rebuildTskModels = false;
         private List<TskModel> tskModels = new List<TskModel>();
@@ -78,14 +79,14 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
 
         protected override void OnInitialized() {
-            if (!TsksState.HasValue()) 
-                EntityService.Load<Tsk>();
+            if (!TsksState.HasValue())
+                EntityStateFacade.Load<Tsk>();
             if (!InitiativesState.HasValue())
-                EntityService.Load<Initiative>();
+                EntityStateFacade.Load<Initiative>();
             if (!CompaniesState.HasValue())
-                EntityService.Load<Company>();
+                EntityStateFacade.Load<Company>();
             if (!ProjectsState.HasValue())
-                EntityService.Load<Project>();
+                EntityStateFacade.Load<Project>();
 
             //TODO:(MWM) Perhaps Make the Entities Lists a Lookup for fast access.
 
@@ -126,41 +127,19 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
         public void DragStopHandler(DragEventArgs<TskModel> args) {
             foreach (var tskModel in args.Data) {
-                Logger.LogInformation($"Moved: {tskModel.Name}, Status: {tskModel.Status}");
-                //EntityService.
+                try {
+                    var previousTskModel = args.PreviousCardData?.SingleOrDefault(c => c.Id == tskModel.Id);
 
+                    Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {previousTskModel?.Status} ToStatus: {tskModel.Status}");
+                    EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                        Id = tskModel.Id,
+                        Status = tskModel.Status
+                    });
+                } catch (Exception ex) {
+                    Logger.LogError($"Unable to update: {tskModel.Name}, {ex}");
+                }
             }
-            
         }
 
-        //
-        //// Summary:
-        ////     Returns the appropriate added data based on the action.
-        //public IEnumerable<TValue> AddedRecords { get; set; }
-        ////
-        //// Summary:
-        ////     Defines the cancel option for the action taking place.
-        //public bool Cancel { get; set; }
-        ////
-        //// Summary:
-        ////     Returns the appropriate changed data based on the action.
-        //public IEnumerable<TValue> ChangedRecords { get; set; }
-        ////
-        //// Summary:
-        ////     Returns the appropriate deleted data based on the action.
-        //public IEnumerable<TValue> DeletedRecords { get; set; }
-        ////
-        //// Summary:
-        ////     Specifies the name of the event.
-        //[Obsolete("This event argument is deprecated and will no longer be used.")]
-        //public string Name { get; set; }
-        ////
-        //// Summary:
-        ////     Returns the request type of the current action.
-        //public string RequestType { get; set; }
-        ////
-        //// Summary:
-        ////     Returns the failure exceptions.
-        //public Exception Exception { get; set; }
     }
 }
