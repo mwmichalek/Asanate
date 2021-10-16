@@ -62,6 +62,7 @@ namespace Mwm.Asanate.Server {
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mwm.Asanate.Server", Version = "v1" });
+                c.CustomSchemaIds(type => type.ToString());
             });
         }
 

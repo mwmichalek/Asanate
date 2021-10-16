@@ -128,9 +128,9 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public void DragStopHandler(DragEventArgs<TskModel> args) {
             foreach (var tskModel in args.Data) {
                 try {
-                    var previousTskModel = args.PreviousCardData?.SingleOrDefault(c => c.Id == tskModel.Id);
+                    var tsk = TsksState.FindById(tskModel.Id);
 
-                    Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {previousTskModel?.Status} ToStatus: {tskModel.Status}");
+                    Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
                     EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
                         Id = tskModel.Id,
                         Status = tskModel.Status
