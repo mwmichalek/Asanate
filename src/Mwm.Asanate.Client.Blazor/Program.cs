@@ -41,10 +41,6 @@ namespace Mwm.Asanate.Client.Blazor {
 
             var configuration = services.AddConfigurationWithUserSecrets();
             services.AddLogging();
-            //services.AddDatabaseContext(connectionString);
-            //services.AddRepositories();
-            //services.AddAsanaServices();
-            //services.AddMediatR();
             services.AddClientServices();
 
             builder.Services.AddSyncfusionBlazor();
