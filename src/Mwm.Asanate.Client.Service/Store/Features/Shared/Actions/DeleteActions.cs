@@ -1,19 +1,27 @@
-﻿using Mwm.Asanate.Domain;
+﻿using Mwm.Asanate.Application.Shared.Commands;
+using Mwm.Asanate.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Service.Store.Features.Shared.Actions {
-    public class DeleteAction<TEntity> where TEntity : INamedEntity {
+
+    public class DeleteAction<TEntity, TDeleteEntityCommand> where TEntity : INamedEntity
+                                                             where TDeleteEntityCommand : IDeleteEntityCommand<TEntity> {
+
+        public DeleteAction(TDeleteEntityCommand entityCommand) =>
+            EntityCommand = entityCommand;
+
+        public TDeleteEntityCommand EntityCommand { get; }
     }
 
     public class DeleteSuccessAction<TEntity> where TEntity : INamedEntity {
 
-        public DeleteSuccessAction(TEntity entity) =>
-            Entity = entity;
+        public DeleteSuccessAction(int id) =>
+            Id = id;
 
-        public TEntity Entity { get; }
+        public int Id { get; }
 
     }
 

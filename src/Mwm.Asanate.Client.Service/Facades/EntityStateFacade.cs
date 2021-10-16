@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.Extensions.Logging;
+using Mwm.Asanate.Application.Shared.Commands;
 using Mwm.Asanate.Client.Service.Store.Features.Shared.Actions;
 using Mwm.Asanate.Domain;
 using System;
@@ -21,9 +22,22 @@ namespace Mwm.Asanate.Client.Service.Facades {
             _dispatcher.Dispatch(new LoadAction<TEntity>());
         }
 
-        public void Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
+        public void Add<TEntity, TAddEntityCommand>(TAddEntityCommand entityCommand) where TEntity : INamedEntity
+                                                                                     where TAddEntityCommand : IAddEntityCommand<TEntity> {
+            _logger.LogInformation($"Issuing action to add { typeof(TEntity).Name}(s) ...");
+            _dispatcher.Dispatch(new AddAction<TEntity, TAddEntityCommand>(entityCommand));
+        }
+
+        public void Update<TEntity, TUpdateEntityCommand>(TUpdateEntityCommand entityCommand) where TEntity : INamedEntity
+                                                                                              where TUpdateEntityCommand : IUpdateEntityCommand<TEntity>{
             _logger.LogInformation($"Issuing action to update { typeof(TEntity).Name}(s) ...");
-            _dispatcher.Dispatch(new UpdateAction<TEntity>(entity));
+            _dispatcher.Dispatch(new UpdateAction<TEntity, TUpdateEntityCommand>(entityCommand));
+        }
+
+        public void Delete<TEntity, TDeleteEntityCommand>(TDeleteEntityCommand entityCommand) where TEntity : INamedEntity
+                                                                                              where TDeleteEntityCommand : IDeleteEntityCommand<TEntity> {
+            _logger.LogInformation($"Issuing action to delete { typeof(TEntity).Name}(s) ...");
+            _dispatcher.Dispatch(new DeleteAction<TEntity, TDeleteEntityCommand>(entityCommand));
         }
     }
 }

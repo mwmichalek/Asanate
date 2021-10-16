@@ -15,26 +15,21 @@ namespace Mwm.Asanate.Client.Service.Storage {
 
         Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity;
 
+        Task<TEntity> Get<TEntity>(int id) where TEntity : INamedEntity;
+
         Task<int> Add<TEntity, TAddEntityCommand>(TAddEntityCommand entityCommand) where TEntity : INamedEntity
                                                                                    where TAddEntityCommand : IAddEntityCommand<TEntity>;
 
-        Task<int> Update<TEntity>(TEntity entity) where TEntity : INamedEntity;
+        Task<int> Update<TEntity, TUpdateEntityCommand>(TUpdateEntityCommand entityCommand) where TEntity : INamedEntity
+                                                                                            where TUpdateEntityCommand : IUpdateEntityCommand<TEntity>;
 
-        Task<int> Delete<TEntity>(TEntity entity) where TEntity : INamedEntity;
+        Task<int> Delete<TEntity, TDeleteEntityCommand>(TDeleteEntityCommand entityCommand) where TEntity : INamedEntity
+                                                                                            where TDeleteEntityCommand : IDeleteEntityCommand<TEntity>;
+
 
     }
 
-
-    //public class EntityController<TEntity, TAddEntityCommand, TUpdateEntityCommand, TDeleteEntityCommand> :
-    //                      ControllerBase, IEntityController<TEntity>
-    //                      where TEntity : NamedEntity
-    //                      where TAddEntityCommand : IAddEntityCommand<TEntity>
-    //                      where TUpdateEntityCommand : IUpdateEntityCommand<TEntity>
-    //                      where TDeleteEntityCommand : IDeleteEntityCommand<TEntity> {
-
-
-
-        public class WebApiEntityStorage : IEntityStorage {
+    public class WebApiEntityStorage : IEntityStorage {
 
         private HttpClient _httpClient;
 
@@ -42,6 +37,10 @@ namespace Mwm.Asanate.Client.Service.Storage {
 
         public async Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity {
             return await _httpClient.GetFromJsonAsync<List<TEntity>>($"/api/{typeof(TEntity).Name}");
+        }
+
+        public async Task<TEntity> Get<TEntity>(int id) where TEntity : INamedEntity {
+            return await _httpClient.GetFromJsonAsync<TEntity>($"/api/{typeof(TEntity).Name}/{id}");
         }
 
         public async Task<int> Add<TEntity, TAddEntityCommand>(TAddEntityCommand entityCommand) where TEntity : INamedEntity
@@ -54,8 +53,9 @@ namespace Mwm.Asanate.Client.Service.Storage {
             throw new Exception(response.ReasonPhrase);
         }
 
-        public async Task<int> Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
-            var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Update", entity);
+        public async Task<int> Update<TEntity, TUpdateEntityCommand>(TUpdateEntityCommand entityCommand) where TEntity : INamedEntity
+                                                                                                         where TUpdateEntityCommand : IUpdateEntityCommand<TEntity> {
+            var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Update", entityCommand);
 
             if (response.IsSuccessStatusCode &&
                 int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
@@ -63,16 +63,15 @@ namespace Mwm.Asanate.Client.Service.Storage {
             throw new Exception(response.ReasonPhrase);
         }
 
-        public async Task<int> Delete<TEntity>(TEntity entity) where TEntity : INamedEntity {
-            var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Delete", entity);
+        public async Task<int> Delete<TEntity, TDeleteEntityCommand>(TDeleteEntityCommand entityCommand) where TEntity : INamedEntity
+                                                                                                         where TDeleteEntityCommand : IDeleteEntityCommand<TEntity> {
+            var response = await _httpClient.PostAsJsonAsync($"/api/{typeof(TEntity).Name}/Delete", entityCommand);
 
             if (response.IsSuccessStatusCode &&
                 int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
                 return id;
             throw new Exception(response.ReasonPhrase);
         }
-
-
 
     }
 }

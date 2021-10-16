@@ -13,25 +13,28 @@ using Mwm.Asanate.Application.Tsks.Commands;
 using Mwm.Asanate.Application.Shared.Commands;
 
 namespace Mwm.Asanate.Client.Service.Store.Features.Shared.Effects {
-    public abstract class AddEffect<TEntity> : Effect<AddAction<TEntity>> where TEntity : INamedEntity {
+    public abstract class AddEffect<TEntity, TAddEntityCommand> : 
+                          Effect<AddAction<TEntity, TAddEntityCommand>> where TEntity : INamedEntity
+                                                                        where TAddEntityCommand : IAddEntityCommand<TEntity> {
 
-        protected readonly ILogger<AddEffect<TEntity>> _logger;
+        protected readonly ILogger<AddEffect<TEntity, TAddEntityCommand>> _logger;
         protected readonly IEntityStorage _entityStorage;
 
-        public AddEffect(ILogger<AddEffect<TEntity>> logger, IEntityStorage entityStorage) =>
+        public AddEffect(ILogger<AddEffect<TEntity, TAddEntityCommand>> logger, IEntityStorage entityStorage) =>
             (_logger, _entityStorage) = (logger, entityStorage);
 
-        public override async Task HandleAsync(AddAction<TEntity> action, IDispatcher dispatcher) {
+        public override async Task HandleAsync(AddAction<TEntity, TAddEntityCommand> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
             try {
                 _logger.LogInformation($"Adding {entityName} ...");
 
-                //var tskCommand = new TskAdd.Command {
-                //    Name = action.Entity.Name
-                //};
-                //var id = await _entityStorage.Add<TEntity, IAddEntityCommand<TEntity>>(tskCommand);
+                var id = await _entityStorage.Add<TEntity, TAddEntityCommand>(action.EntityCommand);
                 _logger.LogInformation($"Added {entityName} successfully!");
-                dispatcher.Dispatch(new AddSuccessAction<TEntity>(0));
+
+                var entity = await _entityStorage.Get<TEntity>(id);
+                _logger.LogInformation($"Retrieved added {entityName} successfully!");
+
+                dispatcher.Dispatch(new AddSuccessAction<TEntity>(entity));
             } catch (Exception e) {
                 _logger.LogError($"Error adding {entityName}(s), reason: {e}");
                 dispatcher.Dispatch(new AddFailureAction<TEntity>(e.Message));

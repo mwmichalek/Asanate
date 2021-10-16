@@ -1,22 +1,24 @@
 ﻿using Mwm.Asanate.Domain;
+using Mwm.Asanate.Application.Shared.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Service.Store.Features.Shared.Actions {
-    public class UpdateAction<TEntity> where TEntity : INamedEntity {
+    public class UpdateAction<TEntity, TUpdateEntityAction> where TEntity : INamedEntity
+                                                           where TUpdateEntityAction : IUpdateEntityCommand<TEntity> {
 
-        public TEntity Entity {  get; }
+        public TUpdateEntityAction EntityCommand {  get; }
 
-        public UpdateAction(TEntity entity) => Entity = entity;
+        public UpdateAction(TUpdateEntityAction entityCommand) => EntityCommand = entityCommand;
     }
 
     public class UpdateSuccessAction<TEntity> where TEntity : INamedEntity {
 
-        public UpdateSuccessAction(int id) => Id = id;
+        public UpdateSuccessAction(TEntity entity) => Entity = entity;
 
-        public int Id { get; }
+        public TEntity Entity { get; }
 
     }
 
