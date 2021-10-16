@@ -51,11 +51,11 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
 
         [Fact]
         public async Task Add() {
-            var tsk = new TskAdd.Command {
+            var tskCommand = new TskAdd.Command {
                 Name = "This is a test",
                 Status = Status.Open
             };
-            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Add", tsk);
+            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Add", tskCommand);
             
             Assert.True(response.IsSuccessStatusCode);
             var result = await response.Content.ReadAsStringAsync(); 
@@ -68,35 +68,35 @@ namespace Mwm.Asanate.Service.Tests.Controllers {
         public async Task Update() {
             var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault();
 
-            var tsk = new TskUpdate.Command {
+            var tskCommand = new TskUpdate.Command {
                 Name = "This is a test againmmmmm",
                 Status = Status.Done,
                 IsCompleted = true,
                 Id = lastId
             };
-            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Update", tsk);
+            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Update", tskCommand);
 
             Assert.True(response.IsSuccessStatusCode);
             var result = await response.Content.ReadAsStringAsync();
             _output.WriteLine(result);
             Assert.True(int.TryParse(result, out int intResult));
-            Assert.Equal(tsk.Id, intResult);
+            Assert.Equal(tskCommand.Id, intResult);
         }
 
         [Fact]
         public async Task Delete() {
             var lastId = _databaseContext.Set<Tsk>().OrderByDescending(t => t.Id).Select(t => t.Id).FirstOrDefault(); 
 
-            var tsk = new TskDelete.Command {
+            var tskCommand = new TskDelete.Command {
                 Id = lastId
             };
-            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Delete", tsk);
+            var response = await _httpClient.PostAsJsonAsync("/api/Tsk/Delete", tskCommand);
 
             Assert.True(response.IsSuccessStatusCode);
             var result = await response.Content.ReadAsStringAsync();
             _output.WriteLine(result);
             Assert.True(int.TryParse(result, out int intResult));
-            Assert.Equal(tsk.Id, intResult);
+            Assert.Equal(tskCommand.Id, intResult);
         }
     }
 }

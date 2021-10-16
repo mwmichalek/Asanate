@@ -1,40 +1,52 @@
+using Mwm.Asanate.Client.Service.Storage;
+using Mwm.Asanate.Domain;
 using Mwm.Asanate.Persistance.Shared;
+using Mwm.Asanate.Application.Tsks.Commands;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Mwm.Asanate.Client.Tests.WebApiEntityService {
+
+    [Collection("WebApi")]
+
     public class TskTests {
         private readonly IDatabaseContext _databaseContext;
         private readonly ITestOutputHelper _output;
-        private readonly HttpClient _httpClient;
+        //private readonly HttpClient _httpClient;
+        private readonly IEntityStorage _entityStorage;
 
-        public TskTests(IDatabaseContext databaseContext, ITestOutputHelper output, HttpClient httpClient) {
+        public TskTests(IDatabaseContext databaseContext, ITestOutputHelper output, IEntityStorage entityStorage) { // , HttpClient httpClient
             _databaseContext = databaseContext;
             _output = output;
-            _httpClient = httpClient;
-
+            //_httpClient = httpClient;
+            _entityStorage = entityStorage;
         }
 
         [Fact]
         public async Task All() {
-            //var response = await _httpClient.GetFromJsonAsync<List<Tsk>>("/api/Tsk");
 
-            //Assert.NotNull(response);
+            var tsks = await _entityStorage.GetAll<Tsk>();
+            Assert.NotNull(tsks);
             //Assert.True(response.Count > 0);
         }
 
         [Fact]
-        public async Task Get() {
-            //var response = await _httpClient.GetFromJsonAsync<Tsk>("/api/Tsk/Get/1");
-
-            //Assert.NotNull(response);
-        }
-
-        [Fact]
         public async Task Add() {
+
+            var tskCommand = new TskAdd.Command {
+                Name = "This is a test",
+                Status = Status.Open
+            };
+
+            var id = await _entityStorage.Add<Tsk, TskAdd.Command>(tskCommand);
+
+            Assert.True(id > 0);
+
+
             //var tsk = new TskAdd.Command {
             //    Name = "This is a test",
             //    Status = Status.Open

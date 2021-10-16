@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -22,8 +22,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Mwm.Asana.Service\Mwm.Asana.Service.csproj" />
+    <ProjectReference Include="..\..\src\Mwm.Asanate.Client.Service\Mwm.Asanate.Client.Service.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Persistance\Mwm.Asanate.Persistance.csproj" />
+    <ProjectReference Include="..\..\src\Mwm.Asanate.Server\Mwm.Asanate.Server.csproj" />
   </ItemGroup>
 
   <ItemGroup>

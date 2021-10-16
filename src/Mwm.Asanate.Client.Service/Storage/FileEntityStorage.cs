@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 
 namespace Mwm.Asanate.Client.Service.Storage {
 
-    public class FileEntityStorage : IEntityStorage {
-        public Task<int> Add<TEntity>(TEntity entity) where TEntity : INamedEntity {
-            throw new NotImplementedException();
-        }
+    //public class FileEntityStorage : IEntityStorage {
+    //    public Task<int> Add<TEntity>(TEntity entity) where TEntity : INamedEntity {
+    //        throw new NotImplementedException();
+    //    }
 
-        public Task<int> Delete<TEntity>(TEntity entity) where TEntity : INamedEntity {
-            throw new NotImplementedException();
-        }
+    //    public Task<int> Delete<TEntity>(TEntity entity) where TEntity : INamedEntity {
+    //        throw new NotImplementedException();
+    //    }
 
-        public async Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity {
+    //    public async Task<List<TEntity>> GetAll<TEntity>() where TEntity : INamedEntity {
 
-            var jsonPath = $"Data/{typeof(TEntity).Name}.json";
-            Console.WriteLine($"jsonPath: {jsonPath}");
+    //        var jsonPath = $"Data/{typeof(TEntity).Name}.json";
+    //        Console.WriteLine($"jsonPath: {jsonPath}");
 
-            var json = await File.ReadAllTextAsync(jsonPath);
-            return JsonConvert.DeserializeObject<List<TEntity>>(json);
-        }
+    //        var json = await File.ReadAllTextAsync(jsonPath);
+    //        return JsonConvert.DeserializeObject<List<TEntity>>(json);
+    //    }
 
-        public Task<int> Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
-            throw new NotImplementedException();
-        }
-    }
+    //    public Task<int> Update<TEntity>(TEntity entity) where TEntity : INamedEntity {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

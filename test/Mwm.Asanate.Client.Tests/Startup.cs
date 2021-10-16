@@ -8,6 +8,7 @@ using Mwm.Asanate.Persistance.Shared;
 using Mwm.Asana.Service.Utils;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Mwm.Asanate.Client.Service.Utils;
 
 namespace Mwm.Asanate.Client.Tests {
     public class Startup {
@@ -20,6 +21,7 @@ namespace Mwm.Asanate.Client.Tests {
             services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
             services.AddLogging();
             services.AddDatabaseContext(configuration);
+            services.AddClientServices();
         }
 
         public void Configure(IServiceProvider provider) {
