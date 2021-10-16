@@ -50,7 +50,8 @@ namespace Mwm.Asanate.Client.Service.Storage {
             if (response.IsSuccessStatusCode &&
                 int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
                 return id;
-            throw new Exception(response.ReasonPhrase);
+            var errorMsg = await response.Content.ReadAsStringAsync();
+            throw new Exception(errorMsg);
         }
 
         public async Task<int> Update<TEntity, TUpdateEntityCommand>(TUpdateEntityCommand entityCommand) where TEntity : INamedEntity
@@ -60,7 +61,8 @@ namespace Mwm.Asanate.Client.Service.Storage {
             if (response.IsSuccessStatusCode &&
                 int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
                 return id;
-            throw new Exception(response.ReasonPhrase);
+            var errorMsg = await response.Content.ReadAsStringAsync();
+            throw new Exception(errorMsg);
         }
 
         public async Task<int> Delete<TEntity, TDeleteEntityCommand>(TDeleteEntityCommand entityCommand) where TEntity : INamedEntity
@@ -70,7 +72,8 @@ namespace Mwm.Asanate.Client.Service.Storage {
             if (response.IsSuccessStatusCode &&
                 int.TryParse(await response.Content.ReadAsStringAsync(), out int id))
                 return id;
-            throw new Exception(response.ReasonPhrase);
+            var errorMsg = await response.Content.ReadAsStringAsync();
+            throw new Exception(errorMsg);
         }
 
     }

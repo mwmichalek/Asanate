@@ -24,7 +24,7 @@ namespace Mwm.Asanate.Client.Service.Store.Features.Tsks {
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceAddTsksAction(EntityState<Tsk> state, AddAction<Tsk, TskAdd.Command> _) =>
-           new EntityState<Tsk>(true, null, null, state.CurrentEntity);
+           new EntityState<Tsk>(true, null, state.Entities, state.CurrentEntity);
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceAddTsksSuccessAction(EntityState<Tsk> state, AddSuccessAction<Tsk> action) {
@@ -35,11 +35,11 @@ namespace Mwm.Asanate.Client.Service.Store.Features.Tsks {
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceAddTsksFailureAction(EntityState<Tsk> state, AddFailureAction<Tsk> action) =>
-            new EntityState<Tsk>(false, action.ErrorMessage, null, state.CurrentEntity);
+            new EntityState<Tsk>(false, action.ErrorMessage, state.Entities, state.CurrentEntity);
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceUpdateTsksAction(EntityState<Tsk> state, UpdateAction<Tsk, TskUpdate.Command> _) =>
-           new EntityState<Tsk>(true, null, null, state.CurrentEntity);
+           new EntityState<Tsk>(true, null, state.Entities, state.CurrentEntity);
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceUpdateTsksSuccessAction(EntityState<Tsk> state, UpdateSuccessAction<Tsk> action) {
@@ -53,11 +53,11 @@ namespace Mwm.Asanate.Client.Service.Store.Features.Tsks {
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceUpdateTsksFailureAction(EntityState<Tsk> state, UpdateFailureAction<Tsk> action) =>
-            new EntityState<Tsk>(false, action.ErrorMessage, null, state.CurrentEntity);
+            new EntityState<Tsk>(false, action.ErrorMessage, state.Entities, state.CurrentEntity);
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceDeleteTsksAction(EntityState<Tsk> state, DeleteAction<Tsk, TskDelete.Command> _) =>
-           new EntityState<Tsk>(true, null, null, state.CurrentEntity);
+           new EntityState<Tsk>(true, null, state.Entities, state.CurrentEntity);
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceDeleteTsksSuccessAction(EntityState<Tsk> state, DeleteSuccessAction<Tsk> action) {
@@ -71,7 +71,7 @@ namespace Mwm.Asanate.Client.Service.Store.Features.Tsks {
 
         [ReducerMethod]
         public static EntityState<Tsk> ReduceDeleteTsksFailureAction(EntityState<Tsk> state, DeleteFailureAction<Tsk> action) =>
-            new EntityState<Tsk>(false, action.ErrorMessage, null, state.CurrentEntity);
+            new EntityState<Tsk>(false, action.ErrorMessage, state.Entities, state.CurrentEntity);
     }
 }
 

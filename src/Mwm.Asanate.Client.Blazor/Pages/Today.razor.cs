@@ -133,6 +133,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                     Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
                     EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
                         Id = tskModel.Id,
+                        Name = tsk.Name,
                         Status = tskModel.Status
                     });
                 } catch (Exception ex) {
