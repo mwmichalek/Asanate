@@ -13,34 +13,7 @@ using Mwm.Asanate.Application.Utils;
 using System.Threading;
 
 namespace Mwm.Asanate.Application.Initiatives.Commands {
-    public class InitiativeAdd {
-
-        public class Command : IAddEntityCommand<Initiative> {
-
-            public string Name { get; set; }
-
-            public string? ExternalId { get; set; }
-
-            public bool? IsArchived { get; set; }
-
-            public int? PercentCompleted { get; set; }
-
-            public string? Notes { get; set; }
-
-            public DateTime? CompletedDate { get; set; }
-
-            public DateTime? DueDate { get; set; }
-
-            public DateTime? StartedDate { get; set; }
-
-            public bool? IsComplete { get; set; }
-
-
-            public int? ProjectId { get; set; }
-
-            public int? AssignedToId { get; set; }
-
-        }
+    public partial class InitiativeAdd {
 
         public class Handler : IRequestHandler<Command, Result<int>> {
 
@@ -57,7 +30,6 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
                 _userRepository = userRepository;
                 _initiativeRepository = initiativeRepository;
             }
-
 
             public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken) {
                 return await CreateInitiative(command);
@@ -85,8 +57,6 @@ namespace Mwm.Asanate.Application.Initiatives.Commands {
                     return Result.Fail(new Error("Unable to create Initiative").CausedBy(ex));
                 }
             }
-
-            
         }
     }
 }
