@@ -19,26 +19,9 @@ namespace Mwm.Asanate.Application.Companies.Commands {
 
             public string Name { get; set; }
 
-            //public string? ExternalId { get; set; }
+            public bool? IsPersonal { get; set; }
 
-            //public bool? IsArchived { get; set; }
-
-            //public int? PercentCompleted { get; set; }
-
-            //public string? Notes { get; set; }
-
-            //public DateTime? CompletedDate { get; set; }
-
-            //public DateTime? DueDate { get; set; }
-
-            //public DateTime? StartedDate { get; set; }
-
-            //public bool? IsComplete { get; set; }
-
-
-            //public int? ProjectId { get; set; }
-
-            //public int? AssignedToId { get; set; }
+            public string Color { get; set; }
 
         }
     }

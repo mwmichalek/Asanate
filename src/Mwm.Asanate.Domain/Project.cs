@@ -19,7 +19,5 @@ namespace Mwm.Asanate.Domain {
 
         public virtual List<Initiative> Initiatives { get; set; } = new List<Initiative>();
 
-        // public Workspace Workspace { get; set; }
-
     }
 }
