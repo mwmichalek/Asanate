@@ -1,6 +1,8 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 @using Mwm.Asanate.Client.Blazor.Helpers;
+@using Mwm.Asanate.Client.Blazor.Models.Tsks
 @using Mwm.Asanate.Domain; 
+@using Syncfusion.Blazor.Kanban
 @page "/"
 
 <h3 class="text-center mb-3">Today
@@ -11,7 +13,7 @@
      }
 </h3>
 
-@using Syncfusion.Blazor.Kanban
+
 <div class="d-flex flex-row justify-content-center">
     @if (HasErrors()) {
         <span>Whoops! Looks like an issue occurred loading TskModels</span>
@@ -25,12 +27,29 @@
             <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
             <KanbanDialogSettings>
                 <KanbanDialogSettingsFields>
+                    <KanbanDialogSettingsField Text="Id" Key="Id" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
                     <KanbanDialogSettingsField Text="Status" Key="Status" Type=DialogFieldType.DropDown></KanbanDialogSettingsField>
+                    <KanbanDialogSettingsField Text="Archived?" Key="IsArchived" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
                     <KanbanDialogSettingsField Text="Notes" Key="Notes" Type=DialogFieldType.TextArea></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="ID" Key="Id" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="Estimated Hours" Key="EstimatedHours" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="Actual Hours" Key="ActualHours" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
+                    <KanbanDialogSettingsField Text="Estimated Hours" Key="DurationEstimate" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
+                    <KanbanDialogSettingsField Text="Completed Hours" Key="DurationCompleted" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
                 </KanbanDialogSettingsFields>
+
+
+
+       @* public string ExternalId { get; set; }
+        public Status Status { get; set; }
+        public bool IsArchived { get; set; }
+        public bool IsCompleted { get; set; }
+        public int? DurationEstimate { get; set; }
+        public int? DurationCompleted { get; set; }
+        public string Notes { get; set; }
+        public DateTime? DueDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? StartedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }*@
+
+
             </KanbanDialogSettings>
             <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
             </KanbanSwimlaneSettings>
