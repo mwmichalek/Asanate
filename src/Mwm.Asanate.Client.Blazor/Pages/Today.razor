@@ -25,36 +25,14 @@
                 }
             </KanbanColumns>
             <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
-            <KanbanDialogSettings>
-                <KanbanDialogSettingsFields>
-                    <KanbanDialogSettingsField Text="Id" Key="Id" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="Status" Key="Status" Type=DialogFieldType.DropDown></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="Archived?" Key="IsArchived" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="Notes" Key="Notes" Type=DialogFieldType.TextArea></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="Estimated Hours" Key="DurationEstimate" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-                    <KanbanDialogSettingsField Text="Completed Hours" Key="DurationCompleted" Type=DialogFieldType.TextBox></KanbanDialogSettingsField>
-                </KanbanDialogSettingsFields>
-
-
-
-       @* public string ExternalId { get; set; }
-        public Status Status { get; set; }
-        public bool IsArchived { get; set; }
-        public bool IsCompleted { get; set; }
-        public int? DurationEstimate { get; set; }
-        public int? DurationCompleted { get; set; }
-        public string Notes { get; set; }
-        public DateTime? DueDate { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? StartedDate { get; set; }
-        public DateTime? CompletedDate { get; set; }*@
-
-
-            </KanbanDialogSettings>
+          
             <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
             </KanbanSwimlaneSettings>
             <KanbanEvents ActionComplete="@ActionCompleteHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
             <KanbanEvents DragStop="@DragStopHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+            <KanbanEvents CardClick="@CardClickHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+            <KanbanEvents CardDoubleClick="@CardDoubleClickHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+            <KanbanEvents DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
         </SfKanban>
     }
 
