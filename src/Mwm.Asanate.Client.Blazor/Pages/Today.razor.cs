@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Syncfusion.Blazor.Popups;
 
 namespace Mwm.Asanate.Client.Blazor.Pages {
     public partial class Today : FluxorComponent {
@@ -153,10 +154,21 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         }
 
         public void DialogOpenHandler(DialogOpenEventArgs<TskModel> args) {
-            var tskModel = args.Data;
-            Logger.LogInformation($"Show the dialog, bitch: {tskModel.Name}");
+            SelectedTskModel = args.Data;
+            //Logger.LogInformation($"Show the dialog, bitch: {tskModel.Name}");
             args.Cancel = true;
         }
+
+        public void DialogCloseHandler(CloseEventArgs args) {
+            SelectedTskModel = null;
+        }
+
+
+        public bool IsDialogShowing { get => SelectedTskModel != null; set => Console.WriteLine(value); }
+
+
+
+        public TskModel SelectedTskModel { get; set; }
 
 
 
