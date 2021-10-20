@@ -52,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Application.Asanate", "src\Mwm.Asanate.Application.Asanate\Mwm.Asanate.Application.Asanate.csproj", "{6C72903D-12B6-4B2E-A4FE-09276BEDED82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.Asanate.Client.Service", "src\Mwm.Asanate.Client.Service\Mwm.Asanate.Client.Service.csproj", "{CC2C3493-0550-4946-A382-4D3822C53EE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Service", "src\Mwm.Asanate.Client.Service\Mwm.Asanate.Client.Service.csproj", "{CC2C3493-0550-4946-A382-4D3822C53EE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
