@@ -159,18 +159,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             args.Cancel = true;
         }
 
-        public void DialogCloseHandler(CloseEventArgs args) {
-            SelectedTskModel = null;
-        }
-
-
-        public bool IsDialogShowing { get => SelectedTskModel != null; set => Console.WriteLine(value); }
-
-
-
         public TskModel SelectedTskModel { get; set; }
-
-
 
     }
 }

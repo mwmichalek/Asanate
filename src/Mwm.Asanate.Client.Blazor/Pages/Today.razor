@@ -3,7 +3,7 @@
 @using Mwm.Asanate.Client.Blazor.Models.Tsks
 @using Mwm.Asanate.Domain; 
 @using Syncfusion.Blazor.Kanban
-@using Syncfusion.Blazor.Popups
+
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Inputs
 @page "/"
@@ -15,8 +15,6 @@
         </div>
      }
 </h3>
-
-<Mwm.Asanate.Client.Blazor.Components.TskPopup TskModel="@SelectedTskModel" />
 
 <div class="d-flex flex-row justify-content-center">
     @if (HasErrors()) {
@@ -42,35 +40,7 @@
 
 </div>
 
-<SfDialog Height="75%" Width="435px" Target="#target" ShowCloseIcon="true" @bind-Visible="@IsDialogShowing">
-    <DialogTemplates>
-        <Header>
-            <span class="e-avatar template-image e-avatar-xsmall e-avatar-circle"></span>
-            <div id="template" title="Nancy" class="e-icon-settings">Nancy</div>
-        </Header>
-        <Content>
-            <div class="dialogContent">
-                <h2>@SelectedTskModel?.Name</h2>
-
-              @*  <EditForm Model="@SelectedTskModel">
-                     <DataAnnotationsValidator />
-                     <ValidationSummary />
-                     <div class="form-group">
-                         <label for="first-name">Name:</label>
-                         <SfTextBox ID="first-name"></SfTextBox>
-                     </div>
-                     <SfButton>Submit</SfButton>
-                 </EditForm>*@
-            </div>
-        </Content>
-        <FooterTemplate>
-       @*     <SfTextBox ID="inVal" @bind-Value="@TextBoxValue" @ref="TextboxObj" Type="InputType.Text" Placeholder="Enter your message here!" />
-            <button id="sendButton" @onclick="@SendBtnclicked" class="e-control e-btn e-primary" data-ripple="true">Send</button>*@
-        </FooterTemplate>
-    </DialogTemplates>
-    <DialogEvents Closed="@DialogCloseHandler"></DialogEvents>
-</SfDialog>
-
+<Mwm.Asanate.Client.Blazor.Components.TskPopup TskModel="@SelectedTskModel" />
 
 
 
