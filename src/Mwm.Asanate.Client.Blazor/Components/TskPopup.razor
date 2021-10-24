@@ -3,12 +3,13 @@
 <SfDialog Height="75%" Width="435px" Target="#target" ShowCloseIcon="true" @bind-Visible="@IsDialogShowing" >
     <DialogTemplates>
         <Header>
-            <span class="e-avatar template-image e-avatar-xsmall e-avatar-circle"></span>
-            <div id="template" title="Nancy" class="e-icon-settings">Nancy</div>
+            @*<span class="e-avatar template-image e-avatar-xsmall e-avatar-circle"></span>
+            <div id="template" title="Nancy" class="e-icon-settings">Nancy</div>*@
+            <h2>@TskModel?.Name Bizzle</h2>
         </Header>
         <Content>
             <div class="dialogContent">
-                <h2>@TskModel?.Name Bizzle</h2>
+                
 
               @*  <EditForm Model="@SelectedTskModel">
                      <DataAnnotationsValidator />
@@ -22,8 +23,8 @@
             </div>
         </Content>
         <FooterTemplate>
-       @*     <SfTextBox ID="inVal" @bind-Value="@TextBoxValue" @ref="TextboxObj" Type="InputType.Text" Placeholder="Enter your message here!" />
-            <button id="sendButton" @onclick="@SendBtnclicked" class="e-control e-btn e-primary" data-ripple="true">Send</button>*@
+            @*<SfTextBox ID="inVal" @bind-Value="@TextBoxValue" @ref="TextboxObj" Type="InputType.Text" Placeholder="Enter your message here!" />*@
+            <button id="sendButton" @onclick="@Save" class="e-control e-btn e-primary" data-ripple="true">Send</button>
         </FooterTemplate>
     </DialogTemplates>
     <DialogEvents Closed="@DialogCloseHandler"></DialogEvents>

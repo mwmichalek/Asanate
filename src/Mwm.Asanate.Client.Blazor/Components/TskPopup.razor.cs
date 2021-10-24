@@ -37,17 +37,18 @@ namespace Mwm.Asanate.Client.Blazor.Components {
             TskModel = null;
         }
 
+
         public async Task Save() {
             try {
                 if (TskModel.Id == 0) {
                     Logger.LogInformation($"Add: {TskModel.Name}");
                 } else {
                     var tsk = TsksState.FindById(TskModel.Id);
-                    //EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
-                    //    Id = TskModel.Id,
-                    //    Name = tsk.Name,
-                    //    Status = TskModel.Status
-                    //});
+                    EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                        Id = TskModel.Id,
+                        Name = tsk.Name,
+                        Status = TskModel.Status
+                    });
                     Logger.LogInformation($"Update: {TskModel.Name}");
                 }
                 
