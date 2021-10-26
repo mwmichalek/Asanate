@@ -51,7 +51,7 @@ namespace Mwm.Asanate.Client.Blazor.Components {
                     });
                     Logger.LogInformation($"Update: {TskModel.Name}");
                 }
-                
+                TskModel = null;
             } catch (Exception ex) {
                 Logger.LogError($"Unable to update: {TskModel.Name}, {ex}");
             }

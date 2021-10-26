@@ -121,10 +121,10 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             }
         }
 
-        public void ActionCompleteHandler(ActionEventArgs<TskModel> args) {
-            Logger.LogInformation("Hi");
-            Logger.LogInformation($"ChangedRecords: {args.ChangedRecords?.Count()}, EventName: {args.RequestType}");
-        }
+        //public void ActionCompleteHandler(ActionEventArgs<TskModel> args) {
+        //    Logger.LogInformation("Hi");
+        //    Logger.LogInformation($"ChangedRecords: {args.ChangedRecords?.Count()}, EventName: {args.RequestType}");
+        //}
 
         public void DragStopHandler(DragEventArgs<TskModel> args) {
             foreach (var tskModel in args.Data) {
@@ -143,15 +143,15 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             }
         }
 
-        public void CardClickHandler(CardClickEventArgs<TskModel> args) {
-            var tskModel = args.Data;
-            Logger.LogInformation($"Show edit for: {tskModel.Name}");
-        }
+        //public void CardClickHandler(CardClickEventArgs<TskModel> args) {
+        //    var tskModel = args.Data;
+        //    Logger.LogInformation($"Show edit for: {tskModel.Name}");
+        //}
 
-        public void CardDoubleClickHandler(CardClickEventArgs<TskModel> args) {
-            var tskModel = args.Data;
-            Logger.LogInformation($"Double show edit for: {tskModel.Name}");
-        }
+        //public void CardDoubleClickHandler(CardClickEventArgs<TskModel> args) {
+        //    var tskModel = args.Data;
+        //    Logger.LogInformation($"Double show edit for: {tskModel.Name}");
+        //}
 
         public void DialogOpenHandler(DialogOpenEventArgs<TskModel> args) {
             SelectedTskModel = args.Data;

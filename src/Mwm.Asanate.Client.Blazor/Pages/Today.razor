@@ -8,7 +8,16 @@
 @using Syncfusion.Blazor.Inputs
 @page "/"
 
-<h3 class="text-center mb-3">Today
+<style>
+    .e-card.e-draggable {
+        cursor: grab;
+    }
+
+
+</style>
+
+
+<h3 class="text-center text-light mb-3">Today
      @if (IsLoading()) {
         <div class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
@@ -30,11 +39,8 @@
           
             <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
             </KanbanSwimlaneSettings>
-            <KanbanEvents ActionComplete="@ActionCompleteHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-            <KanbanEvents DragStop="@DragStopHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-            <KanbanEvents CardClick="@CardClickHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-            <KanbanEvents CardDoubleClick="@CardDoubleClickHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-            <KanbanEvents DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+            <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+           
         </SfKanban>
     }
 
