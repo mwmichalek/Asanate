@@ -11,10 +11,6 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
 
         public string Name { get; set; }
 
-        public int EstimatedHours { get; set; }
-
-        public int ActualHours { get; set; }
-
         public string ExternalId { get; set; }
 
         public Status Status { get; set; }
@@ -32,15 +28,23 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
 
         public bool IsArchived { get; set; }
 
+        // IsCompleted
+
+        //public int? PercentCompleted { get; set; }
+
+        public int? DurationEstimate { get; set; }
+
+        public int? DurationCompleted { get; set; }
+
         public string Notes { get; set; }
-
-        public DateTime? CompletedDate { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
 
         public DateTime? DueDate { get; set; }
 
+        public DateTime? StartDate { get; set; }
+
         public DateTime? StartedDate { get; set; }
+
+        public DateTime? CompletedDate { get; set; }
 
         public string InitiativeName { get; set; }
 

@@ -23,31 +23,58 @@ namespace Mwm.Asanate.Client.Blazor.Components {
         [Inject]
         public IState<EntityState<Tsk>> TsksState { get; set; }
 
+
+        public bool IsDialogShowing {
+            get => TskModel != null;
+            set { Logger.LogInformation(value.ToString()); }
+        }
+
+        private TskModel _model = new TskModel();
+
         [Parameter]
         public TskModel TskModel { get; set; }
+        
 
         protected override async Task OnInitializedAsync() {
-            Logger.LogInformation($"TskPop!!!!!");
-            
-            //await
-                
+            Logger.LogInformation($"TskPop!!!!!");   
         }
 
         public void DialogCloseHandler(CloseEventArgs args) {
             TskModel = null;
         }
 
-
-        public async Task Save() {
+        public void Save() {
             try {
                 if (TskModel.Id == 0) {
                     Logger.LogInformation($"Add: {TskModel.Name}");
+
+                    EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
+                        Name = TskModel.Name,
+                        ExternalId = TskModel.ExternalId,
+                        Status = TskModel.Status,
+                        DurationEstimate = TskModel.DurationEstimate,
+                        DurationCompleted = TskModel.DurationCompleted,
+                        Notes = TskModel.Notes,
+                        DueDate = TskModel.DueDate,
+                        StartDate = TskModel.StartDate,
+                        StartedDate = TskModel.StartedDate,
+                        CompletedDate = TskModel.CompletedDate
+                    });
+
                 } else {
                     var tsk = TsksState.FindById(TskModel.Id);
                     EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
                         Id = TskModel.Id,
-                        Name = tsk.Name,
-                        Status = TskModel.Status
+                        Name = TskModel.Name,
+                        ExternalId = TskModel.ExternalId,
+                        Status = TskModel.Status,
+                        DurationEstimate = TskModel.DurationEstimate,
+                        DurationCompleted = TskModel.DurationCompleted, 
+                        Notes = TskModel.Notes,
+                        DueDate = TskModel.DueDate, 
+                        StartDate = TskModel.StartDate, 
+                        StartedDate = TskModel.StartedDate, 
+                        CompletedDate = TskModel.CompletedDate
                     });
                     Logger.LogInformation($"Update: {TskModel.Name}");
                 }
@@ -57,6 +84,5 @@ namespace Mwm.Asanate.Client.Blazor.Components {
             }
         }
 
-        public bool IsDialogShowing { get => TskModel != null; set => Console.WriteLine(value); }
     }
 }
