@@ -3,63 +3,51 @@
 @using Mwm.Asanate.Client.Blazor.Models.Tsks
 @using Mwm.Asanate.Domain; 
 @using Syncfusion.Blazor.Kanban
-
+@using Syncfusion.Blazor.Layouts
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Inputs
 @page "/"
 
-<style>
-    .e-card.e-draggable {
-        cursor: grab;
-    }
 
+<SfDashboardLayout Columns="1" AllowResizing="false">
+    <DashboardLayoutPanels>
+        <DashboardLayoutPanel Id="main" Column="0" Row="0">
+            <HeaderTemplate>
+                @if (IsLoading()) {
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                } 
+            </HeaderTemplate>
+            <ContentTemplate>
+                <div class="root-container">
+                    <div class="d-flex flex-row justify-content-center">
+                        @if (HasErrors()) {
+                            <span>Whoops! Looks like an issue occurred loading TskModels</span>
+                        } else if (HasValues()) {
+                            <SfKanban @ref="KanbanBoard" KeyField="StatusName" DataSource="@TskModels">
+                                <KanbanColumns>
+                                    @foreach (var statusName in StatusNames) {
+                                        <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
+                                    }
+                                </KanbanColumns>
+                                <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
 
-</style>
+                                <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
+                                </KanbanSwimlaneSettings>
+                                <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
 
+                            </SfKanban>
+                        }
 
-<h3 class="text-center text-light mb-3">Today
-     @if (IsLoading()) {
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-     }
-</h3>
-
-<div class="d-flex flex-row justify-content-center">
-    @if (HasErrors()) {
-        <span>Whoops! Looks like an issue occurred loading TskModels</span>
-    } else if (HasValues()) {
-        <SfKanban @ref="KanbanBoard" KeyField="StatusName" DataSource="@TskModels">
-            <KanbanColumns>
-                @foreach (var statusName in StatusNames) {
-                    <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
-                }
-            </KanbanColumns>
-            <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
-          
-            <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
-            </KanbanSwimlaneSettings>
-            <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-           
-        </SfKanban>
-    }
-
-</div>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </DashboardLayoutPanel>
+    
+    </DashboardLayoutPanels>
+</SfDashboardLayout>
 
 <Mwm.Asanate.Client.Blazor.Components.TskPopup TskModel="@SelectedTskModel" />
 
 
-
-@*<SfKanban KeyField="CompanyName" DataSource="@TskModels">
-        <KanbanColumns>
-            @foreach (var companyName in TskModels.Select(t => t.CompanyName).Distinct()) {
-                <KanbanColumn HeaderText="@companyName" KeyField="@companyName.ToKeyFields()">
-                </KanbanColumn>
-            }
-
-        </KanbanColumns>
-        <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
-        <KanbanSwimlaneSettings KeyField="StatusId" TextField="StatusName" SortDirection="SortDirection.Ascending">
-        </KanbanSwimlaneSettings>
-
-    </SfKanban>*@

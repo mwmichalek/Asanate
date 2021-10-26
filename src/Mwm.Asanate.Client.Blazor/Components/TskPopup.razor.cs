@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 namespace Mwm.Asanate.Client.Blazor.Components {
     public partial class TskPopup : ComponentBase {
 
+        public SfDialog Dialog { get; set; }
+
         [Inject]
         public ILogger<TskPopup> Logger { get; set; }
 
@@ -26,10 +28,10 @@ namespace Mwm.Asanate.Client.Blazor.Components {
 
         public bool IsDialogShowing {
             get => TskModel != null;
-            set { Logger.LogInformation(value.ToString()); }
+            set { TskModel = null; }
         }
 
-        private TskModel _model = new TskModel();
+        public bool IsNew => TskModel != null && TskModel.Id == 0;
 
         [Parameter]
         public TskModel TskModel { get; set; }
@@ -40,6 +42,7 @@ namespace Mwm.Asanate.Client.Blazor.Components {
         }
 
         public void DialogCloseHandler(CloseEventArgs args) {
+            //IsDialogShowing = false;
             TskModel = null;
         }
 
@@ -78,7 +81,7 @@ namespace Mwm.Asanate.Client.Blazor.Components {
                     });
                     Logger.LogInformation($"Update: {TskModel.Name}");
                 }
-                TskModel = null;
+                Dialog.HideAsync();
             } catch (Exception ex) {
                 Logger.LogError($"Unable to update: {TskModel.Name}, {ex}");
             }
