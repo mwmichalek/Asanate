@@ -143,20 +143,10 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             }
         }
 
-        //public void CardClickHandler(CardClickEventArgs<TskModel> args) {
-        //    var tskModel = args.Data;
-        //    Logger.LogInformation($"Show edit for: {tskModel.Name}");
-        //}
-
-        //public void CardDoubleClickHandler(CardClickEventArgs<TskModel> args) {
-        //    var tskModel = args.Data;
-        //    Logger.LogInformation($"Double show edit for: {tskModel.Name}");
-        //}
-
         public void DialogOpenHandler(DialogOpenEventArgs<TskModel> args) {
-            SelectedTskModel = args.Data;
-            //Logger.LogInformation($"Show the dialog, bitch: {tskModel.Name}");
             args.Cancel = true;
+            Logger.LogInformation("DialogOpenHandler!!!!!");
+            SelectedTskModel = args.Data;
         }
 
         public TskModel SelectedTskModel { get; set; }

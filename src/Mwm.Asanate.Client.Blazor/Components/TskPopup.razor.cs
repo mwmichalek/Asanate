@@ -26,27 +26,35 @@ namespace Mwm.Asanate.Client.Blazor.Components {
         public IState<EntityState<Tsk>> TsksState { get; set; }
 
 
-        public bool IsDialogShowing {
-            get => TskModel != null;
-            set { TskModel = null; }
-        }
+        public bool IsDialogShowing { get; set; }
 
         public bool IsNew => TskModel != null && TskModel.Id == 0;
 
+
+        private TskModel _tskModel;
+
         [Parameter]
-        public TskModel TskModel { get; set; }
-        
+        public TskModel TskModel {
+            get { return _tskModel; }
+            set { 
+                _tskModel = value;
+                // THIS IS GETTING TRIGGERED AFTER DRAG
+                Logger.LogInformation($"Showing Popup.");
+                IsDialogShowing = true;
+            }
+        }
 
         protected override async Task OnInitializedAsync() {
-            Logger.LogInformation($"TskPop!!!!!");   
+            Logger.LogInformation($"Initializing Popup.");   
         }
 
         public void DialogCloseHandler(CloseEventArgs args) {
-            //IsDialogShowing = false;
-            TskModel = null;
+            Logger.LogInformation($"Closing Popup.");
+            IsDialogShowing = false;
         }
 
         public void Save() {
+            Logger.LogInformation($"Saving Popup.");
             try {
                 if (TskModel.Id == 0) {
                     Logger.LogInformation($"Add: {TskModel.Name}");
@@ -81,7 +89,7 @@ namespace Mwm.Asanate.Client.Blazor.Components {
                     });
                     Logger.LogInformation($"Update: {TskModel.Name}");
                 }
-                Dialog.HideAsync();
+                //Dialog.HideAsync();
             } catch (Exception ex) {
                 Logger.LogError($"Unable to update: {TskModel.Name}, {ex}");
             }
