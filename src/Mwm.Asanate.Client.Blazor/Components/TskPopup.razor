@@ -43,6 +43,7 @@
                             </div>
                             <div class="row">
                                 <button type="submit">SAVE</button>
+                                <SfButton @onclick="@Close">CLOSE</SfButton>
                             </div>
                         </EditForm>
                     </div>
@@ -51,7 +52,7 @@
             </Content>
             <FooterTemplate>
 
-                <SfButton @onclick="@Save">SAVE</SfButton>
+                <SfButton @onclick="@Save">SAVER</SfButton>
                 @*<button id="sendButton" class="e-control e-btn e-primary" data-ripple="true">Send</button>*@
             </FooterTemplate>
         </DialogTemplates>

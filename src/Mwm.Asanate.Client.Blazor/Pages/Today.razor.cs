@@ -16,11 +16,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Syncfusion.Blazor.Popups;
+using Mwm.Asanate.Client.Blazor.Components;
 
 namespace Mwm.Asanate.Client.Blazor.Pages {
     public partial class Today : FluxorComponent {
 
         public SfKanban<TskModel> KanbanBoard;
+
+        public TskPopup TskPopup;
 
         [Inject]
         ILogger<Today> Logger { get; set; }
@@ -121,11 +124,6 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             }
         }
 
-        //public void ActionCompleteHandler(ActionEventArgs<TskModel> args) {
-        //    Logger.LogInformation("Hi");
-        //    Logger.LogInformation($"ChangedRecords: {args.ChangedRecords?.Count()}, EventName: {args.RequestType}");
-        //}
-
         public void DragStopHandler(DragEventArgs<TskModel> args) {
             foreach (var tskModel in args.Data) {
                 try {
@@ -146,7 +144,9 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public void DialogOpenHandler(DialogOpenEventArgs<TskModel> args) {
             args.Cancel = true;
             Logger.LogInformation("DialogOpenHandler!!!!!");
-            SelectedTskModel = args.Data;
+            //SelectedTskModel = args.Data;
+
+            TskPopup.Update(args.Data);
         }
 
         public TskModel SelectedTskModel { get; set; }

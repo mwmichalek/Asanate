@@ -46,7 +46,11 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
 
         public DateTime? CompletedDate { get; set; }
 
+        public int? InitiativeId { get; set; }
+
         public string InitiativeName { get; set; }
+
+        public int? ProjectId { get; set; }
 
         public string ProjectName { get; set; }
 

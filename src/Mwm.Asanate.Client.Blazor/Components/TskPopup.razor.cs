@@ -25,23 +25,34 @@ namespace Mwm.Asanate.Client.Blazor.Components {
         [Inject]
         public IState<EntityState<Tsk>> TsksState { get; set; }
 
-
         public bool IsDialogShowing { get; set; }
 
         public bool IsNew => TskModel != null && TskModel.Id == 0;
 
+        public TskModel TskModel;
 
-        private TskModel _tskModel;
+        public void Add(int? initiativeId) {
+            Logger.LogInformation($"Adding TskModel.");
+            TskModel = new TskModel {
+                InitiativeId = initiativeId
+            };
+            IsDialogShowing = true;
+            StateHasChanged();
+        }
 
-        [Parameter]
-        public TskModel TskModel {
-            get { return _tskModel; }
-            set { 
-                _tskModel = value;
-                // THIS IS GETTING TRIGGERED AFTER DRAG
-                Logger.LogInformation($"Showing Popup.");
-                IsDialogShowing = true;
-            }
+        public void Update(TskModel tskModel) {
+            Logger.LogInformation($"Updating TskModel.");
+            TskModel = tskModel;
+            IsDialogShowing = true;
+            StateHasChanged();
+        }
+
+        public void Close() {
+            Logger.LogInformation($"Closing TskModel.");
+            TskModel = null;
+            
+            IsDialogShowing = false;
+            StateHasChanged();
         }
 
         protected override async Task OnInitializedAsync() {
@@ -50,7 +61,7 @@ namespace Mwm.Asanate.Client.Blazor.Components {
 
         public void DialogCloseHandler(CloseEventArgs args) {
             Logger.LogInformation($"Closing Popup.");
-            IsDialogShowing = false;
+            Close();
         }
 
         public void Save() {
