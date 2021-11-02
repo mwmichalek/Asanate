@@ -100,7 +100,7 @@ namespace Mwm.Asanate.Client.Blazor.Components {
                     });
                     Logger.LogInformation($"Update: {TskModel.Name}");
                 }
-                //Dialog.HideAsync();
+                Close();
             } catch (Exception ex) {
                 Logger.LogError($"Unable to update: {TskModel.Name}, {ex}");
             }

@@ -1,5 +1,7 @@
 ﻿@using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.RichTextEditor
+@using Syncfusion.Blazor.Calendars
 
 @if (TskModel != null) {
     <SfDialog @ref="Dialog" Height="50%" Width="50%" Target="#target" IsModal="true" ShowCloseIcon="true" @bind-Visible="@IsDialogShowing" >
@@ -13,37 +15,30 @@
             </Header>
             <Content>
                 <div class="dialogContent">
-                
-                    @*<div class="form-group">
-                         <label for="first-name">ID:</label>
-                         @TskModel?.Id
-                     </div>
-
-                    <div class="form-group">
-                         <label for="first-name">Name:</label>
-                         <SfTextBox ID="@TskModel?.Name"></SfTextBox>
-                     </div>
-
-                     <div class="form-group">
-                         <label for="first-name">External ID:</label>
-                         <SfTextBox ID="@TskModel?.ExternalId"></SfTextBox>
-                     </div>*@
-                
+                                
                     <div class="container">
                         <EditForm Model="@TskModel" OnValidSubmit="@Save">
                             <DataAnnotationsValidator />
                             <ValidationSummary />
-                            <div class="row">
-                                <label for="name">Name: </label>
-                                <InputText Id="name" @bind-Value="@TskModel.Name"></InputText>
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <InputText class="form-control" Id="name" @bind-Value="@TskModel.Name"></InputText>
                             </div>
-                            <div class="row">
-                                <label for="externalId">External ID: </label>
-                                <InputText Id="externalId" @bind-Value="@TskModel.ExternalId"></InputText>
+                            <div class="form-group">
+                                <label for="externalId">External ID:</label>
+                                <InputText class="form-control" Id="externalId" @bind-Value="@TskModel.ExternalId"></InputText>
                             </div>
-                            <div class="row">
-                                <button type="submit">SAVE</button>
-                                <SfButton @onclick="@Close">CLOSE</SfButton>
+                           @* <div class="form-group">
+                                <label for="durationEstimate">Duration:</label>
+                                <InputText class="form-control" Id="durationEstimate" @bind-Value="@TskModel.DurationEstimate"></InputText>
+                            </div>*@
+                            <div class="form-group">
+                                <label for="dueDate">Due Date:</label>
+                                <SfDatePicker ID="dueDate" TValue="DateTime?" @bind-Value="@TskModel.DueDate" Placeholder='Choose a Date'></SfDatePicker>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes:</label>
+                                <SfRichTextEditor bind-Value="@TskModel.Notes" />
                             </div>
                         </EditForm>
                     </div>
@@ -51,9 +46,9 @@
                 </div>
             </Content>
             <FooterTemplate>
-
-                <SfButton @onclick="@Save">SAVER</SfButton>
-                @*<button id="sendButton" class="e-control e-btn e-primary" data-ripple="true">Send</button>*@
+                <SfButton class="e-control e-btn e-success" @onclick="@Save">SAVE</SfButton>
+                <SfButton class="e-control e-btn e-secondary" @onclick="@Close">CLOSE</SfButton>
+               @* <button id="sendButton" class="e-control e-btn e-primary" data-ripple="true" @onclick="@Save">SAVOR</button>*@
             </FooterTemplate>
         </DialogTemplates>
         <DialogEvents Closed="@DialogCloseHandler"></DialogEvents>
