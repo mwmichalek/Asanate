@@ -45,8 +45,8 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
         private bool rebuildTskModels = false;
         private List<TskModel> tskModels = new List<TskModel>();
-
-        public List<TskModel> TskModels {
+        
+        public IEnumerable<TskModel> TskModels {
             get {
                 if (rebuildTskModels) 
                     BuildTskModels();
@@ -101,8 +101,11 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             ActionSubscriber.SubscribeToAction<LoadSuccessAction<Project>>(this, (action) => rebuildTskModels = true);
             ActionSubscriber.SubscribeToAction<LoadSuccessAction<Company>>(this, (action) => rebuildTskModels = true);
 
+            TsksState.StateChanged += (s, e) => BuildTskModels();
+  
             ActionSubscriber.SubscribeToAction<UpdateSuccessAction<Tsk>>(this, (action) => {
-                Logger.LogInformation($"We have in update ova here: {action.Entity.Name}");
+                Logger.LogInformation($"ActionSubscriber.SubscribeToAction<UpdateSuccessAction<Tsk>>: {action.Entity.Name}");
+                //BuildTskModels();
                 //StateHasChanged();
             });
 
@@ -127,7 +130,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                     };
                 }).ToList();
                 rebuildTskModels = false;
-                Logger.LogInformation($"Built {TskModels.Count} TskModels");
+                Logger.LogInformation($"Built {tskModels.Count} TskModels");
             }
         }
 

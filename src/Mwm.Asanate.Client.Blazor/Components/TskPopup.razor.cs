@@ -65,8 +65,9 @@ namespace Mwm.Asanate.Client.Blazor.Components {
             StateHasChanged();
         }
 
-        protected override async Task OnInitializedAsync() {
+        protected override Task OnInitializedAsync() {
             Logger.LogInformation($"Initializing Popup.");   
+            return base.OnInitializedAsync();
         }
 
         public void DialogCloseHandler(CloseEventArgs args) {
