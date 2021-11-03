@@ -10,11 +10,14 @@ using Mwm.Asanate.Domain;
 using Syncfusion.Blazor.Popups;
 using System;
 using System.Threading.Tasks;
+using Syncfusion.Blazor.RichTextEditor;
 
 namespace Mwm.Asanate.Client.Blazor.Components {
     public partial class TskPopup : ComponentBase {
 
         public SfDialog Dialog { get; set; }
+
+        public SfRichTextEditor TextEditor { get; set; }
 
         [Inject]
         public ILogger<TskPopup> Logger { get; set; }
@@ -30,6 +33,12 @@ namespace Mwm.Asanate.Client.Blazor.Components {
         public bool IsNew => TskModel != null && TskModel.Id == 0;
 
         public TskModel TskModel;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender) {
+            if (TextEditor != null) 
+                await TextEditor?.RefreshUIAsync();
+            await base.OnAfterRenderAsync(firstRender);
+        }
 
         public void Add(int? initiativeId) {
             Logger.LogInformation($"Adding TskModel.");

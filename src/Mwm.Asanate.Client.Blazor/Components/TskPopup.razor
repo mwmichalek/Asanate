@@ -38,7 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="notes">Notes:</label>
-                                <SfRichTextEditor bind-Value="@TskModel.Notes" />
+                                <SfRichTextEditor @ref="TextEditor" @bind-Value="@TskModel.Notes" />
                             </div>
                         </EditForm>
                     </div>
