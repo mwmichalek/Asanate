@@ -52,6 +52,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                     BuildTskModels();
                 return tskModels;
             }
+            set { }
         }
 
         public List<string> Companies => TskModels.Select(t => t.CompanyName).Distinct().ToList();
@@ -99,10 +100,16 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             ActionSubscriber.SubscribeToAction<LoadSuccessAction<Initiative>>(this, (action) => rebuildTskModels = true);
             ActionSubscriber.SubscribeToAction<LoadSuccessAction<Project>>(this, (action) => rebuildTskModels = true);
             ActionSubscriber.SubscribeToAction<LoadSuccessAction<Company>>(this, (action) => rebuildTskModels = true);
+
+            ActionSubscriber.SubscribeToAction<UpdateSuccessAction<Tsk>>(this, (action) => {
+                Logger.LogInformation($"We have in update ova here: {action.Entity.Name}");
+                //StateHasChanged();
+            });
+
             base.OnInitialized();
         }
 
-        
+
         private void BuildTskModels(string triggerBy = null) {
             if (HasValues()) {
                 tskModels = TsksState.Value.Entities?.Where(t => !t.IsArchived).Select(t => {

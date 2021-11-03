@@ -21,48 +21,46 @@
                         <EditForm Model="@TskModel" OnValidSubmit="@Save">
                             <DataAnnotationsValidator />
                             <ValidationSummary />
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <InputText class="form-control" Id="name" @bind-Value="@TskModel.Name"></InputText>
+                            <div class="form-row">
+                                <div class="form-group col-md-9">
+                                    <label for="name">Name:</label>
+                                    <SfTextBox Id="name" class="form-control" Placeholder="Name" @bind-Value="@TskModel.Name"></SfTextBox >
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="externalId">External ID:</label>
+                                    <SfTextBox Id="externalId" class="form-control" Placeholder="External ID"  @bind-Value="@TskModel.ExternalId"></SfTextBox>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="externalId">External ID:</label>
-                                <InputText class="form-control" Id="externalId" @bind-Value="@TskModel.ExternalId"></InputText>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="dueDate">Due Date:</label>
+                                    <SfDatePicker ID="dueDate" TValue="DateTime?" @bind-Value="@TskModel.DueDate" Placeholder='Choose a Date'></SfDatePicker>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="startDate">Start Date:</label>
+                                    <SfDatePicker ID="startDate" TValue="DateTime?" @bind-Value="@TskModel.StartDate" Placeholder='Choose a Date'></SfDatePicker>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="startDate">Started Date:</label>
+                                    @TskModel.StartedDate?.ToString("MM-dd-YYYY");
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="completedDate">Completed Date:</label>
+                                    <SfDatePicker ID="completedDate" TValue="DateTime?" @bind-Value="@TskModel.CompletedDate" Placeholder='Choose a Date'></SfDatePicker>
+                                </div>
                             </div>
-                           @* <div class="form-group">
-                                <label for="durationEstimate">Duration:</label>
-                                <InputText class="form-control" Id="durationEstimate" @bind-Value="@TskModel.DurationEstimate"></InputText>
-                            </div>*@
-                            <div class="form-group">
-                                <label for="dueDate">Due Date:</label>
-                                <SfDatePicker ID="dueDate" TValue="DateTime?" @bind-Value="@TskModel.DueDate" Placeholder='Choose a Date'></SfDatePicker>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="durationEstimate">Duration Estimate:</label>
+                                    <SfDropDownList ID="durationEstimate" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationEstimate" Placeholder="Duration in hours" DataSource="@DurationDropDown">
+                                    </SfDropDownList>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="durationCompleted">Duration Completed:</label>
+                                    <SfDropDownList ID="durationCompleted" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationCompleted" Placeholder="Duration in hours" DataSource="@DurationDropDown">
+                                    </SfDropDownList>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="durationEstimate">Duration Estimate:</label>
-                                <SfDropDownList ID="durationEstimate" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationEstimate" Placeholder="Duration in hours" DataSource="@DurationDropDown">
-                                </SfDropDownList>
-                            </div>
-                            <div class="form-group">
-                                <label for="durationCompleted">Duration Completed:</label>
-                                <SfDropDownList ID="durationCompleted" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationCompleted" Placeholder="Duration in hours" DataSource="@DurationDropDown">
-                                </SfDropDownList>
-                            </div>
-
-                   @*         <form>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>*@
                             <div class="form-group">
                                 <label for="notes">Notes:</label>
                                 <SfRichTextEditor @ref="TextEditor" @bind-Value="@TskModel.Notes" />

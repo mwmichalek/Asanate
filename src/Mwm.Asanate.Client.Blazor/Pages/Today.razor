@@ -24,7 +24,7 @@
                         @if (HasErrors()) {
                             <span>Whoops! Looks like an issue occurred loading TskModels</span>
                         } else if (HasValues()) {
-                            <SfKanban @ref="KanbanBoard" KeyField="StatusName" DataSource="@TskModels">
+                            <SfKanban @ref="KanbanBoard" KeyField="StatusName"  @bind-DataSource="@TskModels">
                                 <KanbanColumns>
                                     @foreach (var statusName in StatusNames) {
                                     <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>

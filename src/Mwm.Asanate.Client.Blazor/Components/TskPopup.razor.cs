@@ -116,6 +116,8 @@ namespace Mwm.Asanate.Client.Blazor.Components {
             }
         }
 
-        public List<float> DurationDropDown => new List<float> { 0.25f, .5f, 1, 2, 3, 4, 5, 6, 7, 8 };
+        private static List<float> _durationDropDownValues = new List<float> { 0.25f, .5f, 1, 2, 3, 4, 5, 6, 7, 8 };
+
+        public List<float> DurationDropDown => _durationDropDownValues;
     }
 }
