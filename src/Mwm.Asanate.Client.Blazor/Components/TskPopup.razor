@@ -2,6 +2,7 @@
 @using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.RichTextEditor
 @using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.DropDowns
 
 @if (TskModel != null) {
     <SfDialog @ref="Dialog" Height="50%" Width="50%" Target="#target" IsModal="true" ShowCloseIcon="true" @bind-Visible="@IsDialogShowing" >
@@ -36,6 +37,12 @@
                                 <label for="dueDate">Due Date:</label>
                                 <SfDatePicker ID="dueDate" TValue="DateTime?" @bind-Value="@TskModel.DueDate" Placeholder='Choose a Date'></SfDatePicker>
                             </div>
+                            <div class="form-group">
+                                <label for="dueDate">Duration Estimate:</label>
+                                <SfDropDownList TValue="float?" TItem="float" @bind-Value="@TskModel.DurationEstimate" Placeholder="Duration in hours" DataSource="@DurationDropDown">
+                                </SfDropDownList>
+                            </div>
+
                             <div class="form-group">
                                 <label for="notes">Notes:</label>
                                 <SfRichTextEditor @ref="TextEditor" @bind-Value="@TskModel.Notes" />

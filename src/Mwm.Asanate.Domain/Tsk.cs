@@ -19,9 +19,9 @@ namespace Mwm.Asanate.Domain {
 
         public bool IsCompleted { get; set; }
 
-        public int? DurationEstimate { get; set; }
+        public float? DurationEstimate { get; set; }
 
-        public int? DurationCompleted { get; set; }
+        public float? DurationCompleted { get; set; }
 
 
         public string Notes { get; set; }
@@ -66,7 +66,7 @@ namespace Mwm.Asanate.Domain {
             get {
                 if (IsCompleted) return 100;
                 if (DurationEstimate.HasValue && DurationCompleted.HasValue) {
-                    return (DurationEstimate.Value / DurationCompleted.Value) * 100;
+                    return (int)(DurationEstimate.Value / DurationCompleted.Value) * 100;
                 }
                 return 0;
             }

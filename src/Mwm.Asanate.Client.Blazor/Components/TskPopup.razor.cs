@@ -11,6 +11,7 @@ using Syncfusion.Blazor.Popups;
 using System;
 using System.Threading.Tasks;
 using Syncfusion.Blazor.RichTextEditor;
+using System.Collections.Generic;
 
 namespace Mwm.Asanate.Client.Blazor.Components {
     public partial class TskPopup : ComponentBase {
@@ -115,5 +116,6 @@ namespace Mwm.Asanate.Client.Blazor.Components {
             }
         }
 
+        public List<float> DurationDropDown => new List<float> { 0.25f, .5f, 1, 2, 3, 4, 5, 6, 7, 8 };
     }
 }

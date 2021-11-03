@@ -32,9 +32,9 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
 
         //public int? PercentCompleted { get; set; }
 
-        public int? DurationEstimate { get; set; }
+        public float? DurationEstimate { get; set; }
 
-        public int? DurationCompleted { get; set; }
+        public float? DurationCompleted { get; set; }
 
         public string Notes { get; set; }
 

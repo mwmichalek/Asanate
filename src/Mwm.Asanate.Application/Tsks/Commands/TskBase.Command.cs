@@ -31,9 +31,9 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
 
             public bool? IsCompleted { get; set; }
 
-            public int? DurationEstimate { get; set; }
+            public float? DurationEstimate { get; set; }
 
-            public int? DurationCompleted { get; set; }
+            public float? DurationCompleted { get; set; }
 
             public string Notes { get; set; }
 
