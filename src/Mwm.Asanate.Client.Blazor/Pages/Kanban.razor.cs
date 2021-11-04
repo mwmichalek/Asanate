@@ -26,7 +26,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public TskPopup TskPopup;
 
         [Inject]
-        ILogger<Today> Logger { get; set; }
+        ILogger<Kanban> Logger { get; set; }
 
         [Inject]
         public IState<EntityState<Tsk>> TsksState { get; set; }
