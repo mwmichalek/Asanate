@@ -43,15 +43,11 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         [Inject]
         public EntityStateFacade EntityStateFacade { get; set; }
 
-        private bool rebuildTskModels = false;
+        //private bool rebuildTskModels = false;
         private List<TskModel> tskModels = new List<TskModel>();
-        
+
         public IEnumerable<TskModel> TskModels {
-            get {
-                if (rebuildTskModels) 
-                    BuildTskModels();
-                return tskModels;
-            }
+            get => tskModels;
             set { }
         }
 
@@ -81,8 +77,6 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                                    ProjectsState.HasValue(true) &&
                                    CompaniesState.HasValue(true);
 
-
-
         protected override void OnInitialized() {
             if (!TsksState.HasValue())
                 EntityStateFacade.Load<Tsk>();
@@ -93,21 +87,10 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             if (!ProjectsState.HasValue())
                 EntityStateFacade.Load<Project>();
 
-            //TODO:(MWM) Perhaps Make the Entities Lists a Lookup for fast access.
-
-            //NOTE:(MWM) These actions get triggered BEFORE the state gets updated.  WTF?!?!?
-            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Tsk>>(this, (action) => rebuildTskModels = true);
-            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Initiative>>(this, (action) => rebuildTskModels = true);
-            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Project>>(this, (action) => rebuildTskModels = true);
-            ActionSubscriber.SubscribeToAction<LoadSuccessAction<Company>>(this, (action) => rebuildTskModels = true);
-
             TsksState.StateChanged += (s, e) => BuildTskModels();
-  
-            ActionSubscriber.SubscribeToAction<UpdateSuccessAction<Tsk>>(this, (action) => {
-                Logger.LogInformation($"ActionSubscriber.SubscribeToAction<UpdateSuccessAction<Tsk>>: {action.Entity.Name}");
-                //BuildTskModels();
-                //StateHasChanged();
-            });
+            InitiativesState.StateChanged += (s, e) => BuildTskModels();
+            ProjectsState.StateChanged += (s, e) => BuildTskModels();
+            CompaniesState.StateChanged += (s, e) => BuildTskModels();
 
             base.OnInitialized();
         }
@@ -123,13 +106,20 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                     return new TskModel {
                         Id = t.Id,
                         Name = t.Name,
+                        ExternalId = t.ExternalId,
                         Status = t.Status,
+                        DurationEstimate = t.DurationEstimate,
+                        DurationCompleted = t.DurationCompleted,
+                        Notes = t.Notes,    
+                        DueDate = t.DueDate,
+                        StartDate = t.StartDate,
+                        StartedDate = t.StartedDate,
+                        CompletedDate = t.CompletedDate,
                         InitiativeName = initiative?.Name,
                         ProjectName = project?.Name,
                         CompanyName = company?.Name
                     };
                 }).ToList();
-                rebuildTskModels = false;
                 Logger.LogInformation($"Built {tskModels.Count} TskModels");
             }
         }
@@ -154,8 +144,6 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         public void DialogOpenHandler(DialogOpenEventArgs<TskModel> args) {
             args.Cancel = true;
             Logger.LogInformation("DialogOpenHandler!!!!!");
-            //SelectedTskModel = args.Data;
-
             TskPopup.Update(args.Data);
         }
 
