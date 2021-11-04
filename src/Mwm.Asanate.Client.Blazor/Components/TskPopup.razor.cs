@@ -12,6 +12,7 @@ using System;
 using System.Threading.Tasks;
 using Syncfusion.Blazor.RichTextEditor;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Mwm.Asanate.Client.Blazor.Components {
     public partial class TskPopup : ComponentBase {
@@ -73,6 +74,11 @@ namespace Mwm.Asanate.Client.Blazor.Components {
         public void DialogCloseHandler(CloseEventArgs args) {
             Logger.LogInformation($"Closing Popup.");
             Close();
+        }
+
+        public void KeyboardEventHandler(KeyboardEventArgs args) {
+            if (args.Key == "Enter")
+                Save();
         }
 
         public void Save() {
