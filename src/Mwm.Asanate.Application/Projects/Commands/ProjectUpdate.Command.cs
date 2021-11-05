@@ -13,17 +13,15 @@ using Mwm.Asanate.Application.Utils;
 using System.Threading;
 
 namespace Mwm.Asanate.Application.Projects.Commands {
-    public partial class ProjectBase {
 
-        public class Command : IAddEntityCommand<Project> {
+    public partial class ProjectUpdate {
 
-            public string Name { get; set; }
-
-            public string Color { get; set; }
-
-            public int CompanyId { get; set; }
-
+        public class Command : ProjectBase.Command, IUpdateEntityCommand<Project> {
+        
+            public int Id { get; set; }
+        
         }
+
     }
 }
 

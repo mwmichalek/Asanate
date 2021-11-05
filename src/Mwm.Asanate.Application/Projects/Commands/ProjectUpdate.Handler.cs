@@ -13,7 +13,7 @@ using Mwm.Asanate.Application.Utils;
 using System.Threading;
 
 namespace Mwm.Asanate.Application.Projects.Commands {
-    public partial class ProjectAdd {
+    public partial class ProjectUpdate {
 
         public class Handler : IRequestHandler<Command, Result<int>> {
 
@@ -28,29 +28,33 @@ namespace Mwm.Asanate.Application.Projects.Commands {
             }
 
             public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken) {
-                return await CreateProject(command);
-            }
-
-            private async Task<Result<int>> CreateProject(Command command) {
+                if (command.Id == 0)
+                    return Result.Fail("Project Id must be set.");
                 if (string.IsNullOrEmpty(command.Name))
                     return Result.Fail("Project Name can't be null.");
                 if (command.CompanyId == 0)
                     return Result.Fail("Project CompanyId must be set.");
 
+                return await UpdateProject(command);
+            }
+
+            private async Task<Result<int>> UpdateProject(Command command) {
+                var project = _projectRepository.Get(command.Id);
+
+                if (project == null)
+                    return Result.Fail(new Error($"Couldn't locate existing Project with Id:{command.Id}."));
+
+                if (command.Name != null) project.Name = command.Name;
+                if (command.Color != null) project.Color = command.Color;
+                if (command.CompanyId != 0) project.CompanyId = command.CompanyId;
+
                 try {
-                    var project = new Project {
-                        Name = command.Name,
-                        Color = command.Color, 
-                        CompanyId = command.CompanyId
-                    };
-                    _projectRepository.Add(project);
                     await _projectRepository.SaveAsync();
-                    _logger.LogInformation($"Project Added: {project.Name}");
-                    return Result.Ok(project.Id).WithSuccess(project.ToSuccess(ResultAction.Add));
-                       
+                    _logger.LogInformation($"Project Updated: {project.Name}");
+                    return Result.Ok(project.Id).WithSuccess(project.ToSuccess(ResultAction.Update));  
                 } catch (Exception ex) {
-                    _logger.LogError($"Project Add Failure: {ex}");
-                    return Result.Fail(new Error("Unable to create Project").CausedBy(ex));
+                    _logger.LogError($"Project Update Failure: {ex}");
+                    return Result.Fail(new Error("Unable to update Project").CausedBy(ex));
                 }
             }
         }
