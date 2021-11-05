@@ -12,6 +12,11 @@
 <EditForm id="form" Model="@NewTskModel" OnValidSubmit="@Save">
     <DataAnnotationsValidator />
     <ValidationSummary />
+@*    <div class="form-group col-md-6">
+        <label for="project">Project:</label>
+        <SfDropDownList ID="project" TValue="int" TItem="float" @bind-Value="@ProjectDropDownEntities.DurationCompleted" Placeholder="Duration in hours" DataSource="@ProjectDropDownEntities">
+        </SfDropDownList>
+    </div>*@
     <div class="form-row">
         <div class="form-group col-md-3">
         </div>
@@ -20,5 +25,6 @@
             <SfTextBox Id="name" class="form-control" Placeholder="Name" @bind-Value="@NewTskModel.Name" @onkeydown="KeyboardEventHandler"></SfTextBox >
         </div>
     </div>
+
 </EditForm>
 
