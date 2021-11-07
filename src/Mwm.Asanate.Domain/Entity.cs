@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -19,7 +20,7 @@ namespace Mwm.Asanate.Domain {
 
     public class Entity : IEntity {
 
-        [Key]
+        [Key, Column(Order = 0)]
         public int Id { get; set; }
 
         public string? Gid { get; set; }
