@@ -10,6 +10,8 @@ namespace Mwm.Asanate.Domain {
 
         public readonly static string DefaultProjectName = "Generic";
 
+        public string ExternalIdPrexfix { get; set; }
+
         public string Color { get; set; }
 
         public int CompanyId { get; set; }

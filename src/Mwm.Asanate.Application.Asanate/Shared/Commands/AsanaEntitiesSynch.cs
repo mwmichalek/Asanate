@@ -139,8 +139,10 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             _logger.LogDebug($"Adding Project: {asanaProject.Name}");
                             var newProject = new Project {
                                 Name = asanaProject.Name,
-                                Gid = asanaProject.Gid,                                
+                                Gid = asanaProject.Gid,
                                 Company = _companyRepository.GetByName(asanaProject.Company),
+                                ExternalIdPrexfix = (asanaProject.Company == "KMV") ? "SHOP" :
+                                                    (asanaProject.Company == "Blackstone") ? "BPS" : null
                             };
                             newProject.Initiatives.Add(new Initiative {
                                 Name = Initiative.DefaultInitiativeName
