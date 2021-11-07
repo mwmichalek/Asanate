@@ -75,7 +75,6 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
 
             UpdateProjectDropDown();
-            UpdateInitiativeDropDown();
 
             base.OnInitialized();
         }
@@ -84,6 +83,10 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
         private void UpdateProjectDropDown() {
             if (ProjectsState.HasValue()) {
+
+                ProjectDropDownEntities = ProjectsState.Value.Entities.Select(p => new DropDownEntity { Id = p.Id, Name = p.Name })
+                                                                      .ToList();
+                // If Project hasn't been set yet, then set it to 'Generic' 
                 if (selectedProjectId == 0) {
                     var genericProject = ProjectsState.Value.Entities.SingleOrDefault(p => p.Name == "Generic");
                     if (genericProject != null) {
@@ -92,25 +95,19 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                     }
                 }
 
-                ProjectDropDownEntities = ProjectsState.Value.Entities.Select(p => new DropDownEntity { Id = p.Id, Name = p.Name })
-                                                                      .ToList();
+                UpdateInitiativeDropDown();
             }
         }
 
         private void UpdateInitiativeDropDown() {
-            if (selectedProjectId != 0 && InitiativesState.HasValue()) {
-                if (selectedInitiativeId == 0) { 
-                    var triageInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
-                                                                                           i.Name == "Triage");
-                    if (triageInitiative != null) {
-                        selectedInitiativeId = triageInitiative.Id;
-                        Logger.LogInformation($"Default Initiative: {triageInitiative.Id} {triageInitiative.Name}");
-                    }
-                }
-
-                InitiativeDropDownEntities = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
-                                                                            .Select(i => new DropDownEntity { Id = i.Id, Name = i.Name })
-                                                                            .ToList();
+            InitiativeDropDownEntities = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
+                                                                        .Select(i => new DropDownEntity { Id = i.Id, Name = i.Name })
+                                                                        .ToList();
+            var triageInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
+                                                                                        i.Name == "Triage");
+            if (triageInitiative != null) {
+                selectedInitiativeId = triageInitiative.Id;
+                Logger.LogInformation($"Default Initiative: {triageInitiative.Id} {triageInitiative.Name}");
             }
         }
 
@@ -123,9 +120,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         }
 
         public void Save() {
-            Logger.LogInformation($"Saving Popup.");
             try {
-
                 Logger.LogInformation($"Add: {NewTskModel.Name}");
 
                 EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
