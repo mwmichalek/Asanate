@@ -11,8 +11,6 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
 
         public string Name { get; set; }
 
-        public string ExternalId { get; set; }
-
         public Status Status { get; set; }
 
         public int StatusId => (int)Status;
@@ -49,6 +47,9 @@ namespace Mwm.Asanate.Client.Blazor.Models.Tsks {
         public int? InitiativeId { get; set; }
 
         public string InitiativeName { get; set; }
+
+        public string InitiativeExternalId { get; set; }
+
 
         public int? ProjectId { get; set; }
 

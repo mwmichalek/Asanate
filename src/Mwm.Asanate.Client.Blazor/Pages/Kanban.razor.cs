@@ -106,7 +106,6 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                     return new TskModel {
                         Id = t.Id,
                         Name = t.Name,
-                        ExternalId = t.ExternalId,
                         Status = t.Status,
                         DurationEstimate = t.DurationEstimate,
                         DurationCompleted = t.DurationCompleted,
@@ -116,6 +115,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                         StartedDate = t.StartedDate,
                         CompletedDate = t.CompletedDate,
                         InitiativeName = initiative?.Name,
+                        InitiativeExternalId = initiative?.ExternalId,
                         ProjectName = project?.Name,
                         CompanyName = company?.Name
                     };

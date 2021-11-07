@@ -95,6 +95,11 @@ namespace Mwm.Asana.Model {
                 if (subProjectAndTask.Length == 2) {
                     SubProjectName = subProjectAndTask[0];
                     name = subProjectAndTask[1];
+                    var subProjectAndExternalId = SubProjectName.Split("-");
+                    if (subProjectAndExternalId.Length == 2) {
+                        SubProjectName = subProjectAndExternalId[0] == "SHOP" || subProjectAndExternalId[0] == "BPS" ? "General" : subProjectAndExternalId[0];
+                        SubProjectExternalId = subProjectAndExternalId[1];
+                    }
                 }
             }
         }
@@ -107,6 +112,9 @@ namespace Mwm.Asana.Model {
         [JsonIgnore]
         public string SubProjectName { get; private set; }
 
+        [JsonIgnore]
+        public string SubProjectExternalId { get; private set; }
+
         [JsonProperty("workspace")]
         [AsanaProperty("workspace")]
         [JsonConverter(typeof(EntityConverter<AsanaWorkspace>))]
@@ -118,6 +126,19 @@ namespace Mwm.Asana.Model {
 
     }
 }
+
+//Positions-2274
+//RescindEmail-1697
+//AWS-666
+//Branch-2174
+//Partition-2043
+//SHOP-461
+//NoProcessors-2086
+//Decrypt-730
+//BPS-2053
+//BPS-2043
+//Git-2174
+//BPS-1272
 
 
 

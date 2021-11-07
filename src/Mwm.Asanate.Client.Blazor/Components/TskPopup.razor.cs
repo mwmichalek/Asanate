@@ -89,7 +89,6 @@ namespace Mwm.Asanate.Client.Blazor.Components {
 
                     EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
                         Name = TskModel.Name,
-                        ExternalId = TskModel.ExternalId,
                         Status = TskModel.Status,
                         DurationEstimate = TskModel.DurationEstimate,
                         DurationCompleted = TskModel.DurationCompleted,
@@ -105,7 +104,6 @@ namespace Mwm.Asanate.Client.Blazor.Components {
                     EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
                         Id = TskModel.Id,
                         Name = TskModel.Name,
-                        ExternalId = TskModel.ExternalId,
                         Status = TskModel.Status,
                         DurationEstimate = TskModel.DurationEstimate,
                         DurationCompleted = TskModel.DurationCompleted, 

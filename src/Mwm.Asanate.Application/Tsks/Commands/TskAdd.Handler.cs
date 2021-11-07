@@ -79,7 +79,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                 try {
                     var tsk = new Tsk {
                         Name = command.Name,
-                        ExternalId = command.ExternalId,
+                        //ExternalId = command.ExternalId,
                         Status = command.Status,
                         IsArchived = command.IsArchived.HasValue ? command.IsArchived.Value : false,
                         IsCompleted = command.IsCompleted.HasValue ? command.IsCompleted.Value : false,

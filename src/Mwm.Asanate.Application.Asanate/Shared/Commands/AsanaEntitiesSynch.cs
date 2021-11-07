@@ -182,6 +182,7 @@ namespace Mwm.Asanate.Application.Asana.Commands {
                             _logger.LogDebug($"New Initiative: {existingProject?.Name}");
                             existingInitiative = new Initiative {
                                 Name = asanaTsk.SubProjectName,
+                                ExternalId = asanaTsk.SubProjectExternalId,
                                 Project = existingProject
 
                             };

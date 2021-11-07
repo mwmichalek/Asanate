@@ -10,10 +10,7 @@ namespace Mwm.Asanate.Domain {
 
         public Tsk() { }
 
-        //Jira
-        public string ExternalId { get; set; }
-
-        public Status Status { get; set; }
+          public Status Status { get; set; }
 
         public bool IsArchived { get; set; }
 

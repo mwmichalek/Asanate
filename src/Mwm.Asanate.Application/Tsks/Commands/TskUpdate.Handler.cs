@@ -52,7 +52,7 @@ namespace Mwm.Asanate.Application.Tsks.Commands {
                         return Result.Fail(new Error($"Couldn't locate existing Tsk with Id:{command.Id}."));
 
                     if (command.Name != null) tsk.Name = command.Name;
-                    if (!string.IsNullOrEmpty(command.ExternalId)) tsk.ExternalId = command.ExternalId;
+                    //if (!string.IsNullOrEmpty(command.ExternalId)) tsk.ExternalId = command.ExternalId;
                     tsk.Status = command.Status;
                     if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;   
                     if (command.IsCompleted.HasValue) tsk.IsCompleted = command.IsCompleted.Value; 
