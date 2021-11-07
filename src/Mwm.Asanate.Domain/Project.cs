@@ -12,6 +12,8 @@ namespace Mwm.Asanate.Domain {
 
         public string ExternalIdPrexfix { get; set; }
 
+        public string ExternalAppBaseUrl { get; set; }
+
         public string Color { get; set; }
 
         public int CompanyId { get; set; }

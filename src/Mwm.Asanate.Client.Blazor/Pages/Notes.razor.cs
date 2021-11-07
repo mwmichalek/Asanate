@@ -83,12 +83,15 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
 
         private void UpdateProjectDropDown() {
             if (ProjectsState.HasValue()) {
-
-                ProjectDropDownEntities = ProjectsState.Value.Entities.Select(p => new DropDownEntity { Id = p.Id, Name = p.Name })
+                var index = 1;
+                ProjectDropDownEntities = ProjectsState.Value.Entities.OrderBy(p => p.Name)
+                                                                      .Select(p => p.ToDropDownEntity(index++))
+                                                                      .OrderBy(dde => dde.Index)
                                                                       .ToList();
+
                 // If Project hasn't been set yet, then set it to 'Generic' 
                 if (selectedProjectId == 0) {
-                    var genericProject = ProjectsState.Value.Entities.SingleOrDefault(p => p.Name == "Generic");
+                    var genericProject = ProjectsState.Value.Entities.SingleOrDefault(p => p.Name == Project.DefaultProjectName);
                     if (genericProject != null) {
                         selectedProjectId = genericProject.Id;
                         Logger.LogInformation($"Default Project: {genericProject.Id} {genericProject.Name}");
@@ -100,11 +103,18 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
         }
 
         private void UpdateInitiativeDropDown() {
+
+            var index = 1;
             InitiativeDropDownEntities = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
-                                                                        .Select(i => new DropDownEntity { Id = i.Id, Name = i.Name })
+                                                                        .OrderBy(i => i.Name)
+                                                                        .Select(i => i.ToDropDownEntity(index++))
+
                                                                         .ToList();
+
+            // Whenever you change projects default to Triage
             var triageInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
-                                                                                        i.Name == "Triage");
+                                                                                        i.Name == Initiative.DefaultInitiativeName);
+
             if (triageInitiative != null) {
                 selectedInitiativeId = triageInitiative.Id;
                 Logger.LogInformation($"Default Initiative: {triageInitiative.Id} {triageInitiative.Name}");
