@@ -79,8 +79,6 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             base.OnInitialized();
         }
 
-        
-
         private void UpdateProjectDropDown() {
             if (ProjectsState.HasValue()) {
                 var index = 1;
@@ -108,7 +106,7 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             InitiativeDropDownEntities = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
                                                                         .OrderBy(i => i.Name)
                                                                         .Select(i => i.ToDropDownEntity(index++))
-
+                                                                        .OrderBy(dde => dde.Index)
                                                                         .ToList();
 
             // Whenever you change projects default to Triage
