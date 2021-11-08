@@ -5,38 +5,39 @@
 @*<div id="header" style="height:55px;text-align: center;color:white;background-color: midnightblue;font-size:1.5rem;line-height:55px;">
     Header
 </div>*@
+<div class="main-page bg-dark">
+    <SfSidebar @ref="sidebarObj" Width="220px" DockSize="72px" EnableDock=true @bind-IsOpen="SidebarToggle">
+        <ChildContent>
+            <div class="dock">
+                <ul>
+                    <li class="sidebar-item" id="toggle" @onclick="Toggle">
+                        <span class="e-icons expand"></span>
+                        <span class="e-text" title="menu">Menu</span>
+                    </li>
+                    <li class="sidebar-item" @onclick='() => NavigateTo("kanban")'>
+                        <span class="e-icons e-selection" ></span>
+                        <span class="e-text e-link" title="kanban">Kanban</span>
+                    </li>
+                    <li class="sidebar-item" @onclick='() => NavigateTo("today")'>
+                        <span class="e-icons e-timeline-today"></span>
+                        <span class="e-text" title="today">Today</span>
+                    </li>
+                    <li class="sidebar-item" @onclick='() => NavigateTo("notes")'>
+                        <span class="e-icons e-list-unordered"></span>
+                        <span class="e-text" title="today">Notes</span>
+                    </li>
+                    <li class="sidebar-item" @onclick='() => NavigateTo("tree")'>
+                        <span class="e-icons e-align-left"></span>
+                        <span class="e-text" title="today">Tree</span>
+                    </li>
+                </ul>
+            </div>
+        </ChildContent>
+    </SfSidebar>
 
-<SfSidebar @ref="sidebarObj" Width="220px" DockSize="72px" EnableDock=true @bind-IsOpen="SidebarToggle">
-    <ChildContent>
-        <div class="dock">
-            <ul>
-                <li class="sidebar-item" id="toggle" @onclick="Toggle">
-                    <span class="e-icons expand"></span>
-                    <span class="e-text" title="menu">Menu</span>
-                </li>
-                <li class="sidebar-item" @onclick='() => NavigateTo("kanban")'>
-                    <span class="e-icons e-selection" ></span>
-                    <span class="e-text e-link" title="kanban">Kanban</span>
-                </li>
-                <li class="sidebar-item" @onclick='() => NavigateTo("today")'>
-                    <span class="e-icons e-timeline-today"></span>
-                    <span class="e-text" title="today">Today</span>
-                </li>
-                <li class="sidebar-item" @onclick='() => NavigateTo("notes")'>
-                    <span class="e-icons e-list-unordered"></span>
-                    <span class="e-text" title="today">Notes</span>
-                </li>
-                <li class="sidebar-item" @onclick='() => NavigateTo("tree")'>
-                    <span class="e-icons e-align-left"></span>
-                    <span class="e-text" title="today">Tree</span>
-                </li>
-            </ul>
-        </div>
-    </ChildContent>
-</SfSidebar>
-
-<div id="main-content container-fluid col-md-12" style="margin-top: 0%;">
-    <div class="title default" style="text-align: center">@Body</div>
+    <div id="page main-content container-fluid col-md-12" style="margin-top: 0%;">
+        <div class="title default" style="text-align: center">@Body</div>
+    </div>
 </div>
 
 @code {
