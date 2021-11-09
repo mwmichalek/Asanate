@@ -1,10 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Fixtures\**" />
+    <EmbeddedResource Remove="Fixtures\**" />
+    <None Remove="Fixtures\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
@@ -26,10 +32,6 @@
     <ProjectReference Include="..\..\src\Mwm.Asanate.Data\Mwm.Asanate.Data.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Persistance\Mwm.Asanate.Persistance.csproj" />
     <ProjectReference Include="..\..\src\Mwm.Asanate.Server\Mwm.Asanate.Server.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Fixtures\" />
   </ItemGroup>
 
 </Project>
