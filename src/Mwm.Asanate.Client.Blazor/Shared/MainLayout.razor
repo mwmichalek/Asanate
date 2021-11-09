@@ -5,7 +5,7 @@
 @*<div id="header" style="height:55px;text-align: center;color:white;background-color: midnightblue;font-size:1.5rem;line-height:55px;">
     Header
 </div>*@
-<div class="main-page bg-dark">
+<div class="main-page  bg-dark">
     <SfSidebar @ref="sidebarObj" Width="220px" DockSize="72px" EnableDock=true @bind-IsOpen="SidebarToggle">
         <ChildContent>
             <div class="dock">
@@ -36,7 +36,8 @@
     </SfSidebar>
 
     <div id="page main-content container-fluid col-md-12" style="margin-top: 0%;">
-        <div class="title default" style="text-align: center">@Body</div>
+        @*<div class="title default" style="text-align: center"></div>*@
+        @Body
     </div>
 </div>
 
