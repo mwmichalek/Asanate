@@ -46,13 +46,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2) Server", "2) Server", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Persistance", "src\Mwm.Asanate.Persistance\Mwm.Asanate.Persistance.csproj", "{E45635FD-E505-4306-ACF0-10BF25750C51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Blazor", "src\Mwm.Asanate.Client.Blazor\Mwm.Asanate.Client.Blazor.csproj", "{408C3676-F83E-49BE-8B35-F4FA5041BAA7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Tests", "test\Mwm.Asanate.Client.Tests\Mwm.Asanate.Client.Tests.csproj", "{0E1D7391-40B3-422B-88F9-6B0FAB9CDBF2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Application.Asanate", "src\Mwm.Asanate.Application.Asanate\Mwm.Asanate.Application.Asanate.csproj", "{6C72903D-12B6-4B2E-A4FE-09276BEDED82}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Service", "src\Mwm.Asanate.Client.Service\Mwm.Asanate.Client.Service.csproj", "{CC2C3493-0550-4946-A382-4D3822C53EE8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Blazor", "src\Mwm.Asanate.Client.Blazor\Mwm.Asanate.Client.Blazor.csproj", "{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,10 +104,6 @@ Global
 		{E45635FD-E505-4306-ACF0-10BF25750C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E45635FD-E505-4306-ACF0-10BF25750C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E45635FD-E505-4306-ACF0-10BF25750C51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{408C3676-F83E-49BE-8B35-F4FA5041BAA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{408C3676-F83E-49BE-8B35-F4FA5041BAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{408C3676-F83E-49BE-8B35-F4FA5041BAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{408C3676-F83E-49BE-8B35-F4FA5041BAA7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0E1D7391-40B3-422B-88F9-6B0FAB9CDBF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E1D7391-40B3-422B-88F9-6B0FAB9CDBF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E1D7391-40B3-422B-88F9-6B0FAB9CDBF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -120,6 +116,10 @@ Global
 		{CC2C3493-0550-4946-A382-4D3822C53EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC2C3493-0550-4946-A382-4D3822C53EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC2C3493-0550-4946-A382-4D3822C53EE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,10 +136,10 @@ Global
 		{7221A645-E467-4F90-80C6-E9588C8B72F3} = {9D9082E1-643D-491A-93AA-597306C83FA9}
 		{278A0C53-1990-409E-88CB-B29A2A368852} = {AFF2F29C-EFAA-49D8-A3AF-A730A71CF177}
 		{E45635FD-E505-4306-ACF0-10BF25750C51} = {9747AA1F-029F-4D44-8C38-6A75D12EFC65}
-		{408C3676-F83E-49BE-8B35-F4FA5041BAA7} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 		{0E1D7391-40B3-422B-88F9-6B0FAB9CDBF2} = {0354F159-A241-4289-9A73-8BE4BEF410CE}
 		{6C72903D-12B6-4B2E-A4FE-09276BEDED82} = {AFF2F29C-EFAA-49D8-A3AF-A730A71CF177}
 		{CC2C3493-0550-4946-A382-4D3822C53EE8} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
+		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAEC8625-EDFB-456B-96CF-330C9CC36C39}
