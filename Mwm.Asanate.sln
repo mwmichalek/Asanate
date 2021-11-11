@@ -54,6 +54,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Service"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.Asanate.Client.Blazor", "src\Mwm.Asanate.Client.Blazor\Mwm.Asanate.Client.Blazor.csproj", "{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncfusionBlazorApp", "src\SyncfusionBlazorApp\SyncfusionBlazorApp.csproj", "{04064BB1-EB9B-4E5A-B6A9-8280640067B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,10 @@ Global
 		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04064BB1-EB9B-4E5A-B6A9-8280640067B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04064BB1-EB9B-4E5A-B6A9-8280640067B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04064BB1-EB9B-4E5A-B6A9-8280640067B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04064BB1-EB9B-4E5A-B6A9-8280640067B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +146,7 @@ Global
 		{6C72903D-12B6-4B2E-A4FE-09276BEDED82} = {AFF2F29C-EFAA-49D8-A3AF-A730A71CF177}
 		{CC2C3493-0550-4946-A382-4D3822C53EE8} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
+		{04064BB1-EB9B-4E5A-B6A9-8280640067B1} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAEC8625-EDFB-456B-96CF-330C9CC36C39}
