@@ -90,10 +90,8 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
                 // If Project hasn't been set yet, then set it to 'Generic' 
                 if (selectedProjectId == 0) {
                     var genericProject = ProjectsState.Value.Entities.SingleOrDefault(p => p.Name == Project.DefaultProjectName);
-                    if (genericProject != null) {
-                        selectedProjectId = genericProject.Id;
-                        Logger.LogInformation($"Default Project: {genericProject.Id} {genericProject.Name}");
-                    }
+                    if (genericProject != null) 
+                        selectedProjectId = genericProject.Id;  
                 }
 
                 UpdateInitiativeDropDown();
@@ -113,10 +111,8 @@ namespace Mwm.Asanate.Client.Blazor.Pages {
             var triageInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
                                                                                         i.Name == Initiative.DefaultInitiativeName);
 
-            if (triageInitiative != null) {
+            if (triageInitiative != null) 
                 selectedInitiativeId = triageInitiative.Id;
-                Logger.LogInformation($"Default Initiative: {triageInitiative.Id} {triageInitiative.Name}");
-            }
         }
 
         public void Saved(EntityState<Tsk> entityState) {

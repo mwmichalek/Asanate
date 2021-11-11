@@ -10,41 +10,35 @@
 @page "/kanban"
 
 
-<h2 class="main-title">KANBAN</h2>
 <div class="row">
     <div class="col-lg-12">
         <div class="d-flex flex-row justify-content-center">
-        @if (IsLoading()) {
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        }
-        @if (HasErrors()) {
-            <span>Whoops! Looks like an issue occurred loading TskModels</span>
-        } else if (HasValues()) {
+            @if (IsLoading()) {
+                <div class="spinner-border" role="status">
+                    <span class="sr-only alert-light">Loading...</span>
+                </div>
+            }
+            @if (HasErrors()) {
+                <span>Whoops! Looks like an issue occurred loading TskModels</span>
+            } else if (HasValues()) {
 
-            <SfKanban @ref="KanbanBoard" TValue="TskModel" KeyField="StatusName"  @bind-DataSource="@TskModels">
-                <KanbanColumns>
-                    @foreach (var statusName in StatusNames) {
-                    <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
-                }
-                </KanbanColumns>
-                <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
+                <SfKanban @ref="KanbanBoard" TValue="TskModel" KeyField="StatusName" @bind-DataSource="@TskModels">
+                    <KanbanColumns>
+                        @foreach (var statusName in StatusNames) {
+                            <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
+                        }
+                    </KanbanColumns>
+                    <KanbanCardSettings HeaderField="Name" ContentField="Notes"></KanbanCardSettings>
 
-                <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
-                </KanbanSwimlaneSettings>
-                <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-            </SfKanban>
-        }
+                    <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
+                    </KanbanSwimlaneSettings>
+                    <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+                </SfKanban>
+
+            }
+        </div>
     </div>
-       
-
-    </div>
-
 </div>
-@*<div class="root-container">
-    
-</div>*@
 
 <Mwm.Asanate.Client.Blazor.Components.TskPopup @ref="TskPopup" />
 
