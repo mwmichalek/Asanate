@@ -26,7 +26,7 @@ namespace Mwm.MyQ.Application.Utils {
 
             asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.MyQ.Application"));
             if (includeAsana)
-                asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.MyQ.Application.MyQ"));
+                asms.Add(AppDomain.CurrentDomain.GetAssemblies().Single(alm => alm.GetName().Name == "Mwm.MyQ.Application.Asana"));
 
             services.AddMediatR(asms.ToArray());
 

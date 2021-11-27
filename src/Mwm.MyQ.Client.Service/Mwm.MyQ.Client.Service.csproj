@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mwm.MyQ.Application.MyQ\Mwm.MyQ.Application.MyQ.csproj" />
     <ProjectReference Include="..\Mwm.MyQ.Application\Mwm.MyQ.Application.csproj" />
     <ProjectReference Include="..\Mwm.MyQ.Domain\Mwm.MyQ.Domain.csproj" />
   </ItemGroup>

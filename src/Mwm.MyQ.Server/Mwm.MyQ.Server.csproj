@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Mwm.Asana.Model\Mwm.Asana.Model.csproj" />
     <ProjectReference Include="..\Mwm.Asana.Service\Mwm.Asana.Service.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Application.Asana\Mwm.MyQ.Application.Asana.csproj" />
     <ProjectReference Include="..\Mwm.MyQ.Application\Mwm.MyQ.Application.csproj" />
     <ProjectReference Include="..\Mwm.MyQ.Common\Mwm.MyQ.Common.csproj" />
     <ProjectReference Include="..\Mwm.MyQ.Data\Mwm.MyQ.Data.csproj" />

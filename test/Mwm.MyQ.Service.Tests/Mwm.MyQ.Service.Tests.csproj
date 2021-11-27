@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Mwm.MyQ.Application.MyQ\Mwm.MyQ.Application.MyQ.csproj" />
+    <ProjectReference Include="..\..\src\Mwm.MyQ.Application.Asana\Mwm.MyQ.Application.Asana.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Common\Mwm.MyQ.Common.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Data\Mwm.MyQ.Data.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Domain\Mwm.MyQ.Domain.csproj" />
