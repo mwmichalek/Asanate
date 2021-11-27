@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Extensions.Logging;
+//using Xunit.Extensions.Logging;
 using Mwm.Asana.Model.Converters;
 using Mwm.MyQ.Persistance.Shared;
 

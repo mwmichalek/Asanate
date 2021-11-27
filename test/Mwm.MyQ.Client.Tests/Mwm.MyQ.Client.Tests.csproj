@@ -27,11 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Mwm.Asana.Service\Mwm.Asana.Service.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Client.Service\Mwm.MyQ.Client.Service.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Data\Mwm.MyQ.Data.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Persistance\Mwm.MyQ.Persistance.csproj" />
-    <ProjectReference Include="..\..\src\Mwm.MyQ.Server\Mwm.MyQ.Server.csproj" />
   </ItemGroup>
 
 </Project>

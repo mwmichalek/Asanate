@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Mwm.MyQ.Application.Shared.Commands;
 using Mwm.MyQ.Domain;
-using Microsoft.Extensions.Logging;
 using Mwm.MyQ.Application.Interfaces.Persistance;
 using Mwm.MyQ.Application.Utils;
 using System.Threading;
