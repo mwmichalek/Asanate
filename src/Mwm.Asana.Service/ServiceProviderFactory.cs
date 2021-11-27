@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Mwm.Asana.Model;
 //using Mwm.Asana.Service;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Mwm.Asana.Service;
 
-namespace Mwm.Asanate.Service {
+namespace Mwm.MyQ.Service {
     public class ServiceProviderFactory {
 
         public static IServiceProvider Build() {

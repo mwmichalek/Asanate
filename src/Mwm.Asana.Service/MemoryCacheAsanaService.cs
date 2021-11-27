@@ -1,4 +1,4 @@
-﻿using FluentResults;
+using FluentResults;
 using Mwm.Asana.Model;
 using Mwm.Asana.Service;
 using Newtonsoft.Json;
@@ -11,9 +11,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Mwm.Asanate.Common.Utils;
+using Mwm.MyQ.Common.Utils;
 
-namespace Mwm.Asanate.Service {
+namespace Mwm.MyQ.Service {
 
     public class MemoryCacheAsanaService<TEntity> : AsanaService<TEntity> where TEntity : IAsanaEntity {
 

@@ -1,4 +1,4 @@
-﻿using FluentResults;
+using FluentResults;
 using Mwm.Asana.Model;
 using Mwm.Asana.Model.Converters;
 using Mwm.Asana.Service;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Mwm.Asanate.Service.Tests {
+namespace Mwm.MyQ.Service.Tests {
     public class AsanaServiceTests {
 
         private readonly ITestOutputHelper output;

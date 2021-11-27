@@ -1,4 +1,4 @@
-﻿using FluentResults;
+using FluentResults;
 using Mwm.Asana.Model;
 using Mwm.Asana.Service;
 using Newtonsoft.Json;
@@ -11,12 +11,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.Asanate.Service {
+namespace Mwm.MyQ.Service {
 
     [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
     public class FileCacheAsanaService<TEntity> : AsanaService<TEntity> where TEntity : IAsanaEntity {
 
-        private const string CACHE_DIRECTORY = @"C:\Projects\MWM\Asanate\Mwm.Asanate\data";
+        private const string CACHE_DIRECTORY = @"C:\Projects\MWM\MyQ\Mwm.MyQ\data";
         //private DateTime previousFetchTime;
 
         private Dictionary<string, TEntity> entitiesLookup;

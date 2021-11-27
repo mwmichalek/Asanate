@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Store\State\TodosState.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fluxor" Version="4.2.0" />
+    <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <!--<PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />-->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mwm.MyQ.Application.MyQ\Mwm.MyQ.Application.MyQ.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Application\Mwm.MyQ.Application.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Domain\Mwm.MyQ.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

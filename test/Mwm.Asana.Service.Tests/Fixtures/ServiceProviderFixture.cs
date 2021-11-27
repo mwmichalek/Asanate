@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Mwm.Asanate.Service.Tests.Fixtures {
+namespace Mwm.MyQ.Service.Tests.Fixtures {
     public class ServiceProviderFixture : IDisposable {
 
         public IServiceProvider ServiceProvider { get; private set; }

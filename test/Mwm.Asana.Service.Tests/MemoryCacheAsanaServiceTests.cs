@@ -1,4 +1,4 @@
-﻿using Mwm.Asana.Model;
+using Mwm.Asana.Model;
 using Mwm.Asana.Service;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Mwm.Asanate.Service.Tests {
+namespace Mwm.MyQ.Service.Tests {
     public class MemoryCacheAsanaServiceTests {
 
         private readonly ITestOutputHelper output;
