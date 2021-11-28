@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 //using Xunit.Extensions.Logging;
-using Mwm.Asana.Model.Converters;
+//using Mwm.Asana.Model.Converters;
 using Mwm.MyQ.Persistance.Shared;
 using Mwm.MyQ.Application.Asana.Commands;
 
@@ -31,18 +31,18 @@ namespace Mwm.MyQ.Service.Tests.Mediator.Commands {
             _output = output;
         }
 
-        [Fact]
+        [Fact(Skip ="Danger")]
         public void CreateNewDatabase() {
             _databaseContext.RecreateDatabase();
         }
 
-        [Fact]
+        [Fact(Skip = "Danger")]
         public async Task ReRunSynch() {
             _databaseContext.EnsureCreated();
             await RunSynch();
         }
 
-        [Fact]
+        [Fact(Skip = "Danger")]
         public async Task CreateNewDatabaseAndRunSynch() {
             _databaseContext.RecreateDatabase();
             await RunSynch();
