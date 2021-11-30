@@ -46,7 +46,6 @@
     <ProjectReference Include="..\..\src\Mwm.MyQ.Common\Mwm.MyQ.Common.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Data\Mwm.MyQ.Data.csproj" />
     <ProjectReference Include="..\..\src\Mwm.MyQ.Domain\Mwm.MyQ.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Mwm.MyQ.Server\Mwm.MyQ.Server.csproj" />
   </ItemGroup>
 
 </Project>
