@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Client.Blazor", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Application.Asana", "src\Mwm.MyQ.Application.Asana\Mwm.MyQ.Application.Asana.csproj", "{EEB9DA15-A167-4405-A536-C8C01FE6D7C8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Server", "src\Mwm.MyQ.Server\Mwm.MyQ.Server.csproj", "{121C40D0-BA5A-47E5-9605-C5A8704BAAFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{EEB9DA15-A167-4405-A536-C8C01FE6D7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEB9DA15-A167-4405-A536-C8C01FE6D7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEB9DA15-A167-4405-A536-C8C01FE6D7C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{121C40D0-BA5A-47E5-9605-C5A8704BAAFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{121C40D0-BA5A-47E5-9605-C5A8704BAAFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{121C40D0-BA5A-47E5-9605-C5A8704BAAFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{121C40D0-BA5A-47E5-9605-C5A8704BAAFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +138,7 @@ Global
 		{CC2C3493-0550-4946-A382-4D3822C53EE8} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 		{7C1604A4-AA0A-4E9A-B10A-49D400EA0F5B} = {577E2C42-F120-4B3E-9FAF-4327FE891C51}
 		{EEB9DA15-A167-4405-A536-C8C01FE6D7C8} = {AFF2F29C-EFAA-49D8-A3AF-A730A71CF177}
+		{121C40D0-BA5A-47E5-9605-C5A8704BAAFD} = {D42533F4-4203-45D6-907B-310F2095E75B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAEC8625-EDFB-456B-96CF-330C9CC36C39}
