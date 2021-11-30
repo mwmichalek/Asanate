@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8) Common", "8) Common", "{FFD9D25E-4952-4A18-AC28-381ED9E25525}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9) Tests", "9) Tests", "{0354F159-A241-4289-9A73-8BE4BEF410CE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Data", "src\Mwm.MyQ.Data\Mwm.MyQ.Data.csproj", "{D9A1E5B1-965C-4641-B4C9-805FD9E423F5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Server", "src\Mwm.MyQ.Server\Mwm.MyQ.Server.csproj", "{76927701-CD9E-42F0-BFC1-3B343670BC30}"
