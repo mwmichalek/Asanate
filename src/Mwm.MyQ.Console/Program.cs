@@ -35,6 +35,8 @@ namespace Mwm.MyQ.Console {
             };
 
             var result = await mediator.Send(command);
+
+            // Lets see if this triggers a build.
         }
 
         private static ServiceProvider BuildServiceProvider() {
