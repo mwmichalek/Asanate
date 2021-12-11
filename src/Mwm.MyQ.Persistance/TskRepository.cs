@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Mwm.MyQ.Domain;
 using Mwm.MyQ.Persistance.Shared;
 using System;

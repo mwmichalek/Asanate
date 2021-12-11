@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using System;
 using FluentResults;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-using Mwm.MyQ.Domain;
+﻿using Mwm.MyQ.Domain;
 
 namespace Mwm.MyQ.Client.Blazor.Models.Shared {
     public class DropDownEntity {

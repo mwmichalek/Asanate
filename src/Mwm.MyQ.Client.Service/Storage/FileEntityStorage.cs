@@ -1,4 +1,4 @@
-using Mwm.MyQ.Domain;
+﻿using Mwm.MyQ.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

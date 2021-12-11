@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 using Mwm.MyQ.Domain;
 using Newtonsoft.Json;

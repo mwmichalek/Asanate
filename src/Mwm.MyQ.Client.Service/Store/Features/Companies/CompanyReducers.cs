@@ -1,4 +1,4 @@
-using Fluxor;
+﻿using Fluxor;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;

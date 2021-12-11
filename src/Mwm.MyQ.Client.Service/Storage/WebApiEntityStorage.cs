@@ -1,4 +1,4 @@
-using Mwm.MyQ.Application.Shared.Commands;
+﻿using Mwm.MyQ.Application.Shared.Commands;
 using Mwm.MyQ.Domain;
 using Newtonsoft.Json;
 using System;

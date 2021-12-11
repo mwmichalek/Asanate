@@ -1,4 +1,4 @@
-using FluentResults;
+﻿using FluentResults;
 using Mwm.MyQ.Application.Shared.Commands;
 using Mwm.MyQ.Domain;
 using System;

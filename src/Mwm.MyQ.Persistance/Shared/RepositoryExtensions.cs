@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.Extensions.DependencyInjection;
 using Mwm.MyQ.Application.Interfaces.Persistance;
 using Mwm.MyQ.Domain;

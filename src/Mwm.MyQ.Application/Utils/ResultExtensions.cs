@@ -1,4 +1,4 @@
-using FluentResults;
+﻿using FluentResults;
 using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;

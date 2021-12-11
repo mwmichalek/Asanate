@@ -1,4 +1,4 @@
-using Mwm.MyQ.Domain;
+﻿using Mwm.MyQ.Domain;
 using Mwm.MyQ.Application.Shared.Commands;
 using System;
 using System.Collections.Generic;
