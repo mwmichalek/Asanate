@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluxor" Version="4.2.0" />
-    <PackageReference Include="Fluxor.Blazor.Web" Version="4.2.0" />
+    <PackageReference Include="Fluxor" Version="4.2.1" />
+    <PackageReference Include="Fluxor.Blazor.Web" Version="4.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
@@ -25,12 +25,12 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />-->
     
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.3.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Kanban" Version="19.3.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="19.3.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.3.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="19.3.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="19.3.0.48" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.3.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Kanban" Version="19.3.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="19.3.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="19.3.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="19.3.0.57" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="19.3.0.57" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <!--<PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />-->
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
