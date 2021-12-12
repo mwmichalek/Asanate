@@ -19,6 +19,15 @@
     <PackageReference Include="Syncfusion.Blazor.Popups" Version="19.3.0.57" />
     <PackageReference Include="Syncfusion.Blazor.Kanban" Version="19.3.0.57" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mwm.MyQ.Application\Mwm.MyQ.Application.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Client.Service\Mwm.MyQ.Client.Service.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Common\Mwm.MyQ.Common.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Data\Mwm.MyQ.Data.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Domain\Mwm.MyQ.Domain.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Persistance\Mwm.MyQ.Persistance.csproj" />
+  </ItemGroup>
   
   
 

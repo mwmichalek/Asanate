@@ -1,0 +1,80 @@
+﻿@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.RichTextEditor
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.DropDowns
+
+@if (TskModel != null) {
+    <SfDialog @ref="Dialog" Height="50%" Width="50%" Target="#target" IsModal="true" ShowCloseIcon="true" @bind-Visible="@IsDialogShowing" >
+        <DialogTemplates>
+            <Header>
+                @if (IsNew) {
+                    <h2>ADD TSK</h2>
+                } else {
+                    <h2>UPDATE TSK</h2>
+                }
+            </Header>
+            <Content>
+                <div class="dialogContent">
+
+                    <div class="container">
+                        <EditForm id="form " Model="@TskModel" OnValidSubmit="@Save">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="externalId">External ID:</label>
+                                    @TskModel.InitiativeExternalId
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <label for="name">Name:</label>
+                                    <SfTextBox Id="name" class="form-control" Placeholder="Name" @bind-Value="@TskModel.Name" @onkeydown="KeyboardEventHandler"></SfTextBox >
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="dueDate">Due Date:</label>
+                                    <SfDatePicker ID="dueDate" TValue="DateTime?" @bind-Value="@TskModel.DueDate" Placeholder='Choose a Date'></SfDatePicker>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="startDate">Start Date:</label>
+                                    <SfDatePicker ID="startDate" TValue="DateTime?" @bind-Value="@TskModel.StartDate" Placeholder='Choose a Date'></SfDatePicker>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="startDate">Started Date:</label>
+                                    @TskModel.StartedDate?.ToString("MM-dd-YYYY");
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="completedDate">Completed Date:</label>
+                                    <SfDatePicker ID="completedDate" TValue="DateTime?" @bind-Value="@TskModel.CompletedDate" Placeholder='Choose a Date'></SfDatePicker>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="durationEstimate">Duration Estimate:</label>
+                                    <SfDropDownList ID="durationEstimate" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationEstimate" Placeholder="Duration in hours" DataSource="@DurationDropDown">
+                                    </SfDropDownList>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="durationCompleted">Duration Completed:</label>
+                                    <SfDropDownList ID="durationCompleted" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationCompleted" Placeholder="Duration in hours" DataSource="@DurationDropDown">
+                                    </SfDropDownList>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes:</label>
+                                <SfRichTextEditor @ref="TextEditor" @bind-Value="@TskModel.Notes" />
+                            </div>
+                        </EditForm>
+                    </div>
+
+                </div>
+            </Content>
+            <FooterTemplate>
+                <SfButton class="e-control e-btn e-success" @onclick="@Save">SAVE</SfButton>
+                <SfButton class="e-control e-btn e-secondary" @onclick="@Close">CLOSE</SfButton>
+            </FooterTemplate>
+        </DialogTemplates>
+        <DialogEvents Closed="@DialogCloseHandler"></DialogEvents>
+    </SfDialog>
+}
