@@ -5,7 +5,10 @@
     <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
             <button class="navbar-toggler" @onclick="ToggleNavMenu" />
-            <a class="navbar-brand" href=""><span class="displayText">SyncfusionBlazorApp303</span></a>
+            <a class="navbar-brand" href="">
+                MyQlone
+               @* <span class="displayText"></span>*@
+            </a>
         </div>
         <div @onmouseover="MouseIn" @onmouseout="MouseOut">
             <NavMenu />
@@ -13,30 +16,12 @@
     </div>
 </SfSidebar>
 <div class="main">
-   <div class="top-row px-4 bg-dark" style="z-index:1111;padding-top:0px;">
-        <a class="link-danger" href="https://www.syncfusion.com/blazor-components/" target="_blank">Blazor Components</a>
-        <a href="https://blazor.syncfusion.com/documentation/" target="_blank">User Guide</a>
-        <a href="http://blazor.syncfusion.com/" target="_blank">View Demos</a>
-    </div>
-
+   <TopMenu />
     <div class="content px-4">
         @Body
     </div>
 </div>
 <style>
-    .sidebar {
-        
-    }
-
-    .navbar-toggler {
-       
-    }
-
-
-    /* Content area styles */
-    .title {
-        font-size: 20px;
-    }
 
     /* Sidebar styles */
     .e-sidebar .e-icons::before {
