@@ -6,10 +6,11 @@
 @using Syncfusion.Blazor.Layouts
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Cards
 @page "/"
 @page "/kanban"
 
-<div class="row">
+<div clabottomottom">
     <div class="col-lg-12">
         <div class="d-flex flex-row justify-content-center">
             @if (IsLoading()) {
@@ -31,20 +32,35 @@
                         <Template>
                             @{
                                 TskModel data = (TskModel)context;
-                                <article class="stat-cards-item">
-         
-                                  <div class="stat-cards-info">
-                                    <p class="stat-cards-info__num">@data.Name</p>
-                                    <p class="stat-cards-info__title">@data.InitiativeName</p>
-                                    <p class="stat-cards-info__progress">
-                                      <span class="stat-cards-info__profit success">
-                                        <i data-feather="trending-up" aria-hidden="true"></i>@data.DurationEstimate
-                                      </span>
-                                      Last month
-                                    </p>
-                                  </div> 
-                                </article>
-            
+
+                                TODO FIX ME!!!!!!
+
+                               <SfCard>
+                                    <CardHeader Title="@data.Name" SubTitle="@data.InitiativeName" />
+                                    <CardContent EnableSeparator="true"></CardContent>
+                                    <CardContent>
+                                        <table style="margin-bottom: 10px;">
+                                            <tr>
+                                                <td>
+                                                    <div class="TempClass">@data.DurationEstimate hr</div>
+                                                </td>
+                  
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span class="RainImage"></span>
+                                                    <span class="RainText">2% preciptation</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </CardContent>
+                                    <CardContent EnableSeparator="true"></CardContent>
+                                    <CardFooter>
+                                        <CardFooterContent>
+                                            Footer
+                                        </CardFooterContent>
+                                    </CardFooter>
+                                </SfCard>
                             }
                         </Template>
                     </KanbanCardSettings>
@@ -65,6 +81,14 @@
 
     .e-kanban-header {
         margin-top: 10px;
+    }
+
+    .e-kanban {
+        border-radius: 10px;
+    }
+
+    .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card, .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card {
+        margin-bottom: 0px;
     }
 
 </style>
