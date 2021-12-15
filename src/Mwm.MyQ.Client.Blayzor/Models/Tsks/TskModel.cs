@@ -50,10 +50,13 @@ namespace Mwm.MyQ.Client.Blayzor.Models.Tsks {
 
         public string InitiativeExternalId { get; set; }
 
+        public string InitiativeExternalLink { get; set; }
 
         public int? ProjectId { get; set; }
 
         public string ProjectName { get; set; }
+
+        public string ProjectColor { get; set; }
 
         public string CompanyName { get; set; }
     }

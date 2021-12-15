@@ -150,7 +150,9 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                                 Company = _companyRepository.GetByName(asanaProject.Company),
                                 Color = asanaProject.Color,
                                 ExternalIdPrexfix = (asanaProject.Company == "KMV") ? "SHOP" :
-                                                    (asanaProject.Company == "Blackstone") ? "BPS" : null
+                                                    (asanaProject.Company == "Blackstone") ? "BPS" : null,
+                                ExternalAppBaseUrl = (asanaProject.Company == "KMV") ? "https://kmv-digital.atlassian.net/browse/" :
+                                                    (asanaProject.Company == "Blackstone") ? "https://blackstone.jira.com/browse/" : null
                             };
                             newProject.Initiatives.Add(new Initiative {
                                 Name = Initiative.DefaultInitiativeName

@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Syncfusion.Blazor.Popups;
 using Mwm.MyQ.Client.Blayzor.Components;
+using Mwm.MyQ.Client.Blayzor.Helpers;
 
 namespace Mwm.MyQ.Client.Blayzor.Pages {
     public partial class Kanban : FluxorComponent {
@@ -109,13 +110,14 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                         Status = t.Status,
                         DurationEstimate = t.DurationEstimate,
                         DurationCompleted = t.DurationCompleted,
-                        Notes = t.Notes,    
+                        Notes = t.Notes,
                         DueDate = t.DueDate,
                         StartDate = t.StartDate,
                         StartedDate = t.StartedDate,
                         CompletedDate = t.CompletedDate,
                         InitiativeName = initiative?.Name,
-                        InitiativeExternalId = initiative?.ExternalId,
+                        InitiativeExternalId = EntityHelpers.ToExternalId(initiative, project),
+                        InitiativeExternalLink = EntityHelpers.ToExternalLink(initiative, project),
                         ProjectName = project?.Name,
                         CompanyName = company?.Name
                     };
