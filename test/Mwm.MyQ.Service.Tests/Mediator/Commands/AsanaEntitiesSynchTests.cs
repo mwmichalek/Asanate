@@ -31,7 +31,7 @@ namespace Mwm.MyQ.Service.Tests.Mediator.Commands {
             _output = output;
         }
 
-        [Fact(Skip ="Danger")]
+        [Fact]
         public void CreateNewDatabase() {
             _databaseContext.RecreateDatabase();
         }
@@ -42,7 +42,7 @@ namespace Mwm.MyQ.Service.Tests.Mediator.Commands {
             await RunSynch();
         }
 
-        [Fact(Skip = "Danger")]
+        [Fact]
         public async Task CreateNewDatabaseAndRunSynch() {
             _databaseContext.RecreateDatabase();
             await RunSynch();

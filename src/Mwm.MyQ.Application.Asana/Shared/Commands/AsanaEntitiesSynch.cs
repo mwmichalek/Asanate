@@ -83,21 +83,28 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                     foreach (var asanaUser in asanaUsers) {
                         var existingUser = _userRepository.GetByGid(asanaUser.Gid);
                         var firstAndLast = asanaUser.Name.Split(" ");
-                        if (existingUser == null) {
-                            _logger.LogDebug($"Adding User: {asanaUser.Name}");
-                            _userRepository.Add(new User {
-                                Name = asanaUser.Name,
-                                Gid = asanaUser.Gid,
-                                FirstName = firstAndLast[0],
-                                LastName = firstAndLast[1]
-                            });
-                            requiresSaving = true;
-                        } else {
-                            _logger.LogDebug($"Updating User: {asanaUser.Name}");
-                            existingUser.Name = asanaUser.Name;
-                            existingUser.FirstName = firstAndLast[0];
-                            existingUser.LastName = firstAndLast[1];
-                            requiresSaving = true;
+                        if (firstAndLast.Length == 2)
+                        {
+                            if (existingUser == null)
+                            {
+                                _logger.LogDebug($"Adding User: {asanaUser.Name}");
+                                _userRepository.Add(new User
+                                {
+                                    Name = asanaUser.Name,
+                                    Gid = asanaUser.Gid,
+                                    FirstName = firstAndLast[0],
+                                    LastName = firstAndLast[1]
+                                });
+                                requiresSaving = true;
+                            }
+                            else
+                            {
+                                _logger.LogDebug($"Updating User: {asanaUser.Name}");
+                                existingUser.Name = asanaUser.Name;
+                                existingUser.FirstName = firstAndLast[0];
+                                existingUser.LastName = firstAndLast[1];
+                                requiresSaving = true;
+                            }
                         }
                     }
 
