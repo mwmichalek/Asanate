@@ -148,6 +148,7 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                                 Name = asanaProject.Name,
                                 Gid = asanaProject.Gid,
                                 Company = _companyRepository.GetByName(asanaProject.Company),
+                                Color = asanaProject.Color,
                                 ExternalIdPrexfix = (asanaProject.Company == "KMV") ? "SHOP" :
                                                     (asanaProject.Company == "Blackstone") ? "BPS" : null
                             };
