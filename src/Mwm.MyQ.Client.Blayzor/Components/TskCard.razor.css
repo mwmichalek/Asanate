@@ -1,10 +1,7 @@
 ﻿
 
-.tailwind-dark .e-kanban .e-kanban-header .e-header-cells .e-item-count,
-.tailwind .e-kanban .e-kanban-header .e-header-cells .e-item-count,
-.bootstrap5-dark .e-kanban .e-kanban-header .e-header-cells .e-item-count,
-.bootstrap5 .e-kanban .e-kanban-header .e-header-cells .e-item-count {
-    margin-top: 3px;
+a, .btn-link {
+    color: lightblue;
 }
 
 .e-kanban .header-template-wrap {

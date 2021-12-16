@@ -21,7 +21,6 @@
             @if (HasErrors()) {
                 <span>Whoops! Looks like an issue occurred loading TskModels</span>
             } else if (HasValues()) {
-
                 <SfKanban @ref="KanbanBoard" TValue="TskModel" KeyField="StatusName" @bind-DataSource="@TskModels">
                     <KanbanColumns>
                         @foreach (var statusName in StatusNames) {
@@ -31,48 +30,7 @@
                     <KanbanCardSettings HeaderField="Name" ContentField="Notes">
                         <Template>
                             @{
-                                TskModel tskModel = (TskModel)context;
-
-                                <Mwm.MyQ.Client.Blayzor.Components.TskCard TskModel="tskModel" />
-
-                                <!--div-- class="card-template">
-                                    <div class="e-card-header">
-                                        <div class="e-card-header-caption">
-                                            <small class="text-secondary card-card-subtitle">@tskModel.InitiativeName</small>
-                                            <div class="e-card-header-title e-tooltip-text">@tskModel.Name</div>
-                                        </div>
-                                    </div>
-                                    <div class="e-card-content" style="background-color: brown;">
-                                        <div class="e-text e-tooltip-text">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-2" style="background-color: blue;">
-                                                        1
-                                                    </div>
-                                                    <div class="col-6" style="background-color: red;">
-                                                        2
-                                                    </div>
-                                                    <div class="col-4" style="background-color: orange;">
-                                                        3
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-2">
-                                                    <div class="col-4">
-                                                        <span class="badge rounded-pill bg-primary">4 / 10</span>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <span class="text-light">12/01/2021</span>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <a target="_blank" class="link-light" href="@tskModel.InitiativeExternalLink">@tskModel.InitiativeExternalId</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </!--div-->
-
+                                <Mwm.MyQ.Client.Blayzor.Components.TskCard TskModel="(TskModel)context" />
                             }
                         </Template>
                     </KanbanCardSettings>
@@ -81,7 +39,6 @@
                     </KanbanSwimlaneSettings>
                     <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
                 </SfKanban>
-
             }
         </div>
     </div>
