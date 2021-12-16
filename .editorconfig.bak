@@ -5,6 +5,3 @@ dotnet_diagnostic.CS8632.severity = none
 
 # Default severity for analyzer diagnostics with category 'Style'
 dotnet_analyzer_diagnostic.category-Style.severity = silent
-
-[*.cs]
-csharp_style_namespace_declarations = file_scoped:warning
