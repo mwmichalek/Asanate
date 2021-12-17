@@ -13,6 +13,8 @@ using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using System.Collections.Generic;
 using Mwm.MyQ.Client.Blayzor.Models.Shared;
 using System.Linq;
+using System.Threading.Tasks;
+using Syncfusion.Blazor.Inputs;
 
 namespace Mwm.MyQ.Client.Blayzor.Pages {
     public partial class Notes : FluxorComponent {
@@ -35,7 +37,17 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         [Inject]
         public EntityStateFacade EntityStateFacade { get; set; }
 
-        public TskModel NewTskModel { get; set; } = new TskModel();
+        private SfTextBox refTskName;
+
+        private SfTextBox refTskEstimatedDuration;
+
+        public string NewTskName { get; set; } = string.Empty;
+
+        public string PendingTskName { get; set; } = string.Empty;
+
+        public string NewTskEstimatedDuration { get; set; }
+
+        public string NewTskStatus { get; set; } = Status.Open.ToStr();
 
         public List<TskModel> SavedTskModels { get; set; } = new List<TskModel>();
 
@@ -73,7 +85,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             TsksState.StateChanged += (s, e) => Saved(e);
             InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
             ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
-
             UpdateProjectDropDown();
 
             base.OnInitialized();
@@ -83,7 +94,7 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             if (ProjectsState.HasValue()) {
                 var index = 1;
                 ProjectDropDownEntities = ProjectsState.Value.Entities.OrderBy(p => p.Name)
-                                                                      .Select(p => p.ToDropDownEntity(index++))
+                                                                      .Select(p => p.ToDropDownEntity(CompaniesState, index++))
                                                                       .OrderBy(dde => dde.Index)
                                                                       .ToList();
 
@@ -100,46 +111,80 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
         private void UpdateInitiativeDropDown() {
 
-            var index = 1;
-            InitiativeDropDownEntities = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
-                                                                        .OrderBy(i => i.Name)
-                                                                        .Select(i => i.ToDropDownEntity(index++))
-                                                                        .OrderBy(dde => dde.Index)
-                                                                        .ToList();
+            if (InitiativesState.HasValue()) {
+                var index = 1;
+                InitiativeDropDownEntities = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
+                                                                            .OrderBy(i => i.Name)
+                                                                            .Select(i => i.ToDropDownEntity(index++))
+                                                                            .OrderBy(dde => dde.Index)
+                                                                            .ToList();
 
-            // Whenever you change projects default to Triage
-            var triageInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
-                                                                                        i.Name == Initiative.DefaultInitiativeName);
+                // Whenever you change projects default to Triage
+                var triageInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
+                                                                                            i.Name == Initiative.DefaultInitiativeName);
 
-            if (triageInitiative != null) 
-                selectedInitiativeId = triageInitiative.Id;
+                if (triageInitiative != null)
+                    selectedInitiativeId = triageInitiative.Id;
+            }
         }
+
+        
+
+        public async Task Saving() {
+            try {
+                if (!string.IsNullOrEmpty(NewTskName)) {
+                    Logger.LogInformation($"Pending item: {NewTskName}");
+                    float.TryParse(NewTskEstimatedDuration, out float estimatedDuration);
+                    var tskStatus = NewTskStatus.ToStatus();
+
+                    EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
+                        Name = NewTskName,
+                        DurationEstimate = estimatedDuration > 0 ? estimatedDuration : null,
+                        Status = tskStatus,
+                        InitiativeId = selectedInitiativeId
+                    });
+                    PendingTskName = NewTskName;
+                    NewTskName = string.Empty; 
+                    NewTskEstimatedDuration = string.Empty;
+                    StateHasChanged();
+                    await refTskName.FocusAsync();
+                }
+            } catch (Exception ex) {
+                Logger.LogError($"Unable to update: {NewTskName}, {ex}");
+            }
+        }
+
+        private void TskNameChanged(InputEventArgs args) => NewTskName = args.Value;
+
+        private void TskDurationEstimateChanged(InputEventArgs args) => NewTskEstimatedDuration = args.Value;
 
         public void Saved(EntityState<Tsk> entityState) {
             if (entityState.CurrentEntity != null &&
-                entityState.CurrentEntity.Name == NewTskModel.Name) {
-                NewTskModel = new TskModel();
-                SavedTskModels.Insert(0, NewTskModel);
-            }
-        }
+                entityState.CurrentEntity.Name == PendingTskName) {
+                Logger.LogInformation($"Adding item to list: {PendingTskName}");
 
-        public void Save() {
-            try {
-                Logger.LogInformation($"Add: {NewTskModel.Name}");
+                var tsk = entityState.CurrentEntity;
 
-                EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
-                    Name = NewTskModel.Name,
-                    DurationEstimate = NewTskModel.DurationEstimate,
-                    InitiativeId = selectedInitiativeId
+                Initiative initiative = InitiativesState.FindById(tsk.InitiativeId);
+                Project project = (initiative != null) ? ProjectsState.FindById(initiative.ProjectId) : null;
+                Company company = (project != null) ? CompaniesState.FindById(project.CompanyId) : null;
+
+                SavedTskModels.Insert(0, new TskModel {
+                    Name = tsk.Name,
+                    InitiativeName = initiative.Name,
+                    ProjectName = project.Name,
+                    CompanyName = company.Name,
+                    DurationEstimate = tsk.DurationEstimate,
+                    Status = tsk.Status
                 });
-            } catch (Exception ex) {
-                Logger.LogError($"Unable to update: {NewTskModel.Name}, {ex}");
+                PendingTskName = string.Empty;
             }
         }
 
-        public void KeyboardEventHandler(KeyboardEventArgs args) {
+        public async Task KeyboardEventHandler(KeyboardEventArgs args) {
             if (args.Key == "Enter")
-                Save();
+                await Saving();
+            return;
         }
     }
 }

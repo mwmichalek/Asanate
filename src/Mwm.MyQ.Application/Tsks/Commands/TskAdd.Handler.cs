@@ -104,7 +104,7 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
                     if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;
                     _tskRepository.Add(tsk);
                     await _tskRepository.SaveAsync();
-                    _logger.LogInformation($"Tsk Added: {tsk.Name}");
+                    _logger.LogInformation($"Tsk Added: {tsk.Name} with DurationEstimate: {tsk.DurationEstimate}");
                     return Result.Ok(tsk.Id).WithSuccess(tsk.ToSuccess(ResultAction.Add));
                 } catch (Exception ex) {
                     _logger.LogError($"Tsk Addition Failure: {ex}");

@@ -1,4 +1,7 @@
-﻿using Mwm.MyQ.Domain;
+﻿using Fluxor;
+using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
+using Mwm.MyQ.Client.Service.Store.State.Shared;
+using Mwm.MyQ.Domain;
 
 namespace Mwm.MyQ.Client.Blayzor.Models.Shared {
     public class DropDownEntity {
@@ -12,10 +15,11 @@ namespace Mwm.MyQ.Client.Blayzor.Models.Shared {
 
     public static class DropDownEntityExtensions {
 
-        public static DropDownEntity ToDropDownEntity(this Project project, int index) {
+        public static DropDownEntity ToDropDownEntity(this Project project, IState<EntityState<Company>> CompaniesState, int index) {
+            Company company = (project != null) ? CompaniesState.FindById(project.CompanyId) : null;
             if (project.Name == Project.DefaultProjectName) 
                 return new DropDownEntity { Id = project.Id, Name = $"- {project.Name} -" };
-            return new DropDownEntity { Id = project.Id, Name = project.Name, Index = index };
+            return new DropDownEntity { Id = project.Id, Name = $"{company.Name} - {project.Name}", Index = index };
         }
 
         public static DropDownEntity ToDropDownEntity(this Initiative initiative, int index) {

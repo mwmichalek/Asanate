@@ -215,7 +215,7 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                                 CompletedDate = asanaTsk.CompletedAt.ToDateTime(),
                                 IsArchived = asanaTsk.IsCompleted,
                                 CreatedDate = asanaTsk.CreatedAt.ToDateTime().Value,
-                                DueDate = asanaTsk.CreatedAt.ToDateTime(),
+                                DueDate = asanaTsk.DueOn.ToDateTime(),
                                 StartedDate = asanaTsk.StartedOn.ToDateTime(),
                                 Initiative = existingInitiative,
                                 AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name),
@@ -230,7 +230,7 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                             existingTsk.CompletedDate = asanaTsk.CompletedAt.ToDateTime();
                             existingTsk.IsArchived = asanaTsk.IsCompleted;
                             existingTsk.CreatedDate = asanaTsk.CreatedAt.ToDateTime().Value;
-                            existingTsk.DueDate = asanaTsk.CreatedAt.ToDateTime();
+                            existingTsk.DueDate = asanaTsk.DueOn.ToDateTime();
                             existingTsk.StartedDate = asanaTsk.StartedOn.ToDateTime();
                             existingTsk.Initiative = existingInitiative;
                             existingTsk.AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name);
