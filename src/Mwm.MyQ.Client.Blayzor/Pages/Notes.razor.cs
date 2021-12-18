@@ -95,6 +95,7 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
             TsksState.StateChanged += (s, e) => Saved(e);
             InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
+            InitiativesState.StateChanged += (s, e) => Saved(e);
             ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
             UpdateProjectDropDown();
 
@@ -124,6 +125,7 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         private void UpdateInitiativeDropDown() {
 
             if (InitiativesState.HasValue()) {
+                Logger.LogInformation("Updating Initiatives Dropdown.");
                 Project project = ProjectsState.FindById(selectedProjectId);
                 if (project != null)
                     NewInitiativeExternalIdPrefix = $"{project.ExternalIdPrexfix}-";
@@ -139,9 +141,11 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
                 // Whenever you change projects default to Triage
                 var selectInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
-                                                                                            i.Name == Initiative.DefaultInitiativeName);
-                if (selectInitiative != null)
+                                                                                            i.Name == selectInitiativeName);
+                if (selectInitiative != null) {
+                    Logger.LogInformation($"Setting default Initiative to {selectInitiative.Name}");
                     selectedInitiativeId = selectInitiative.Id;
+                }
 
             }
         }
@@ -196,14 +200,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
-        private void TskNameChanged(InputEventArgs args) => NewTskName = args.Value;
-
-        private void TskDurationEstimateChanged(InputEventArgs args) => NewTskEstimatedDuration = args.Value;
-
-        private void InitiativeNameChanged(InputEventArgs args) => NewInitiativeName = args.Value;
-
-        private void NewInitiativeExternalIdChanged(InputEventArgs args) => NewInitiativeExternalId = args.Value;
-
         public void Saved(EntityState<Tsk> entityState) {
             if (entityState.CurrentEntity != null &&
                 entityState.CurrentEntity.Name == PendingTskName) {
@@ -227,15 +223,28 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
-        //public void Saved(EntityState<Initiative> entityState) {
-        //    if (entityState.CurrentEntity != null &&
-        //        entityState.CurrentEntity.Name == PendingInitiativeName) {
-        //        Logger.LogInformation($"Adding item to list: {PendingInitiativeName}");
-        //        var initiative = entityState.CurrentEntity;
-        //        UpdateInitiativeDropDown();
-        //        selectedInitiativeId = initiative.Id;
-        //    }
-        //}
+        public void Saved(EntityState<Initiative> entityState) {
+            if (entityState.CurrentEntity != null &&
+                entityState.CurrentEntity.Name == PendingInitiativeName) {
+                Logger.LogInformation($"Initiative has been saved: {PendingInitiativeName}");
+                PendingInitiativeName = string.Empty;
+                //var initiative = entityState.CurrentEntity;
+                //UpdateInitiativeDropDown();
+                //selectedInitiativeId = initiative.Id;
+            }
+        }
+
+        private void TskNameChanged(InputEventArgs args) => NewTskName = args.Value;
+
+        private void TskDurationEstimateChanged(InputEventArgs args) => NewTskEstimatedDuration = args.Value;
+
+        private void InitiativeNameChanged(InputEventArgs args) => NewInitiativeName = args.Value;
+
+        private void NewInitiativeExternalIdChanged(InputEventArgs args) => NewInitiativeExternalId = args.Value;
+
+        
+
+        
 
         public async Task KeyboardEventHandler(KeyboardEventArgs args) {
             if (args.Key == "Enter")
