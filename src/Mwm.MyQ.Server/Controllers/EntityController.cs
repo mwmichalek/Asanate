@@ -7,6 +7,7 @@ using Mwm.MyQ.Application.Services;
 using Mwm.MyQ.Application.Shared.Commands;
 using Mwm.MyQ.Application.Shared.Workflows;
 using Mwm.MyQ.Application.Tsks.Commands;
+using Mwm.MyQ.Application.Initiatives.Commands;
 using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;
@@ -119,10 +120,10 @@ namespace Mwm.MyQ.Server.Controllers {
 
     [Route("api/[controller]")]
     [ApiController]
-    public class InitiativeController : EntityController<Initiative, 
-                                                         AddNotSupportedEntityCommand<Initiative>,
-                                                         UpdateNotSupportedEntityCommand<Initiative>,
-                                                         DeleteNotSupportedEntityCommand<Initiative>> {
+    public class InitiativeController : EntityController<Initiative,
+                                                         InitiativeAdd.Command,
+                                                         InitiativeUpdate.Command,
+                                                         InitiativeDelete.Command> {
 
 
         public InitiativeController(ILogger<IEntityController<Initiative>> logger, IRepository<Initiative> repository, IEntityService<Initiative> entityService) 

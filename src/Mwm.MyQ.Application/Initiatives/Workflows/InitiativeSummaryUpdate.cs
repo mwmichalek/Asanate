@@ -29,8 +29,7 @@ namespace Mwm.MyQ.Application.Initiatives.Workflows {
             var initiative = _initiativeRepository.Get(successEvent.Entity.InitiativeId);
             var tsksFromThisInitiative = await _tskRepository.WhereAsync(t => t.InitiativeId == initiative.Id);
 
-            _logger.LogInformation($"Updating progress for Initiate: {initiative.Name}, Task Count: {tsksFromThisInitiative.Count}");
-            
+            _logger.LogInformation($"Updating progress for Initiative: {initiative.Name}, Task Count: {tsksFromThisInitiative.Count}");
 
             foreach (var tsk in tsksFromThisInitiative) {
                 //_logger.LogInformation($"Task in Initiative: {tsk.Id} {tsk.Name}");
