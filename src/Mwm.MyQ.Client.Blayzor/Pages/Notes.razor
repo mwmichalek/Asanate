@@ -26,21 +26,33 @@
             </SfDropDownList>
         </div>
         <div class="col-md-4">
-            <label class="text-light" for="initiatives">Initiative</label>
-            <SfDropDownList ID="initiatives"
-                            TValue="int"
-                            TItem="DropDownEntity"
-                            DataSource="@InitiativeDropDownEntities"
-                            @bind-Value="@SelectedInitiativeId">
-                <DropDownListFieldSettings Value="Id"
-                                           Text="Name">
-                </DropDownListFieldSettings>
-            </SfDropDownList>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10">
+
+                        <label class="text-light" for="initiatives">Initiative</label>
+                        <SfDropDownList ID="initiatives"
+                                        TValue="int"
+                                        TItem="DropDownEntity"
+                                        DataSource="@InitiativeDropDownEntities"
+                                        @bind-Value="@SelectedInitiativeId">
+                            <DropDownListFieldSettings Value="Id"
+                                                       Text="Name">
+                            </DropDownListFieldSettings>
+                        </SfDropDownList>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <SfButton @onclick="@Saving" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"><i class="fa fa-folder-plus"></i></span>
+                        </SfButton>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
-            <label class="text-light" for="status">Status</label><br/>
+            <label class="text-light" for="status">Status</label><br />
             <SfRadioButton Label="@Status.Open.ToStr()" Name="status" Value="@Status.Open.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
-            <SfRadioButton Label="@Status.Planned.ToStr()" Name="status" Value="@Status.Planned.ToStr()" @bind-Checked="@NewTskStatus" ></SfRadioButton>
+            <SfRadioButton Label="@Status.Planned.ToStr()" Name="status" Value="@Status.Planned.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
             <SfRadioButton Label="@Status.Ready_To_Start.ToStr()" Name="status" Value="@Status.Ready_To_Start.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
         </div>
 
@@ -68,20 +80,20 @@
                        @onkeydown="KeyboardEventHandler">
             </SfTextBox>
         </div>
-        <div class="col-md-4 align-bottom">
-            <SfButton @onclick="@Saving">
-                SAVE
+        <div class="col-md-4  d-flex align-items-end">
+            <SfButton @onclick="@Saving" class="btn btn-labeled btn-danger">
+                <span class="btn-label"><i class="fa fa-save"> Save</i></span>
             </SfButton>
         </div>
     </div>
 
     <div class="row bg-secondary">
-            <div class="col-md-2 text-light border p-2">Project</div>
-            <div class="col-md-2 text-light border p-2">Initiative</div>
-            <div class="col-md-5 text-light border p-2">Name</div>
-            <div class="col-md-1 text-light border p-2">Estimate</div>
-            <div class="col-md-2 text-light border p-2">Status</div>
-        </div>
+        <div class="col-md-2 text-light border p-2">Project</div>
+        <div class="col-md-2 text-light border p-2">Initiative</div>
+        <div class="col-md-5 text-light border p-2">Name</div>
+        <div class="col-md-1 text-light border p-2">Estimate</div>
+        <div class="col-md-2 text-light border p-2">Status</div>
+    </div>
     @foreach (var savedTskModel in SavedTskModels) {
         <div class="row">
             <div class="col-md-2 text-light border p-2">@savedTskModel.ProjectName</div>
