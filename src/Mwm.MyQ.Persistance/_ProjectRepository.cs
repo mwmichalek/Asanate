@@ -14,12 +14,12 @@ namespace Mwm.MyQ.Persistance.Members {
             : base(databaseContext) { }
 
         public override IQueryable<Project> GetAll() {
-            return _database.Projects.Include(t => t.Company);
+            return _database.Projects; //.Include(t => t.Company);
         }
 
         public override Project Get(int id) {
             return _database.Set<Project>()
-                .Include(t => t.Company)
+                //.Include(t => t.Company)
                 .SingleOrDefault(p => p.Id == id);
         }
 

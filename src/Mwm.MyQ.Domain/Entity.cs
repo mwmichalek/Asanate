@@ -25,7 +25,10 @@ namespace Mwm.MyQ.Domain {
 
         public string? Gid { get; set; }
 
-        
+        public bool IsArchived { get; set; }
+
+        public bool IsDeleted { get; set; }
+
     }
 
 }

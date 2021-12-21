@@ -10,9 +10,7 @@ namespace Mwm.MyQ.Domain {
 
         public Tsk() { }
 
-          public Status Status { get; set; }
-
-        public bool IsArchived { get; set; }
+        public Status Status { get; set; }
 
         public bool IsCompleted { get; set; }
 

@@ -14,12 +14,12 @@ namespace Mwm.MyQ.Persistance {
 
         // Overriding to include Status
         public override IQueryable<Initiative> GetAll() {
-            return _database.Initiatives.Include(t => t.Project.Company);
+            return _database.Initiatives; //.Include(t => t.Project.Company);
         }
 
         public override Initiative Get(int id) {
             return _database.Set<Initiative>()
-                .Include(t => t.Project.Company)
+                //.Include(t => t.Project.Company)
                 .SingleOrDefault(p => p.Id == id);
         }
     }
