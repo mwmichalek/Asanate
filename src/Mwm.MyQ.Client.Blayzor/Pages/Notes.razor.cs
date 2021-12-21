@@ -42,6 +42,8 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
         private SfTextBox refTskEstimatedDuration;
 
+        private SfTextBox refInitiativeName;
+
         public string NewTskName { get; set; } = string.Empty;
 
         public string PendingTskName { get; set; } = string.Empty;
@@ -95,7 +97,7 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
             TsksState.StateChanged += (s, e) => Saved(e);
             InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
-            InitiativesState.StateChanged += (s, e) => Saved(e);
+            //InitiativesState.StateChanged += (s, e) => Saved(e);
             ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
             UpdateProjectDropDown();
 
@@ -117,7 +119,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                         selectedProjectId = genericProject.Id;
                 }
                 
-
                 UpdateInitiativeDropDown();
             }
         }
@@ -127,8 +128,9 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             if (InitiativesState.HasValue()) {
                 Logger.LogInformation("Updating Initiatives Dropdown.");
                 Project project = ProjectsState.FindById(selectedProjectId);
-                if (project != null)
-                    NewInitiativeExternalIdPrefix = $"{project.ExternalIdPrexfix}-";
+                NewInitiativeExternalIdPrefix = (project != null && !string.IsNullOrEmpty(project.ExternalIdPrexfix)) ? 
+                    $"{project.ExternalIdPrexfix}-" :
+                    string.Empty;
 
                 var index = 1;
                 InitiativeDropDownEntities = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
@@ -150,15 +152,20 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
-        public async Task SetInitiativeCreationMode(bool IsInInitiativeCreationMode) {
-            await Task.Run(() => {
-                this.IsInInitiativeCreationMode = IsInInitiativeCreationMode;
-                if (!IsInInitiativeCreationMode) {
-                    NewInitiativeName = string.Empty;
-                    NewInitiativeExternalId = string.Empty;
-                }
-                StateHasChanged();
-            });
+        public async Task SetInitiativeCreationMode(bool isInInitiativeCreationMode) {
+            this.IsInInitiativeCreationMode = isInInitiativeCreationMode;
+            if (!isInInitiativeCreationMode) {
+                NewInitiativeName = string.Empty;
+                NewInitiativeExternalId = string.Empty;
+            } 
+
+            StateHasChanged();
+
+            if (isInInitiativeCreationMode) {
+                if (refInitiativeName == null)
+                    await Task.Delay(1000);
+                await refInitiativeName?.FocusAsync();
+            }
         }
 
         public async Task Saving() {
@@ -223,16 +230,16 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
-        public void Saved(EntityState<Initiative> entityState) {
-            if (entityState.CurrentEntity != null &&
-                entityState.CurrentEntity.Name == PendingInitiativeName) {
-                Logger.LogInformation($"Initiative has been saved: {PendingInitiativeName}");
-                PendingInitiativeName = string.Empty;
-                //var initiative = entityState.CurrentEntity;
-                //UpdateInitiativeDropDown();
-                //selectedInitiativeId = initiative.Id;
-            }
-        }
+        //public void Saved(EntityState<Initiative> entityState) {
+        //    if (entityState.CurrentEntity != null &&
+        //        entityState.CurrentEntity.Name == PendingInitiativeName) {
+        //        Logger.LogInformation($"Initiative has been saved: {PendingInitiativeName}");
+        //        PendingInitiativeName = string.Empty;
+        //        //var initiative = entityState.CurrentEntity;
+        //        //UpdateInitiativeDropDown();
+        //        //selectedInitiativeId = initiative.Id;
+        //    }
+        //}
 
         private void TskNameChanged(InputEventArgs args) => NewTskName = args.Value;
 
@@ -241,10 +248,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         private void InitiativeNameChanged(InputEventArgs args) => NewInitiativeName = args.Value;
 
         private void NewInitiativeExternalIdChanged(InputEventArgs args) => NewInitiativeExternalId = args.Value;
-
-        
-
-        
 
         public async Task KeyboardEventHandler(KeyboardEventArgs args) {
             if (args.Key == "Enter")

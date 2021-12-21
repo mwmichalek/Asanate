@@ -47,26 +47,41 @@
                             </SfButton>
                         </div>
                     } else {
-                        <div class="col-md-6 p-0">
-                            <label class="text-light" for="initiative">Initiative</label>
-                            <SfTextBox Id="initiative"
+                        if (!string.IsNullOrEmpty(NewInitiativeExternalIdPrefix)) {
+                            <div class="col-md-6 p-0">
+                                <label class="text-light" for="initiative">Initiative</label>
+                                <SfTextBox Id="initiative"
                                    class="form-control"
                                    Placeholder="Initiative"
                                    Input="@InitiativeNameChanged"
+                                   @ref="refInitiativeName"
                                    @bind-Value="@NewInitiativeName"
                                    @onkeydown="KeyboardEventHandler">
-                            </SfTextBox>
-                        </div>
-                        <div class="col-md-4 d-flex align-items-end pl-1">
-                            <span class="text-light">@NewInitiativeExternalIdPrefix</span>
-                            <SfTextBox Id="initiativeId"
+                                </SfTextBox>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end pl-1">
+                                <span class="text-light mb-1">@NewInitiativeExternalIdPrefix</span>
+                                <SfTextBox Id="initiativeId"
                                    class="form-control"
                                    Placeholder="Id"
                                    Input="@NewInitiativeExternalIdChanged"
                                    @bind-Value="@NewInitiativeExternalId"
                                    @onkeydown="KeyboardEventHandler">
-                            </SfTextBox>
-                        </div>
+                                </SfTextBox>
+                            </div>
+                        } else {
+                            <div class="col-md-10 p-0">
+                                <label class="text-light" for="initiative">Initiative</label>
+                                <SfTextBox Id="initiative"
+                                   class="form-control"
+                                   Placeholder="Initiative"
+                                   Input="@InitiativeNameChanged"
+                                   @ref="refInitiativeName"
+                                   @bind-Value="@NewInitiativeName"
+                                   @onkeydown="KeyboardEventHandler">
+                                </SfTextBox>
+                            </div>
+                        }
                         <div class="col-md-1 d-flex align-items-end">
                             <SfButton @onclick="@Saving" class="btn btn-labeled btn-success">
                                 <span class="btn-label"><i class="fa fa-save"></i></span>
