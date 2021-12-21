@@ -8,6 +8,7 @@ using Mwm.MyQ.Application.Shared.Commands;
 using Mwm.MyQ.Application.Shared.Workflows;
 using Mwm.MyQ.Application.Tsks.Commands;
 using Mwm.MyQ.Application.Initiatives.Commands;
+using Mwm.MyQ.Application.Projects.Commands;
 using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;
@@ -19,24 +20,24 @@ namespace Mwm.MyQ.Server.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProjectController : EntityController<Project,
-                                                  AddNotSupportedEntityCommand<Project>,
-                                                  UpdateNotSupportedEntityCommand<Project>,
-                                                  DeleteNotSupportedEntityCommand<Project>> {
-
-    public ProjectController(ILogger<IEntityController<Project>> logger, IRepository<Project> repository, IEntityService<Project> entityService)
-        : base(logger, repository, entityService) { }
-
-}
-
-[Route("api/[controller]")]
-[ApiController]
 public class CompanyController : EntityController<Company,
                                                   AddNotSupportedEntityCommand<Company>,
                                                   UpdateNotSupportedEntityCommand<Company>,
                                                   DeleteNotSupportedEntityCommand<Company>> {
 
     public CompanyController(ILogger<IEntityController<Company>> logger, IRepository<Company> repository, IEntityService<Company> entityService)
+        : base(logger, repository, entityService) { }
+
+}
+
+[Route("api/[controller]")]
+[ApiController]
+public class ProjectController : EntityController<Project,
+                                                  ProjectAdd.Command,
+                                                  ProjectUpdate.Command,
+                                                  ProjectDelete.Command> {
+
+    public ProjectController(ILogger<IEntityController<Project>> logger, IRepository<Project> repository, IEntityService<Project> entityService)
         : base(logger, repository, entityService) { }
 
 }
