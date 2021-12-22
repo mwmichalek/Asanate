@@ -1,9 +1,18 @@
 ﻿<div class="card-template">
-    <div class="e-card-header bg-dark pb-2">
+    <div class="e-card-header pb-2 @HeaderClasses">
         <div class="e-card-header-caption">
             <div class="container">
                 <div class="row">
-                    <div class="col-8 p-0">
+                    @if (TskModel.IsInFocus) {
+                        <div class="col-1 p-0 mr-1" style="color: yellow; cursor: pointer;">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                    } else {
+                        <div class="col-1 p-0 mr-1" style="color: grey; cursor: pointer;">
+                            <i class="far fa-lightbulb" @onclick="@ToggleInFocus"></i>
+                        </div>
+                    }
+                    <div class="col-7 p-0">
                         <small style="color: #ccc;" class="card-subtitle">@TskModel.InitiativeName</small>
                     </div>
                     <div class="col-4 p-0 text-right">

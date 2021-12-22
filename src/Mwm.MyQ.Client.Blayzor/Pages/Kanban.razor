@@ -7,6 +7,7 @@
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.Cards
+@using Mwm.MyQ.Client.Blayzor.Components;
 @page "/"
 @page "/kanban"
 
@@ -30,13 +31,16 @@
                     <KanbanCardSettings HeaderField="Name" ContentField="Notes">
                         <Template>
                             @{
-                                <Mwm.MyQ.Client.Blayzor.Components.TskCard TskModel="(TskModel)context" />
+                                <TskCard EntityStateFacade="EntityStateFacade" 
+                                         TskModel="(TskModel)context" />
                             }
                         </Template>
                     </KanbanCardSettings>
 
-                    <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
-                    </KanbanSwimlaneSettings>
+                    @if (SplitByCompany) {
+                        <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
+                        </KanbanSwimlaneSettings>
+                    }
                     <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
                 </SfKanban>
             }
@@ -44,7 +48,7 @@
     </div>
 </div>
 
-<Mwm.MyQ.Client.Blayzor.Components.TskPopup @ref="TskPopup" />
+<TskPopup @ref="TskPopup" />
 
 <style>
 .e-kanban-header {

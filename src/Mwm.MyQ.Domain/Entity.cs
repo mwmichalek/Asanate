@@ -29,6 +29,8 @@ namespace Mwm.MyQ.Domain {
 
         public bool IsDeleted { get; set; }
 
+        public bool IsInFocus { get; set; }
+
     }
 
 }

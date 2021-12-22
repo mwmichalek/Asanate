@@ -15,8 +15,6 @@ namespace Mwm.MyQ.Domain {
 
         public Status Status { get; set; }
 
-        public bool IsArchived { get; set; }
-
         public bool IsCompleted { get; set; }
 
         public int? DurationEstimate { get; set; }

@@ -10,8 +10,10 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
     public partial class TskUpdate {
         public class Command : TskBase.Command, IUpdateEntityCommand<Tsk> { 
         
-            public int Id {  get; set; }        
-        
+            public int Id {  get; set; }
+
+            public Status? Status { get; set; }
+
         }
 
     }

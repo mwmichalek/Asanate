@@ -19,7 +19,11 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
 
     public partial class TskAdd {
 
-        public class Command : TskBase.Command, IAddEntityCommand<Tsk> {  }
+        public class Command : TskBase.Command, IAddEntityCommand<Tsk> {
+
+            public Status Status { get; set; }
+
+        }
 
     }
 }

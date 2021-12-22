@@ -25,11 +25,13 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
 
             public string ExternalId { get; set; } 
 
-            public Status Status { get; set; } 
-
             public bool? IsArchived { get; set; }
 
             public bool? IsCompleted { get; set; }
+
+            public bool? IsDeleted { get; set; }
+
+            public bool? IsInFocus { get; set; }    
 
             public float? DurationEstimate { get; set; }
 

@@ -59,5 +59,7 @@ namespace Mwm.MyQ.Client.Blayzor.Models.Tsks {
         public string ProjectColor { get; set; }
 
         public string CompanyName { get; set; }
+
+        public bool IsInFocus { get; set; }
     }
 }

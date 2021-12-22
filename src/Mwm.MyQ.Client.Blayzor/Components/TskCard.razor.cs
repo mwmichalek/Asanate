@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Mwm.MyQ.Client.Blayzor.Models.Tsks;
 using System;
+using System.Threading.Tasks;
+using Mwm.MyQ.Application.Tsks.Commands;
+using Mwm.MyQ.Client.Service.Facades;
+using Mwm.MyQ.Domain;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
@@ -8,6 +12,11 @@ public partial class TskCard : ComponentBase {
 
     [Parameter]
     public TskModel TskModel { get; set; }
+
+    [Parameter]
+    public EntityStateFacade EntityStateFacade { get; set; }
+
+    public string HeaderClasses => TskModel.IsInFocus ? "bg-primary" : "bg-dark";
 
     public string HourProgressDisplay =>
              (TskModel.DurationCompleted.HasValue && TskModel.DurationEstimate.HasValue) ? $"{TskModel.DurationCompleted} / ~{TskModel.DurationEstimate}" :
@@ -36,5 +45,13 @@ public partial class TskCard : ComponentBase {
             return daysTillDueDate;
         }
         return null;
+    }
+
+    public async Task ToggleInFocus() {
+        TskModel.IsInFocus = !TskModel.IsInFocus;
+        await Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+            Id = TskModel.Id, 
+            IsInFocus = TskModel.IsInFocus
+        }));
     }
 }

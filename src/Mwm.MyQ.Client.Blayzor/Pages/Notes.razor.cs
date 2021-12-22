@@ -97,7 +97,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
             TsksState.StateChanged += (s, e) => Saved(e);
             InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
-            //InitiativesState.StateChanged += (s, e) => Saved(e);
             ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
             UpdateProjectDropDown();
 
@@ -229,17 +228,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                 PendingTskName = string.Empty;
             }
         }
-
-        //public void Saved(EntityState<Initiative> entityState) {
-        //    if (entityState.CurrentEntity != null &&
-        //        entityState.CurrentEntity.Name == PendingInitiativeName) {
-        //        Logger.LogInformation($"Initiative has been saved: {PendingInitiativeName}");
-        //        PendingInitiativeName = string.Empty;
-        //        //var initiative = entityState.CurrentEntity;
-        //        //UpdateInitiativeDropDown();
-        //        //selectedInitiativeId = initiative.Id;
-        //    }
-        //}
 
         private void TskNameChanged(InputEventArgs args) => NewTskName = args.Value;
 

@@ -36,8 +36,8 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
             public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken) {
                 if (command.Id == 0)
                     return Result.Fail("Id can't be zero.");
-                if (string.IsNullOrEmpty(command.Name))
-                    return Result.Fail("Tsk Name can't be null.");
+                //if (string.IsNullOrEmpty(command.Name))
+                //    return Result.Fail("Tsk Name can't be null.");
 
                 var tskResult = await UpdateTsk(command);
 
@@ -52,10 +52,11 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
                         return Result.Fail(new Error($"Couldn't locate existing Tsk with Id:{command.Id}."));
 
                     if (command.Name != null) tsk.Name = command.Name;
-                    //if (!string.IsNullOrEmpty(command.ExternalId)) tsk.ExternalId = command.ExternalId;
-                    tsk.Status = command.Status;
+                    if (command.Status.HasValue) tsk.Status = command.Status.Value;
                     if (command.IsArchived.HasValue) tsk.IsArchived = command.IsArchived.Value;   
                     if (command.IsCompleted.HasValue) tsk.IsCompleted = command.IsCompleted.Value; 
+                    if (command.IsDeleted.HasValue) tsk.IsDeleted = command.IsDeleted.Value;
+                    if (command.IsInFocus.HasValue) tsk.IsInFocus = command.IsInFocus.Value;
                     if (command.DurationEstimate.HasValue) tsk.DurationEstimate = command.DurationEstimate.Value;   
                     if (command.DurationCompleted.HasValue) tsk.DurationCompleted = command.DurationCompleted.Value;
                     if (!string.IsNullOrEmpty(command.Notes)) tsk.Notes = command.Notes;
@@ -68,6 +69,7 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
                     if (command.CreatedById.HasValue) tsk.CreatedById = command.CreatedById.Value;
                     if (command.ModifiedById.HasValue) tsk.ModifiedById = command.ModifiedById.Value;
                     if (command.InitiativeId.HasValue) tsk.InitiativeId = command.InitiativeId.Value;
+                    
 
                     await _tskRepository.SaveAsync();
                     _logger.LogInformation($"Tsk Updated: {tsk.Name}");

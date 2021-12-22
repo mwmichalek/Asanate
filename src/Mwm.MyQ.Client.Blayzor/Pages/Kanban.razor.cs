@@ -47,6 +47,8 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         //private bool rebuildTskModels = false;
         private List<TskModel> tskModels = new List<TskModel>();
 
+        public bool SplitByCompany { get; set; } = false;
+
         public IEnumerable<TskModel> TskModels {
             get => tskModels;
             set { }
@@ -119,7 +121,8 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                         InitiativeExternalId = EntityHelpers.ToExternalId(initiative, project),
                         InitiativeExternalLink = EntityHelpers.ToExternalLink(initiative, project),
                         ProjectName = project?.Name,
-                        CompanyName = company?.Name
+                        CompanyName = company?.Name,
+                        IsInFocus = t.IsInFocus
                     };
                 }).ToList();
                 Logger.LogInformation($"Built {tskModels.Count} TskModels");
