@@ -4,11 +4,11 @@
             <div class="container">
                 <div class="row">
                     @if (TskModel.IsInFocus) {
-                        <div class="col-1 p-0 mr-1" style="color: yellow; cursor: pointer;">
+                        <div class="col-1 p-0 m-0" style="color: yellow; cursor: pointer;">
                             <i class="fas fa-lightbulb"></i>
                         </div>
                     } else {
-                        <div class="col-1 p-0 mr-1" style="color: grey; cursor: pointer;">
+                        <div class="col-1 p-0 m-0" style="color: grey; cursor: pointer;">
                             <i class="far fa-lightbulb" @onclick="@ToggleInFocus"></i>
                         </div>
                     }
