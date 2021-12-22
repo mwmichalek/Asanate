@@ -133,13 +133,14 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             foreach (var tskModel in args.Data) {
                 try {
                     var tsk = TsksState.FindById(tskModel.Id);
-
-                    Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
-                    EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
-                        Id = tskModel.Id,
-                        Name = tsk.Name,
-                        Status = tskModel.Status
-                    });
+                    if (tsk.Status != tskModel.Status) {
+                        Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
+                        EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                            Id = tskModel.Id,
+                            Name = tsk.Name,
+                            Status = tskModel.Status
+                        });
+                    }
                 } catch (Exception ex) {
                     Logger.LogError($"Unable to update: {tskModel.Name}, {ex}");
                 }

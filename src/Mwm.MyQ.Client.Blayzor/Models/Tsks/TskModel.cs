@@ -9,6 +9,8 @@ namespace Mwm.MyQ.Client.Blayzor.Models.Tsks {
 
         public int Id { get; set; }
 
+        public int RankId { get; set; }
+
         public string Name { get; set; }
 
         public Status Status { get; set; }

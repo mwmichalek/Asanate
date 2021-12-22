@@ -31,8 +31,8 @@
                     <KanbanCardSettings HeaderField="Name" ContentField="Notes">
                         <Template>
                             @{
-                                <TskCard EntityStateFacade="EntityStateFacade" 
-                                         TskModel="(TskModel)context" />
+                                <TskCard EntityStateFacade="EntityStateFacade"
+                                 TskModel="(TskModel)context" />
                             }
                         </Template>
                     </KanbanCardSettings>
@@ -44,7 +44,9 @@
                         </KanbanSwimlaneSettings>
                     }
                     <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
+                    <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
                 </SfKanban>
+
             }
         </div>
     </div>
@@ -53,11 +55,11 @@
 <TskPopup @ref="TskPopup" />
 
 <style>
-.e-kanban-header {
-    margin-top: 10px;
-}
+    .e-kanban-header {
+        margin-top: 10px;
+    }
 
-.e-kanban {
-    border-radius: 10px;
-}
+    .e-kanban {
+        border-radius: 10px;
+    }
 </style>
