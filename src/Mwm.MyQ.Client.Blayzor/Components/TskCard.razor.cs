@@ -13,8 +13,11 @@ public partial class TskCard : ComponentBase {
     [Parameter]
     public TskModel TskModel { get; set; }
 
-    [Parameter]
+    [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
+
+    [Parameter]
+    public bool IncludeCompanyName { get; set; }
 
     public string HeaderClasses => TskModel.IsInFocus ? "bg-primary" : "bg-dark";
 

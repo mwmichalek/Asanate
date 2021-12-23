@@ -2,64 +2,18 @@
 @using Mwm.MyQ.Client.Blayzor.Helpers;
 @using Mwm.MyQ.Client.Blayzor.Models.Tsks
 @using Mwm.MyQ.Domain;
-@using Syncfusion.Blazor.Kanban
-@using Syncfusion.Blazor.Layouts
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Cards
 @using Mwm.MyQ.Client.Blayzor.Components;
 @page "/"
 @page "/kanban"
 
+<button @onclick="@ToggleIsGroupedByCompany">GroupByCompany</button>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="d-flex flex-row justify-content-center">
-            @if (IsLoading()) {
-                <div class="spinner-border" role="status">
-                    <span class="sr-only alert-light">Loading...</span>
-                </div>
-            }
-            @if (HasErrors()) {
-                <span>Whoops! Looks like an issue occurred loading TskModels</span>
-            } else if (HasValues()) {
-                <SfKanban @ref="KanbanBoard" TValue="TskModel" KeyField="StatusName" @bind-DataSource="@TskModels">
-                    <KanbanColumns>
-                        @foreach (var statusName in StatusNames) {
-                            <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
-                        }
-                    </KanbanColumns>
-                    <KanbanCardSettings HeaderField="Name" ContentField="Notes">
-                        <Template>
-                            @{
-                                <TskCard EntityStateFacade="EntityStateFacade"
-                                 TskModel="(TskModel)context" />
-                            }
-                        </Template>
-                    </KanbanCardSettings>
-
-                    @*https://blazor.syncfusion.com/documentation/kanban/sort*@
-
-                    @if (SplitByCompany) {
-                        <KanbanSwimlaneSettings KeyField="CompanyName" TextField="CompanyName" SortDirection="SortDirection.Ascending">
-                        </KanbanSwimlaneSettings>
-                    }
-                    <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
-                    <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
-                </SfKanban>
-
-            }
+            <KanbanBoard IsGroupedByCompany="@IsGroupedByCompany" />
         </div>
     </div>
 </div>
 
-<TskPopup @ref="TskPopup" />
 
-<style>
-    .e-kanban-header {
-        margin-top: 10px;
-    }
-
-    .e-kanban {
-        border-radius: 10px;
-    }
-</style>
