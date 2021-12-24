@@ -146,9 +146,23 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                             _logger.LogDebug($"Adding Project: {asanaProject.Name}");
                             var newProject = new Project {
                                 Name = asanaProject.Name,
+                                Abbreviation = asanaProject.Name == "Home" ? "Home" :
+                                                asanaProject.Name == "BFV Hardware" ? "BFV" :
+                                                asanaProject.Name == "BFV Software" ? "BFV" :
+                                                asanaProject.Name == "Command Launcher" ? "CMD" :
+                                                asanaProject.Name == "CDPHP" ? "CDPHP" :
+                                                asanaProject.Name == "BOT" ? "BOT" :
+                                                asanaProject.Name == "General" ? "Gen" :
+                                                asanaProject.Name == "HedgeHog" ? "HH" :
+                                                asanaProject.Name == "Generic" ? "XXX" :
+                                                asanaProject.Name == "MyQlone" ? "MyQ" : asanaProject.Name,
                                 Gid = asanaProject.Gid,
                                 Company = _companyRepository.GetByName(asanaProject.Company),
-                                Color = asanaProject.Color,
+                                Color = asanaProject.Color == "light-green" ? "#aecf55" :
+                                                asanaProject.Color == "light-blue" ? "#4573d2" :
+                                                asanaProject.Color == "dark-red" ? "#f06a6a" :
+                                                asanaProject.Color == "light-purple" ? "#b36bd4" :
+                                                asanaProject.Color == "light-warm-gray" ? "#6d6e6f" : asanaProject.Color,
                                 ExternalIdPrexfix = (asanaProject.Company == "KMV") ? "SHOP" :
                                                     (asanaProject.Company == "Blackstone") ? "BPS" : null,
                                 ExternalAppBaseUrl = (asanaProject.Company == "KMV") ? "https://kmv-digital.atlassian.net/browse/" :

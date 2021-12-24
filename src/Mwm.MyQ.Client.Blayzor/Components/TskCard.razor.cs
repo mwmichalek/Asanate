@@ -19,12 +19,15 @@ public partial class TskCard : ComponentBase {
     [Parameter]
     public bool IncludeCompanyName { get; set; }
 
+    public string HeaderStyles => TskModel.IsInFocus ? $"background-color: {TskModel.ProjectColor};" :
+                                                       $"background-color: {TskModel.ProjectColor}; background-blend-mode: darken;";
+
     public string HeaderClasses => TskModel.IsInFocus ? "bg-primary" : "bg-dark";
 
-    public string HourProgressDisplay =>
-             (TskModel.DurationCompleted.HasValue && TskModel.DurationEstimate.HasValue) ? $"{TskModel.DurationCompleted} / ~{TskModel.DurationEstimate}" :
-                    TskModel.DurationCompleted.HasValue ? TskModel.DurationCompleted.ToString() :
-                    TskModel.DurationEstimate.HasValue ? $"~{TskModel.DurationEstimate}" : "";
+    public string HourProgressDisplay => (TskModel.DurationCompleted.HasValue && TskModel.DurationEstimate.HasValue) ? 
+                    $"{TskModel.DurationCompleted} / ~{TskModel.DurationEstimate}" :
+                        TskModel.DurationCompleted.HasValue ? TskModel.DurationCompleted.ToString() :
+                        TskModel.DurationEstimate.HasValue ? $"~{TskModel.DurationEstimate}" : "";
 
     public string DueDateDisplay {
         get {

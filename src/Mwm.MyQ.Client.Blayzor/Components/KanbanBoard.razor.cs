@@ -101,7 +101,6 @@ public partial class KanbanBoard : FluxorComponent {
         base.OnInitialized();
     }
 
-
     private void BuildTskModels(string triggerBy = null) {
         if (HasValues()) {
             tskModels = TsksState.Value.Entities?.Where(t => !t.IsArchived).Select(t => {
@@ -125,6 +124,7 @@ public partial class KanbanBoard : FluxorComponent {
                     InitiativeExternalLink = EntityHelpers.ToExternalLink(initiative, project),
                     ProjectName = project?.Name,
                     CompanyName = company?.Name,
+                    ProjectColor = project?.Color,
                     IsInFocus = t.IsInFocus
                 };
             }).ToList();

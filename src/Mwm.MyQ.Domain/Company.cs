@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 namespace Mwm.MyQ.Domain {
     public class Company : NamedEntity {
 
-        
-
         public static readonly string PersonalCompanyName = "MWM";
 
         public static readonly string DefaultCompanyName = PersonalCompanyName;

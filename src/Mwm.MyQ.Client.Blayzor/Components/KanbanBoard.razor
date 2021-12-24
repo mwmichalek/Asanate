@@ -36,12 +36,10 @@
             <KanbanSwimlaneSettings KeyField="CompanyName" 
                                     TextField="CompanyName" 
                                     SortDirection="SortDirection.Ascending" />
-
         }
         <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
         <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
     </SfKanban>
-
 }
 
 <TskPopup @ref="TskPopup" />

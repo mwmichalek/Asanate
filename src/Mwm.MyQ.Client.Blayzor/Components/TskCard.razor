@@ -1,5 +1,5 @@
 ﻿<div class="card-template">
-    <div class="e-card-header pb-2 @HeaderClasses">
+    <div class="e-card-header pb-2" style="@HeaderStyles">
         <div class="e-card-header-caption">
             <div class="container">
                 <div class="row">
@@ -13,7 +13,15 @@
                         </div>
                     }
                     <div class="col-7 p-0">
-                        <small style="color: #ccc;" class="card-subtitle">@TskModel.InitiativeName</small>
+                        @if (IncludeCompanyName) {
+                            <small style="color: #ccc;" class="card-subtitle">
+                                @TskModel.CompanyName.Substring(0,2).ToUpper() - @TskModel.ProjectName.Substring(0,2).ToUpper() > @TskModel.InitiativeName
+                            </small>
+                        } else {
+                            <small style="color: #ccc;" class="card-subtitle">
+                                @TskModel.ProjectName.Substring(0,2).ToUpper() > @TskModel.InitiativeName
+                            </small>
+                        }
                     </div>
                     <div class="col-4 p-0 text-right">
                         <a target="_blank" class="link-alert card-subtitle" href="@TskModel.InitiativeExternalLink">@TskModel.InitiativeExternalId</a>

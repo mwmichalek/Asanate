@@ -10,6 +10,8 @@ namespace Mwm.MyQ.Domain {
 
         public readonly static string DefaultProjectName = "Generic";
 
+        public string Abbreviation { get; set; }
+
         public string ExternalIdPrexfix { get; set; }
 
         public string ExternalAppBaseUrl { get; set; }
