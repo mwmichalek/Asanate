@@ -19,8 +19,8 @@ public partial class TskCard : ComponentBase {
     [Parameter]
     public bool IncludeCompanyName { get; set; }
 
-    public string HeaderStyles => TskModel.IsInFocus ? $"background-color: {TskModel.ProjectColor};" :
-                                                       $"background-color: {TskModel.ProjectColor}; background-blend-mode: darken;";
+    public string HeaderStyles => TskModel.IsInFocus ? $"background-color: {TskModel.ProjectColor}; background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0 0);" :
+                                                       $"background-color: {TskModel.ProjectColor}; background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0 0);";
 
     public string HeaderClasses => TskModel.IsInFocus ? "bg-primary" : "bg-dark";
 

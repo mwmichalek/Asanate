@@ -58,6 +58,8 @@ namespace Mwm.MyQ.Client.Blayzor.Models.Tsks {
 
         public string ProjectName { get; set; }
 
+        public string ProjectAbbreviation { get; set; }
+
         public string ProjectColor { get; set; }
 
         public string CompanyName { get; set; }

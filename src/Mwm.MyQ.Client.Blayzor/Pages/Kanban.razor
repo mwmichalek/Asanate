@@ -3,15 +3,28 @@
 @using Mwm.MyQ.Client.Blayzor.Models.Tsks
 @using Mwm.MyQ.Domain;
 @using Mwm.MyQ.Client.Blayzor.Components;
+@using Syncfusion.Blazor.Buttons
 @page "/"
 @page "/kanban"
 
-<button @onclick="@ToggleIsGroupedByCompany">GroupByCompany</button>
-
+<div class="row pb-3">
+    <div class="col-lg-3">
+        <label for="is-groupded-by-company" class="text-light">Group By Company</label>
+        <SfSwitch id="is-groupded-by-company" @bind-Checked="IsGroupedByCompany"></SfSwitch>
+    </div>
+    <div class="col-lg-3">
+        @*<label for="is-archive-removed" class="text-light">Archives Removed</label>
+        <SfSwitch id="is-archive-removed" @bind-Checked="IsArchivedRemoved"></SfSwitch>*@
+    </div>
+    <div class="col-lg-3">
+        <label for="is-infocus-only" class="text-light">Is InFocus Only</label>
+        <SfSwitch id="is-infocus-only" @bind-Checked="IsInFocusOnly"></SfSwitch>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12">
         <div class="d-flex flex-row justify-content-center">
-            <KanbanBoard IsGroupedByCompany="@IsGroupedByCompany" />
+            <KanbanBoard @ref="refKanbanBoard" />
         </div>
     </div>
 </div>

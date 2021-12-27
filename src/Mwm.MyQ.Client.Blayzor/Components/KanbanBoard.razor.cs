@@ -45,8 +45,11 @@ public partial class KanbanBoard : FluxorComponent {
     [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
 
-    [Parameter]
     public bool IsGroupedByCompany { get; set; } = true;
+
+    public bool IsArchivedRemoved { get; set; } = true;
+
+    public bool IsInFocusOnly { get; set; } = false;
 
     private List<TskModel> tskModels = new List<TskModel>();
 
@@ -102,34 +105,55 @@ public partial class KanbanBoard : FluxorComponent {
     }
 
     private void BuildTskModels(string triggerBy = null) {
+        var index = 0;
         if (HasValues()) {
-            tskModels = TsksState.Value.Entities?.Where(t => !t.IsArchived).Select(t => {
-                Initiative initiative = InitiativesState.FindById(t.InitiativeId);
-                Project project = (initiative != null) ? ProjectsState.FindById(initiative.ProjectId) : null;
-                Company company = (project != null) ? CompaniesState.FindById(project.CompanyId) : null;
+            var tsks = TsksState.Value.Entities;
 
-                return new TskModel {
-                    Id = t.Id,
-                    Name = t.Name,
-                    Status = t.Status,
-                    DurationEstimate = t.DurationEstimate,
-                    DurationCompleted = t.DurationCompleted,
-                    Notes = t.Notes,
-                    DueDate = t.DueDate,
-                    StartDate = t.StartDate,
-                    StartedDate = t.StartedDate,
-                    CompletedDate = t.CompletedDate,
-                    InitiativeName = initiative?.Name,
-                    InitiativeExternalId = EntityHelpers.ToExternalId(initiative, project),
-                    InitiativeExternalLink = EntityHelpers.ToExternalLink(initiative, project),
-                    ProjectName = project?.Name,
-                    CompanyName = company?.Name,
-                    ProjectColor = project?.Color,
-                    IsInFocus = t.IsInFocus
-                };
-            }).ToList();
+            //if (IsArchivedRemoved)
+            tsks = tsks.Where(t => !t.IsArchived);
+
+            if (IsInFocusOnly)
+                tsks = tsks.Where(t => t.IsInFocus);
+
+            tskModels = tsks.Select(t => CreateModel(t))
+                                .OrderByDescending(tm => tm.IsInFocus)
+                                .ThenBy(tm => tm.CompanyName)
+                                .ThenBy(tm => tm.ProjectAbbreviation)
+                                .ThenBy(tm => tm.InitiativeName)
+                                .ToList();
+
+            foreach (var tskModel in tskModels)
+                tskModel.RankId = index++;
+
             Logger.LogInformation($"Built {tskModels.Count} TskModels");
         }
+    }
+
+    private TskModel CreateModel(Tsk t) {
+        Initiative initiative = InitiativesState.FindById(t.InitiativeId);
+        Project project = (initiative != null) ? ProjectsState.FindById(initiative.ProjectId) : null;
+        Company company = (project != null) ? CompaniesState.FindById(project.CompanyId) : null;
+
+        return new TskModel {
+            Id = t.Id,
+            Name = t.Name,
+            Status = t.Status,
+            DurationEstimate = t.DurationEstimate,
+            DurationCompleted = t.DurationCompleted,
+            Notes = t.Notes,
+            DueDate = t.DueDate,
+            StartDate = t.StartDate,
+            StartedDate = t.StartedDate,
+            CompletedDate = t.CompletedDate,
+            InitiativeName = initiative?.Name,
+            InitiativeExternalId = EntityHelpers.ToExternalId(initiative, project),
+            InitiativeExternalLink = EntityHelpers.ToExternalLink(initiative, project),
+            ProjectName = project?.Name,
+            ProjectAbbreviation = project?.Abbreviation,
+            CompanyName = company?.Name,
+            ProjectColor = project?.Color,
+            IsInFocus = t.IsInFocus
+        };
     }
 
     public void DragStopHandler(DragEventArgs<TskModel> args) {
@@ -156,13 +180,30 @@ public partial class KanbanBoard : FluxorComponent {
         TskPopup.Update(args.Data);
     }
 
-    //public async Task ToggleIsGroupedByCompany() {
-    //    IsGroupedByCompany = !IsGroupedByCompany;
-    //    //StateHasChanged();
-    //    await refKanbanBoard.RefreshAsync();
-    //}
+    public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
+        IsGroupedByCompany = isGroupedByCompany;
+        BuildTskModels();
+        StateHasChanged();
+        await refKanbanBoard.RefreshAsync();
+    }
+
+    public async Task SetIsArchivedRemoved(bool isArchivedRemoved) {
+        IsArchivedRemoved = isArchivedRemoved;
+        BuildTskModels();
+        StateHasChanged();
+        await refKanbanBoard.RefreshAsync();
+    }
+
+    public async Task SetIsInFocusOnly(bool isInFocusOnly) {
+        IsInFocusOnly = isInFocusOnly;
+        StateHasChanged();
+        BuildTskModels();
+        await refKanbanBoard.RefreshAsync();
+    }
 
     public TskModel SelectedTskModel { get; set; }
+
+    
 
 
 

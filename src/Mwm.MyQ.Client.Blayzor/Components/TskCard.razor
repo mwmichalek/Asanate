@@ -15,11 +15,11 @@
                     <div class="col-7 p-0">
                         @if (IncludeCompanyName) {
                             <small style="color: #ccc;" class="card-subtitle">
-                                @TskModel.CompanyName.Substring(0,2).ToUpper() - @TskModel.ProjectName.Substring(0,2).ToUpper() > @TskModel.InitiativeName
+                                @TskModel.CompanyName.ToUpper() - @TskModel.ProjectAbbreviation.ToUpper() > @TskModel.InitiativeName
                             </small>
                         } else {
                             <small style="color: #ccc;" class="card-subtitle">
-                                @TskModel.ProjectName.Substring(0,2).ToUpper() > @TskModel.InitiativeName
+                                @TskModel.ProjectAbbreviation.ToUpper() > @TskModel.InitiativeName
                             </small>
                         }
                     </div>
