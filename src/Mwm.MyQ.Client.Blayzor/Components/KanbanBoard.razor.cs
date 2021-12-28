@@ -100,9 +100,9 @@ public partial class KanbanBoard : FluxorComponent {
         InitiativesState.StateChanged += (s, e) => BuildTskModels();
         ProjectsState.StateChanged += (s, e) => BuildTskModels();
         CompaniesState.StateChanged += (s, e) => BuildTskModels();
-
+        
         BuildTskModels();
-
+        UpdateSwimLanes();
         base.OnInitialized();
     }
 
@@ -187,15 +187,27 @@ public partial class KanbanBoard : FluxorComponent {
 
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
-        FilterTskModels();
+        UpdateSwimLanes();
         StateHasChanged();
-
-        //var slsm = new SwimlaneSettingsModel {
-        //};
-        //refKanbanBoard.SwimlaneSettings = slsm;
-        // https://help.syncfusion.com/cr/blazor/Syncfusion.Blazor.Kanban.SwimlaneSettingsModel.html
-
         await refKanbanBoard.RefreshAsync();
+    }
+
+    private void UpdateSwimLanes() {
+        if (refKanbanBoard != null) {
+            if (IsGroupedByCompany) {
+                refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
+                    SortDirection = SortDirection.Ascending,
+                    KeyField = "CompanyName",
+                    TextField = "CompanyName"
+                };
+            } else {
+                refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
+                    SortDirection = SortDirection.Ascending,
+                    KeyField = string.Empty,
+                    TextField = string.Empty
+                };
+            }
+        }
     }
 
     public async Task SetIsInFocusOnly(bool isInFocusOnly) {

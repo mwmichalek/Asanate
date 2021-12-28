@@ -24,12 +24,12 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
         public KanbanBoard refKanbanBoard;
 
-        private bool _isGroupedByCompany = true;
-        public bool IsGroupedByCompany {
-            get => _isGroupedByCompany;
+        private bool _isGroupedTogether = true;
+        public bool IsGroupedTogether {
+            get => _isGroupedTogether;
             set {
-                _isGroupedByCompany = value;
-                refKanbanBoard.SetIsGroupedByCompany(_isGroupedByCompany).Wait();
+                _isGroupedTogether = value;
+                refKanbanBoard.SetIsGroupedByCompany(!_isGroupedTogether).Wait();
             }
         }
 

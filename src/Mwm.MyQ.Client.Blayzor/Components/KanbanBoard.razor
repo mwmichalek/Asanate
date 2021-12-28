@@ -34,9 +34,9 @@
         </KanbanCardSettings>
 
         @if (IsGroupedByCompany) {
-            <KanbanSwimlaneSettings KeyField="CompanyName" 
+            <!--KanbanSwimlaneSettings KeyField="CompanyName" 
                                     TextField="CompanyName" 
-                                    SortDirection="SortDirection.Ascending" />
+                                    SortDirection="SortDirection.Ascending" /-->
         }
         <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
         <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
