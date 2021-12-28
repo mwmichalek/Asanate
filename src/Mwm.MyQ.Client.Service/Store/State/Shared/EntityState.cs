@@ -5,11 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.State.Shared {
-    public class EntityState<TEntity> where TEntity : INamedEntity {
-
-        public bool IsLoading { get; }
-
-        public string? CurrentErrorMessage { get; }
+    public class EntityState<TEntity> : RootState where TEntity : INamedEntity {
 
         public IEnumerable<TEntity>? Entities { get; }
 
@@ -22,15 +18,13 @@ namespace Mwm.MyQ.Client.Service.Store.State.Shared {
         public EntityState() : this(false, null, null, default) {
         }
 
-        public EntityState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<TEntity>? entities = null, TEntity? currentEntity = default) {
-            IsLoading = isLoading;
-            CurrentErrorMessage = currentErrorMessage;
+        public EntityState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<TEntity>? entities = null, TEntity? currentEntity = default) : 
+            base(isLoading, currentErrorMessage) {
             _lookup = entities?.ToLookup(e => e.Id);
             Entities = entities;
             CurrentEntity = currentEntity;
         }
 
-        public bool HasCurrentErrors => !string.IsNullOrWhiteSpace(CurrentErrorMessage);
     }
 
 }
