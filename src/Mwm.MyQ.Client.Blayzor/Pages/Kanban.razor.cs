@@ -42,5 +42,14 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
+        private bool _isActionStatusOnly = false;
+        public bool IsActionStatusOnly {
+            get => _isActionStatusOnly;
+            set {
+                _isActionStatusOnly = value;
+                refKanbanBoard.SetIsActionStatusOnly(_isActionStatusOnly).Wait();
+            }
+        }
+
     }
 }

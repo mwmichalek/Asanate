@@ -46,12 +46,6 @@ public partial class KanbanBoard : FluxorComponent {
     [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
 
-    public bool IsGroupedByCompany { get; set; } = true;
-
-    public bool IsArchivedRemoved { get; set; } = true;
-
-    public bool IsInFocusOnly { get; set; } = false;
-
     private List<TskModel> tskModels = new List<TskModel>();
 
     public IEnumerable<TskModel> TskModels {
@@ -63,6 +57,13 @@ public partial class KanbanBoard : FluxorComponent {
 
     public IEnumerable<TskModel> FilteredTskModels {
         get => filteredTskModels;
+        set { }
+    }
+
+    private List<Status> statuses = StatusExtensions.AllStatuses;
+
+    public List<Status> Statuses {
+        get => statuses;
         set { }
     }
 
@@ -102,8 +103,10 @@ public partial class KanbanBoard : FluxorComponent {
         CompaniesState.StateChanged += (s, e) => BuildTskModels();
         
         BuildTskModels();
-        UpdateSwimLanes();
+        
         base.OnInitialized();
+        UpdateSwimLanes();
+        UpdateColumns();
     }
 
     private void BuildTskModels() {
@@ -161,6 +164,36 @@ public partial class KanbanBoard : FluxorComponent {
         filteredTskModels = filtered.ToList();
     }
 
+    private void UpdateSwimLanes() {
+        if (refKanbanBoard != null) {
+            if (IsGroupedByCompany) {
+                refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
+                    SortDirection = SortDirection.Ascending,
+                    KeyField = "CompanyName",
+                    TextField = "CompanyName"
+                };
+            } else {
+                refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
+                    SortDirection = SortDirection.Ascending,
+                    KeyField = string.Empty,
+                    TextField = string.Empty
+                };
+            }
+        }
+    }
+
+    private void UpdateColumns() {
+        if (refKanbanBoard != null) {
+            refKanbanBoard.Columns = statuses.Select(s => s.ToStr())
+                                             .Select(s => new KanbanColumn {
+                                                 HeaderText = s,
+                                                 KeyField = s.ToKeyFields()
+                                             }).ToList();
+        }
+    }
+
+    //####################################### ACTIONS ################################
+
     public void DragStopHandler(DragEventArgs<TskModel> args) {
         foreach (var tskModel in args.Data) {
             try {
@@ -185,37 +218,26 @@ public partial class KanbanBoard : FluxorComponent {
         TskPopup.Update(args.Data);
     }
 
+    public bool IsGroupedByCompany { get; set; } = true;
+
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
         UpdateSwimLanes();
-        StateHasChanged();
         await refKanbanBoard.RefreshAsync();
     }
 
-    private void UpdateSwimLanes() {
-        if (refKanbanBoard != null) {
-            if (IsGroupedByCompany) {
-                refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
-                    SortDirection = SortDirection.Ascending,
-                    KeyField = "CompanyName",
-                    TextField = "CompanyName"
-                };
-            } else {
-                refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
-                    SortDirection = SortDirection.Ascending,
-                    KeyField = string.Empty,
-                    TextField = string.Empty
-                };
-            }
-        }
-    }
+    public bool IsInFocusOnly { get; set; } = false;
 
     public async Task SetIsInFocusOnly(bool isInFocusOnly) {
         IsInFocusOnly = isInFocusOnly;
         FilterTskModels();
-        StateHasChanged();
+        StateHasChanged(); //Because a collection changed.
+    }
+
+    public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
+        statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
+        UpdateColumns();
         await refKanbanBoard.RefreshAsync();
-        
     }
 
     public TskModel SelectedTskModel { get; set; }

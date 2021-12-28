@@ -18,9 +18,13 @@
      <span class="text-light">Whoops! Looks like an issue occurred loading TskModels</span>
 } else if (HasValues()) {
 
-    <SfKanban @ref="refKanbanBoard" TValue="TskModel" KeyField="StatusName" @bind-DataSource="@FilteredTskModels">
+    <SfKanban @ref="refKanbanBoard" 
+              TValue="TskModel" 
+              KeyField="StatusName" 
+              @bind-DataSource="@FilteredTskModels">
         <KanbanColumns>
-        @foreach (var statusName in StatusExtensions.All.Select(s => s.ToStr())) {
+        <!-- Would like to be able to remove this since its being done programmatically -->
+        @foreach (var statusName in Statuses.Select(s => s.ToStr())) {
             <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
         }
         </KanbanColumns>
@@ -32,12 +36,6 @@
             }
             </Template>
         </KanbanCardSettings>
-
-        @if (IsGroupedByCompany) {
-            <!--KanbanSwimlaneSettings KeyField="CompanyName" 
-                                    TextField="CompanyName" 
-                                    SortDirection="SortDirection.Ascending" /-->
-        }
         <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@DialogOpenHandler" TValue="Models.Tsks.TskModel"></KanbanEvents>
         <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
     </SfKanban>
