@@ -60,4 +60,12 @@ public partial class TskCard : ComponentBase {
             IsInFocus = TskModel.IsInFocus
         }));
     }
+
+    public async Task ToggleIsArchived() {
+        TskModel.IsArchived = !TskModel.IsArchived;
+        await Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+            Id = TskModel.Id,
+            IsArchived = TskModel.IsArchived
+        }));
+    }
 }

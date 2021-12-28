@@ -69,7 +69,7 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
                     if (command.CreatedById.HasValue) tsk.CreatedById = command.CreatedById.Value;
                     if (command.ModifiedById.HasValue) tsk.ModifiedById = command.ModifiedById.Value;
                     if (command.InitiativeId.HasValue) tsk.InitiativeId = command.InitiativeId.Value;
-                    
+                    tsk.ModifiedDate = DateTime.Now;    
 
                     await _tskRepository.SaveAsync();
                     _logger.LogInformation($"Tsk Updated: {tsk.Name}");
