@@ -5,7 +5,7 @@
                 <div class="row">
                     @if (TskModel.IsInFocus) {
                         <div class="col-1 p-0 m-0" style="color: yellow; cursor: pointer;">
-                            <i class="fas fa-lightbulb"></i>
+                            <i class="fas fa-lightbulb" @onclick="@ToggleInFocus"></i>
                         </div>
                     } else {
                         <div class="col-1 p-0 m-0" style="color: grey; cursor: pointer;">
@@ -33,8 +33,6 @@
                     </div>
                 </div>
             </div>
-            
-            
         </div>
     </div>
     <div class="e-card-content">

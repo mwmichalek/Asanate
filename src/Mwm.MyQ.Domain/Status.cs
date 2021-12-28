@@ -16,7 +16,16 @@ namespace Mwm.MyQ.Domain {
         Done
     }
 
+  
     public static class StatusExtensions {
+
+        public static List<Status> All => new List<Status> { 
+            Status.Open, 
+            Status.Planned, 
+            Status.Ready_To_Start, 
+            Status.Pending, 
+            Status.Done 
+        };
 
         public static Status ToStatus(this string statusStr) {
             if (Enum.TryParse(typeof(Status), statusStr.Replace(" ", "_"), true, out object? statusObj))

@@ -17,9 +17,10 @@
 @if (HasErrors()) {
      <span class="text-light">Whoops! Looks like an issue occurred loading TskModels</span>
 } else if (HasValues()) {
-    <SfKanban @ref="refKanbanBoard" TValue="TskModel" KeyField="StatusName" @bind-DataSource="@TskModels">
+
+    <SfKanban @ref="refKanbanBoard" TValue="TskModel" KeyField="StatusName" @bind-DataSource="@FilteredTskModels">
         <KanbanColumns>
-        @foreach (var statusName in StatusNames) {
+        @foreach (var statusName in StatusExtensions.All.Select(s => s.ToStr())) {
             <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
         }
         </KanbanColumns>

@@ -29,43 +29,18 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             get => _isGroupedByCompany;
             set {
                 _isGroupedByCompany = value;
-                refKanbanBoard.SetIsGroupedByCompany(_isGroupedByCompany);
+                refKanbanBoard.SetIsGroupedByCompany(_isGroupedByCompany).Wait();
             }
         }
-
-        private bool _isArchivedRemoved = true;
-
-        public bool IsArchivedRemoved {
-            get => _isArchivedRemoved;
-            set {
-                _isArchivedRemoved = value;
-                refKanbanBoard.SetIsArchivedRemoved(_isArchivedRemoved);
-            }
-        }
-
 
         private bool _isInFocusOnly = false;
         public bool IsInFocusOnly { 
             get => _isInFocusOnly;
             set {
                 _isInFocusOnly = value;
-                refKanbanBoard.SetIsInFocusOnly(_isInFocusOnly);
+                refKanbanBoard.SetIsInFocusOnly(_isInFocusOnly).Wait();
             }
-}
+        }
 
-        //public async Task ToggleIsGroupedByCompany() {
-        //    IsGroupedByCompany = !IsGroupedByCompany;
-        //    await refKanbanBoard.ToggleIsGroupedByCompany(IsGroupedByCompany);
-        //}
-
-        //public async Task ToggleIsArchivedRemoved() {
-        //    IsArchivedRemoved = !IsArchivedRemoved;
-        //    await refKanbanBoard.ToggleIsGroupedByCompany(IsGroupedByCompany);
-        //}
-
-        //public async Task ToggleIsInFocusOnly() {
-        //    IsInFocusOnly = !IsInFocusOnly;
-        //    await refKanbanBoard.ToggleIsInFocusOnly(IsInFocusOnly);
-        //}
     }
 }

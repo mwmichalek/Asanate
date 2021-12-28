@@ -18,6 +18,7 @@ using Mwm.MyQ.Client.Blayzor.Models.Tsks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Fluxor;
+using System.Collections;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
@@ -58,13 +59,14 @@ public partial class KanbanBoard : FluxorComponent {
         set { }
     }
 
-    public List<string> Companies => TskModels.Select(t => t.CompanyName).Distinct().ToList();
+    private List<TskModel> filteredTskModels = new List<TskModel>();
 
-    public List<string> StatusNames => TskModels.Select(t => t.Status)
-                                                .Distinct()
-                                                .OrderBy(s => (int)s)
-                                                .Select(s => s.ToStr())
-                                                .ToList();
+    public IEnumerable<TskModel> FilteredTskModels {
+        get => filteredTskModels;
+        set { }
+    }
+
+    public List<string> Companies => TskModels.Select(t => t.CompanyName).Distinct().ToList();
 
     [Inject]
     public IActionSubscriber ActionSubscriber { get; set; }
@@ -104,16 +106,10 @@ public partial class KanbanBoard : FluxorComponent {
         base.OnInitialized();
     }
 
-    private void BuildTskModels(string triggerBy = null) {
+    private void BuildTskModels() {
         var index = 0;
         if (HasValues()) {
-            var tsks = TsksState.Value.Entities;
-
-            //if (IsArchivedRemoved)
-            tsks = tsks.Where(t => !t.IsArchived);
-
-            if (IsInFocusOnly)
-                tsks = tsks.Where(t => t.IsInFocus);
+            var tsks = TsksState.Value.Entities.Where(t => !t.IsArchived); 
 
             tskModels = tsks.Select(t => CreateModel(t))
                                 .OrderByDescending(tm => tm.IsInFocus)
@@ -126,6 +122,8 @@ public partial class KanbanBoard : FluxorComponent {
                 tskModel.RankId = index++;
 
             Logger.LogInformation($"Built {tskModels.Count} TskModels");
+
+            FilterTskModels();
         }
     }
 
@@ -156,6 +154,13 @@ public partial class KanbanBoard : FluxorComponent {
         };
     }
 
+    private void FilterTskModels() { 
+        var filtered = tskModels as IEnumerable<TskModel>;
+        if (IsInFocusOnly)
+            filtered = filtered.Where(tm => tm.IsInFocus);
+        filteredTskModels = filtered.ToList();
+    }
+
     public void DragStopHandler(DragEventArgs<TskModel> args) {
         foreach (var tskModel in args.Data) {
             try {
@@ -182,29 +187,25 @@ public partial class KanbanBoard : FluxorComponent {
 
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
-        BuildTskModels();
+        FilterTskModels();
         StateHasChanged();
-        await refKanbanBoard.RefreshAsync();
-    }
 
-    public async Task SetIsArchivedRemoved(bool isArchivedRemoved) {
-        IsArchivedRemoved = isArchivedRemoved;
-        BuildTskModels();
-        StateHasChanged();
+        //var slsm = new SwimlaneSettingsModel {
+        //};
+        //refKanbanBoard.SwimlaneSettings = slsm;
+        // https://help.syncfusion.com/cr/blazor/Syncfusion.Blazor.Kanban.SwimlaneSettingsModel.html
+
         await refKanbanBoard.RefreshAsync();
     }
 
     public async Task SetIsInFocusOnly(bool isInFocusOnly) {
         IsInFocusOnly = isInFocusOnly;
+        FilterTskModels();
         StateHasChanged();
-        BuildTskModels();
         await refKanbanBoard.RefreshAsync();
+        
     }
 
     public TskModel SelectedTskModel { get; set; }
-
-    
-
-
 
 }
