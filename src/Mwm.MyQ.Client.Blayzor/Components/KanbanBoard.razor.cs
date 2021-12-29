@@ -24,12 +24,16 @@ namespace Mwm.MyQ.Client.Blayzor.Components;
 
 public partial class KanbanBoard : EntityFluxorComponent {
 
+    [Inject]
+    ILogger<KanbanBoard> Logger { get; set; }
+
+    [Inject]
+    public IActionSubscriber ActionSubscriber { get; set; }
+
     private SfKanban<TskModel> refKanbanBoard;
 
     public TskPopup TskPopup;
 
-    [Inject]
-    ILogger<KanbanBoard> Logger { get; set; }
 
     private List<TskModel> filteredTskModels = new List<TskModel>();
 
@@ -45,9 +49,6 @@ public partial class KanbanBoard : EntityFluxorComponent {
         set { }
     }
 
-    [Inject]
-    public IActionSubscriber ActionSubscriber { get; set; }
-
     protected override void OnInitialized() {
         base.OnInitialized();
         UpdateSwimLanes();
@@ -57,7 +58,6 @@ public partial class KanbanBoard : EntityFluxorComponent {
     protected override void BuildTskModels() {
         base.BuildTskModels();
 
-        
         if (HasValues()) {
             var index = 0;
             foreach (var tskModel in TskModels.OrderByDescending(tm => tm.IsInFocus)
