@@ -22,7 +22,7 @@ using System.Collections;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class KanbanBoard : FluxorComponent {
+public partial class KanbanBoard : EntityFluxorComponent {
 
     private SfKanban<TskModel> refKanbanBoard;
 
@@ -30,28 +30,6 @@ public partial class KanbanBoard : FluxorComponent {
 
     [Inject]
     ILogger<KanbanBoard> Logger { get; set; }
-
-    [Inject]
-    public IState<EntityState<Tsk>> TsksState { get; set; }
-
-    [Inject]
-    public IState<EntityState<Initiative>> InitiativesState { get; set; }
-
-    [Inject]
-    public IState<EntityState<Company>> CompaniesState { get; set; }
-
-    [Inject]
-    public IState<EntityState<Project>> ProjectsState { get; set; }
-
-    [Inject]
-    public EntityStateFacade EntityStateFacade { get; set; }
-
-    private List<TskModel> tskModels = new List<TskModel>();
-
-    public IEnumerable<TskModel> TskModels {
-        get => tskModels;
-        set { }
-    }
 
     private List<TskModel> filteredTskModels = new List<TskModel>();
 
@@ -67,94 +45,32 @@ public partial class KanbanBoard : FluxorComponent {
         set { }
     }
 
-    public List<string> Companies => TskModels.Select(t => t.CompanyName).Distinct().ToList();
-
     [Inject]
     public IActionSubscriber ActionSubscriber { get; set; }
 
-    public bool IsLoading() => TsksState.IsLoading() ||
-                               InitiativesState.IsLoading() ||
-                               ProjectsState.IsLoading() ||
-                               CompaniesState.IsLoading();
-
-    public bool HasErrors() => TsksState.HasErrors() ||
-                               InitiativesState.HasErrors() ||
-                               ProjectsState.HasErrors() ||
-                               CompaniesState.HasErrors();
-
-    public bool HasValues() => TsksState.HasValue(true) &&
-                               InitiativesState.HasValue(true) &&
-                               ProjectsState.HasValue(true) &&
-                               CompaniesState.HasValue(true);
-
     protected override void OnInitialized() {
-        if (!TsksState.HasValue())
-            EntityStateFacade.Load<Tsk>();
-        if (!InitiativesState.HasValue())
-            EntityStateFacade.Load<Initiative>();
-        if (!CompaniesState.HasValue())
-            EntityStateFacade.Load<Company>();
-        if (!ProjectsState.HasValue())
-            EntityStateFacade.Load<Project>();
-
-        TsksState.StateChanged += (s, e) => BuildTskModels();
-        InitiativesState.StateChanged += (s, e) => BuildTskModels();
-        ProjectsState.StateChanged += (s, e) => BuildTskModels();
-        CompaniesState.StateChanged += (s, e) => BuildTskModels();
-        
-        BuildTskModels();
-        
         base.OnInitialized();
         UpdateSwimLanes();
         UpdateColumns();
     }
 
-    private void BuildTskModels() {
-        var index = 0;
+    protected override void BuildTskModels() {
+        base.BuildTskModels();
+
+        
         if (HasValues()) {
-            var tsks = TsksState.Value.Entities.Where(t => !t.IsArchived); 
-
-            tskModels = tsks.Select(t => CreateModel(t))
-                                .OrderByDescending(tm => tm.IsInFocus)
-                                .ThenBy(tm => tm.CompanyName)
-                                .ThenBy(tm => tm.ProjectAbbreviation)
-                                .ThenBy(tm => tm.InitiativeName)
-                                .ToList();
-
-            foreach (var tskModel in tskModels)
+            var index = 0;
+            foreach (var tskModel in TskModels.OrderByDescending(tm => tm.IsInFocus)
+                                          .ThenBy(tm => tm.CompanyName)
+                                          .ThenBy(tm => tm.ProjectAbbreviation)
+                                          .ThenBy(tm => tm.InitiativeName)
+                                          .ToList())
                 tskModel.RankId = index++;
 
             Logger.LogInformation($"Built {tskModels.Count} TskModels");
 
             FilterTskModels();
         }
-    }
-
-    private TskModel CreateModel(Tsk t) {
-        Initiative initiative = InitiativesState.FindById(t.InitiativeId);
-        Project project = (initiative != null) ? ProjectsState.FindById(initiative.ProjectId) : null;
-        Company company = (project != null) ? CompaniesState.FindById(project.CompanyId) : null;
-
-        return new TskModel {
-            Id = t.Id,
-            Name = t.Name,
-            Status = t.Status,
-            DurationEstimate = t.DurationEstimate,
-            DurationCompleted = t.DurationCompleted,
-            Notes = t.Notes,
-            DueDate = t.DueDate,
-            StartDate = t.StartDate,
-            StartedDate = t.StartedDate,
-            CompletedDate = t.CompletedDate,
-            InitiativeName = initiative?.Name,
-            InitiativeExternalId = EntityHelpers.ToExternalId(initiative, project),
-            InitiativeExternalLink = EntityHelpers.ToExternalLink(initiative, project),
-            ProjectName = project?.Name,
-            ProjectAbbreviation = project?.Abbreviation,
-            CompanyName = company?.Name,
-            ProjectColor = project?.Color,
-            IsInFocus = t.IsInFocus
-        };
     }
 
     private void FilterTskModels() { 
