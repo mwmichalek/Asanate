@@ -1,8 +1,25 @@
 ﻿@inherits Mwm.MyQ.Client.Blayzor.Components.EntityFluxorComponent
 
+@using Mwm.MyQ.Client.Blayzor.Models.Tsks
 @using Syncfusion.Blazor.Grids
 
-<h2>EntityGrid</h2>
+<SfGrid DataSource="@TskModels">
+    <GridColumns>
+        <GridColumn Field=@nameof(TskModel.Name) 
+                    HeaderText="Name" 
+                    TextAlign="TextAlign.Left" 
+                    Width="120" />
+        <GridColumn Field=@nameof(TskModel.Status) 
+                    HeaderText="Status" 
+                    Width="150" />
+        <GridColumn Field=@nameof(TskModel.InitiativeName) 
+                    HeaderText="Initiative" 
+                    TextAlign="TextAlign.Left" 
+                    Width="130" />
+        <GridColumn Field=@nameof(TskModel.ProjectName) 
+                    HeaderText="Project" 
 
-@*<SfGrid>
-</SfGrid>*@
+                    TextAlign="TextAlign.Left" 
+                    Width="120"/>
+    </GridColumns>
+</SfGrid>
