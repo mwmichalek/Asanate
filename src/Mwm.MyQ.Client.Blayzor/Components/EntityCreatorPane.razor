@@ -1,0 +1,153 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using Mwm.MyQ.Domain
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.RichTextEditor
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.DropDowns
+@using Mwm.MyQ.Client.Blayzor.Models.Shared
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label class="text-light" for="projects">Project</label>
+            <SfDropDownList ID="projects"
+                            TValue="int"
+                            TItem="DropDownEntity"
+                            DataSource="@ProjectDropDownEntities"
+                            @bind-Value="@SelectedProjectId">
+                <DropDownListFieldSettings Value="Id"
+                                           Text="Name">
+                </DropDownListFieldSettings>
+            </SfDropDownList>
+        </div>
+        <div class="col-md-6">
+            <div class="container">
+                <div class="row">
+                    @if (!IsInInitiativeCreationMode) {
+                        <div class="col-md-10">
+                            <label class="text-light" for="initiatives">Initiative</label>
+                            <SfDropDownList ID="initiatives"
+                                        TValue="int"
+                                        TItem="DropDownEntity"
+                                        DataSource="@InitiativeDropDownEntities"
+                                        @bind-Value="@SelectedInitiativeId">
+                                <DropDownListFieldSettings Value="Id"
+                                                       Text="Name">
+                                </DropDownListFieldSettings>
+                            </SfDropDownList>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end p-0">
+                            <SfButton @onclick="() => SetInitiativeCreationMode(true)" class="btn btn-labeled btn-primary">
+                                <span class="btn-label"><i class="fa fa-folder-plus"></i></span>
+                            </SfButton>
+                        </div>
+                    } else {
+                        if (!string.IsNullOrEmpty(NewInitiativeExternalIdPrefix)) {
+                            <div class="col-md-6 p-0">
+                                <label class="text-light" for="initiative">Initiative</label>
+                                <SfTextBox Id="initiative"
+                                   class="form-control"
+                                   Placeholder="Initiative"
+                                   Input="@InitiativeNameChanged"
+                                   @ref="refInitiativeName"
+                                   @bind-Value="@NewInitiativeName"
+                                   @onkeydown="KeyboardEventHandler">
+                                </SfTextBox>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end pl-1">
+                                <span class="text-light mb-1">@NewInitiativeExternalIdPrefix</span>
+                                <SfTextBox Id="initiativeId"
+                                   class="form-control"
+                                   Placeholder="Id"
+                                   Input="@NewInitiativeExternalIdChanged"
+                                   @bind-Value="@NewInitiativeExternalId"
+                                   @onkeydown="KeyboardEventHandler">
+                                </SfTextBox>
+                            </div>
+                        } else {
+                            <div class="col-md-10 p-0">
+                                <label class="text-light" for="initiative">Initiative</label>
+                                <SfTextBox Id="initiative"
+                                   class="form-control"
+                                   Placeholder="Initiative"
+                                   Input="@InitiativeNameChanged"
+                                   @ref="refInitiativeName"
+                                   @bind-Value="@NewInitiativeName"
+                                   @onkeydown="KeyboardEventHandler">
+                                </SfTextBox>
+                            </div>
+                        }
+                        <div class="col-md-1 d-flex align-items-end">
+                            <SfButton @onclick="@Saving" class="btn btn-labeled btn-success">
+                                <span class="btn-label"><i class="fa fa-save"></i></span>
+                            </SfButton>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-end">
+                            <SfButton @onclick="() => SetInitiativeCreationMode(false)" class="btn btn-labeled btn-danger">
+                                <span class="btn-label"><i class="fas fa-window-close"></i></span>
+                            </SfButton>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label class="text-light" for="status">Status</label><br />
+            <SfRadioButton Label="@Status.Open.ToStr()" Name="status" Value="@Status.Open.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+            <SfRadioButton Label="@Status.Planned.ToStr()" Name="status" Value="@Status.Planned.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+            <SfRadioButton Label="@Status.Ready_To_Start.ToStr()" Name="status" Value="@Status.Ready_To_Start.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+        </div>
+
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-5">
+            <label class="text-light" for="name">Name @NewTskName</label>
+            <SfTextBox Id="name"
+                       class="form-control"
+                       Placeholder="Name"
+                       Input="@TskNameChanged"
+                       @ref="refTskName"
+                       @bind-Value="@NewTskName"
+                       @onkeydown="KeyboardEventHandler">
+            </SfTextBox>
+        </div>
+        <div class="col-md-3">
+            <label class="text-light" for="durationEstamate">Estimate (Hrs) @NewTskEstimatedDuration</label>
+            <SfTextBox Id="durationEstamate"
+                       class="form-control"
+                       Placeholder="Estimate"
+                       Input="@TskDurationEstimateChanged"
+                       @ref="refTskEstimatedDuration"
+                       @bind-Value="@NewTskEstimatedDuration"
+                       @onkeydown="KeyboardEventHandler">
+            </SfTextBox>
+        </div>
+        <div class="col-md-4  d-flex align-items-end">
+            <SfButton @onclick="@Saving" class="btn btn-labeled btn-danger">
+                <span class="btn-label"><i class="fa fa-save">&nbsp;Save</i></span>
+            </SfButton>
+        </div>
+    </div>
+    <div class="row">
+       <div class="col-md-12 text-light border-top p-2" style="height:15px;"></div>
+    </div>
+    <div class="row bg-secondary">
+        <div class="col-md-2 text-light border p-2">Project</div>
+        <div class="col-md-2 text-light border p-2">Initiative</div>
+        <div class="col-md-5 text-light border p-2">Name</div>
+        <div class="col-md-1 text-light border p-2">Estimate</div>
+        <div class="col-md-2 text-light border p-2">Status</div>
+    </div>
+    @foreach (var savedTskModel in SavedTskModels) {
+        <div class="row">
+            <div class="col-md-2 text-light border p-2">@savedTskModel.ProjectName</div>
+            <div class="col-md-2 text-light border p-2">@savedTskModel.InitiativeName</div>
+            <div class="col-md-5 text-light border p-2">@savedTskModel.Name</div>
+            <div class="col-md-1 text-light border p-2">@savedTskModel.DurationEstimate</div>
+            <div class="col-md-2 text-light border p-2">@savedTskModel.Status.ToStr()</div>
+        </div>
+    }
+
+</div>
