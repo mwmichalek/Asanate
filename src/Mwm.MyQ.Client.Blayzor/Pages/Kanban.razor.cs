@@ -18,9 +18,13 @@ using System.Threading.Tasks;
 using Syncfusion.Blazor.Popups;
 using Mwm.MyQ.Client.Blayzor.Components;
 using Mwm.MyQ.Client.Blayzor.Helpers;
+using Mwm.MyQ.Client.Service.Store.Features.Settings;
 
 namespace Mwm.MyQ.Client.Blayzor.Pages {
     public partial class Kanban : FluxorComponent {
+
+        [Inject]
+        public ApplicationStateFacade ApplicationStateFacade { get; set; }
 
         public KanbanBoard refKanbanBoard;
 
@@ -28,8 +32,13 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         public bool IsGroupedTogether {
             get => _isGroupedTogether;
             set {
+                ApplicationStateFacade.Set(new IsInFocusOnlyTskFilter {
+                    PreviousValue = _isGroupedTogether,
+                    CurrentValue = value
+                });
                 _isGroupedTogether = value;
-                refKanbanBoard.SetIsGroupedByCompany(!_isGroupedTogether).Wait();
+
+                //refKanbanBoard.SetIsGroupedByCompany(!_isGroupedTogether).Wait();
             }
         }
 
@@ -37,8 +46,13 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         public bool IsInFocusOnly { 
             get => _isInFocusOnly;
             set {
+                ApplicationStateFacade.Set(new IsGroupedByCompanyFlag {
+                    PreviousValue = _isInFocusOnly,
+                    CurrentValue = value
+                });
                 _isInFocusOnly = value;
-                refKanbanBoard.SetIsInFocusOnly(_isInFocusOnly).Wait();
+
+                //refKanbanBoard.SetIsInFocusOnly(_isInFocusOnly).Wait();
             }
         }
 
@@ -46,8 +60,13 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         public bool IsActionStatusOnly {
             get => _isActionStatusOnly;
             set {
+                ApplicationStateFacade.Set(new IsActionStatusOnlyFlag {
+                    PreviousValue = _isActionStatusOnly,
+                    CurrentValue = value
+                });
                 _isActionStatusOnly = value;
-                refKanbanBoard.SetIsActionStatusOnly(_isActionStatusOnly).Wait();
+
+                //refKanbanBoard.SetIsActionStatusOnly(_isActionStatusOnly).Wait();
             }
         }
 

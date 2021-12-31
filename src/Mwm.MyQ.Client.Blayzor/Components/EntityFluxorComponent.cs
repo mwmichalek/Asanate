@@ -27,6 +27,9 @@ public abstract class EntityFluxorComponent : FluxorComponent {
     public IState<EntityState<Company>> CompaniesState { get; set; }
 
     [Inject]
+    public IState<ApplicationState> ApplicationState { get; set; }
+
+    [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
 
     public bool IsLoading() => TsksState.IsLoading() ||

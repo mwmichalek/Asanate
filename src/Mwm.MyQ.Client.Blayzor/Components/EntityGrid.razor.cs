@@ -15,9 +15,13 @@ public partial class EntityGrid : EntityFluxorComponent {
     ILogger<EntityGrid> Logger { get; set; }
 
     protected override void OnInitialized() {
-        base.OnInitialized(); 
+        base.OnInitialized();
 
-         
+        ApplicationState.StateChanged += (s, e) => UpdateSettings(e);
+    }
+
+    private void UpdateSettings(ApplicationState applicationState) {
+        Logger.LogInformation($"Updated setting: {applicationState.CurrentSetting.GetType().Name}");
     }
 
 }
