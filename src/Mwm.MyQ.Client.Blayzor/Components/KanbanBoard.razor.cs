@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Fluxor;
 using System.Collections;
+using Mwm.MyQ.Client.Service.Store.Features.Settings;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
@@ -53,7 +54,21 @@ public partial class KanbanBoard : EntityFluxorComponent {
         base.OnInitialized();
         UpdateSwimLanes();
         UpdateColumns();
+
+        ApplicationState.StateChanged += (s, e) => UpdateSettings(e);
     }
+
+    private void UpdateSettings(ApplicationState applicationState) {
+        if (applicationState.CurrentSetting is IsInFocusOnlyTskFilter focusFilter)
+            Logger.LogInformation($"Updated IsInFocusOnlyTskFilter: {focusFilter.CurrentValue}");
+
+        else if (applicationState.CurrentSetting is IsGroupedByCompanyFlag groupingFlag)
+            Logger.LogInformation($"Updated IsGroupedByCompanyFlag: {groupingFlag.CurrentValue}");
+
+        else if (applicationState.CurrentSetting is IsActionStatusOnlyFlag actionFlag)
+            Logger.LogInformation($"Updated IsActionStatusOnlyFlag: {actionFlag.CurrentValue}");
+    }
+
 
     protected override void BuildTskModels() {
         base.BuildTskModels();
@@ -61,10 +76,10 @@ public partial class KanbanBoard : EntityFluxorComponent {
         if (HasValues()) {
             var index = 0;
             foreach (var tskModel in TskModels.OrderByDescending(tm => tm.IsInFocus)
-                                          .ThenBy(tm => tm.CompanyName)
-                                          .ThenBy(tm => tm.ProjectAbbreviation)
-                                          .ThenBy(tm => tm.InitiativeName)
-                                          .ToList())
+                                              .ThenBy(tm => tm.CompanyName)
+                                              .ThenBy(tm => tm.ProjectAbbreviation)
+                                              .ThenBy(tm => tm.InitiativeName)
+                                              .ToList())
                 tskModel.RankId = index++;
 
             Logger.LogInformation($"Built {tskModels.Count} TskModels");

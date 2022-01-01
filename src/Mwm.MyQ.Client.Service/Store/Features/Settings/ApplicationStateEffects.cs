@@ -16,7 +16,7 @@ public class SetApplicationSettingEffect : Effect<SetApplicationSettingAction> {
 
     public override Task HandleAsync(SetApplicationSettingAction action, IDispatcher dispatcher) {
         try {
-            _logger.LogInformation($"Setting {nameof(action.ApplicationSetting)} ...");
+            _logger.LogInformation($"Setting {action.ApplicationSetting.GetType().Name} ...");
 
             dispatcher.Dispatch(new SetApplicationSettingSuccessAction(action.ApplicationSetting));
         } catch (Exception e) {

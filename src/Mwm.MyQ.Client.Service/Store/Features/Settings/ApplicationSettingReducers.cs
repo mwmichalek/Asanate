@@ -12,13 +12,13 @@ public static class ApplicationSettingReducers {
 
     [ReducerMethod]
     public static ApplicationState ReduceSetApplicationSettingAction(ApplicationState state, SetApplicationSettingAction _) =>
-           new ApplicationState(true, null, null, state.CurrentSetting);
+           new ApplicationState(true, null, state.Settings, null);
 
     [ReducerMethod]
     public static ApplicationState ReduceSetApplicationSettingSuccessAction(ApplicationState state, SetApplicationSettingSuccessAction action) {
         var settings = state.Settings.ToList();
         var setting = state.FindByType(action.ApplicationSetting.GetType());
-        if (setting == null)
+        if (setting != null)
             settings.Remove(setting);
         settings.Add(action.ApplicationSetting);
 
@@ -27,6 +27,6 @@ public static class ApplicationSettingReducers {
 
     [ReducerMethod]
     public static ApplicationState ReduceSetApplicationSettingFailureAction(ApplicationState state, SetApplicationSettingFailureAction action) =>
-        new ApplicationState(false, action.ErrorMessage, null, state.CurrentSetting);
+        new ApplicationState(false, action.ErrorMessage, state.Settings, state.CurrentSetting);
 
 }

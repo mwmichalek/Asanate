@@ -32,7 +32,7 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         public bool IsGroupedTogether {
             get => _isGroupedTogether;
             set {
-                ApplicationStateFacade.Set(new IsInFocusOnlyTskFilter {
+                ApplicationStateFacade.Set(new IsGroupedByCompanyFlag {
                     PreviousValue = _isGroupedTogether,
                     CurrentValue = value
                 });
@@ -46,7 +46,7 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         public bool IsInFocusOnly { 
             get => _isInFocusOnly;
             set {
-                ApplicationStateFacade.Set(new IsGroupedByCompanyFlag {
+                ApplicationStateFacade.Set(new IsInFocusOnlyTskFilter {
                     PreviousValue = _isInFocusOnly,
                     CurrentValue = value
                 });
