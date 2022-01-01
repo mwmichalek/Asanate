@@ -54,21 +54,19 @@ public partial class KanbanBoard : EntityFluxorComponent {
         base.OnInitialized();
         UpdateSwimLanes();
         UpdateColumns();
-
-        ApplicationState.StateChanged += (s, e) => UpdateSettings(e);
     }
 
-    private void UpdateSettings(ApplicationState applicationState) {
-        if (applicationState.CurrentSetting is IsInFocusOnlyTskFilter focusFilter)
-            Logger.LogInformation($"Updated IsInFocusOnlyTskFilter: {focusFilter.CurrentValue}");
-
-        else if (applicationState.CurrentSetting is IsGroupedByCompanyFlag groupingFlag)
-            Logger.LogInformation($"Updated IsGroupedByCompanyFlag: {groupingFlag.CurrentValue}");
-
-        else if (applicationState.CurrentSetting is IsActionStatusOnlyFlag actionFlag)
-            Logger.LogInformation($"Updated IsActionStatusOnlyFlag: {actionFlag.CurrentValue}");
+    protected override void Handle(IsInFocusOnlyTskFilter filter) {
+        Logger.LogInformation($"Updated IsInFocusOnlyTskFilter: {filter.CurrentValue}");
     }
 
+    protected override void Handle(IsActionStatusOnlyFlag flag) {
+        Logger.LogInformation($"Updated IsActionStatusOnlyFlag: {flag.CurrentValue}");
+    }
+
+    protected override void Handle(IsGroupedByCompanyFlag flag) {
+        Logger.LogInformation($"Updated IsGroupedByCompanyFlag: {flag.CurrentValue}");
+    }
 
     protected override void BuildTskModels() {
         base.BuildTskModels();

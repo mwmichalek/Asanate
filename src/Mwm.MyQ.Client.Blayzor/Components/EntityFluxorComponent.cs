@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Mwm.MyQ.Client.Blayzor.Helpers;
 using Mwm.MyQ.Client.Blayzor.Models.Tsks;
 using Mwm.MyQ.Client.Service.Facades;
+using Mwm.MyQ.Client.Service.Store.Features.Settings;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
@@ -62,10 +63,27 @@ public abstract class EntityFluxorComponent : FluxorComponent {
         ProjectsState.StateChanged += (s, e) => BuildTskModels();
         CompaniesState.StateChanged += (s, e) => BuildTskModels();
 
+        ApplicationState.StateChanged += (s, e) => RouteApplicationSettingChange(e.CurrentSetting);
+
         BuildTskModels();
 
         base.OnInitialized();
     }
+
+    private void RouteApplicationSettingChange(IApplicationSetting applicationSetting) {
+        if (applicationSetting is IsInFocusOnlyTskFilter focusFilter)
+            Handle(focusFilter);
+        else if (applicationSetting is IsGroupedByCompanyFlag groupingFlag)
+            Handle(groupingFlag);
+        else if (applicationSetting is IsActionStatusOnlyFlag actionFlag)
+            Handle(actionFlag);
+    }
+
+    protected virtual void Handle(IsInFocusOnlyTskFilter filter) { }
+
+    protected virtual void Handle(IsGroupedByCompanyFlag flag) { }
+
+    protected virtual void Handle(IsActionStatusOnlyFlag flag) { }
 
     protected List<TskModel> tskModels = new List<TskModel>();
 
