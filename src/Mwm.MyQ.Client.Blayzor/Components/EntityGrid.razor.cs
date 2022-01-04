@@ -6,16 +6,17 @@ using Mwm.MyQ.Client.Blayzor.Models.Tsks;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
+using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityGrid : EntityFluxorComponent {
+public partial class EntityGrid : TskModelConsumerComponent {
 
     [Inject]
     ILogger<EntityGrid> Logger { get; set; }
 
-    protected override void OnInitialized() {
-        base.OnInitialized();
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
 
         //ApplicationState.StateChanged += (s, e) => UpdateSettings(e);
     }
