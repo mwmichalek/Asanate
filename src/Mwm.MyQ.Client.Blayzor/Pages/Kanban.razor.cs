@@ -21,12 +21,19 @@ using Mwm.MyQ.Client.Blayzor.Helpers;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
 
 namespace Mwm.MyQ.Client.Blayzor.Pages {
-    public partial class Kanban : FluxorComponent {
+    public partial class Kanban : EventHandlerComponent {
 
         [Inject]
         public ApplicationStateFacade ApplicationStateFacade { get; set; }
 
         public KanbanBoard refKanbanBoard;
+
+        protected override async Task OnInitializedAsync() { 
+        
+        }
+
+        protected override async Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) =>
+            _isGroupedTogether = flag.CurrentValue;
 
         private bool _isGroupedTogether = true;
         public bool IsGroupedTogether {
@@ -37,10 +44,11 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                     CurrentValue = value
                 });
                 _isGroupedTogether = value;
-
-                //refKanbanBoard.SetIsGroupedByCompany(!_isGroupedTogether).Wait();
             }
         }
+
+        protected override async Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) =>
+            _isInFocusOnly = filter.CurrentValue;
 
         private bool _isInFocusOnly = false;
         public bool IsInFocusOnly { 
@@ -51,10 +59,11 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                     CurrentValue = value
                 });
                 _isInFocusOnly = value;
-
-                //refKanbanBoard.SetIsInFocusOnly(_isInFocusOnly).Wait();
             }
         }
+
+        protected override async Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) =>
+            _isActionStatusOnly = flag.CurrentValue;
 
         private bool _isActionStatusOnly = false;
         public bool IsActionStatusOnly {
@@ -65,8 +74,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                     CurrentValue = value
                 });
                 _isActionStatusOnly = value;
-
-                //refKanbanBoard.SetIsActionStatusOnly(_isActionStatusOnly).Wait();
             }
         }
 

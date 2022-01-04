@@ -71,6 +71,10 @@ public abstract class EventHandlerComponent : FluxorComponent {
         ApplicationState.StateChanged += async (s, e) => await RouteApplicationSettingChangeAsync(e.CurrentSetting);
 
         await base.OnInitializedAsync();
+
+        // Go through all application settings and trigger them.
+        foreach (var applicationSetting in ApplicationState.Value.Settings)
+            await RouteApplicationSettingChangeAsync(applicationSetting);
     }
 
     private async Task RouteApplicationSettingChangeAsync(IApplicationSetting applicationSetting) {
