@@ -144,7 +144,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
         UpdateSwimLanes();
-        await refKanbanBoard.RefreshAsync();
+        await refKanbanBoard?.RefreshAsync();
     }
 
     protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => SetIsInFocusOnly(filter.CurrentValue);
@@ -163,7 +163,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
         UpdateColumns();
-        await refKanbanBoard.RefreshAsync();
+        await refKanbanBoard?.RefreshAsync();
     }
 
     
