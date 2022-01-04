@@ -1,4 +1,4 @@
-﻿@inherits Mwm.MyQ.Client.Blayzor.Components.EntityFluxorComponent
+﻿@inherits Mwm.MyQ.Client.Blayzor.Components.TskModelConsumerComponent
 @using Mwm.MyQ.Client.Blayzor.Helpers;
 @using Mwm.MyQ.Client.Blayzor.Models.Tsks
 @using Mwm.MyQ.Domain;
@@ -41,7 +41,7 @@
     </SfKanban>
 }
 
-<TskPopup @ref="TskPopup" />
+<TskPopup @ref="refTskPopup" />
 
 <style>
     .e-kanban-header {

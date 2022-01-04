@@ -10,6 +10,7 @@ using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
@@ -31,12 +32,15 @@ public abstract class EventHandlerComponent : FluxorComponent {
     public IState<ApplicationState> ApplicationState { get; set; }
 
     [Inject]
+    public IActionSubscriber ActionSubscriber { get; set; }
+
+    [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
 
     public bool IsLoading() => TsksState.IsLoading() ||
-                           InitiativesState.IsLoading() ||
-                           ProjectsState.IsLoading() ||
-                           CompaniesState.IsLoading();
+                               InitiativesState.IsLoading() ||
+                               ProjectsState.IsLoading() ||
+                               CompaniesState.IsLoading();
 
     public bool HasErrors() => TsksState.HasErrors() ||
                                InitiativesState.HasErrors() ||
@@ -48,7 +52,7 @@ public abstract class EventHandlerComponent : FluxorComponent {
                                ProjectsState.HasValue(true) &&
                                CompaniesState.HasValue(true);
 
-    protected override void OnInitialized() {
+    protected override async Task OnInitializedAsync() {
         if (!TsksState.HasValue())
             EntityStateFacade.Load<Tsk>();
         if (!InitiativesState.HasValue())
@@ -58,38 +62,38 @@ public abstract class EventHandlerComponent : FluxorComponent {
         if (!ProjectsState.HasValue())
             EntityStateFacade.Load<Project>();
 
+        //ActionSubscriber.SubscribeToAction<>
 
-        TsksState.StateChanged += (s, e) => Handle(e.CurrentEntity);
-        InitiativesState.StateChanged += (s, e) => Handle(e.CurrentEntity);
-        ProjectsState.StateChanged += (s, e) => Handle(e.CurrentEntity);
-        CompaniesState.StateChanged += (s, e) => Handle(e.CurrentEntity);
+        TsksState.StateChanged += async (s, e) => await HandleUpdateAsync(e.CurrentEntity);
+        InitiativesState.StateChanged += async (s, e) => await HandleUpdateAsync(e.CurrentEntity);
+        ProjectsState.StateChanged += async (s, e) => await HandleUpdateAsync(e.CurrentEntity);
+        CompaniesState.StateChanged += async (s, e) => await HandleUpdateAsync(e.CurrentEntity);
+        ApplicationState.StateChanged += async (s, e) => await RouteApplicationSettingChangeAsync(e.CurrentSetting);
 
-        ApplicationState.StateChanged += (s, e) => RouteApplicationSettingChange(e.CurrentSetting);
-
-        base.OnInitialized();
+        await base.OnInitializedAsync();
     }
 
-    private void RouteApplicationSettingChange(IApplicationSetting applicationSetting) {
+    private async Task RouteApplicationSettingChangeAsync(IApplicationSetting applicationSetting) {
         if (applicationSetting is IsInFocusOnlyTskFilter focusFilter)
-            Handle(focusFilter);
+            await HandleUpdateAsync(focusFilter);
         else if (applicationSetting is IsGroupedByCompanyFlag groupingFlag)
-            Handle(groupingFlag);
+            await HandleUpdateAsync(groupingFlag);
         else if (applicationSetting is IsActionStatusOnlyFlag actionFlag)
-            Handle(actionFlag);
+            await HandleUpdateAsync(actionFlag);
     }
 
-    protected virtual void Handle(Tsk tsk) { }
+    protected virtual Task HandleUpdateAsync(Tsk tsk) => Task.CompletedTask;
 
-    protected virtual void Handle(Initiative initiative) { }
+    protected virtual Task HandleUpdateAsync(Initiative initiative) => Task.CompletedTask;
 
-    protected virtual void Handle(Project project) { }
+    protected virtual Task HandleUpdateAsync(Project project) => Task.CompletedTask;
 
-    protected virtual void Handle(Company company) { }
+    protected virtual Task HandleUpdateAsync(Company company) => Task.CompletedTask;
 
-    protected virtual void Handle(IsInFocusOnlyTskFilter filter) { }
+    protected virtual Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => Task.CompletedTask;
 
-    protected virtual void Handle(IsGroupedByCompanyFlag flag) { }
+    protected virtual Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) => Task.CompletedTask;
 
-    protected virtual void Handle(IsActionStatusOnlyFlag flag) { }
+    protected virtual Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) => Task.CompletedTask;
 
 }

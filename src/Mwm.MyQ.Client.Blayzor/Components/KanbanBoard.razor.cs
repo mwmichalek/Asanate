@@ -23,7 +23,7 @@ using Mwm.MyQ.Client.Service.Store.Features.Settings;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class KanbanBoard : EntityFluxorComponent {
+public partial class KanbanBoard : TskModelConsumerComponent {
 
     [Inject]
     ILogger<KanbanBoard> Logger { get; set; }
@@ -33,8 +33,9 @@ public partial class KanbanBoard : EntityFluxorComponent {
 
     private SfKanban<TskModel> refKanbanBoard;
 
-    public TskPopup TskPopup;
+    private TskPopup refTskPopup;
 
+    //public TskModel SelectedTskModel { get; set; }
 
     private List<TskModel> filteredTskModels = new List<TskModel>();
 
@@ -50,25 +51,13 @@ public partial class KanbanBoard : EntityFluxorComponent {
         set { }
     }
 
-    protected override void OnInitialized() {
-        base.OnInitialized();
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
         UpdateSwimLanes();
         UpdateColumns();
     }
 
-    protected override void Handle(IsInFocusOnlyTskFilter filter) {
-        Logger.LogInformation($"Updated IsInFocusOnlyTskFilter: {filter.CurrentValue}");
-    }
-
-    protected override void Handle(IsActionStatusOnlyFlag flag) {
-        Logger.LogInformation($"Updated IsActionStatusOnlyFlag: {flag.CurrentValue}");
-    }
-
-    protected override void Handle(IsGroupedByCompanyFlag flag) {
-        Logger.LogInformation($"Updated IsGroupedByCompanyFlag: {flag.CurrentValue}");
-    }
-
-    protected override void BuildTskModels() {
+    protected override Task BuildTskModels() {
         base.BuildTskModels();
 
         if (HasValues()) {
@@ -84,6 +73,7 @@ public partial class KanbanBoard : EntityFluxorComponent {
 
             FilterTskModels();
         }
+        return Task.CompletedTask;
     }
 
     private void FilterTskModels() { 
@@ -144,8 +134,10 @@ public partial class KanbanBoard : EntityFluxorComponent {
     public void DialogOpenHandler(DialogOpenEventArgs<TskModel> args) {
         args.Cancel = true;
         Logger.LogInformation("DialogOpenHandler!!!!!");
-        TskPopup.Update(args.Data);
+        refTskPopup.Update(args.Data);
     }
+
+    protected override async Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) => await SetIsGroupedByCompany(flag.CurrentValue);
 
     public bool IsGroupedByCompany { get; set; } = true;
 
@@ -155,13 +147,18 @@ public partial class KanbanBoard : EntityFluxorComponent {
         await refKanbanBoard.RefreshAsync();
     }
 
+    protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => SetIsInFocusOnly(filter.CurrentValue);
+
     public bool IsInFocusOnly { get; set; } = false;
 
-    public async Task SetIsInFocusOnly(bool isInFocusOnly) {
+    public Task SetIsInFocusOnly(bool isInFocusOnly) {
         IsInFocusOnly = isInFocusOnly;
         FilterTskModels();
         StateHasChanged(); //Because a collection changed.
+        return Task.CompletedTask;
     }
+
+    protected override async Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) => await SetIsActionStatusOnly(flag.CurrentValue);
 
     public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
@@ -169,6 +166,13 @@ public partial class KanbanBoard : EntityFluxorComponent {
         await refKanbanBoard.RefreshAsync();
     }
 
-    public TskModel SelectedTskModel { get; set; }
+    
+
+    
+
+    
+
+    
+    
 
 }
