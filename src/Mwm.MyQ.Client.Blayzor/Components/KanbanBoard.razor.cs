@@ -28,14 +28,17 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     [Inject]
     ILogger<KanbanBoard> Logger { get; set; }
 
-    [Inject]
-    public IActionSubscriber ActionSubscriber { get; set; }
-
     private SfKanban<TskModel> refKanbanBoard;
 
-    private TskPopup refTskPopup;
+    private SfKanban<TskModel> RefKanbanBoard {
+        get { return refKanbanBoard; }
+        set { 
+            refKanbanBoard = value;
+            InitializeBoard();
+        }
+    }
 
-    //public TskModel SelectedTskModel { get; set; }
+    private TskPopup refTskPopup;
 
     private List<TskModel> filteredTskModels = new List<TskModel>();
 
@@ -51,14 +54,17 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         set { }
     }
 
-    protected override async Task OnInitializedAsync() {
-        await base.OnInitializedAsync();
-        UpdateSwimLanes();
-        UpdateColumns();
-    }
+    //protected override async Task OnInitializedAsync() {
+    //    await base.OnInitializedAsync();
+    //}
 
-    protected override Task BuildTskModels() {
-        base.BuildTskModels();
+    //protected override Task OnAfterRenderAsync(bool firstRender) {
+    //    Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
+    //    return base.OnAfterRenderAsync(firstRender);
+    //}
+
+    protected override async Task BuildTskModels() {
+        await base.BuildTskModels();
 
         if (HasValues()) {
             var index = 0;
@@ -73,7 +79,6 @@ public partial class KanbanBoard : TskModelConsumerComponent {
 
             FilterTskModels();
         }
-        return Task.CompletedTask;
     }
 
     private void FilterTskModels() { 
@@ -81,6 +86,11 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         if (IsInFocusOnly)
             filtered = filtered.Where(tm => tm.IsInFocus);
         filteredTskModels = filtered.ToList();
+    }
+
+    private void InitializeBoard() {
+        UpdateSwimLanes();
+        UpdateColumns();
     }
 
     private void UpdateSwimLanes() {
@@ -109,6 +119,11 @@ public partial class KanbanBoard : TskModelConsumerComponent {
                                                  KeyField = s.ToKeyFields()
                                              }).ToList();
         }
+    }
+
+    private async Task RefreshBoard() {
+        if (refKanbanBoard != null)
+            await refKanbanBoard.RefreshAsync();
     }
 
     //####################################### ACTIONS ################################
@@ -144,7 +159,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
         UpdateSwimLanes();
-        await refKanbanBoard?.RefreshAsync();
+        await RefreshBoard();
     }
 
     protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => SetIsInFocusOnly(filter.CurrentValue);
@@ -163,16 +178,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
         UpdateColumns();
-        await refKanbanBoard?.RefreshAsync();
+        await RefreshBoard();
     }
-
-    
-
-    
-
-    
-
-    
-    
 
 }

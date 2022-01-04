@@ -28,10 +28,6 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
         public KanbanBoard refKanbanBoard;
 
-        //protected override async Task OnInitializedAsync() { 
-        //    base.OnInitializedAsync();
-        //}
-
         protected override async Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) =>
             _isGroupedTogether = flag.CurrentValue;
 
