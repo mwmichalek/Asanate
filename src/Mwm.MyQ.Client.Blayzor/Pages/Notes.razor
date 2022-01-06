@@ -6,6 +6,7 @@
 @using Syncfusion.Blazor.RichTextEditor
 @using Syncfusion.Blazor.Calendars
 @using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Layouts
 @using Mwm.MyQ.Client.Blayzor.Models.Shared
 @using Mwm.MyQ.Client.Blayzor.Components
 
@@ -16,9 +17,32 @@
         <EntityCreatorPane />
     </div>
     <div class="row">
-       <div class="col-md-12 text-light border-top p-2" style="height:15px;"></div>
+        <div class="col-md-12 text-light border-top p-2" style="height:15px;"></div>
     </div>
     <div class="row">
         <EntityGrid />
     </div>
 </div>
+
+
+@*<div class="container">
+    <div class="row">
+
+        <SfSplitter Height="100%" Width="600px" Orientation="Orientation.Vertical">
+            <SplitterPanes>
+                <SplitterPane Size="100px">
+                    <ContentTemplate>
+                        <EntityCreatorPane />
+                    </ContentTemplate>
+                </SplitterPane>
+
+                <SplitterPane Size="*">
+                    <ContentTemplate>
+                        <EntityGrid />
+                    </ContentTemplate>
+                </SplitterPane>
+            </SplitterPanes>
+        </SfSplitter>
+
+    </div>
+</div>*@
