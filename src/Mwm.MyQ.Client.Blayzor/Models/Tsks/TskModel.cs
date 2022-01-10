@@ -38,6 +38,8 @@ namespace Mwm.MyQ.Client.Blayzor.Models.Tsks {
 
         public string Notes { get; set; }
 
+        public DateTime? CreatedDate { get; set; }  
+
         public DateTime? DueDate { get; set; }
 
         public DateTime? StartDate { get; set; }

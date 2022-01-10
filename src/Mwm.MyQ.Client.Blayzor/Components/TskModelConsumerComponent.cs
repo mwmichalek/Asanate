@@ -55,6 +55,7 @@ public abstract class TskModelConsumerComponent : EventHandlerComponent {
             DurationEstimate = t.DurationEstimate,
             DurationCompleted = t.DurationCompleted,
             Notes = t.Notes,
+            CreatedDate = t.CreatedDate,
             DueDate = t.DueDate,
             StartDate = t.StartDate,
             StartedDate = t.StartedDate,
