@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mwm.MyQ.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,25 +20,25 @@ public class IsInFocusOnlyTskFilter : PrimativeApplicationSetting<bool> {
     public IsInFocusOnlyTskFilter() => CurrentValue = false;
 }
 
-//public interface IsInFocusOnlyTskFilterHandler {
-//    void Handler(IsInFocusOnlyTskFilter filter);
-//}
-
 public class IsGroupedByCompanyFlag : PrimativeApplicationSetting<bool> {
 
     public IsGroupedByCompanyFlag() => CurrentValue = true;
 }
-
-//public interface IsGroupedByCompanyFlagHandler {
-//    void Handler(IsGroupedByCompanyFlag flag);
-//}
 
 public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> { 
 
     public IsActionStatusOnlyFlag() => CurrentValue = false;
 }
 
-//public interface IsActionStatusOnlyFlagHandler {
-//    void Handler(IsActionStatusOnlyFlag flag);
-//}
+
+public interface ITskFilterApplicationSetting : IApplicationSetting { }
+
+public abstract class TskFilter : IApplicationSetting {
+
+    public abstract Predicate<Tsk> Predicate()
+
+}
+
+
+
 

@@ -64,6 +64,8 @@ namespace Mwm.MyQ.Client.Blayzor.Models.Tsks {
 
         public string CompanyName { get; set; }
 
+        public string CompanyNameAndProjectName => $"{CompanyName} - {ProjectName}";
+
         public bool IsInFocus { get; set; }
 
     }

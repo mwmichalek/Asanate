@@ -3,22 +3,45 @@
 @using Mwm.MyQ.Client.Blayzor.Models.Tsks
 @using Syncfusion.Blazor.Grids
 
-<SfGrid DataSource="@TskModels">
+<SfGrid DataSource="@TskModels" 
+        AllowSorting="true"
+        EnableAdaptiveUI="true">
     <GridColumns>
-        <GridColumn Field=@nameof(TskModel.Name) 
-                    HeaderText="Name" 
+        <GridColumn Field=@nameof(TskModel.CompanyNameAndProjectName) 
+                    HeaderText="Project" 
                     TextAlign="TextAlign.Left" 
-                    Width="120" />
-        <GridColumn Field=@nameof(TskModel.Status) 
-                    HeaderText="Status" 
-                    Width="150" />
+                    AutoFit="true"
+                    />
         <GridColumn Field=@nameof(TskModel.InitiativeName) 
                     HeaderText="Initiative" 
                     TextAlign="TextAlign.Left" 
-                    Width="130" />
-        <GridColumn Field=@nameof(TskModel.ProjectName) 
-                    HeaderText="Project" 
+                    AutoFit="true"
+                     />
+        <GridColumn Field=@nameof(TskModel.Name) 
+                    HeaderText="Name" 
                     TextAlign="TextAlign.Left" 
-                    Width="120"/>
+                    Width="99%"
+                    />
+        <GridColumn Field=@nameof(TskModel.StatusName) 
+                    HeaderText="Status" 
+                    TextAlign="TextAlign.Left"
+                    AutoFit="true"
+                    />
+       <GridColumn HeaderText="Actions" 
+                    TextAlign="TextAlign.Center"
+                    AutoFit="true"
+                    >
+            <Template>
+                @{
+                    var tskModel = (context as TskModel);
+
+                    <button @onclick="() => ShowTskEditor(tskModel)" class="btn btn-primary"><i class="fas fa-pen-square"></i></button>
+                    <button class="btn btn-primary"><i class="fas fa-archive"></i></button>
+                    <button class="btn btn-primary"><i class="fas fa-check-square"></i></button>
+                }
+            </Template>
+        </GridColumn>
     </GridColumns>
 </SfGrid>
+
+<TskPopup @ref="refTskPopup" />

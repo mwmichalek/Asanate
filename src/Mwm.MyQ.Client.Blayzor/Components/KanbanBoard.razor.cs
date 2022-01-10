@@ -146,9 +146,8 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         }
     }
 
-    public void DialogOpenHandler(DialogOpenEventArgs<TskModel> args) {
+    public void ShowTskEditor(DialogOpenEventArgs<TskModel> args) {
         args.Cancel = true;
-        Logger.LogInformation("DialogOpenHandler!!!!!");
         refTskPopup.Update(args.Data);
     }
 

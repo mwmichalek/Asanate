@@ -6,6 +6,7 @@ using Mwm.MyQ.Client.Blayzor.Models.Tsks;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
+using Syncfusion.Blazor.Kanban;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
@@ -15,10 +16,17 @@ public partial class EntityGrid : TskModelConsumerComponent {
     [Inject]
     ILogger<EntityGrid> Logger { get; set; }
 
+    private TskPopup refTskPopup;
+
+
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
 
         //ApplicationState.StateChanged += (s, e) => UpdateSettings(e);
+    }
+
+    public void ShowTskEditor(TskModel tskModel) {
+        refTskPopup.Update(tskModel);
     }
 
     //private void UpdateSettings(ApplicationState applicationState) {

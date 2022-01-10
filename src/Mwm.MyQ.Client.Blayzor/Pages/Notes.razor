@@ -12,37 +12,28 @@
 
 @page "/notes"
 
-<div class="container">
-    <div class="row">
-        <EntityCreatorPane />
+@*@if (IsCreatorPaneVisible) {*@
+    <div class="row pb-3">
+        <div class="col-lg-12">
+            <EntityCreatorPane />
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 text-light border-top p-2" style="height:15px;"></div>
+    <div class="row pb-3">
+        <div class="col-lg-12">
+            <div class="col-md-12 text-light border-top p-2" style="height:15px;"></div>
+        </div>
     </div>
-    <div class="row">
+@*} else {
+    <div class="row pb-3">
+        <div class="col-lg-12">
+            <button class="btn btn-primary" @onclick="() => IsCreatorPaneVisible = false;"><i class="fas fa-plus-square"></i></button>
+        </div>
+    </div>
+
+}*@
+<div class="row pb-3">
+    <div class="col-lg-12">
         <EntityGrid />
     </div>
 </div>
 
-
-@*<div class="container">
-    <div class="row">
-
-        <SfSplitter Height="100%" Width="600px" Orientation="Orientation.Vertical">
-            <SplitterPanes>
-                <SplitterPane Size="100px">
-                    <ContentTemplate>
-                        <EntityCreatorPane />
-                    </ContentTemplate>
-                </SplitterPane>
-
-                <SplitterPane Size="*">
-                    <ContentTemplate>
-                        <EntityGrid />
-                    </ContentTemplate>
-                </SplitterPane>
-            </SplitterPanes>
-        </SfSplitter>
-
-    </div>
-</div>*@

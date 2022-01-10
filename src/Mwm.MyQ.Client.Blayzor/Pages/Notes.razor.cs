@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 namespace Mwm.MyQ.Client.Blayzor.Pages {
     public partial class Notes : FluxorComponent {
 
-       
+        //public bool IsCreatorPaneVisible { get; set; } = true;
+
+
     }
 }
