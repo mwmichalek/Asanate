@@ -176,7 +176,7 @@ public partial class EntityCreatorPane : FluxorComponent {
                 float.TryParse(NewTskEstimatedDuration, out float estimatedDuration);
                 var tskStatus = NewTskStatus.ToStatus();
 
-                EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
+                await EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
                     Name = NewTskName,
                     DurationEstimate = estimatedDuration > 0 ? estimatedDuration : null,
                     Status = tskStatus,
@@ -190,7 +190,7 @@ public partial class EntityCreatorPane : FluxorComponent {
             } else if (!string.IsNullOrEmpty(NewInitiativeName) && IsInInitiativeCreationMode) {
                 Logger.LogInformation($"Pending item: {NewInitiativeName}");
 
-                EntityStateFacade.Add<Initiative, Application.Initiatives.Commands.InitiativeAdd.Command>(new InitiativeAdd.Command {
+                await EntityStateFacade.Add<Initiative, Application.Initiatives.Commands.InitiativeAdd.Command>(new InitiativeAdd.Command {
                     Name = NewInitiativeName,
                     ExternalId = NewInitiativeExternalId,
                     ProjectId = SelectedProjectId

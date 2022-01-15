@@ -130,13 +130,13 @@ public partial class KanbanBoard : TskModelConsumerComponent {
 
     //####################################### ACTIONS ################################
 
-    public void DragStopHandler(DragEventArgs<TskModel> args) {
+    public async Task DragStopHandlerAsync(DragEventArgs<TskModel> args) {
         foreach (var tskModel in args.Data) {
             try {
                 var tsk = TsksState.FindById(tskModel.Id);
                 if (tsk.Status != tskModel.Status) {
                     Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
-                    EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                    await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
                         Id = tskModel.Id,
                         Name = tsk.Name,
                         Status = tskModel.Status

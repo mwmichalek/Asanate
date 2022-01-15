@@ -17,27 +17,27 @@ namespace Mwm.MyQ.Client.Service.Facades {
         public EntityStateFacade(ILogger<EntityStateFacade> logger, IDispatcher dispatcher) =>
             (_logger, _dispatcher) = (logger, dispatcher);
 
-        public void Load<TEntity>() where TEntity : INamedEntity {
+        public async Task Load<TEntity>() where TEntity : INamedEntity {
             _logger.LogInformation($"Issuing action to load { typeof(TEntity).Name}(s) ...");
-            _dispatcher.Dispatch(new LoadAction<TEntity>());
+            await Task.Run(() => _dispatcher.Dispatch(new LoadAction<TEntity>()));
         }
 
-        public void Add<TEntity, TAddEntityCommand>(TAddEntityCommand entityCommand) where TEntity : INamedEntity
+        public async Task Add<TEntity, TAddEntityCommand>(TAddEntityCommand entityCommand) where TEntity : INamedEntity
                                                                                      where TAddEntityCommand : IAddEntityCommand<TEntity> {
             _logger.LogInformation($"Issuing action to add { typeof(TEntity).Name}(s) ...");
-            _dispatcher.Dispatch(new AddAction<TEntity, TAddEntityCommand>(entityCommand));
+            await Task.Run(() => _dispatcher.Dispatch(new AddAction<TEntity, TAddEntityCommand>(entityCommand)));
         }
 
-        public void Update<TEntity, TUpdateEntityCommand>(TUpdateEntityCommand entityCommand) where TEntity : INamedEntity
+        public async Task Update<TEntity, TUpdateEntityCommand>(TUpdateEntityCommand entityCommand) where TEntity : INamedEntity
                                                                                               where TUpdateEntityCommand : IUpdateEntityCommand<TEntity>{
             _logger.LogInformation($"Issuing action to update { typeof(TEntity).Name}(s) ...");
-            _dispatcher.Dispatch(new UpdateAction<TEntity, TUpdateEntityCommand>(entityCommand));
+            await Task.Run(() => _dispatcher.Dispatch(new UpdateAction<TEntity, TUpdateEntityCommand>(entityCommand)));
         }
 
-        public void Delete<TEntity, TDeleteEntityCommand>(TDeleteEntityCommand entityCommand) where TEntity : INamedEntity
+        public async Task Delete<TEntity, TDeleteEntityCommand>(TDeleteEntityCommand entityCommand) where TEntity : INamedEntity
                                                                                               where TDeleteEntityCommand : IDeleteEntityCommand<TEntity> {
             _logger.LogInformation($"Issuing action to delete { typeof(TEntity).Name}(s) ...");
-            _dispatcher.Dispatch(new DeleteAction<TEntity, TDeleteEntityCommand>(entityCommand));
+            await Task.Run(() => _dispatcher.Dispatch(new DeleteAction<TEntity, TDeleteEntityCommand>(entityCommand)));
         }
     }
 }

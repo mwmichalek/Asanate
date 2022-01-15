@@ -36,7 +36,7 @@
             }
             </Template>
         </KanbanCardSettings>
-        <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@ShowTskEditor" TValue="TskModel"></KanbanEvents>
+        <KanbanEvents DragStop="@DragStopHandlerAsync" DialogOpen="@ShowTskEditor" TValue="TskModel"></KanbanEvents>
         <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
     </SfKanban>
 }

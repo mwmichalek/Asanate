@@ -54,13 +54,13 @@ public abstract class EventHandlerComponent : FluxorComponent {
 
     protected override async Task OnInitializedAsync() {
         if (!TsksState.HasValue())
-            EntityStateFacade.Load<Tsk>();
+            await EntityStateFacade.Load<Tsk>();
         if (!InitiativesState.HasValue())
-            EntityStateFacade.Load<Initiative>();
+            await EntityStateFacade.Load<Initiative>();
         if (!CompaniesState.HasValue())
-            EntityStateFacade.Load<Company>();
+            await EntityStateFacade.Load<Company>();
         if (!ProjectsState.HasValue())
-            EntityStateFacade.Load<Project>();
+            await EntityStateFacade.Load<Project>();
 
         //ActionSubscriber.SubscribeToAction<>
 
