@@ -29,10 +29,6 @@
     <ProjectReference Include="..\Mwm.MyQ.Domain\Mwm.MyQ.Domain.csproj" />
     <ProjectReference Include="..\Mwm.MyQ.Persistance\Mwm.MyQ.Persistance.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Tsks\" />
-  </ItemGroup>
   
   
 
