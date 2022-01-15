@@ -54,9 +54,10 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         set { }
     }
 
-    //protected override async Task OnInitializedAsync() {
-    //    await base.OnInitializedAsync();
-    //}
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+        InitializeBoard();
+    }
 
     //protected override Task OnAfterRenderAsync(bool firstRender) {
     //    Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
@@ -91,6 +92,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     private void InitializeBoard() {
         UpdateSwimLanes();
         UpdateColumns();
+        RefreshBoard();
     }
 
     private void UpdateSwimLanes() {

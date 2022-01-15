@@ -1,13 +1,13 @@
 ﻿@inherits Mwm.MyQ.Client.Blayzor.Components.TskModelConsumerComponent
-@using Mwm.MyQ.Client.Blayzor.Helpers;
-@using Mwm.MyQ.Client.Blayzor.Models.Tsks
+@using Mwm.MyQ.Client.Blayzor.Helpers
+@using Mwm.MyQ.Client.Service.Models
 @using Mwm.MyQ.Domain;
 @using Syncfusion.Blazor.Kanban
 @using Syncfusion.Blazor.Layouts
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Inputs
 @using Syncfusion.Blazor.Cards
-@using Mwm.MyQ.Client.Blayzor.Components;
+@using Mwm.MyQ.Client.Blayzor.Components
 
 @if (IsLoading()) {
     <div class="spinner-border" role="status">
@@ -36,7 +36,7 @@
             }
             </Template>
         </KanbanCardSettings>
-        <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@ShowTskEditor" TValue="Models.Tsks.TskModel"></KanbanEvents>
+        <KanbanEvents DragStop="@DragStopHandler" DialogOpen="@ShowTskEditor" TValue="TskModel"></KanbanEvents>
         <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
     </SfKanban>
 }

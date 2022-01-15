@@ -6,4 +6,3 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Settings;
 
-}

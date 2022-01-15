@@ -13,9 +13,6 @@ public interface IPrimativeApplicationSetting : IApplicationSetting { }
 
 public interface IObjectApplicationSetting : IApplicationSetting { }
 
-//public abstract class ApplicationSetting : IApplicationSetting {
-//}
-
 public abstract class ObjectApplicationSetting<TClass> : IObjectApplicationSetting where TClass : class {
 
     public TClass PreviousValue { get; set; }
@@ -36,6 +33,8 @@ public interface IEntityFilter<TNamedEntity> where TNamedEntity : INamedEntity {
     bool Filter(TNamedEntity entity);
 
     bool IsApplied { get; }
+
+    string Title { get; }
 }
 
 
@@ -53,7 +52,9 @@ public interface IObjectEntityFilter<TNamedEntity, TClass> : IEntityFilter<TName
 public abstract class EntityFilter<TNamedEntity> : IEntityFilter<TNamedEntity> where TNamedEntity : INamedEntity {
     public abstract bool Filter(TNamedEntity namedEntity);
 
-    public bool IsApplied { get; set; }
+    public bool IsApplied { get; set; } = false;
+
+    public virtual string Title => "Name == Something";
 
 }
 
@@ -71,6 +72,8 @@ public abstract class ObjectEntityFilter<TNamedEntity, TClass> : EntityFilter<TN
     public TClass FilterValue { get; set; }                                                                                
 }
 
-public class CompletedTskFilter : EntityFilter<Tsk> {
-    public override bool Filter(Tsk tsk) => tsk.IsCompleted;
+public class IsInFocusedTskFilter : EntityFilter<Tsk> {
+    public override bool Filter(Tsk tsk) => tsk.IsInFocus;
+
+    public override string Title => "Tsk == In Focus";
 }
