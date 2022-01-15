@@ -14,7 +14,7 @@ using Syncfusion.Blazor.Popups;
 using Mwm.MyQ.Client.Blayzor.Components;
 using Mwm.MyQ.Client.Blayzor.Helpers;
 using Fluxor.Blazor.Web.Components;
-using Mwm.MyQ.Client.Blayzor.Models.Tsks;
+using Mwm.MyQ.Client.Service.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Fluxor;

@@ -33,11 +33,11 @@ public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> {
 
 public interface ITskFilterApplicationSetting : IApplicationSetting { }
 
-public abstract class TskFilter : IApplicationSetting {
+//public abstract class TskFilter : IApplicationSetting {
 
-    public abstract Predicate<Tsk> Predicate()
+//    public abstract Predicate<Tsk> Predicate()
 
-}
+//}
 
 
 

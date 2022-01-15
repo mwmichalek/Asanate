@@ -2,7 +2,7 @@
 using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Mwm.MyQ.Client.Blayzor.Models.Tsks;
+using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
@@ -28,8 +28,10 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
 
         public KanbanBoard refKanbanBoard;
 
-        protected override async Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) =>
+        protected override Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) {
             _isGroupedTogether = flag.CurrentValue;
+            return Task.CompletedTask;
+        }
 
         private bool _isGroupedTogether = true;
         public bool IsGroupedTogether {
@@ -43,8 +45,11 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
-        protected override async Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) =>
+        protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) {
             _isInFocusOnly = filter.CurrentValue;
+            return Task.CompletedTask;
+        }
+
 
         private bool _isInFocusOnly = false;
         public bool IsInFocusOnly { 
@@ -58,8 +63,10 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
-        protected override async Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) =>
+        protected override Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) {
             _isActionStatusOnly = flag.CurrentValue;
+            return Task.CompletedTask;
+        }
 
         private bool _isActionStatusOnly = false;
         public bool IsActionStatusOnly {

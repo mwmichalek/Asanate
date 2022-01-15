@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Mwm.MyQ.Application.Initiatives.Commands;
 using Mwm.MyQ.Application.Tsks.Commands;
 using Mwm.MyQ.Client.Blayzor.Models.Shared;
-using Mwm.MyQ.Client.Blayzor.Models.Tsks;
+using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.MyQ.Client.Service.Store.State.Shared;

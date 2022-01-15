@@ -2,7 +2,7 @@
 using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Mwm.MyQ.Client.Blayzor.Models.Tsks;
+using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;

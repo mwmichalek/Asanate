@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Mwm.MyQ.Client.Blayzor.Models.Tsks;
+using Mwm.MyQ.Client.Service.Models;
 using System;
 using System.Threading.Tasks;
 using Mwm.MyQ.Application.Tsks.Commands;

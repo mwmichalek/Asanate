@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mwm.MyQ.Client.Blayzor.Models.Tsks {
+namespace Mwm.MyQ.Client.Service.Models {
     public class TskModel {
 
         public int Id { get; set; }
