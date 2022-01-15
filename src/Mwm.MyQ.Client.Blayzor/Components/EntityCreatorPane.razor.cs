@@ -86,22 +86,24 @@ public partial class EntityCreatorPane : FluxorComponent {
 
     public IEnumerable<DropDownEntity> InitiativeDropDownEntities { get; set; } = new List<DropDownEntity>();
 
-    protected override void OnInitialized() {
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+
         if (!TsksState.HasValue())
-            EntityStateFacade.Load<Tsk>();
+            await EntityStateFacade.Load<Tsk>();
         if (!InitiativesState.HasValue())
-            EntityStateFacade.Load<Initiative>();
+            await EntityStateFacade.Load<Initiative>();
         if (!CompaniesState.HasValue())
-            EntityStateFacade.Load<Company>();
+            await EntityStateFacade.Load<Company>();
         if (!ProjectsState.HasValue())
-            EntityStateFacade.Load<Project>();
+            await EntityStateFacade.Load<Project>();
 
         TsksState.StateChanged += (s, e) => Saved(e);
         InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
         ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
         UpdateProjectDropDown();
 
-        base.OnInitialized();
+        
     }
 
     private void UpdateProjectDropDown() {

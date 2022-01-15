@@ -34,7 +34,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         get { return refKanbanBoard; }
         set { 
             refKanbanBoard = value;
-            InitializeBoard();
+            InitializeBoardAsync().Wait();
         }
     }
 
@@ -56,7 +56,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
-        InitializeBoard();
+        await InitializeBoardAsync();
     }
 
     //protected override Task OnAfterRenderAsync(bool firstRender) {
@@ -89,10 +89,10 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         filteredTskModels = filtered.ToList();
     }
 
-    private void InitializeBoard() {
+    private async Task InitializeBoardAsync() {
         UpdateSwimLanes();
         UpdateColumns();
-        RefreshBoard();
+        await RefreshBoardAsync();
     }
 
     private void UpdateSwimLanes() {
@@ -123,7 +123,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         }
     }
 
-    private async Task RefreshBoard() {
+    private async Task RefreshBoardAsync() {
         if (refKanbanBoard != null)
             await refKanbanBoard.RefreshAsync();
     }
@@ -160,7 +160,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
         UpdateSwimLanes();
-        await RefreshBoard();
+        await RefreshBoardAsync();
     }
 
     protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => SetIsInFocusOnly(filter.CurrentValue);
@@ -179,7 +179,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
         UpdateColumns();
-        await RefreshBoard();
+        await RefreshBoardAsync();
     }
 
 }
