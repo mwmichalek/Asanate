@@ -56,6 +56,8 @@ namespace Mwm.MyQ.Domain {
 
         public int InitiativeId { get; set; }
 
+        public List<Activity> Activities { get; set; }   
+
         [JsonIgnore]
         public int PercentageCompleted {
             get {

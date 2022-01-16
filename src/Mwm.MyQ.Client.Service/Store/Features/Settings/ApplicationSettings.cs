@@ -72,8 +72,3 @@ public abstract class ObjectEntityFilter<TNamedEntity, TClass> : EntityFilter<TN
     public TClass FilterValue { get; set; }                                                                                
 }
 
-public class IsInFocusedTskFilter : EntityFilter<Tsk> {
-    public override bool Filter(Tsk tsk) => tsk.IsInFocus;
-
-    public override string Title => "Tsk == In Focus";
-}

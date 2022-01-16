@@ -59,6 +59,8 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                     PreviousValue = _isInFocusOnly,
                     CurrentValue = value
                 });
+
+                //TODO: (MWM) Change to new filter here
                 _isInFocusOnly = value;
             }
         }

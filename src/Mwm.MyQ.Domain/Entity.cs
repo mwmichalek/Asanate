@@ -18,7 +18,7 @@ namespace Mwm.MyQ.Domain {
         
     }
 
-    public class Entity : IEntity {
+    public abstract class Entity : IEntity {
 
         [Key, Column(Order = 0)]
         public int Id { get; set; }

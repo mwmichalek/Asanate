@@ -30,8 +30,14 @@ public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> {
     public IsActionStatusOnlyFlag() => CurrentValue = false;
 }
 
+public class IsInFocusedTskFilter : EntityFilter<Tsk> {
+    public override bool Filter(Tsk tsk) => tsk.IsInFocus;
 
-public interface ITskFilterApplicationSetting : IApplicationSetting { }
+    public override string Title => "Tsk == In Focus";
+}
+
+
+//public interface ITskFilterApplicationSetting : IApplicationSetting { }
 
 //public abstract class TskFilter : IApplicationSetting {
 

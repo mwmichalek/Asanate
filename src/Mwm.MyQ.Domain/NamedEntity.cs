@@ -11,7 +11,7 @@ namespace Mwm.MyQ.Domain {
         public string Name { get; set; }
 
     }
-    public class NamedEntity : Entity, INamedEntity {
+    public abstract class NamedEntity : Entity, INamedEntity {
 
         [Column(Order = 1)]
         public string Name { get; set; }
