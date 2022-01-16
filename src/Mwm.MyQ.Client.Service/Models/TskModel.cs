@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Models {
-    public class TskModel {
+    public class TskModel : EntityModel<Tsk> {
 
         public int Id { get; set; }
 

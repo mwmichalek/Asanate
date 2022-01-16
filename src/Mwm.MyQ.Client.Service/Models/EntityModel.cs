@@ -7,5 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Models;
 
-//public abstract class EntityModel<TNamedEntity> : TNamedEntity where TNamedEntity : INamedEntity {
-//}
+public abstract class EntityModel<TNamedEntity> where TNamedEntity : INamedEntity {
+
+
+}
