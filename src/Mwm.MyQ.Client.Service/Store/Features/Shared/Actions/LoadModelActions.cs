@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
     public class LoadModelAction<TEntity> where TEntity : INamedEntity {
+
+        public LoadModelAction(IEnumerable<TEntity> entities) =>
+            Entities = entities;
+
+        public IEnumerable<TEntity> Entities { get; }
     }
 
     public class LoadModelSuccessAction<TEntity> where TEntity : INamedEntity {
