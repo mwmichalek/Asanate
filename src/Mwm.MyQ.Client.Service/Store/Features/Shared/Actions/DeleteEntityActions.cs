@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
 
-    public class DeleteAction<TEntity, TDeleteEntityCommand> where TEntity : INamedEntity
+    public class DeleteEntityAction<TEntity, TDeleteEntityCommand> where TEntity : INamedEntity
                                                              where TDeleteEntityCommand : IDeleteEntityCommand<TEntity> {
 
-        public DeleteAction(TDeleteEntityCommand entityCommand) =>
+        public DeleteEntityAction(TDeleteEntityCommand entityCommand) =>
             EntityCommand = entityCommand;
 
         public TDeleteEntityCommand EntityCommand { get; }
     }
 
-    public class DeleteSuccessAction<TEntity> where TEntity : INamedEntity {
+    public class DeleteEntitySuccessAction<TEntity> where TEntity : INamedEntity {
 
-        public DeleteSuccessAction(int id) =>
+        public DeleteEntitySuccessAction(int id) =>
             Id = id;
 
         public int Id { get; }
 
     }
 
-    public class DeleteFailureAction<TEntity> : FailureAction where TEntity : INamedEntity {
+    public class DeleteEntityFailureAction<TEntity> : FailureAction where TEntity : INamedEntity {
 
-        public DeleteFailureAction(string errorMessage) : base(errorMessage) { }
+        public DeleteEntityFailureAction(string errorMessage) : base(errorMessage) { }
     }
 
 }

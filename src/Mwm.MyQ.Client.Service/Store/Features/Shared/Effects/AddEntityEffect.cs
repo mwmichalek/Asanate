@@ -13,17 +13,17 @@ using Mwm.MyQ.Application.Tsks.Commands;
 using Mwm.MyQ.Application.Shared.Commands;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
-    public abstract class AddEffect<TEntity, TAddEntityCommand> : 
-                          Effect<AddAction<TEntity, TAddEntityCommand>> where TEntity : INamedEntity
+    public abstract class AddEntityEffect<TEntity, TAddEntityCommand> : 
+                          Effect<AddEntityAction<TEntity, TAddEntityCommand>> where TEntity : INamedEntity
                                                                         where TAddEntityCommand : IAddEntityCommand<TEntity> {
 
-        protected readonly ILogger<AddEffect<TEntity, TAddEntityCommand>> _logger;
+        protected readonly ILogger<AddEntityEffect<TEntity, TAddEntityCommand>> _logger;
         protected readonly IEntityStorage _entityStorage;
 
-        public AddEffect(ILogger<AddEffect<TEntity, TAddEntityCommand>> logger, IEntityStorage entityStorage) =>
+        public AddEntityEffect(ILogger<AddEntityEffect<TEntity, TAddEntityCommand>> logger, IEntityStorage entityStorage) =>
             (_logger, _entityStorage) = (logger, entityStorage);
 
-        public override async Task HandleAsync(AddAction<TEntity, TAddEntityCommand> action, IDispatcher dispatcher) {
+        public override async Task HandleAsync(AddEntityAction<TEntity, TAddEntityCommand> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
             try {
                 _logger.LogInformation($"Adding {entityName} ...");
@@ -34,10 +34,10 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 var entity = await _entityStorage.Get<TEntity>(id);
                 _logger.LogInformation($"Retrieved added {entityName} successfully!");
 
-                dispatcher.Dispatch(new AddSuccessAction<TEntity>(entity));
+                dispatcher.Dispatch(new AddEntitySuccessAction<TEntity>(entity));
             } catch (Exception e) {
                 _logger.LogError($"Error adding {entityName}(s), reason: {e}");
-                dispatcher.Dispatch(new AddFailureAction<TEntity>(e.Message));
+                dispatcher.Dispatch(new AddEntityFailureAction<TEntity>(e.Message));
             }
 
         }

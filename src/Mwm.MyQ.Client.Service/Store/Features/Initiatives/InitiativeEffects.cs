@@ -10,27 +10,27 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
-    public class InitiativeLoadEffect : LoadEffect<Initiative> {
+    public class InitiativeLoadEffect : LoadEntityEffect<Initiative> {
 
-        public InitiativeLoadEffect(ILogger<LoadEffect<Initiative>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
-
-    }
-
-    public class InitiativeAddEffect : AddEffect<Initiative, InitiativeAdd.Command> {
-
-        public InitiativeAddEffect(ILogger<AddEffect<Initiative, InitiativeAdd.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public InitiativeLoadEffect(ILogger<LoadEntityEffect<Initiative>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
 
-    public class InitiativeUpdateEffect : UpdateEffect<Initiative, InitiativeUpdate.Command> {
+    public class InitiativeAddEffect : AddEntityEffect<Initiative, InitiativeAdd.Command> {
 
-        public InitiativeUpdateEffect(ILogger<UpdateEffect<Initiative, InitiativeUpdate.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public InitiativeAddEffect(ILogger<AddEntityEffect<Initiative, InitiativeAdd.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
 
-    public class InitiativeDeleteEffect : DeleteEffect<Initiative, InitiativeDelete.Command> {
+    public class InitiativeUpdateEffect : UpdateEntityEffect<Initiative, InitiativeUpdate.Command> {
 
-        public InitiativeDeleteEffect(ILogger<DeleteEffect<Initiative, InitiativeDelete.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public InitiativeUpdateEffect(ILogger<UpdateEntityEffect<Initiative, InitiativeUpdate.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+
+    }
+
+    public class InitiativeDeleteEffect : DeleteEntityEffect<Initiative, InitiativeDelete.Command> {
+
+        public InitiativeDeleteEffect(ILogger<DeleteEntityEffect<Initiative, InitiativeDelete.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
 

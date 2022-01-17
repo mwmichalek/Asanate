@@ -12,17 +12,17 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
-    public abstract class UpdateEffect<TEntity, TUpdateEntityCommand> : 
-                          Effect<UpdateAction<TEntity, TUpdateEntityCommand>> where TEntity : INamedEntity
+    public abstract class UpdateEntityEffect<TEntity, TUpdateEntityCommand> : 
+                          Effect<UpdateEntityAction<TEntity, TUpdateEntityCommand>> where TEntity : INamedEntity
                                                                               where TUpdateEntityCommand : IUpdateEntityCommand<TEntity>{
 
-        protected readonly ILogger<UpdateEffect<TEntity, TUpdateEntityCommand>> _logger;
+        protected readonly ILogger<UpdateEntityEffect<TEntity, TUpdateEntityCommand>> _logger;
         protected readonly IEntityStorage _entityStorage;
 
-        public UpdateEffect(ILogger<UpdateEffect<TEntity, TUpdateEntityCommand>> logger, IEntityStorage entityStorage) =>
+        public UpdateEntityEffect(ILogger<UpdateEntityEffect<TEntity, TUpdateEntityCommand>> logger, IEntityStorage entityStorage) =>
             (_logger, _entityStorage) = (logger, entityStorage);
 
-        public override async Task HandleAsync(UpdateAction<TEntity, TUpdateEntityCommand> action, IDispatcher dispatcher) {
+        public override async Task HandleAsync(UpdateEntityAction<TEntity, TUpdateEntityCommand> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
             try {
                 _logger.LogInformation($"Updating {entityName} ...");
@@ -33,10 +33,10 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 var entity = await _entityStorage.Get<TEntity>(id);
                 _logger.LogInformation($"Retrieved updated {entityName} successfully!");
 
-                dispatcher.Dispatch(new UpdateSuccessAction<TEntity>(entity));
+                dispatcher.Dispatch(new UpdateEntitySuccessAction<TEntity>(entity));
             } catch (Exception e) {
                 _logger.LogError($"Error updating {entityName}(s), reason: {e}");
-                dispatcher.Dispatch(new UpdateFailureAction<TEntity>(e.Message));
+                dispatcher.Dispatch(new UpdateEntityFailureAction<TEntity>(e.Message));
             }
 
         }

@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
     public static class ProjectReducers {
         [ReducerMethod]
-        public static EntityState<Project> ReduceLoadProjectsAction(EntityState<Project> state, LoadAction<Project> _) =>
+        public static EntityState<Project> ReduceLoadProjectsAction(EntityState<Project> state, LoadEntityAction<Project> _) =>
             new EntityState<Project>(true, null, null, state.CurrentEntity);
 
         [ReducerMethod]
-        public static EntityState<Project> ReduceLoadProjectsSuccessAction(EntityState<Project> state, LoadSuccessAction<Project> action) =>
+        public static EntityState<Project> ReduceLoadProjectsSuccessAction(EntityState<Project> state, LoadEntitySuccessAction<Project> action) =>
             new EntityState<Project>(false, null, action.Entities, state.CurrentEntity);
 
         [ReducerMethod]
-        public static EntityState<Project> ReduceLoadProjectsFailureAction(EntityState<Project> state, LoadFailureAction<Project> action) =>
+        public static EntityState<Project> ReduceLoadProjectsFailureAction(EntityState<Project> state, LoadEntityFailureAction<Project> action) =>
             new EntityState<Project>(false, action.ErrorMessage, null, state.CurrentEntity);
     }
 }

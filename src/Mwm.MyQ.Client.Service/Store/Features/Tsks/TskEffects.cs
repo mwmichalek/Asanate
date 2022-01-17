@@ -14,31 +14,31 @@ using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
-    public class TskLoadEffect : LoadEffect<Tsk> {
+    public class TskLoadEffect : LoadEntityEffect<Tsk> {
 
-        public TskLoadEffect(ILogger<LoadEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
-
-    }
-
-    public class TskAddEffect : AddEffect<Tsk, TskAdd.Command> {
-
-        public TskAddEffect(ILogger<AddEffect<Tsk, TskAdd.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public TskLoadEffect(ILogger<LoadEntityEffect<Tsk>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
 
-    public class TskUpdateEffect : UpdateEffect<Tsk, TskUpdate.Command> {
+    public class TskAddEffect : AddEntityEffect<Tsk, TskAdd.Command> {
 
-        public TskUpdateEffect(ILogger<UpdateEffect<Tsk, TskUpdate.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
-
-    }
-
-    public class TskDeleteEffect : DeleteEffect<Tsk, TskDelete.Command> {
-
-        public TskDeleteEffect(ILogger<DeleteEffect<Tsk, TskDelete.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public TskAddEffect(ILogger<AddEntityEffect<Tsk, TskAdd.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
 
-    public class TskModelBuilderEffect : Effect<LoadSuccessAction<Tsk>> {
+    public class TskUpdateEffect : UpdateEntityEffect<Tsk, TskUpdate.Command> {
+
+        public TskUpdateEffect(ILogger<UpdateEntityEffect<Tsk, TskUpdate.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+
+    }
+
+    public class TskDeleteEffect : DeleteEntityEffect<Tsk, TskDelete.Command> {
+
+        public TskDeleteEffect(ILogger<DeleteEntityEffect<Tsk, TskDelete.Command>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+
+    }
+
+    public class TskModelBuilderEffect : Effect<LoadEntitySuccessAction<Tsk>> {
 
         protected readonly ILogger<TskModelBuilderEffect> _logger;
 
@@ -67,7 +67,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
                                _projectsState.HasValue(true) &&
                                _companiesState.HasValue(true);
 
-        public override Task HandleAsync(LoadSuccessAction<Tsk> action, IDispatcher dispatcher) {
+        public override Task HandleAsync(LoadEntitySuccessAction<Tsk> action, IDispatcher dispatcher) {
 
 
             return Task.CompletedTask;

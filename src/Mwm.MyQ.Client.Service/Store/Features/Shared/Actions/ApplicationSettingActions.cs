@@ -1,11 +1,12 @@
-﻿using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
+﻿using Mwm.MyQ.Client.Service.Store.Features.Settings;
+using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mwm.MyQ.Client.Service.Store.Features.Settings;
+namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
 
 public class SetApplicationSettingAction {
 

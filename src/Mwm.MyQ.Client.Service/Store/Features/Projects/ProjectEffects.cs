@@ -9,9 +9,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
-    public class ProjectLoadEffect : LoadEffect<Project> {
+    public class ProjectLoadEffect : LoadEntityEffect<Project> {
 
-        public ProjectLoadEffect(ILogger<LoadEffect<Project>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
+        public ProjectLoadEffect(ILogger<LoadEntityEffect<Project>> logger, IEntityStorage entityStorage) : base(logger, entityStorage) { }
 
     }
 
