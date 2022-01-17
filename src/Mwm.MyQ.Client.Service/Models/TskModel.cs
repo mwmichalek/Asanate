@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Mwm.MyQ.Client.Service.Models {
     public class TskModel : EntityModel<Tsk> {
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
+
+        //public string Name { get; set; }
 
         public int RankId { get; set; }
-
-        public string Name { get; set; }
 
         public Status Status { get; set; }
 

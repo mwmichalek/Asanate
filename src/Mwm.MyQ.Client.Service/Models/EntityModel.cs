@@ -9,5 +9,8 @@ namespace Mwm.MyQ.Client.Service.Models;
 
 public abstract class EntityModel<TNamedEntity> where TNamedEntity : INamedEntity {
 
+    public int Id { get; set; }
+
+    public string Name { get; set; }
 
 }
