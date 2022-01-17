@@ -6,20 +6,20 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.State.Shared;
-public abstract class ModelState<TModel> : RootState where TModel : EntityModel<TNamedEntity> where TNamedEntity : INamedEntity {
+public abstract class ModelState<TNamedEntity> : RootState where TNamedEntity : INamedEntity {
 
-    public IEnumerable<EntityModel<TEntity>>? Models { get; }
+    public IEnumerable<EntityModel<TNamedEntity>>? Models { get; }
 
-    public EntityModel<TEntity> FindById(int id) => (_lookup != null) ? _lookup[id].SingleOrDefault() : default;
+    public EntityModel<TNamedEntity> FindById(int id) => (_lookup != null) ? _lookup[id].SingleOrDefault() : default;
 
-    public EntityModel<TEntity>? CurrentModel { get; }
+    public EntityModel<TNamedEntity>? CurrentModel { get; }
 
-    private ILookup<int, TskModel> _lookup;
+    private ILookup<int, EntityModel<TNamedEntity>> _lookup;
 
     public ModelState() : this(false, null, null, default) {
     }
 
-    public ModelState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<EntityModel<TEntity>>? models = null, TskModel? currentModel = default) :
+    public ModelState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<EntityModel<TNamedEntity>>? models = null, EntityModel<TNamedEntity>? currentModel = default) :
         base(isLoading, currentErrorMessage) {
         _lookup = models?.ToLookup(e => e.Id);
         Models = models;
