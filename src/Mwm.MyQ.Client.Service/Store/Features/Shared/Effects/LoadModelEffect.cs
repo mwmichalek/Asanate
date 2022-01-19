@@ -15,27 +15,11 @@ using System.Threading.Tasks;
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
     public abstract class LoadModelEffect<TEntity> : Effect<LoadModelAction<TEntity>> where TEntity : INamedEntity {
 
-        protected readonly ILogger<LoadEntityEffect<TEntity>> _logger;
+        protected readonly ILogger<LoadModelEffect<TEntity>> _logger;
 
-        //protected IState<EntityState<Tsk>> _tsksState { get; set; }
+        public LoadModelEffect(ILogger<LoadModelEffect<TEntity>> logger) => (_logger) = (logger);
 
-        //protected IState<EntityState<Initiative>> _initiativesState { get; set; }
-
-        //protected IState<EntityState<Project>> _projectsState { get; set; }
-
-        //protected IState<EntityState<Company>> _companiesState { get; set; }
-
-        //public LoadModelEffect(ILogger<LoadEntityEffect<TEntity>> logger,
-        //                       IState<EntityState<Tsk>> tsksState,
-        //                       IState<EntityState<Initiative>> initiativesState,
-        //                       IState<EntityState<Project>> projectsState,
-        //                       IState<EntityState<Company>> companiesState) =>
-        //                       (_logger, _tsksState, _initiativesState, _projectsState, _companiesState) = 
-        //                       (logger, tsksState, initiativesState, projectsState, companiesState);
-
-        public LoadModelEffect(ILogger<LoadEntityEffect<TEntity>> logger) => (_logger) = (logger);
-
-        public override async Task HandleAsync(LoadModelAction<TEntity> action, IDispatcher dispatcher) {
+        public override Task HandleAsync(LoadModelAction<TEntity> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
             try {
                 _logger.LogInformation($"Loading models {entityName}(s) ...");
@@ -48,6 +32,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 _logger.LogError($"Error loading {entityName}(s), reason: {e}");
                 dispatcher.Dispatch(new LoadEntityFailureAction<TEntity>(e.Message));
             }
+            return Task.CompletedTask;
         }
 
         public abstract EntityModel<TEntity> CreateModel(TEntity entity);

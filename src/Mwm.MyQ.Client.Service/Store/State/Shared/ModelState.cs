@@ -10,19 +10,22 @@ public abstract class ModelState<TNamedEntity> : RootState where TNamedEntity : 
 
     public IEnumerable<EntityModel<TNamedEntity>>? Models { get; }
 
+    public IEnumerable<EntityModel<TNamedEntity>>? FilteredModels { get; }
+
     public EntityModel<TNamedEntity> FindById(int id) => (_lookup != null) ? _lookup[id].SingleOrDefault() : default;
 
     public EntityModel<TNamedEntity>? CurrentModel { get; }
 
     private ILookup<int, EntityModel<TNamedEntity>> _lookup;
 
-    public ModelState() : this(false, null, null, default) {
+    public ModelState() : this(false, null, null, null, default) {
     }
 
-    public ModelState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<EntityModel<TNamedEntity>>? models = null, EntityModel<TNamedEntity>? currentModel = default) :
+    public ModelState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<EntityModel<TNamedEntity>>? models = null, IEnumerable<EntityModel<TNamedEntity>>? filteredModels = null, EntityModel<TNamedEntity>? currentModel = default) :
         base(isLoading, currentErrorMessage) {
         _lookup = models?.ToLookup(e => e.Id);
         Models = models;
-        CurrentModel = CurrentModel;
+        FilteredModels = filteredModels;
+        CurrentModel = currentModel;
     }
 }
