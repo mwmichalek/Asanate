@@ -37,4 +37,33 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
         public abstract EntityModel<TEntity> CreateModel(TEntity entity);
     }
+
+    public abstract class LoadModelEffect<TEntity, TModel> : Effect<LoadModelAction<TEntity>> where TEntity : INamedEntity
+                                                                                              where TModel : INamedEntity {
+
+        protected readonly ILogger<LoadModelEffect<TEntity, TModel>> _logger;
+
+        protected IState<EntityState<TModel>> _state { get; set; }
+
+        public LoadModelEffect(ILogger<LoadModelEffect<TEntity, TModel>> logger, IState<EntityState<TModel>> state) => 
+            (_logger, _state) = (logger, state);
+
+        public override Task HandleAsync(LoadModelAction<TEntity> action, IDispatcher dispatcher) {
+            var entityName = typeof(TEntity).Name;
+            try {
+                _logger.LogInformation($"Loading models {entityName}(s) ...");
+
+                var models = _state.Value.Entities.Select(e => CreateModel(e)).ToList();
+
+                _logger.LogInformation($"Loaded models {models.Count} {entityName}(s) successfully!");
+                dispatcher.Dispatch(new LoadModelSuccessAction<TModel>(models));
+            } catch (Exception e) {
+                _logger.LogError($"Error loading {entityName}(s), reason: {e}");
+                dispatcher.Dispatch(new LoadEntityFailureAction<TModel>(e.Message));
+            }
+            return Task.CompletedTask;
+        }
+
+        public abstract EntityModel<TModel> CreateModel(TModel entity);
+    }
 }

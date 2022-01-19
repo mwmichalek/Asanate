@@ -15,9 +15,47 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.TskModels;
 
-public class TskLoadModelEffect : LoadModelEffect<Tsk> {
+public class TskTriggeredTskLoadModelEffect : TskLoadModelEffect<Tsk> {
+    public TskTriggeredTskLoadModelEffect(ILogger<TskLoadModelEffect<Tsk>> logger, 
+                                          IState<EntityState<Tsk>> tsksState, 
+                                          IState<EntityState<Initiative>> initiativesState, 
+                                          IState<EntityState<Project>> projectsState, 
+                                          IState<EntityState<Company>> companiesState) : 
+        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+    }
+}
 
-    private IState<EntityState<Tsk>> _tsksState { get; set; }
+public class InitiativeTriggeredTskLoadModelEffect : TskLoadModelEffect<Initiative> {
+    public InitiativeTriggeredTskLoadModelEffect(ILogger<TskLoadModelEffect<Initiative>> logger,
+                                          IState<EntityState<Tsk>> tsksState,
+                                          IState<EntityState<Initiative>> initiativesState,
+                                          IState<EntityState<Project>> projectsState,
+                                          IState<EntityState<Company>> companiesState) :
+        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+    }
+}
+
+public class ProjectTriggeredTskLoadModelEffect : TskLoadModelEffect<Project> {
+    public ProjectTriggeredTskLoadModelEffect(ILogger<TskLoadModelEffect<Project>> logger,
+                                          IState<EntityState<Tsk>> tsksState,
+                                          IState<EntityState<Initiative>> initiativesState,
+                                          IState<EntityState<Project>> projectsState,
+                                          IState<EntityState<Company>> companiesState) :
+        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+    }
+}
+
+public class CompanyTriggeredTskLoadModelEffect : TskLoadModelEffect<Company> {
+    public CompanyTriggeredTskLoadModelEffect(ILogger<TskLoadModelEffect<Company>> logger,
+                                          IState<EntityState<Tsk>> tsksState,
+                                          IState<EntityState<Initiative>> initiativesState,
+                                          IState<EntityState<Project>> projectsState,
+                                          IState<EntityState<Company>> companiesState) :
+        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+    }
+}
+
+public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk> where TEntity : INamedEntity {
 
     private IState<EntityState<Initiative>> _initiativesState { get; set; }
 
@@ -25,21 +63,26 @@ public class TskLoadModelEffect : LoadModelEffect<Tsk> {
 
     private IState<EntityState<Company>> _companiesState { get; set; }
 
-    public TskLoadModelEffect(ILogger<TskLoadModelEffect> logger,
-                                 IState<EntityState<Tsk>> tsksState,
-                                 IState<EntityState<Initiative>> initiativesState,
-                                 IState<EntityState<Project>> projectsState,
-                                 IState<EntityState<Company>> companiesState) : base(logger) {
-        _tsksState = tsksState;
+    public TskLoadModelEffect(ILogger<TskLoadModelEffect<TEntity>> logger,
+                              IState<EntityState<Tsk>> tsksState,
+                              IState<EntityState<Initiative>> initiativesState,
+                              IState<EntityState<Project>> projectsState,
+                              IState<EntityState<Company>> companiesState) : base(logger, tsksState) {
         _initiativesState = initiativesState;
         _projectsState = projectsState;
         _companiesState = companiesState;
     }
 
-    public bool HasValues() => _tsksState.HasValue(true) &&
+    public bool HasValues() => _state.HasValue(true) &&
                            _initiativesState.HasValue(true) &&
                            _projectsState.HasValue(true) &&
                            _companiesState.HasValue(true);
+
+    public override Task HandleAsync(LoadModelAction<TEntity> action, IDispatcher dispatcher) {
+        if (HasValues())
+            return base.HandleAsync(action, dispatcher);
+        return Task.CompletedTask;
+    }
 
     public override EntityModel<Tsk> CreateModel(Tsk t) {
         Initiative initiative = _initiativesState.FindById(t.InitiativeId);
