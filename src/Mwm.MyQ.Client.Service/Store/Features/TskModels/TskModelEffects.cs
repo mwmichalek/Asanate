@@ -78,7 +78,7 @@ public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk
                            _projectsState.HasValue(true) &&
                            _companiesState.HasValue(true);
 
-    public override Task HandleAsync(LoadModelAction<TEntity> action, IDispatcher dispatcher) {
+    public override Task HandleAsync(LoadEntitySuccessAction<TEntity> action, IDispatcher dispatcher) {
         if (HasValues())
             return base.HandleAsync(action, dispatcher);
         return Task.CompletedTask;

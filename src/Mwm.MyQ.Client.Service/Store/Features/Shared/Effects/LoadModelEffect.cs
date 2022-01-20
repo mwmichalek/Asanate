@@ -13,13 +13,13 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
-    public abstract class LoadModelEffect<TEntity> : Effect<LoadModelAction<TEntity>> where TEntity : INamedEntity {
+    public abstract class LoadModelEffect<TEntity> : Effect<LoadEntitySuccessAction<TEntity>> where TEntity : INamedEntity {
 
         protected readonly ILogger<LoadModelEffect<TEntity>> _logger;
 
         public LoadModelEffect(ILogger<LoadModelEffect<TEntity>> logger) => (_logger) = (logger);
 
-        public override Task HandleAsync(LoadModelAction<TEntity> action, IDispatcher dispatcher) {
+        public override Task HandleAsync(LoadEntitySuccessAction<TEntity> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
             try {
                 _logger.LogInformation($"Loading models {entityName}(s) ...");
@@ -38,7 +38,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
         public abstract EntityModel<TEntity> CreateModel(TEntity entity);
     }
 
-    public abstract class LoadModelEffect<TEntity, TModel> : Effect<LoadModelAction<TEntity>> where TEntity : INamedEntity
+    public abstract class LoadModelEffect<TEntity, TModel> : Effect<LoadEntitySuccessAction<TEntity>> where TEntity : INamedEntity
                                                                                               where TModel : INamedEntity {
 
         protected readonly ILogger<LoadModelEffect<TEntity, TModel>> _logger;
@@ -48,7 +48,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
         public LoadModelEffect(ILogger<LoadModelEffect<TEntity, TModel>> logger, IState<EntityState<TModel>> state) => 
             (_logger, _state) = (logger, state);
 
-        public override Task HandleAsync(LoadModelAction<TEntity> action, IDispatcher dispatcher) {
+        public override Task HandleAsync(LoadEntitySuccessAction<TEntity> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
             try {
                 _logger.LogInformation($"Loading models {entityName}(s) ...");
