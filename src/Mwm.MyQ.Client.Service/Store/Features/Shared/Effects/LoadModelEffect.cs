@@ -16,23 +16,25 @@ using System.Threading.Tasks;
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
     
 
-    public abstract class LoadModelEffect<TEntity, TModel> : Effect<LoadEntitySuccessAction<TEntity>> where TEntity : INamedEntity
-                                                                                                      where TModel : INamedEntity {
+    public abstract class LoadModelEffect<TModel, TModelEntity, TTriggerEntity> : 
+                          Effect<LoadEntitySuccessAction<TTriggerEntity>> where TModel : EntityModel<TModelEntity>
+                                                                          where TModelEntity : INamedEntity
+                                                                          where TTriggerEntity : INamedEntity {
 
-        protected readonly ILogger<LoadModelEffect<TEntity, TModel>> _logger;
+        protected readonly ILogger<LoadModelEffect<TModel, TModelEntity, TTriggerEntity>> _logger;
 
-        protected IState<EntityState<TModel>> _entityState { get; set; }
+        protected IState<EntityState<TModelEntity>> _entityState { get; set; }
 
         protected IState<ApplicationState> _applicationState { get; set; }  
 
-        public LoadModelEffect(ILogger<LoadModelEffect<TEntity, TModel>> logger, 
-                               IState<EntityState<TModel>> entityState, 
+        public LoadModelEffect(ILogger<LoadModelEffect<TModel, TModelEntity, TTriggerEntity>> logger, 
+                               IState<EntityState<TModelEntity>> entityState, 
                                IState<ApplicationState> applicationState) => 
                                 (_logger, _entityState, _applicationState) = (logger, entityState, applicationState);
 
-        public override Task HandleAsync(LoadEntitySuccessAction<TEntity> action, IDispatcher dispatcher) {
-            var entityName = typeof(TEntity).Name;
-            var modelName = typeof(TModel).Name;
+        public override Task HandleAsync(LoadEntitySuccessAction<TTriggerEntity> action, IDispatcher dispatcher) {
+            var entityName = typeof(TTriggerEntity).Name;
+            var modelName = typeof(TModelEntity).Name;
             try {
                 //_logger.LogInformation($"Loading models {entityName}(s) ...");
 
@@ -40,17 +42,17 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 var filteredModels = Filter(models);
                 
                 _logger.LogInformation($"Loaded models {modelName}(s), triggered by {entityName}, successfully!");
-                dispatcher.Dispatch(new LoadModelSuccessAction<TModel>(models, filteredModels));
+                dispatcher.Dispatch(new LoadModelSuccessAction<TModelEntity>(models, filteredModels));
             } catch (Exception e) {
                 _logger.LogError($"Error loading {entityName}(s), reason: {e}");
-                dispatcher.Dispatch(new LoadEntityFailureAction<TModel>(e.Message));
+                dispatcher.Dispatch(new LoadEntityFailureAction<TModelEntity>(e.Message));
             }
             return Task.CompletedTask;
         }
 
-        public abstract EntityModel<TModel> CreateModel(TModel entity);
+        public abstract TModel CreateModel(TModelEntity entity);
 
-        public abstract IEnumerable<EntityModel<TModel>> Filter(IEnumerable<EntityModel<TModel>> models); 
+        public abstract IEnumerable<EntityModel<TModelEntity>> Filter(IEnumerable<TModel> models); 
     }
 
     //public abstract class LoadModelEffect<TEntity> : Effect<LoadEntitySuccessAction<TEntity>> where TEntity : INamedEntity {

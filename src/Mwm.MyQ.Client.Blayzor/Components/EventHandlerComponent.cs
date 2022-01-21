@@ -14,6 +14,16 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
+
+public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent where TModel : EntityModel<TEntity>
+                                                                                where TEntity : INamedEntity {
+
+}
+
+
+
+
+
 public abstract class EventHandlerComponent : FluxorComponent {
 
     [Inject]

@@ -60,7 +60,15 @@ public class CompanyTriggeredTskLoadModelEffect : TskLoadModelEffect<Company> {
     }
 }
 
-public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk> where TEntity : INamedEntity {
+
+//public abstract class LoadModelEffect<TModel, TModelEntity, TTriggerEntity> :
+//                      Effect<LoadEntitySuccessAction<TTriggerEntity>> where TModel : EntityModel<TModelEntity>
+//                                                                      where TModelEntity : INamedEntity
+//                                                                      where TTriggerEntity : INamedEntity {
+
+
+
+    public abstract class TskLoadModelEffect<TTriggerEntity> : LoadModelEffect<TskModel, Tsk, TTriggerEntity> where TTriggerEntity : INamedEntity {
 
     private IState<EntityState<Initiative>> _initiativesState { get; set; }
 
@@ -68,7 +76,7 @@ public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk
 
     private IState<EntityState<Company>> _companiesState { get; set; }
 
-    public TskLoadModelEffect(ILogger<TskLoadModelEffect<TEntity>> logger,
+    public TskLoadModelEffect(ILogger<TskLoadModelEffect<TTriggerEntity>> logger,
                               IState<EntityState<Tsk>> tsksState,
                               IState<EntityState<Initiative>> initiativesState,
                               IState<EntityState<Project>> projectsState,
@@ -84,13 +92,13 @@ public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk
                            _projectsState.HasValue(true) &&
                            _companiesState.HasValue(true);
 
-    public override Task HandleAsync(LoadEntitySuccessAction<TEntity> action, IDispatcher dispatcher) {
+    public override Task HandleAsync(LoadEntitySuccessAction<TTriggerEntity> action, IDispatcher dispatcher) {
         if (HasValues())
             return base.HandleAsync(action, dispatcher);
         return Task.CompletedTask;
     }
 
-    public override EntityModel<Tsk> CreateModel(Tsk t) {
+    public override TskModel CreateModel(Tsk t) {
         Initiative initiative = _initiativesState.FindById(t.InitiativeId);
         Project project = (initiative != null) ? _projectsState.FindById(initiative.ProjectId) : null;
         Company company = (project != null) ? _companiesState.FindById(project.CompanyId) : null;
@@ -118,9 +126,9 @@ public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk
         };
     }
 
-    public override IEnumerable<EntityModel<Tsk>> Filter(IEnumerable<EntityModel<Tsk>> models) {
+    public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
         var filteredModels = models;
-        foreach (IModelFilter<Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<Tsk> mf && mf.IsApplied))
+        foreach (IModelFilter<TskModel, Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<TskModel,Tsk> mf && mf.IsApplied))
             filteredModels = filter.Filter(filteredModels);
         return filteredModels;
     }

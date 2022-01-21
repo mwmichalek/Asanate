@@ -32,11 +32,11 @@ public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> {
     public IsActionStatusOnlyFlag() => CurrentValue = false;
 }
 
-public class IsInFocusedTskModelFilter : ModelFilter<Tsk> {
+public class IsInFocusedTskModelFilter : ModelFilter<TskModel, Tsk> {
 
     public override string Title => "Tsk == In Focus";
 
-    public override IEnumerable<EntityModel<Tsk>> Filter(IEnumerable<EntityModel<Tsk>> models) {
+    public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
         try {
             return models.Cast<TskModel>().Where(tm => tm.IsInFocus);
         } catch (Exception) {

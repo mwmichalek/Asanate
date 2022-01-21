@@ -7,7 +7,15 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Models;
 
-public abstract class EntityModel<TNamedEntity> where TNamedEntity : INamedEntity {
+//public interface IEntityModel<TNamedEntity> where TNamedEntity : INamedEntity {
+
+//    public int Id { get; }
+
+//    public string Name { get; }
+
+//}
+
+public abstract class EntityModel<TNamedEntity> /*: IEntityModel<TNamedEntity>*/ where TNamedEntity : INamedEntity {
 
     public int Id { get; set; }
 
