@@ -32,16 +32,14 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
         public override Task HandleAsync(LoadEntitySuccessAction<TEntity> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
+            var modelName = typeof(TModel).Name;
             try {
-                _logger.LogInformation($"Loading models {entityName}(s) ...");
+                //_logger.LogInformation($"Loading models {entityName}(s) ...");
 
                 var models = _entityState.Value.Entities.Select(e => CreateModel(e));
-                var filteredModels = models;
-
-                foreach (IModelFilter<TModel> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<TModel> mf && mf.IsApplied))
-                    filteredModels = filter.Filter(filteredModels);
-
-                _logger.LogInformation($"Loaded models {entityName}(s) successfully!");
+                var filteredModels = Filter(models);
+                
+                _logger.LogInformation($"Loaded models {modelName}(s), triggered by {entityName}, successfully!");
                 dispatcher.Dispatch(new LoadModelSuccessAction<TModel>(models, filteredModels));
             } catch (Exception e) {
                 _logger.LogError($"Error loading {entityName}(s), reason: {e}");
@@ -51,6 +49,8 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
         }
 
         public abstract EntityModel<TModel> CreateModel(TModel entity);
+
+        public abstract IEnumerable<EntityModel<TModel>> Filter(IEnumerable<EntityModel<TModel>> models); 
     }
 
     //public abstract class LoadModelEffect<TEntity> : Effect<LoadEntitySuccessAction<TEntity>> where TEntity : INamedEntity {

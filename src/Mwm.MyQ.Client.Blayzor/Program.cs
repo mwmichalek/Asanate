@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mwm.MyQ.Common.Utils;
 using Mwm.MyQ.Client.Service.Utils;
+using Mwm.MyQ.Client.Service.Facades;
 
 namespace Mwm.MyQ.Client.Blayzor
 {
@@ -42,7 +43,14 @@ namespace Mwm.MyQ.Client.Blayzor
 
             builder.Services.AddSyncfusionBlazor();
 
-            await builder.Build().RunAsync();
+            var server = builder.Build();
+            var serviceProvider = server.Services;
+
+            var logger = serviceProvider.GetService<ILogger<Program>>();
+            logger.LogInformation(">>> STARTING SERVICE <<<");
+
+            await serviceProvider.UseClientServicesAsync();
+            await server.RunAsync(); 
         }
     }
 }

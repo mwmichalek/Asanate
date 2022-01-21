@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Mwm.MyQ.Client.Service.Helpers;
 using Mwm.MyQ.Client.Service.Models;
+using Mwm.MyQ.Client.Service.Store.Features.Settings;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Effects;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
@@ -115,6 +116,13 @@ public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk
             ProjectColor = project?.Color,
             IsInFocus = t.IsInFocus
         };
+    }
+
+    public override IEnumerable<EntityModel<Tsk>> Filter(IEnumerable<EntityModel<Tsk>> models) {
+        var filteredModels = models;
+        foreach (IModelFilter<Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<Tsk> mf && mf.IsApplied))
+            filteredModels = filter.Filter(filteredModels);
+        return filteredModels;
     }
 
 }

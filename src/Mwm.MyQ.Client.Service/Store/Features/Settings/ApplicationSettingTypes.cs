@@ -13,7 +13,8 @@ public class ApplicationSettingTypes {
     public static List<IApplicationSetting> DefaultSettings = new List<IApplicationSetting> {
         new IsInFocusOnlyTskFilter(),
         new IsGroupedByCompanyFlag(),
-        new IsActionStatusOnlyFlag()
+        new IsActionStatusOnlyFlag(),
+        new IsInFocusedTskModelFilter { IsApplied = true }
     };
 }
 
@@ -35,19 +36,12 @@ public class IsInFocusedTskModelFilter : ModelFilter<Tsk> {
 
     public override string Title => "Tsk == In Focus";
 
-    public override IEnumerable<EntityModel<Tsk>> Filter(IEnumerable<EntityModel<Tsk>> models) => models.Where(tm => tm.IsInFocus);
+    public override IEnumerable<EntityModel<Tsk>> Filter(IEnumerable<EntityModel<Tsk>> models) {
+        try {
+            return models.Cast<TskModel>().Where(tm => tm.IsInFocus);
+        } catch (Exception) {
+            return models;
+        }
+    }
        
 }
-
-
-//public interface ITskFilterApplicationSetting : IApplicationSetting { }
-
-//public abstract class TskFilter : IApplicationSetting {
-
-//    public abstract Predicate<Tsk> Predicate()
-
-//}
-
-
-
-

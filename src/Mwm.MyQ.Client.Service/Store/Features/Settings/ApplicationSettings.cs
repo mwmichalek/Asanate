@@ -30,7 +30,7 @@ public abstract class PrimativeApplicationSetting<TPrimative> : IPrimativeApplic
 
 }
 
-public interface IModelFilter<TNamedEntity> where TNamedEntity : INamedEntity {
+public interface IModelFilter<TNamedEntity> : IApplicationSetting where TNamedEntity : INamedEntity {
     IEnumerable<EntityModel<TNamedEntity>> Filter(IEnumerable<EntityModel<TNamedEntity>> entities);
 
     bool IsApplied { get; }
