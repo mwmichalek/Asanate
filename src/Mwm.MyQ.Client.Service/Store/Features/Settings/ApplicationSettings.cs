@@ -1,4 +1,5 @@
-﻿using Mwm.MyQ.Domain;
+﻿using Mwm.MyQ.Client.Service.Models;
+using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +30,8 @@ public abstract class PrimativeApplicationSetting<TPrimative> : IPrimativeApplic
 
 }
 
-public interface IEntityFilter<TNamedEntity> where TNamedEntity : INamedEntity {
-    bool Filter(TNamedEntity entity);
+public interface IModelFilter<TNamedEntity> where TNamedEntity : INamedEntity {
+    IEnumerable<EntityModel<TNamedEntity>> Filter(IEnumerable<EntityModel<TNamedEntity>> entities);
 
     bool IsApplied { get; }
 
@@ -39,18 +40,19 @@ public interface IEntityFilter<TNamedEntity> where TNamedEntity : INamedEntity {
 
 
 
-public interface IPrimativeEntityFilter<TNamedEntity, TPrimative> : IEntityFilter<TNamedEntity> where TNamedEntity : INamedEntity
+public interface IPrimativeModelFilter<TNamedEntity, TPrimative> : IModelFilter<TNamedEntity> where TNamedEntity : INamedEntity
                                                                                                 where TPrimative : struct {
     TPrimative FilterValue { get; set; }
 }
 
-public interface IObjectEntityFilter<TNamedEntity, TClass> : IEntityFilter<TNamedEntity> where TNamedEntity : INamedEntity
+public interface IObjectModelFilter<TNamedEntity, TClass> : IModelFilter<TNamedEntity> where TNamedEntity : INamedEntity
                                                                                          where TClass : class { 
     TClass FilterValue { get; set; }
 }
 
-public abstract class EntityFilter<TNamedEntity> : IEntityFilter<TNamedEntity> where TNamedEntity : INamedEntity {
-    public abstract bool Filter(TNamedEntity namedEntity);
+public abstract class ModelFilter<TNamedEntity> : IModelFilter<TNamedEntity> where TNamedEntity : INamedEntity {
+
+    public abstract IEnumerable<EntityModel<TNamedEntity>> Filter(IEnumerable<EntityModel<TNamedEntity>> entities);
 
     public bool IsApplied { get; set; } = false;
 
@@ -59,16 +61,16 @@ public abstract class EntityFilter<TNamedEntity> : IEntityFilter<TNamedEntity> w
 }
 
 
-public abstract class PrimativeEntityFilter<TNamedEntity, TPrimative> : EntityFilter<TNamedEntity>, 
-                                                                        IPrimativeEntityFilter<TNamedEntity, TPrimative> where TNamedEntity : INamedEntity 
-                                                                                                                         where TPrimative : struct {
+public abstract class PrimativeModelFilter<TNamedEntity, TPrimative> : ModelFilter<TNamedEntity>, 
+                                                                       IPrimativeModelFilter<TNamedEntity, TPrimative> where TNamedEntity : INamedEntity 
+                                                                                                                       where TPrimative : struct {
     public TPrimative FilterValue { get; set; }
 
 }
 
-public abstract class ObjectEntityFilter<TNamedEntity, TClass> : EntityFilter<TNamedEntity>,
-                                                                 IObjectEntityFilter<TNamedEntity, TClass> where TNamedEntity : INamedEntity 
-                                                                                                            where TClass : class {
+public abstract class ObjectModelFilter<TNamedEntity, TClass> : ModelFilter<TNamedEntity>,
+                                                                 IObjectModelFilter<TNamedEntity, TClass> where TNamedEntity : INamedEntity 
+                                                                                                          where TClass : class {
     public TClass FilterValue { get; set; }                                                                                
 }
 

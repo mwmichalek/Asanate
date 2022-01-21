@@ -6,20 +6,15 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
-    public class LoadModelAction<TEntity> where TEntity : INamedEntity {
-
-        public LoadModelAction(IEnumerable<TEntity> entities) =>
-            Entities = entities;
-
-        public IEnumerable<TEntity> Entities { get; }
-    }
 
     public class LoadModelSuccessAction<TEntity> where TEntity : INamedEntity {
 
-        public LoadModelSuccessAction(IEnumerable<EntityModel<TEntity>> models) =>
-            Models = models;
+        public LoadModelSuccessAction(IEnumerable<EntityModel<TEntity>> models, IEnumerable<EntityModel<TEntity>> filteredModels) => 
+            (Models, FilteredModels) = (models, filteredModels);
 
         public IEnumerable<EntityModel<TEntity>> Models { get; }
+
+        public IEnumerable<EntityModel<TEntity>> FilteredModels { get; }
 
     }
 

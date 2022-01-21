@@ -20,8 +20,9 @@ public class TskTriggeredTskLoadModelEffect : TskLoadModelEffect<Tsk> {
                                           IState<EntityState<Tsk>> tsksState, 
                                           IState<EntityState<Initiative>> initiativesState, 
                                           IState<EntityState<Project>> projectsState, 
-                                          IState<EntityState<Company>> companiesState) : 
-        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+                                          IState<EntityState<Company>> companiesState,
+                                          IState<ApplicationState> applicationState) : 
+        base(logger, tsksState, initiativesState, projectsState, companiesState, applicationState) {
     }
 }
 
@@ -30,8 +31,9 @@ public class InitiativeTriggeredTskLoadModelEffect : TskLoadModelEffect<Initiati
                                           IState<EntityState<Tsk>> tsksState,
                                           IState<EntityState<Initiative>> initiativesState,
                                           IState<EntityState<Project>> projectsState,
-                                          IState<EntityState<Company>> companiesState) :
-        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+                                          IState<EntityState<Company>> companiesState,
+                                          IState<ApplicationState> applicationState) :
+        base(logger, tsksState, initiativesState, projectsState, companiesState, applicationState) {
     }
 }
 
@@ -40,8 +42,9 @@ public class ProjectTriggeredTskLoadModelEffect : TskLoadModelEffect<Project> {
                                           IState<EntityState<Tsk>> tsksState,
                                           IState<EntityState<Initiative>> initiativesState,
                                           IState<EntityState<Project>> projectsState,
-                                          IState<EntityState<Company>> companiesState) :
-        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+                                          IState<EntityState<Company>> companiesState,
+                                          IState<ApplicationState> applicationState) :
+        base(logger, tsksState, initiativesState, projectsState, companiesState, applicationState) {
     }
 }
 
@@ -50,8 +53,9 @@ public class CompanyTriggeredTskLoadModelEffect : TskLoadModelEffect<Company> {
                                           IState<EntityState<Tsk>> tsksState,
                                           IState<EntityState<Initiative>> initiativesState,
                                           IState<EntityState<Project>> projectsState,
-                                          IState<EntityState<Company>> companiesState) :
-        base(logger, tsksState, initiativesState, projectsState, companiesState) {
+                                          IState<EntityState<Company>> companiesState,
+                                          IState<ApplicationState> applicationState) :
+        base(logger, tsksState, initiativesState, projectsState, companiesState, applicationState) {
     }
 }
 
@@ -67,13 +71,14 @@ public abstract class TskLoadModelEffect<TEntity> : LoadModelEffect<TEntity, Tsk
                               IState<EntityState<Tsk>> tsksState,
                               IState<EntityState<Initiative>> initiativesState,
                               IState<EntityState<Project>> projectsState,
-                              IState<EntityState<Company>> companiesState) : base(logger, tsksState) {
+                              IState<EntityState<Company>> companiesState,
+                              IState<ApplicationState> applicationState) : base(logger, tsksState, applicationState) {
         _initiativesState = initiativesState;
         _projectsState = projectsState;
         _companiesState = companiesState;
     }
 
-    public bool HasValues() => _state.HasValue(true) &&
+    public bool HasValues() => _entityState.HasValue(true) &&
                            _initiativesState.HasValue(true) &&
                            _projectsState.HasValue(true) &&
                            _companiesState.HasValue(true);
