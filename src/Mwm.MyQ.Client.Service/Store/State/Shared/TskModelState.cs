@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.State.Shared;
 
-public class TskModelState : ModelState<Tsk> { }
+public class TskModelState : ModelState<TskModel, Tsk> { }
 
 

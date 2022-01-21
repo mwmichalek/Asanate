@@ -6,22 +6,23 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.State.Shared;
-public abstract class ModelState<TNamedEntity> : RootState where TNamedEntity : INamedEntity {
+public abstract class ModelState<TModel, TEntity> : RootState where TModel : EntityModel<TEntity>
+                                                              where TEntity : INamedEntity {
 
-    public IEnumerable<EntityModel<TNamedEntity>>? Models { get; }
+    public IEnumerable<TModel>? Models { get; }
 
-    public IEnumerable<EntityModel<TNamedEntity>>? FilteredModels { get; }
+    public IEnumerable<TModel>? FilteredModels { get; }
 
-    public EntityModel<TNamedEntity> FindById(int id) => (_lookup != null) ? _lookup[id].SingleOrDefault() : default;
+    public TModel FindById(int id) => (_lookup != null) ? _lookup[id].SingleOrDefault() : default;
 
-    public EntityModel<TNamedEntity>? CurrentModel { get; }
+    public TModel? CurrentModel { get; }
 
-    private ILookup<int, EntityModel<TNamedEntity>> _lookup;
+    private ILookup<int, TModel> _lookup;
 
     public ModelState() : this(false, null, null, null, default) {
     }
 
-    public ModelState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<EntityModel<TNamedEntity>>? models = null, IEnumerable<EntityModel<TNamedEntity>>? filteredModels = null, EntityModel<TNamedEntity>? currentModel = default) :
+    public ModelState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<TModel>? models = null, IEnumerable<TModel>? filteredModels = null, TModel? currentModel = default) :
         base(isLoading, currentErrorMessage) {
         _lookup = models?.ToLookup(e => e.Id);
         Models = models;
