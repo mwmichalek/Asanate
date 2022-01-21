@@ -1,4 +1,5 @@
-﻿using Mwm.MyQ.Domain;
+﻿using Mwm.MyQ.Client.Service.Models;
+using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +31,12 @@ public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> {
     public IsActionStatusOnlyFlag() => CurrentValue = false;
 }
 
-public class IsInFocusedTskFilter : EntityFilter<Tsk> {
-    public override bool Filter(Tsk tsk) => tsk.IsInFocus;
+public class IsInFocusedTskModelFilter : ModelFilter<Tsk> {
 
     public override string Title => "Tsk == In Focus";
+
+    public override IEnumerable<EntityModel<Tsk>> Filter(IEnumerable<EntityModel<Tsk>> models) => models.Where(tm => tm.IsInFocus);
+       
 }
 
 
