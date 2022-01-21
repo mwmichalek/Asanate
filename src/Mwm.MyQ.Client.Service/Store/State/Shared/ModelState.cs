@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.State.Shared;
-public abstract class ModelState<TModel, TEntity> : RootState where TModel : EntityModel<TEntity>
-                                                              where TEntity : INamedEntity {
+public class ModelState<TModel, TEntity> : RootState where TModel : EntityModel<TEntity>
+                                                     where TEntity : INamedEntity {
 
     public IEnumerable<TModel>? Models { get; }
 

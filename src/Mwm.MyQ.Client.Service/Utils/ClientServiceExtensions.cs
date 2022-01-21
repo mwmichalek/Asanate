@@ -20,7 +20,6 @@ namespace Mwm.MyQ.Client.Service.Utils {
             });
 
             services.AddScoped<EntityStateFacade>();
-            //services.AddScoped<ModelStateFacade>();
             services.AddScoped<ApplicationStateFacade>();
             services.AddScoped<IEntityStorage, WebApiEntityStorage>();
 

@@ -29,20 +29,25 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers {
             return entitiesState.Value.HasCurrentErrors;
         }
 
-        public static bool HasValue<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState, bool isNotEmpty = false) where TModel : EntityModel<TEntity>
-                                                                                                                                    where TEntity : INamedEntity {
 
+
+
+        public static bool HasValue<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState, bool isNotEmpty = false)
+            where TModel : EntityModel<TEntity>
+            where TEntity : INamedEntity {
             return (isNotEmpty) ? modelsState.Value.Models != null && modelsState.Value.Models.Count() > 0 :
                                   modelsState.Value.Models != null;
         }
 
-        public static bool IsLoading<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState) where TModel : EntityModel<TEntity>
-                                                                                                            where TEntity : INamedEntity {
+        public static bool IsLoading<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState)
+            where TModel : EntityModel<TEntity>
+            where TEntity : INamedEntity {
             return modelsState.Value.IsLoading;
         }
 
-        public static bool HasErrors<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState) where TModel : EntityModel<TEntity>
-                                                                                                            where TEntity : INamedEntity {
+        public static bool HasErrors<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState)
+            where TModel : EntityModel<TEntity>
+            where TEntity : INamedEntity {
             return modelsState.Value.HasCurrentErrors;
         }
     }

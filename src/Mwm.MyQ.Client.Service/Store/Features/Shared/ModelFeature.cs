@@ -12,7 +12,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared;
 
 public abstract class ModelFeature<TModel, TEntity> : Feature<ModelState<TModel, TEntity>> where TModel : EntityModel<TEntity>
                                                                                            where TEntity : INamedEntity {
-    public override string GetName() => typeof(TEntity).Name;
+    public override string GetName() => typeof(TModel).Name;
 
     protected override ModelState<TModel, TEntity> GetInitialState() => Activator.CreateInstance<ModelState<TModel, TEntity>>();
 

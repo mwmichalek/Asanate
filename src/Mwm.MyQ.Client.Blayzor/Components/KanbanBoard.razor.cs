@@ -23,7 +23,7 @@ using Mwm.MyQ.Client.Service.Store.Features.Settings;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class KanbanBoard : TskModelConsumerComponent {
+public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
 
     [Inject]
     ILogger<KanbanBoard> Logger { get; set; }
@@ -40,10 +40,10 @@ public partial class KanbanBoard : TskModelConsumerComponent {
 
     private TskPopup refTskPopup;
 
-    private List<TskModel> filteredTskModels = new List<TskModel>();
+    
 
     public IEnumerable<TskModel> FilteredTskModels {
-        get => filteredTskModels;
+        get => ModelsState.Value.Models;
         set { }
     }
 
@@ -63,31 +63,6 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     //    Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
     //    return base.OnAfterRenderAsync(firstRender);
     //}
-
-    protected override async Task BuildTskModels() {
-        await base.BuildTskModels();
-
-        if (HasValues()) {
-            var index = 0;
-            foreach (var tskModel in TskModels.OrderByDescending(tm => tm.IsInFocus)
-                                              .ThenBy(tm => tm.CompanyName)
-                                              .ThenBy(tm => tm.ProjectAbbreviation)
-                                              .ThenBy(tm => tm.InitiativeName)
-                                              .ToList())
-                tskModel.RankId = index++;
-
-            Logger.LogInformation($"Built {tskModels.Count} TskModels");
-
-            FilterTskModels();
-        }
-    }
-
-    private void FilterTskModels() { 
-        var filtered = tskModels as IEnumerable<TskModel>;
-        if (IsInFocusOnly)
-            filtered = filtered.Where(tm => tm.IsInFocus);
-        filteredTskModels = filtered.ToList();
-    }
 
     private async Task InitializeBoardAsync() {
         UpdateSwimLanes();
@@ -133,15 +108,15 @@ public partial class KanbanBoard : TskModelConsumerComponent {
     public async Task DragStopHandlerAsync(DragEventArgs<TskModel> args) {
         foreach (var tskModel in args.Data) {
             try {
-                var tsk = TsksState.FindById(tskModel.Id);
-                if (tsk.Status != tskModel.Status) {
-                    Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
-                    await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
-                        Id = tskModel.Id,
-                        Name = tsk.Name,
-                        Status = tskModel.Status
-                    });
-                }
+                //var tsk = TsksState.FindById(tskModel.Id);
+                //if (tsk.Status != tskModel.Status) {
+                //    Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
+                //    await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                //        Id = tskModel.Id,
+                //        Name = tsk.Name,
+                //        Status = tskModel.Status
+                //    });
+                //}
             } catch (Exception ex) {
                 Logger.LogError($"Unable to update: {tskModel.Name}, {ex}");
             }
@@ -153,7 +128,7 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         refTskPopup.Update(args.Data);
     }
 
-    protected override async Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) => await SetIsGroupedByCompany(flag.CurrentValue);
+    //protected override async Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) => await SetIsGroupedByCompany(flag.CurrentValue);
 
     public bool IsGroupedByCompany { get; set; } = true;
 
@@ -163,18 +138,18 @@ public partial class KanbanBoard : TskModelConsumerComponent {
         await RefreshBoardAsync();
     }
 
-    protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => SetIsInFocusOnly(filter.CurrentValue);
+    //protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => SetIsInFocusOnly(filter.CurrentValue);
 
     public bool IsInFocusOnly { get; set; } = false;
 
     public Task SetIsInFocusOnly(bool isInFocusOnly) {
         IsInFocusOnly = isInFocusOnly;
-        FilterTskModels();
-        StateHasChanged(); //Because a collection changed.
+        //FilterTskModels();
+        //StateHasChanged(); //Because a collection changed.
         return Task.CompletedTask;
     }
 
-    protected override async Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) => await SetIsActionStatusOnly(flag.CurrentValue);
+    //protected override async Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) => await SetIsActionStatusOnly(flag.CurrentValue);
 
     public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;

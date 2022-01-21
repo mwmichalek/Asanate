@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-
 public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent where TModel : EntityModel<TEntity>
                                                                                 where TEntity : INamedEntity {
     [Inject]
@@ -24,6 +23,10 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
     public IActionSubscriber ActionSubscriber { get; set; }
 
     public bool HasValues() => ModelsState.HasValue(true);
+
+    public bool HasErrors() => ModelsState.HasErrors();
+
+    public bool IsLoading() => ModelsState.IsLoading();
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
