@@ -17,12 +17,22 @@ namespace Mwm.MyQ.Client.Blayzor.Components;
 
 public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent where TModel : EntityModel<TEntity>
                                                                                 where TEntity : INamedEntity {
+    [Inject]
+    public IState<ModelState<TModel, TEntity>> ModelsState { get; set; }
+
+    [Inject]
+    public IActionSubscriber ActionSubscriber { get; set; }
+
+    public bool HasValues() => ModelsState.HasValue(true);
+
+    protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+        ModelsState.StateChanged += async (s, e) => await HandleUpdateAsync(e.CurrentModel);
+    }
+
+    protected virtual Task HandleUpdateAsync(TModel? model) => Task.CompletedTask;
 
 }
-
-
-
-
 
 public abstract class EventHandlerComponent : FluxorComponent {
 
