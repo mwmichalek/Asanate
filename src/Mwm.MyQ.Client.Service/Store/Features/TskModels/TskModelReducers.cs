@@ -7,13 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mwm.MyQ.Client.Service.Models;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
     public static class TskModelReducers {
-
-        //[ReducerMethod]
-        //public static ModelState<Tsk> ReduceLoadTsksSuccessAction(ModelState<Tsk> state, LoadEntitySuccessAction<Tsk> action) =>
-        //    new ModelState<Tsk>(false, null, action.Entities, state.CurrentModel);
+        //LoadModelSuccessAction<TModelEntity>
+        [ReducerMethod]
+        public static ModelState<TskModel, Tsk> ReduceLoadModelSuccessAction(ModelState<TskModel, Tsk> state, LoadModelSuccessAction<TskModel, Tsk> action) =>
+            new ModelState<TskModel, Tsk>(false, null, action.Models, action.FilteredModels, null);
 
         //[ReducerMethod]
         //public static ModelState<Tsk> ReduceLoadTsksFailureAction(ModelState<Tsk> state, LoadEntityFailureAction<Tsk> action) =>

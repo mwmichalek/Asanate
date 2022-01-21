@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
 
-    public class LoadModelSuccessAction<TEntity> where TEntity : INamedEntity {
+    public class LoadModelSuccessAction<TModel, TEntity> where TModel : EntityModel<TEntity> 
+                                                         where TEntity : INamedEntity {
 
-        public LoadModelSuccessAction(IEnumerable<EntityModel<TEntity>> models, IEnumerable<EntityModel<TEntity>> filteredModels) => 
+        public LoadModelSuccessAction(IEnumerable<TModel> models, IEnumerable<TModel> filteredModels) => 
             (Models, FilteredModels) = (models, filteredModels);
 
-        public IEnumerable<EntityModel<TEntity>> Models { get; }
+        public IEnumerable<TModel> Models { get; }
 
-        public IEnumerable<EntityModel<TEntity>> FilteredModels { get; }
+        public IEnumerable<TModel> FilteredModels { get; }
 
     }
 

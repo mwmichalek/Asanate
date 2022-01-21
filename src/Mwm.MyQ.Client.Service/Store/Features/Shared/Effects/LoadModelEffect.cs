@@ -42,7 +42,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 var filteredModels = Filter(models);
                 
                 _logger.LogInformation($"Loaded models {modelName}(s), triggered by {entityName}, successfully!");
-                dispatcher.Dispatch(new LoadModelSuccessAction<TModelEntity>(models, filteredModels));
+                dispatcher.Dispatch(new LoadModelSuccessAction<TModel, TModelEntity>(models, filteredModels));
             } catch (Exception e) {
                 _logger.LogError($"Error loading {entityName}(s), reason: {e}");
                 dispatcher.Dispatch(new LoadEntityFailureAction<TModelEntity>(e.Message));
@@ -52,7 +52,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
         public abstract TModel CreateModel(TModelEntity entity);
 
-        public abstract IEnumerable<EntityModel<TModelEntity>> Filter(IEnumerable<TModel> models); 
+        public abstract IEnumerable<TModel> Filter(IEnumerable<TModel> models); 
     }
 
     //public abstract class LoadModelEffect<TEntity> : Effect<LoadEntitySuccessAction<TEntity>> where TEntity : INamedEntity {
