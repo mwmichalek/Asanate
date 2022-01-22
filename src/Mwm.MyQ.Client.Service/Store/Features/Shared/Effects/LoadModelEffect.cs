@@ -38,7 +38,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
             try {
                 //_logger.LogInformation($"Loading models {entityName}(s) ...");
 
-                var models = _entityState.Value.Entities.Select(e => CreateModel(e));
+                var models = _entityState.Value.Entities.Where(e => !e.IsArchived).Select(e => CreateModel(e));
                 var filteredModels = Filter(models);
                 
                 _logger.LogInformation($"Loaded models {modelName}(s), triggered by {entityName}, successfully!");

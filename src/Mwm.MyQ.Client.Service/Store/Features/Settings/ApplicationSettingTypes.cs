@@ -14,7 +14,7 @@ public class ApplicationSettingTypes {
         new IsInFocusOnlyTskFilter(),
         new IsGroupedByCompanyFlag(),
         new IsActionStatusOnlyFlag(),
-        new IsInFocusedTskModelFilter { IsApplied = true }
+        new IsInFocusedTskModelFilter { IsApplied = false }
     };
 }
 

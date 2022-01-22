@@ -40,8 +40,12 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
 
     private TskPopup refTskPopup;
 
-    public IEnumerable<TskModel> FilteredTskModels { get; set; }
-    
+    private List<TskModel> filteredTskModels = new List<TskModel>();
+
+    public IEnumerable<TskModel> FilteredTskModels { 
+        get => filteredTskModels;
+        set { } 
+    } 
 
     private List<Status> statuses = StatusExtensions.AllStatuses;
 
@@ -52,13 +56,18 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
+        if (HasValues())
+            filteredTskModels = ModelsState.Value.FilteredModels.ToList();
         await InitializeBoardAsync();
+        
+        Logger.LogInformation($"Initialized, bitches [{filteredTskModels.Count}]!");
     }
 
-    protected override async Task HandleUpdateAsync(TskModel model) {
-        Logger.LogInformation($"Model update: {ModelsState.Value.Models.Count()}");
-        FilteredTskModels = ModelsState.Value.Models;
-        await RefreshBoardAsync();
+    protected override async Task HandleModelsLoaded() {
+        
+        filteredTskModels = ModelsState.Value.FilteredModels.ToList();
+        Logger.LogInformation($"Model update: [{filteredTskModels.Count}]!");
+        //await InitializeBoardAsync();
     }
 
     //protected override Task OnAfterRenderAsync(bool firstRender) {

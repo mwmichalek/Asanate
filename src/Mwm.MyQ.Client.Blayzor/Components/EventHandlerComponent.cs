@@ -29,11 +29,11 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
     public bool IsLoading() => ModelsState.IsLoading();
 
     protected override async Task OnInitializedAsync() {
-        ModelsState.StateChanged += async (s, e) => await HandleUpdateAsync(e.CurrentModel);
+        ModelsState.StateChanged += async (s, e) => await HandleModelsLoaded();
         await base.OnInitializedAsync();
     }
 
-    protected virtual Task HandleUpdateAsync(TModel? model) => Task.CompletedTask;
+    protected virtual Task HandleModelsLoaded() => Task.CompletedTask;
 
 }
 
