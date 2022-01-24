@@ -29,14 +29,11 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers {
             return entitiesState.Value.HasCurrentErrors;
         }
 
-
-
-
         public static bool HasValue<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState, bool isNotEmpty = false)
             where TModel : EntityModel<TEntity>
             where TEntity : INamedEntity {
-            return (isNotEmpty) ? modelsState.Value.Models != null && modelsState.Value.Models.Count() > 0 :
-                                  modelsState.Value.Models != null;
+            return (isNotEmpty) ? modelsState.Value.Models != null && modelsState.Value.Models.Count() > 0 && !modelsState.IsLoading() :
+                                  modelsState.Value.Models != null && !modelsState.IsLoading();
         }
 
         public static bool IsLoading<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState)

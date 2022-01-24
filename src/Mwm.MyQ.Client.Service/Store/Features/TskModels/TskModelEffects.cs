@@ -60,15 +60,7 @@ public class CompanyTriggeredTskLoadModelEffect : TskLoadModelEffect<Company> {
     }
 }
 
-
-//public abstract class LoadModelEffect<TModel, TModelEntity, TTriggerEntity> :
-//                      Effect<LoadEntitySuccessAction<TTriggerEntity>> where TModel : EntityModel<TModelEntity>
-//                                                                      where TModelEntity : INamedEntity
-//                                                                      where TTriggerEntity : INamedEntity {
-
-
-
-    public abstract class TskLoadModelEffect<TTriggerEntity> : LoadModelEffect<TskModel, Tsk, TTriggerEntity> where TTriggerEntity : INamedEntity {
+public abstract class TskLoadModelEffect<TTriggerEntity> : LoadModelEffect<TskModel, Tsk, TTriggerEntity> where TTriggerEntity : INamedEntity {
 
     private IState<EntityState<Initiative>> _initiativesState { get; set; }
 
@@ -128,8 +120,8 @@ public class CompanyTriggeredTskLoadModelEffect : TskLoadModelEffect<Company> {
 
     public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
         var filteredModels = models;
-        foreach (IModelFilter<TskModel, Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<TskModel,Tsk> mf && mf.IsApplied))
-            filteredModels = filter.Filter(filteredModels);
+        //foreach (IModelFilter<TskModel, Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<TskModel,Tsk> mf && mf.IsApplied))
+        //    filteredModels = filter.Filter(filteredModels);
         return filteredModels;
     }
 

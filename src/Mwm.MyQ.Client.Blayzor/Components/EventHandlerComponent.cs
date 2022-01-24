@@ -14,29 +14,6 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent where TModel : EntityModel<TEntity>
-                                                                                where TEntity : INamedEntity {
-    [Inject]
-    public IState<ModelState<TModel, TEntity>> ModelsState { get; set; }
-
-    [Inject]
-    public IActionSubscriber ActionSubscriber { get; set; }
-
-    public bool HasValues() => ModelsState.HasValue(true);
-
-    public bool HasErrors() => ModelsState.HasErrors();
-
-    public bool IsLoading() => ModelsState.IsLoading();
-
-    protected override async Task OnInitializedAsync() {
-        ModelsState.StateChanged += async (s, e) => await HandleModelsLoaded();
-        await base.OnInitializedAsync();
-    }
-
-    protected virtual Task HandleModelsLoaded() => Task.CompletedTask;
-
-}
-
 public abstract class EventHandlerComponent : FluxorComponent {
 
     [Inject]

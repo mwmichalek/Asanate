@@ -45,7 +45,7 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
     public IEnumerable<TskModel> FilteredTskModels { 
         get => filteredTskModels;
         set { } 
-    } 
+    }
 
     private List<Status> statuses = StatusExtensions.AllStatuses;
 
@@ -67,7 +67,7 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
         
         filteredTskModels = ModelsState.Value.FilteredModels.ToList();
         Logger.LogInformation($"Model update: [{filteredTskModels.Count}]!");
-        //await InitializeBoardAsync();
+        await InitializeBoardAsync();
     }
 
     //protected override Task OnAfterRenderAsync(bool firstRender) {

@@ -17,7 +17,45 @@
 } else if (HasErrors()) {
     <span class="text-light">Whoops! Looks like an issue occurred loading TskModels</span>
 } else if (HasValues()) {
+    
     <h2>@FilteredTskModels.Count()</h2>
+
+
+   @* <SfKanban 
+        TValue="TaskModel" 
+        KeyField="Status" 
+        DataSource="TestTskModels"
+       >
+        <KanbanColumns>
+            <!-- DataSource="TestTskModels" Would like to be able to remove this since its being done programmatically -->
+            @foreach (var statusName in Statuses.Select(s => s.ToStr())) {
+                <KanbanColumn HeaderText="@statusName" KeyField="@statusName.ToKeyFields()"></KanbanColumn>
+            }
+        </KanbanColumns>
+        <KanbanCardSettings HeaderField="Name" ContentField="Name"></KanbanCardSettings>
+    </SfKanban>
+
+    @code {
+
+    public List<TaskModel> TestTskModels = new List<TaskModel>() {
+        new TaskModel() {
+            Id = 456,
+            Name = "Testing",
+            Status = Status.Open.ToStr(),
+            ProjectName = "MyQlone",
+            CompanyName = "MWM"
+        }
+    };
+
+    public class TaskModel {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
+        public string ProjectName { get; set; }
+        public string CompanyName { get; set; }
+    }*@
+}
+
 
     <SfKanban @ref="RefKanbanBoard" 
               TValue="TskModel" 
@@ -41,6 +79,9 @@
         <!--KanbanEvents DragStop="@DragStopHandlerAsync" DialogOpen="@ShowTskEditor" TValue="TskModel"></!--KanbanEvents>
         <KanbanSortSettings-- SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings-->
     </SfKanban>
+
+
+
 }
 
 <TskPopup @ref="refTskPopup" />
