@@ -34,12 +34,7 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
         get { return refKanbanBoard; }
         set { 
             refKanbanBoard = value;
-            //InitializeBoardAsync().Wait();
         }
-    }
-
-    public void Log(string message) {
-        Logger.LogInformation(message);
     }
 
     private TskPopup refTskPopup;
@@ -61,12 +56,12 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
     protected override async Task OnInitializedAsync() {
         Logger.LogInformation($">>> OnInitializedAsync triggered.");
         await base.OnInitializedAsync();
-        await InitializeBoardAsync("OnInitializedAsync");
+        await InitializeBoardAsync();
     }
 
     protected override async Task HandleModelsLoaded() {
         Logger.LogInformation($">>> HandleModelsLoaded triggered.");
-        await InitializeBoardAsync("HandleModelsLoaded");
+        await InitializeBoardAsync();
         
     }
 
@@ -75,16 +70,16 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
         return base.OnAfterRenderAsync(firstRender);
     }
 
-    private async Task InitializeBoardAsync(string caller = "not defined") {
+    private async Task InitializeBoardAsync() {
         if (HasValues()) {
-            Logger.LogInformation($">>> Initialization Started, models[{filteredTskModels.Count}] - {caller}!");
+            Logger.LogDebug($">>> Initialization Started, models[{filteredTskModels.Count}]");
             filteredTskModels = ModelsState.Value.FilteredModels.ToList();
             UpdateSwimLanes();
             UpdateColumns();
             await RefreshBoardAsync();
-            Logger.LogInformation($">>> Initialization Completed, models[{filteredTskModels.Count}]!");
+            Logger.LogDebug($">>> Initialization Completed, models[{filteredTskModels.Count}]");
         } else
-            Logger.LogInformation($"Not ready to be initialized {caller}.");
+            Logger.LogDebug($"Not ready to be initialized.");
     }
 
     private void UpdateSwimLanes() {
@@ -123,19 +118,22 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
     //####################################### ACTIONS ################################
 
     public async Task DragStopHandlerAsync(DragEventArgs<TskModel> args) {
-        foreach (var tskModel in args.Data) {
+        foreach (var updatedTskModel in args.Data) {
             try {
-                //var tsk = TsksState.FindById(tskModel.Id);
-                //if (tsk.Status != tskModel.Status) {
-                //    Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tsk.Status} ToStatus: {tskModel.Status}");
-                //    await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
-                //        Id = tskModel.Id,
-                //        Name = tsk.Name,
-                //        Status = tskModel.Status
-                //    });
-                //}
+
+
+                var originalTskModel = ModelsState.FindById(updatedTskModel.Id);
+
+                if (updatedTskModel.Status != originalTskModel.Status) {
+                    Logger.LogInformation($"Moved: {updatedTskModel.Name}, FromStatus: {originalTskModel.Status} ToStatus: {updatedTskModel.Status}");
+                    await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                        Id = updatedTskModel.Id,
+                        Name = originalTskModel.Name,
+                        Status = updatedTskModel.Status
+                    });
+                }
             } catch (Exception ex) {
-                Logger.LogError($"Unable to update: {tskModel.Name}, {ex}");
+                Logger.LogError($"Unable to update: {updatedTskModel.Name}, {ex}");
             }
         }
     }

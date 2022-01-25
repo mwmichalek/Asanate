@@ -18,8 +18,6 @@
 @if (HasErrors()) {
     <span class="text-light">Whoops! Looks like an issue occurred loading TskModels</span>
 } else if (HasValues()) {
-    Log("[[[ Outputing HTML ]]]");
-
     <SfKanban @ref="RefKanbanBoard" 
               TValue="TskModel" 
               KeyField="StatusName" 
@@ -39,8 +37,8 @@
             </Template>
         </KanbanCardSettings>
 
-        <!--KanbanEvents DragStop="@DragStopHandlerAsync" DialogOpen="@ShowTskEditor" TValue="TskModel"></!--KanbanEvents>
-        <KanbanSortSettings-- SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings-->
+        <KanbanEvents DragStop="@DragStopHandlerAsync" DialogOpen="@ShowTskEditor" TValue="TskModel"></KanbanEvents>
+        <KanbanSortSettings SortBy="SortOrderBy.Index" Field="RankId"></KanbanSortSettings>
     </SfKanban>
 
     <TskPopup @ref="refTskPopup" />

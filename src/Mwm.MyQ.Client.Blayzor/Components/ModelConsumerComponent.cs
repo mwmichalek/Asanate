@@ -1,6 +1,7 @@
 ﻿using Fluxor;
 using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
+using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
@@ -16,6 +17,9 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
 
     [Inject]
     public IActionSubscriber ActionSubscriber { get; set; }
+
+    [Inject]
+    public EntityStateFacade EntityStateFacade { get; set; }
 
     public bool HasValues() => ModelsState.HasValue(false);
 

@@ -29,6 +29,17 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers {
             return entitiesState.Value.HasCurrentErrors;
         }
 
+        public static TModel FindById<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> entitiesState, int id)
+            where TModel : EntityModel<TEntity>
+            where TEntity : INamedEntity {
+            //return (entitiesState.Value.Models != null) ?
+            //    entitiesState.Value.FindById(id) :
+            //    default;
+            return (entitiesState.Value.Models != null) ? 
+                entitiesState.Value.Models.SingleOrDefault(e => e.Id == id) : 
+                default;
+        }
+
         public static bool HasValue<TModel, TEntity>(this IState<ModelState<TModel, TEntity>> modelsState, bool isNotEmpty = false)
             where TModel : EntityModel<TEntity>
             where TEntity : INamedEntity {
