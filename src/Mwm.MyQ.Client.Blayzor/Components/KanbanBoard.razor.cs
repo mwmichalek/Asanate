@@ -34,8 +34,12 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
         get { return refKanbanBoard; }
         set { 
             refKanbanBoard = value;
-            InitializeBoardAsync().Wait();
+            //InitializeBoardAsync().Wait();
         }
+    }
+
+    public void Log(string message) {
+        Logger.LogInformation(message);
     }
 
     private TskPopup refTskPopup;
@@ -55,30 +59,32 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
     }
 
     protected override async Task OnInitializedAsync() {
+        Logger.LogInformation($">>> OnInitializedAsync triggered.");
         await base.OnInitializedAsync();
-        await InitializeBoardAsync();
-        Logger.LogInformation($"OnInitializedAsync triggered.");
+        await InitializeBoardAsync("OnInitializedAsync");
     }
 
     protected override async Task HandleModelsLoaded() {
-        Logger.LogInformation($"HandleModelsLoaded triggered.");
-        await InitializeBoardAsync();
+        Logger.LogInformation($">>> HandleModelsLoaded triggered.");
+        await InitializeBoardAsync("HandleModelsLoaded");
         
     }
 
     protected override Task OnAfterRenderAsync(bool firstRender) {
-        Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
+        Logger.LogInformation($">>> OnAfterRenderAsync : {firstRender}");
         return base.OnAfterRenderAsync(firstRender);
     }
 
-    private async Task InitializeBoardAsync() {
-        if (HasValues()) { 
+    private async Task InitializeBoardAsync(string caller = "not defined") {
+        if (HasValues()) {
+            Logger.LogInformation($">>> Initialization Started, models[{filteredTskModels.Count}] - {caller}!");
             filteredTskModels = ModelsState.Value.FilteredModels.ToList();
             UpdateSwimLanes();
             UpdateColumns();
             await RefreshBoardAsync();
-            Logger.LogInformation($"Initialization Completed, models[{filteredTskModels.Count}]!");
-        }
+            Logger.LogInformation($">>> Initialization Completed, models[{filteredTskModels.Count}]!");
+        } else
+            Logger.LogInformation($"Not ready to be initialized {caller}.");
     }
 
     private void UpdateSwimLanes() {

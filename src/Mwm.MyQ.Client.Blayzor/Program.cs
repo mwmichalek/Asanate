@@ -48,8 +48,9 @@ namespace Mwm.MyQ.Client.Blayzor
 
             var logger = serviceProvider.GetService<ILogger<Program>>();
             logger.LogInformation(">>> STARTING SERVICE <<<");
-
             await serviceProvider.UseClientServicesAsync();
+            logger.LogInformation(">>> LOADED DATA <<<");
+
             await server.RunAsync(); 
         }
     }
