@@ -33,8 +33,12 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
                 var entity = await _entityStorage.Get<TEntity>(id);
                 _logger.LogInformation($"Retrieved added {entityName} successfully!");
-
                 dispatcher.Dispatch(new AddEntitySuccessAction<TEntity>(entity));
+
+                //NOTE:(MWM) Just seeing if this properly triggers model rebuild.
+                var entities = await _entityStorage.GetAll<TEntity>();
+                dispatcher.Dispatch(new LoadEntitySuccessAction<TEntity>(entities));
+
             } catch (Exception e) {
                 _logger.LogError($"Error adding {entityName}(s), reason: {e}");
                 dispatcher.Dispatch(new AddEntityFailureAction<TEntity>(e.Message));

@@ -28,8 +28,8 @@ public partial class TskPopup : ComponentBase {
     [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
 
-    [Inject]
-    public IState<EntityState<Tsk>> TsksState { get; set; }
+    //[Inject]
+    //public IState<EntityState<Tsk>> TsksState { get; set; }
 
     public bool IsDialogShowing { get; set; }
 
@@ -77,18 +77,18 @@ public partial class TskPopup : ComponentBase {
         Close();
     }
 
-    public void KeyboardEventHandler(KeyboardEventArgs args) {
+    public async Task KeyboardEventHandlerAsync(KeyboardEventArgs args) {
         if (args.Key == "Enter")
-            Save();
+            await SaveAsync();
     }
 
-    public void Save() {
+    public async Task SaveAsync() {
         Logger.LogInformation($"Saving Popup.");
         try {
             if (TskModel.Id == 0) {
                 Logger.LogInformation($"Add: {TskModel.Name}");
 
-                EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
+                await EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
                     Name = TskModel.Name,
                     Status = TskModel.Status,
                     DurationEstimate = TskModel.DurationEstimate,
@@ -101,8 +101,8 @@ public partial class TskPopup : ComponentBase {
                 });
 
             } else {
-                var tsk = TsksState.FindById(TskModel.Id);
-                EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                //var tsk = TsksState.FindById(TskModel.Id);
+                await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
                     Id = TskModel.Id,
                     Name = TskModel.Name,
                     Status = TskModel.Status,

@@ -7,6 +7,16 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
 
+    public class LoadModelAction<TModel, TEntity> where TModel : EntityModel<TEntity>
+                                                  where TEntity : INamedEntity {
+
+        public LoadModelAction(IEnumerable<TEntity> entities) =>
+            (Entities) = (entities);
+
+        public IEnumerable<TEntity> Entities { get; }
+
+    }
+
     public class LoadModelSuccessAction<TModel, TEntity> where TModel : EntityModel<TEntity> 
                                                          where TEntity : INamedEntity {
 
@@ -19,7 +29,8 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
 
     }
 
-    public class LoadModelFailureAction<TEntity> : FailureAction where TEntity : INamedEntity {
+    public class LoadModelFailureAction<TModel, TEntity> : FailureAction where TModel : EntityModel<TEntity> 
+                                                                         where TEntity : INamedEntity {
 
         public LoadModelFailureAction(string errorMessage) : base(errorMessage) { }
     }
