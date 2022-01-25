@@ -17,7 +17,7 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
     [Inject]
     public IActionSubscriber ActionSubscriber { get; set; }
 
-    public bool HasValues() => ModelsState.HasValue(true);
+    public bool HasValues() => ModelsState.HasValue(false);
 
     public bool HasErrors() => ModelsState.HasErrors();
 

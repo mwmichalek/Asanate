@@ -56,29 +56,29 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
-        if (HasValues())
-            filteredTskModels = ModelsState.Value.FilteredModels.ToList();
         await InitializeBoardAsync();
-        
-        Logger.LogInformation($"Initialized, bitches [{filteredTskModels.Count}]!");
+        Logger.LogInformation($"OnInitializedAsync triggered.");
     }
 
     protected override async Task HandleModelsLoaded() {
-        
-        filteredTskModels = ModelsState.Value.FilteredModels.ToList();
-        Logger.LogInformation($"Model update: [{filteredTskModels.Count}]!");
+        Logger.LogInformation($"HandleModelsLoaded triggered.");
         await InitializeBoardAsync();
+        
     }
 
-    //protected override Task OnAfterRenderAsync(bool firstRender) {
-    //    Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
-    //    return base.OnAfterRenderAsync(firstRender);
-    //}
+    protected override Task OnAfterRenderAsync(bool firstRender) {
+        Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
+        return base.OnAfterRenderAsync(firstRender);
+    }
 
     private async Task InitializeBoardAsync() {
-        UpdateSwimLanes();
-        UpdateColumns();
-        await RefreshBoardAsync();
+        if (HasValues()) { 
+            filteredTskModels = ModelsState.Value.FilteredModels.ToList();
+            UpdateSwimLanes();
+            UpdateColumns();
+            await RefreshBoardAsync();
+            Logger.LogInformation($"Initialization Completed, models[{filteredTskModels.Count}]!");
+        }
     }
 
     private void UpdateSwimLanes() {
