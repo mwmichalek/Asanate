@@ -33,8 +33,8 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 dispatcher.Dispatch(new DeleteEntitySuccessAction<TEntity>(0));
 
                 //NOTE:(MWM) Just seeing if this properly triggers model rebuild.
-                var entities = await _entityStorage.GetAll<TEntity>();
-                dispatcher.Dispatch(new LoadEntitySuccessAction<TEntity>(entities));
+                //var entities = await _entityStorage.GetAll<TEntity>();
+                //dispatcher.Dispatch(new LoadEntitySuccessAction<TEntity>(entities));
 
             } catch (Exception e) {
                 _logger.LogError($"Error deleting {entityName}(s), reason: {e}");

@@ -36,8 +36,8 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 dispatcher.Dispatch(new UpdateEntitySuccessAction<TEntity>(entity));
 
                 //NOTE:(MWM) Just seeing if this properly triggers model rebuild.
-                var entities = await _entityStorage.GetAll<TEntity>();
-                dispatcher.Dispatch(new LoadEntitySuccessAction<TEntity>(entities));
+                //var entities = await _entityStorage.GetAll<TEntity>();
+                //dispatcher.Dispatch(new LoadEntitySuccessAction<TEntity>(entities));
 
             } catch (Exception e) {
                 _logger.LogError($"Error updating {entityName}(s), reason: {e}");

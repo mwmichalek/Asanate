@@ -16,17 +16,17 @@ using System.Threading.Tasks;
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
     public class InitiativeLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Initiative> {
-        public InitiativeLoadTriggersLoadTskModelEffect(ILogger<LoadModelEffect<TskModel, Tsk, Initiative>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        public InitiativeLoadTriggersLoadTskModelEffect(ILogger<EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Initiative>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
         }
     }
 
     public class ProjectLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Project> {
-        public ProjectLoadTriggersLoadTskModelEffect(ILogger<LoadModelEffect<TskModel, Tsk, Project>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        public ProjectLoadTriggersLoadTskModelEffect(ILogger<EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Project>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
         }
     }
 
     public class CompanyLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Company> {
-        public CompanyLoadTriggersLoadTskModelEffect(ILogger<LoadModelEffect<TskModel, Tsk, Company>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        public CompanyLoadTriggersLoadTskModelEffect(ILogger<EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Company>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
         }
     }
 
@@ -51,11 +51,11 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                                                                           where TEntity : INamedEntity
                                                                           where TTriggerEntity : INamedEntity {
 
-        protected readonly ILogger<LoadModelEffect<TModel, TEntity, TTriggerEntity>> _logger;
+        protected readonly ILogger<EntityLoadTriggersLoadModelEffect<TModel, TEntity, TTriggerEntity>> _logger;
 
         protected IState<EntityState<TEntity>> _entityState { get; set; }
 
-        public EntityLoadTriggersLoadModelEffect(ILogger<LoadModelEffect<TModel, TEntity, TTriggerEntity>> logger, IState<EntityState<TEntity>> entityState) =>
+        public EntityLoadTriggersLoadModelEffect(ILogger<EntityLoadTriggersLoadModelEffect<TModel, TEntity, TTriggerEntity>> logger, IState<EntityState<TEntity>> entityState) =>
                                 (_logger, _entityState) = (logger, entityState);
 
         public override Task HandleAsync(LoadEntitySuccessAction<TTriggerEntity> action, IDispatcher dispatcher) {
@@ -156,42 +156,42 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
         public abstract IEnumerable<TModel> Filter(IEnumerable<TModel> models);
     }
 
-    public abstract class LoadModelEffect<TModel, TModelEntity, TTriggerEntity> : 
-                          Effect<LoadEntitySuccessAction<TTriggerEntity>> where TModel : EntityModel<TModelEntity>
-                                                                          where TModelEntity : INamedEntity
-                                                                          where TTriggerEntity : INamedEntity {
+    //public abstract class LoadModelEffect<TModel, TModelEntity, TTriggerEntity> : 
+    //                      Effect<LoadEntitySuccessAction<TTriggerEntity>> where TModel : EntityModel<TModelEntity>
+    //                                                                      where TModelEntity : INamedEntity
+    //                                                                      where TTriggerEntity : INamedEntity {
 
-        protected readonly ILogger<LoadModelEffect<TModel, TModelEntity, TTriggerEntity>> _logger;
+    //    protected readonly ILogger<LoadModelEffect<TModel, TModelEntity, TTriggerEntity>> _logger;
 
-        protected IState<EntityState<TModelEntity>> _entityState { get; set; }
+    //    protected IState<EntityState<TModelEntity>> _entityState { get; set; }
 
-        protected IState<ApplicationState> _applicationState { get; set; }  
+    //    protected IState<ApplicationState> _applicationState { get; set; }  
 
-        public LoadModelEffect(ILogger<LoadModelEffect<TModel, TModelEntity, TTriggerEntity>> logger, 
-                               IState<EntityState<TModelEntity>> entityState, 
-                               IState<ApplicationState> applicationState) => 
-                                (_logger, _entityState, _applicationState) = (logger, entityState, applicationState);
+    //    public LoadModelEffect(ILogger<LoadModelEffect<TModel, TModelEntity, TTriggerEntity>> logger, 
+    //                           IState<EntityState<TModelEntity>> entityState, 
+    //                           IState<ApplicationState> applicationState) => 
+    //                            (_logger, _entityState, _applicationState) = (logger, entityState, applicationState);
 
-        public override Task HandleAsync(LoadEntitySuccessAction<TTriggerEntity> action, IDispatcher dispatcher) {
-            var entityName = typeof(TTriggerEntity).Name;
-            var modelName = typeof(TModelEntity).Name;
-            try {
-                var models = _entityState.Value.Entities.Where(e => !e.IsArchived).Select(e => CreateModel(e));
-                var filteredModels = Filter(models);
+    //    public override Task HandleAsync(LoadEntitySuccessAction<TTriggerEntity> action, IDispatcher dispatcher) {
+    //        var entityName = typeof(TTriggerEntity).Name;
+    //        var modelName = typeof(TModelEntity).Name;
+    //        try {
+    //            var models = _entityState.Value.Entities.Where(e => !e.IsArchived).Select(e => CreateModel(e));
+    //            var filteredModels = Filter(models);
                 
-                _logger.LogInformation($"Loaded models {modelName}(s), triggered by {entityName}, successfully!");
-                dispatcher.Dispatch(new LoadModelSuccessAction<TModel, TModelEntity>(models, filteredModels));
-            } catch (Exception e) {
-                _logger.LogError($"Error loading {entityName}(s), reason: {e}");
-                dispatcher.Dispatch(new LoadEntityFailureAction<TModelEntity>(e.Message));
-            }
-            return Task.CompletedTask;
-        }
+    //            _logger.LogInformation($"Loaded models {modelName}(s), triggered by {entityName}, successfully!");
+    //            dispatcher.Dispatch(new LoadModelSuccessAction<TModel, TModelEntity>(models, filteredModels));
+    //        } catch (Exception e) {
+    //            _logger.LogError($"Error loading {entityName}(s), reason: {e}");
+    //            dispatcher.Dispatch(new LoadEntityFailureAction<TModelEntity>(e.Message));
+    //        }
+    //        return Task.CompletedTask;
+    //    }
 
-        public abstract TModel CreateModel(TModelEntity entity);
+    //    public abstract TModel CreateModel(TModelEntity entity);
 
-        public abstract IEnumerable<TModel> Filter(IEnumerable<TModel> models); 
-    }
+    //    public abstract IEnumerable<TModel> Filter(IEnumerable<TModel> models); 
+    //}
 
 
 
