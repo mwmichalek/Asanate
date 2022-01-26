@@ -34,11 +34,6 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 _logger.LogInformation($"Retrieved updated {entityName} successfully!");
 
                 dispatcher.Dispatch(new UpdateEntitySuccessAction<TEntity>(entity));
-
-                //NOTE:(MWM) Just seeing if this properly triggers model rebuild.
-                //var entities = await _entityStorage.GetAll<TEntity>();
-                //dispatcher.Dispatch(new LoadEntitySuccessAction<TEntity>(entities));
-
             } catch (Exception e) {
                 _logger.LogError($"Error updating {entityName}(s), reason: {e}");
                 dispatcher.Dispatch(new UpdateEntityFailureAction<TEntity>(e.Message));
@@ -46,19 +41,5 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
         }
 
-        //public override async Task HandleAsync(AddAction<TEntity, TAddEntityCommand> action, IDispatcher dispatcher) {
-        //    var entityName = typeof(TEntity).Name;
-        //    try {
-        //        _logger.LogInformation($"Adding {entityName} ...");
-
-        //        var id = await _entityStorage.Add<TEntity, IAddEntityCommand<TEntity>>(action.EntityCommand);
-        //        _logger.LogInformation($"Added {entityName} successfully!");
-        //        dispatcher.Dispatch(new AddSuccessAction<TEntity>(0));
-        //    } catch (Exception e) {
-        //        _logger.LogError($"Error adding {entityName}(s), reason: {e}");
-        //        dispatcher.Dispatch(new AddFailureAction<TEntity>(e.Message));
-        //    }
-
-        //}
     }
 }

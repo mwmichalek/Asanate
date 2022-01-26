@@ -16,14 +16,6 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.TskModels;
 
-
-
-
-
-
-
-
-
 public class TskLoadModelEffect : LoadModelEffect<TskModel, Tsk> {
 
     private IState<EntityState<Tsk>> _tsksState { get; set; }
