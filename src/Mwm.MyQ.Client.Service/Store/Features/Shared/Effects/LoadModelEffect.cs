@@ -15,8 +15,6 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
-    //TODO:(MWM) Create concrete instance triggered by each entity type
-
     public class InitiativeLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Initiative> {
         public InitiativeLoadTriggersLoadTskModelEffect(ILogger<LoadModelEffect<TskModel, Tsk, Initiative>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
         }
