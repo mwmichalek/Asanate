@@ -17,6 +17,36 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
     //TODO:(MWM) Create concrete instance triggered by each entity type
 
+    public class InitiativeLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Initiative> {
+        public InitiativeLoadTriggersLoadTskModelEffect(ILogger<LoadModelEffect<TskModel, Tsk, Initiative>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        }
+    }
+
+    public class ProjectLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Project> {
+        public ProjectLoadTriggersLoadTskModelEffect(ILogger<LoadModelEffect<TskModel, Tsk, Project>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        }
+    }
+
+    public class CompanyLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Company> {
+        public CompanyLoadTriggersLoadTskModelEffect(ILogger<LoadModelEffect<TskModel, Tsk, Company>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        }
+    }
+
+    public class TskAddTriggersLoadTskModelEffect : EntityAddTriggersLoadModelEffect<TskModel, Tsk, Tsk> {
+        public TskAddTriggersLoadTskModelEffect(ILogger<EntityAddTriggersLoadModelEffect<TskModel, Tsk, Tsk>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        }
+    }
+
+    public class TskUpdateTriggersLoadTskModelEffect : EntityUpdateTriggersLoadModelEffect<TskModel, Tsk, Tsk> {
+        public TskUpdateTriggersLoadTskModelEffect(ILogger<EntityUpdateTriggersLoadModelEffect<TskModel, Tsk, Tsk>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        }
+    }
+
+    public class TskDeleteTriggersLoadTskModelEffect : EntityDeleteTriggersLoadModelEffect<TskModel, Tsk, Tsk> {
+        public TskDeleteTriggersLoadTskModelEffect(ILogger<EntityDeleteTriggersLoadModelEffect<TskModel, Tsk, Tsk>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+        }
+    }
+
 
     public abstract class EntityLoadTriggersLoadModelEffect<TModel, TEntity, TTriggerEntity> :
                           Effect<LoadEntitySuccessAction<TTriggerEntity>> where TModel : EntityModel<TEntity>
@@ -72,7 +102,24 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
         }
     }
 
-    //TODO:(MWM) Create generic successful Delete effect that triggers LoadModelAction
+    public abstract class EntityDeleteTriggersLoadModelEffect<TModel, TEntity, TTriggerEntity> :
+                          Effect<DeleteEntitySuccessAction<TTriggerEntity>> where TModel : EntityModel<TEntity>
+                                                                          where TEntity : INamedEntity
+                                                                          where TTriggerEntity : INamedEntity {
+
+        protected readonly ILogger<EntityDeleteTriggersLoadModelEffect<TModel, TEntity, TTriggerEntity>> _logger;
+
+        protected IState<EntityState<TEntity>> _entityState { get; set; }
+
+        public EntityDeleteTriggersLoadModelEffect(ILogger<EntityDeleteTriggersLoadModelEffect<TModel, TEntity, TTriggerEntity>> logger, IState<EntityState<TEntity>> entityState) =>
+                                (_logger, _entityState) = (logger, entityState);
+
+        public override Task HandleAsync(DeleteEntitySuccessAction<TTriggerEntity> action, IDispatcher dispatcher) {
+            dispatcher.Dispatch(new LoadModelAction<TModel, TEntity>(_entityState.Value.Entities));
+            return Task.CompletedTask;
+        }
+    }
+
 
 
 
