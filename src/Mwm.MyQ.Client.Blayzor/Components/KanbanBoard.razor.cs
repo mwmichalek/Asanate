@@ -20,10 +20,11 @@ using Microsoft.Extensions.Logging;
 using Fluxor;
 using System.Collections;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
+using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk> {
+public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>, IKanbanComponent {
 
     [Inject]
     ILogger<KanbanBoard> Logger { get; set; }

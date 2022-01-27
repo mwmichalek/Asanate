@@ -1,4 +1,5 @@
-﻿using Mwm.MyQ.Client.Service.Models;
+﻿using Mwm.MyQ.Client.Service.Components;
+using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,17 @@ public interface IPrimativeApplicationSetting : IApplicationSetting { }
 
 public interface IObjectApplicationSetting : IApplicationSetting { }
 
-public abstract class ObjectApplicationSetting<TClass> : IObjectApplicationSetting where TClass : class {
+public class TestApplicationSetting : ObjectApplicationSetting<IKanbanComponent, string> { }
+
+public abstract class ApplicationSetting<TComponent> where TComponent : IApplicationComponent {
+
+    public bool AppliesTo(IApplicationComponent applicationComponent) {
+        return applicationComponent is TComponent;
+    }
+
+}
+
+public abstract class ObjectApplicationSetting<TComponent, TClass> : ApplicationSetting<TComponent>, IObjectApplicationSetting where TComponent : IApplicationComponent where TClass : class {
 
     public TClass PreviousValue { get; set; }
 
@@ -22,7 +33,8 @@ public abstract class ObjectApplicationSetting<TClass> : IObjectApplicationSetti
 
 }
 
-public abstract class PrimativeApplicationSetting<TPrimative> : IPrimativeApplicationSetting where TPrimative : struct {
+public abstract class PrimativeApplicationSetting<TComponent, TPrimative> : IPrimativeApplicationSetting where TComponent : IApplicationComponent
+                                                                                                         where TPrimative : struct {
 
     public TPrimative PreviousValue { get; set; }
 

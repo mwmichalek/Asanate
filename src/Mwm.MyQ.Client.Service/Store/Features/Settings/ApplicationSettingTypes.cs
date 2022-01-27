@@ -1,4 +1,5 @@
-﻿using Mwm.MyQ.Client.Service.Models;
+﻿using Mwm.MyQ.Client.Service.Components;
+using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;
@@ -18,16 +19,16 @@ public class ApplicationSettingTypes {
     };
 }
 
-public class IsInFocusOnlyTskFilter : PrimativeApplicationSetting<bool> {
+public class IsInFocusOnlyTskFilter : PrimativeApplicationSetting<IKanbanComponent, bool> {
     public IsInFocusOnlyTskFilter() => CurrentValue = false;
 }
 
-public class IsGroupedByCompanyFlag : PrimativeApplicationSetting<bool> {
+public class IsGroupedByCompanyFlag : PrimativeApplicationSetting<IKanbanComponent, bool> {
 
     public IsGroupedByCompanyFlag() => CurrentValue = true;
 }
 
-public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> { 
+public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<IKanbanComponent, bool> { 
 
     public IsActionStatusOnlyFlag() => CurrentValue = false;
 }

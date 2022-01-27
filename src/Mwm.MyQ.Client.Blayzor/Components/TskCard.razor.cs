@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Mwm.MyQ.Application.Tsks.Commands;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Domain;
+using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class TskCard : ComponentBase {
+public partial class TskCard : ComponentBase, IApplicationComponent {
 
     [Parameter]
     public TskModel TskModel { get; set; }

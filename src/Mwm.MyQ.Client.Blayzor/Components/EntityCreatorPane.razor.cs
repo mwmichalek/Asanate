@@ -16,10 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityCreatorPane : FluxorComponent {
+public partial class EntityCreatorPane : FluxorComponent, IApplicationComponent {
 
     [Inject]
     ILogger<EntityCreatorPane> Logger { get; set; }

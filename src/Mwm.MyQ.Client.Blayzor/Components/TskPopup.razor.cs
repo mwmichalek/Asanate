@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 using Syncfusion.Blazor.RichTextEditor;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components.Web;
+using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class TskPopup : ComponentBase {
+public partial class TskPopup : ComponentBase, IApplicationComponent {
 
     public SfDialog Dialog { get; set; }
 
@@ -27,9 +28,6 @@ public partial class TskPopup : ComponentBase {
 
     [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
-
-    //[Inject]
-    //public IState<EntityState<Tsk>> TsksState { get; set; }
 
     public bool IsDialogShowing { get; set; }
 

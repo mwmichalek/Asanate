@@ -8,10 +8,11 @@ using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
 using Syncfusion.Blazor.Kanban;
 using System.Threading.Tasks;
+using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityGrid : TskModelConsumerComponent {
+public partial class EntityGrid : TskModelConsumerComponent, IApplicationComponent {
 
     [Inject]
     ILogger<EntityGrid> Logger { get; set; }
