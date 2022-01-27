@@ -15,17 +15,20 @@ public interface IPrimativeApplicationSetting : IApplicationSetting { }
 
 public interface IObjectApplicationSetting : IApplicationSetting { }
 
-public class TestApplicationSetting : ObjectApplicationSetting<IKanbanComponent, string> { }
+public class TestThisApplicationSetting : ObjectApplicationSetting<string> { }
+public class TestThatApplicationSetting : ObjectApplicationSetting<string> { }
 
-public abstract class ApplicationSetting<TComponent> where TComponent : IApplicationComponent {
+public abstract class ApplicationSetting<TApplicationSetting> : IApplicationSetting where TApplicationSetting : IApplicationSetting {
 
-    public bool AppliesTo(IApplicationComponent applicationComponent) {
-        return applicationComponent is TComponent;
+    public void ApplyTo(IApplicationComponent applicationComponent) {
+        if (applicationComponent is IApplicationSettingConsumer<TApplicationSetting> applicationSettingConsumer)
+            applicationSettingConsumer.Consume(this);
+
     }
 
 }
 
-public abstract class ObjectApplicationSetting<TComponent, TClass> : ApplicationSetting<TComponent>, IObjectApplicationSetting where TComponent : IApplicationComponent where TClass : class {
+public abstract class ObjectApplicationSetting<TClass> : ApplicationSetting, IObjectApplicationSetting where TClass : class {
 
     public TClass PreviousValue { get; set; }
 

@@ -173,4 +173,11 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>, IKanba
         await RefreshBoardAsync();
     }
 
+    public void Consume(TestThisApplicationSetting applicationSetting) {
+        throw new NotImplementedException();
+    }
+
+    public void Consume(TestThatApplicationSetting applicationSetting) {
+        throw new NotImplementedException();
+    }
 }

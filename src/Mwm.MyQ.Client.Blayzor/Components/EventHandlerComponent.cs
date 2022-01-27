@@ -78,6 +78,11 @@ public abstract class EventHandlerComponent : FluxorComponent {
     }
 
     private async Task RouteApplicationSettingChangeAsync(IApplicationSetting applicationSetting) {
+
+        //if (this is IApplicationSettingConsumer)
+
+
+
         if (applicationSetting is IsInFocusOnlyTskFilter focusFilter)
             await HandleUpdateAsync(focusFilter);
         else if (applicationSetting is IsGroupedByCompanyFlag groupingFlag)
