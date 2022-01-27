@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.TskModels;
 
+public class TskLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Tsk> {
+    public TskLoadTriggersLoadTskModelEffect(ILogger<EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Tsk>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
+    }
+}
+
 public class InitiativeLoadTriggersLoadTskModelEffect : EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Initiative> {
     public InitiativeLoadTriggersLoadTskModelEffect(ILogger<EntityLoadTriggersLoadModelEffect<TskModel, Tsk, Initiative>> logger, IState<EntityState<Tsk>> entityState) : base(logger, entityState) {
     }
