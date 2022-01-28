@@ -24,7 +24,7 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>, IKanbanComponent {
+public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>, IApplicationSettingConsumer<IsInFocusOnlyFlag> {
 
     [Inject]
     ILogger<KanbanBoard> Logger { get; set; }
@@ -173,11 +173,7 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>, IKanba
         await RefreshBoardAsync();
     }
 
-    public void Consume(TestThisApplicationSetting applicationSetting) {
-        throw new NotImplementedException();
-    }
-
-    public void Consume(TestThatApplicationSetting applicationSetting) {
+    public Task ApplySetting(IsInFocusOnlyFlag applicationSetting) {
         throw new NotImplementedException();
     }
 }

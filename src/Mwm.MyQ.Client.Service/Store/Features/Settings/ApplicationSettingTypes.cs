@@ -12,26 +12,19 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Settings;
 public class ApplicationSettingTypes {
 
     public static List<IApplicationSetting> DefaultSettings = new List<IApplicationSetting> {
-        new IsInFocusOnlyTskFilter(),
-        new IsGroupedByCompanyFlag(),
+        new IsInFocusOnlyFlag(),
+        new IsGroupedByCompanyFlag { CurrentValue = true },
         new IsActionStatusOnlyFlag(),
         new IsInFocusedTskModelFilter { IsApplied = false }
     };
 }
 
-public class IsInFocusOnlyTskFilter : PrimativeApplicationSetting<IKanbanComponent, bool> {
-    public IsInFocusOnlyTskFilter() => CurrentValue = false;
-}
+public class IsInFocusOnlyFlag : PrimativeApplicationSetting<bool> { }
 
-public class IsGroupedByCompanyFlag : PrimativeApplicationSetting<IKanbanComponent, bool> {
+public class IsGroupedByCompanyFlag : PrimativeApplicationSetting<bool> { }
 
-    public IsGroupedByCompanyFlag() => CurrentValue = true;
-}
+public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> { }
 
-public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<IKanbanComponent, bool> { 
-
-    public IsActionStatusOnlyFlag() => CurrentValue = false;
-}
 
 public class IsInFocusedTskModelFilter : ModelFilter<TskModel, Tsk> {
 

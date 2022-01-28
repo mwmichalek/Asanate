@@ -20,7 +20,7 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityCreatorPane : FluxorComponent, IApplicationComponent {
+public partial class EntityCreatorPane : FluxorComponent {
 
     [Inject]
     ILogger<EntityCreatorPane> Logger { get; set; }

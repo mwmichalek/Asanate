@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Components;
 
-public interface IApplicationComponent {
+//public interface IApplicationComponent {
 
+
+//}
+
+public interface IApplicationSettingConsumer<TApplicationSetting> : IApplicationSettingConsumer where TApplicationSetting : IApplicationSetting {
+
+    Task ApplySetting(TApplicationSetting applicationSetting);
 
 }
 
-public interface IKanbanComponent : IApplicationComponent, IApplicationSettingConsumer<TestThisApplicationSetting>,
-  IApplicationSettingConsumer<TestThatApplicationSetting> { 
-
-}
-
-public interface IApplicationSettingConsumer<TApplicationSetting> where TApplicationSetting : IApplicationSetting {
-
-    void Consume(TApplicationSetting applicationSetting);
-
+public interface IApplicationSettingConsumer {
 
 }

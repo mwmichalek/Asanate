@@ -45,8 +45,8 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
             }
         }
 
-        protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) {
-            _isInFocusOnly = filter.CurrentValue;
+        protected override Task HandleUpdateAsync(IsInFocusOnlyFlag flag) {
+            _isInFocusOnly = flag.CurrentValue;
             return Task.CompletedTask;
         }
 
@@ -55,7 +55,7 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
         public bool IsInFocusOnly { 
             get => _isInFocusOnly;
             set {
-                ApplicationStateFacade.Set(new IsInFocusOnlyTskFilter {
+                ApplicationStateFacade.Set(new IsInFocusOnlyFlag {
                     PreviousValue = _isInFocusOnly,
                     CurrentValue = value
                 });

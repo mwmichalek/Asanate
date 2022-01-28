@@ -9,7 +9,7 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class TskCard : ComponentBase, IApplicationComponent {
+public partial class TskCard : ComponentBase {
 
     [Parameter]
     public TskModel TskModel { get; set; }

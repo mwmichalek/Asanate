@@ -15,20 +15,12 @@ public interface IPrimativeApplicationSetting : IApplicationSetting { }
 
 public interface IObjectApplicationSetting : IApplicationSetting { }
 
-public class TestThisApplicationSetting : ObjectApplicationSetting<string> { }
-public class TestThatApplicationSetting : ObjectApplicationSetting<string> { }
 
-public abstract class ApplicationSetting<TApplicationSetting> : IApplicationSetting where TApplicationSetting : IApplicationSetting {
-
-    public void ApplyTo(IApplicationComponent applicationComponent) {
-        if (applicationComponent is IApplicationSettingConsumer<TApplicationSetting> applicationSettingConsumer)
-            applicationSettingConsumer.Consume(this);
-
-    }
+public class ApplicationSetting : IApplicationSetting {
 
 }
 
-public abstract class ObjectApplicationSetting<TClass> : ApplicationSetting, IObjectApplicationSetting where TClass : class {
+public class ObjectApplicationSetting<TClass> : ApplicationSetting where TClass : class {
 
     public TClass PreviousValue { get; set; }
 
@@ -36,14 +28,18 @@ public abstract class ObjectApplicationSetting<TClass> : ApplicationSetting, IOb
 
 }
 
-public abstract class PrimativeApplicationSetting<TComponent, TPrimative> : IPrimativeApplicationSetting where TComponent : IApplicationComponent
-                                                                                                         where TPrimative : struct {
+public class PrimativeApplicationSetting<TPrimative> : ApplicationSetting, IPrimativeApplicationSetting where TPrimative : struct {
 
     public TPrimative PreviousValue { get; set; }
 
     public TPrimative CurrentValue { get; set; }
 
 }
+
+
+
+
+
 
 public interface IModelFilter<TModel, TEntity> : IApplicationSetting where TModel : EntityModel<TEntity>
                                                                      where TEntity : INamedEntity {
@@ -53,8 +49,6 @@ public interface IModelFilter<TModel, TEntity> : IApplicationSetting where TMode
 
     string Title { get; }
 }
-
-
 
 public interface IPrimativeModelFilter<TModel, TEntity, TPrimative> : IModelFilter<TModel, TEntity> where TModel : EntityModel<TEntity> 
                                                                                                     where TEntity : INamedEntity

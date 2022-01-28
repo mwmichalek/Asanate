@@ -12,7 +12,7 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityGrid : TskModelConsumerComponent, IApplicationComponent {
+public partial class EntityGrid : TskModelConsumerComponent {
 
     [Inject]
     ILogger<EntityGrid> Logger { get; set; }

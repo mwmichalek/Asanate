@@ -17,7 +17,7 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class TskPopup : ComponentBase, IApplicationComponent {
+public partial class TskPopup : ComponentBase {
 
     public SfDialog Dialog { get; set; }
 

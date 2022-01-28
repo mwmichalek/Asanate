@@ -11,10 +11,11 @@ using Mwm.MyQ.Domain;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public abstract class EventHandlerComponent : FluxorComponent {
+public abstract class EventHandlerComponent : FluxorComponent, IApplicationSettingConsumer {
 
     [Inject]
     public IState<EntityState<Tsk>> TsksState { get; set; }
@@ -81,14 +82,19 @@ public abstract class EventHandlerComponent : FluxorComponent {
 
         //if (this is IApplicationSettingConsumer)
 
+        await ApplyTo(applicationSetting);
 
+        //if (applicationSetting is IsInFocusOnlyTskFilter focusFilter)
+        //    await HandleUpdateAsync(focusFilter);
+        //else if (applicationSetting is IsGroupedByCompanyFlag groupingFlag)
+        //    await HandleUpdateAsync(groupingFlag);
+        //else if (applicationSetting is IsActionStatusOnlyFlag actionFlag)
+        //    await HandleUpdateAsync(actionFlag);
+    }
 
-        if (applicationSetting is IsInFocusOnlyTskFilter focusFilter)
-            await HandleUpdateAsync(focusFilter);
-        else if (applicationSetting is IsGroupedByCompanyFlag groupingFlag)
-            await HandleUpdateAsync(groupingFlag);
-        else if (applicationSetting is IsActionStatusOnlyFlag actionFlag)
-            await HandleUpdateAsync(actionFlag);
+    public async Task ApplyTo<TSetting>(TSetting setting) where TSetting : IApplicationSetting {
+        if (this is IApplicationSettingConsumer<TSetting> applicationSettingConsumer)
+            await applicationSettingConsumer.ApplySetting(setting);
     }
 
     protected virtual Task HandleUpdateAsync(Tsk tsk) => Task.CompletedTask;
@@ -99,7 +105,7 @@ public abstract class EventHandlerComponent : FluxorComponent {
 
     protected virtual Task HandleUpdateAsync(Company company) => Task.CompletedTask;
 
-    protected virtual Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => Task.CompletedTask;
+    protected virtual Task HandleUpdateAsync(IsInFocusOnlyFlag flag) => Task.CompletedTask;
 
     protected virtual Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) => Task.CompletedTask;
 
