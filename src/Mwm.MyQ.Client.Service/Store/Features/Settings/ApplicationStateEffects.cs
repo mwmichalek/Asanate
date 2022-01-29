@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Settings;
 
-public class SetApplicationSettingEffect : Effect<SetApplicationSettingAction> {
+public class SetApplicationSettingEffect<TApplicationSetting> : Effect<SetApplicationSettingAction<TApplicationSetting>> where TApplicationSetting : IApplicationSetting {
 
-    protected readonly ILogger<SetApplicationSettingEffect> _logger;
+    protected readonly ILogger<SetApplicationSettingEffect<TApplicationSetting>> _logger;
 
-    public SetApplicationSettingEffect(ILogger<SetApplicationSettingEffect> logger) => _logger = logger;    
+    public SetApplicationSettingEffect(ILogger<SetApplicationSettingEffect<TApplicationSetting>> logger) => _logger = logger;    
 
-    public override Task HandleAsync(SetApplicationSettingAction action, IDispatcher dispatcher) {
+    public override Task HandleAsync(SetApplicationSettingAction<TApplicationSetting> action, IDispatcher dispatcher) {
         try {
             _logger.LogInformation($"Setting {action.ApplicationSetting.GetType().Name} ...");
 
-            dispatcher.Dispatch(new SetApplicationSettingSuccessAction(action.ApplicationSetting));
+            dispatcher.Dispatch(new SetApplicationSettingSuccessAction<TApplicationSetting>(action.ApplicationSetting));
         } catch (Exception e) {
             _logger.LogError($"Error, reason: {e}");
-            dispatcher.Dispatch(new SetApplicationSettingFailureAction(e.Message));
+            dispatcher.Dispatch(new SetApplicationSettingFailureAction<TApplicationSetting>(e.Message));
         }
         return Task.CompletedTask;
     }

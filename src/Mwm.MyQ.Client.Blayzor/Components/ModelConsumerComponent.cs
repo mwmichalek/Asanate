@@ -1,6 +1,7 @@
 ﻿using Fluxor;
 using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Mwm.MyQ.Client.Service.Components;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Models;
@@ -14,6 +15,9 @@ namespace Mwm.MyQ.Client.Blayzor.Components;
 
 public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent where TModel : EntityModel<TEntity>
                                                                                 where TEntity : INamedEntity {
+    [Inject]
+    public ILogger<ModelConsumerComponent<TModel, TEntity>> Logger { get; set; }
+
     [Inject]
     public IState<ModelState<TModel, TEntity>> ModelsState { get; set; }
 
@@ -44,6 +48,7 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
     }
 
     public async Task ApplyTo<TSetting>(TSetting setting) where TSetting : IApplicationSetting {
+        Logger.LogInformation($"ApplyTo: {typeof(TSetting).Name}");
         if (this is IApplicationSettingConsumer<TSetting> applicationSettingConsumer)
             await applicationSettingConsumer.ApplySetting(setting);
     }
