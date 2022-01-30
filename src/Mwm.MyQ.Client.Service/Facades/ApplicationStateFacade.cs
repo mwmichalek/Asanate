@@ -13,7 +13,7 @@ namespace Mwm.MyQ.Client.Service.Facades {
 
         public void Set<TApplicationSetting>(TApplicationSetting setting) where TApplicationSetting : IApplicationSetting {
             _logger.LogInformation($"Issuing action to set { setting.GetType().Name} ...");
-            _dispatcher.Dispatch(new SetApplicationSettingAction<TApplicationSetting>(setting));
+            _dispatcher.Dispatch(new SetApplicationSettingAction(setting));
         }
 
     }

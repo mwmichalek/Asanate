@@ -18,6 +18,15 @@ public interface IObjectApplicationSetting : IApplicationSetting { }
 
 public class ApplicationSetting : IApplicationSetting {
 
+    //public Type ConsumerType { private get; set; }
+
+    //public void ApplyTo(IApplicationSettingConsumer consumer) {
+    //    if (typeof(consumer).IsAssignableFrom(someOtherType)
+    //    if (consumer.Imp)
+
+
+    //}
+
 }
 
 public class ObjectApplicationSetting<TClass> : ApplicationSetting where TClass : class {
@@ -50,7 +59,7 @@ public interface IModelFilter<TModel, TEntity> : IApplicationSetting where TMode
     string Title { get; }
 }
 
-public interface IPrimativeModelFilter<TModel, TEntity, TPrimative> : IModelFilter<TModel, TEntity> where TModel : EntityModel<TEntity> 
+public interface IPrimativeModelFilter<TModel, TEntity, TPrimative> : IModelFilter<TModel, TEntity> where TModel : EntityModel<TEntity>
                                                                                                     where TEntity : INamedEntity
                                                                                                     where TPrimative : struct {
     TPrimative FilterValue { get; set; }
@@ -58,12 +67,12 @@ public interface IPrimativeModelFilter<TModel, TEntity, TPrimative> : IModelFilt
 
 public interface IObjectModelFilter<TModel, TEntity, TClass> : IModelFilter<TModel, TEntity> where TModel : EntityModel<TEntity>
                                                                                              where TEntity : INamedEntity
-                                                                                             where TClass : class { 
+                                                                                             where TClass : class {
     TClass FilterValue { get; set; }
 }
 
 public abstract class ModelFilter<TModel, TEntity> : IModelFilter<TModel, TEntity> where TModel : EntityModel<TEntity>
-                                                                                   where TEntity : INamedEntity { 
+                                                                                   where TEntity : INamedEntity {
 
     public abstract IEnumerable<TModel> Filter(IEnumerable<TModel> entities);
 
@@ -74,7 +83,7 @@ public abstract class ModelFilter<TModel, TEntity> : IModelFilter<TModel, TEntit
 }
 
 
-public abstract class PrimativeModelFilter<TModel, TEntity, TPrimative> : ModelFilter<TModel, TEntity>, 
+public abstract class PrimativeModelFilter<TModel, TEntity, TPrimative> : ModelFilter<TModel, TEntity>,
                                                                           IPrimativeModelFilter<TModel, TEntity, TPrimative> where TModel : EntityModel<TEntity>
                                                                                                                              where TEntity : INamedEntity
                                                                                                                              where TPrimative : struct {
@@ -86,6 +95,6 @@ public abstract class ObjectModelFilter<TModel, TEntity, TClass> : ModelFilter<T
                                                                    IObjectModelFilter<TModel, TEntity, TClass> where TModel : EntityModel<TEntity>
                                                                                                                where TEntity : INamedEntity
                                                                                                                where TClass : class {
-    public TClass FilterValue { get; set; }                                                                                
+    public TClass FilterValue { get; set; }
 }
 

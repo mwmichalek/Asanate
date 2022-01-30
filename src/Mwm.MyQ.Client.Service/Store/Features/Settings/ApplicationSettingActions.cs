@@ -8,25 +8,50 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Settings;
 
-public class SetApplicationSettingAction<TApplicationSetting> where TApplicationSetting : IApplicationSetting {
+public class SetApplicationSettingAction : IApplicationSetting {
 
-    public SetApplicationSettingAction(TApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;  
+    public SetApplicationSettingAction(IApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;  
     
-    public TApplicationSetting ApplicationSetting { get; } 
+    public IApplicationSetting ApplicationSetting { get; } 
 
 }
 
-public class SetApplicationSettingSuccessAction<TApplicationSetting> where TApplicationSetting : IApplicationSetting {
+public class SetApplicationSettingSuccessAction : IApplicationSetting {
 
-    public SetApplicationSettingSuccessAction(TApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;
+    public SetApplicationSettingSuccessAction(IApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;
 
-    public TApplicationSetting ApplicationSetting { get; }
+    public IApplicationSetting ApplicationSetting { get; }
 
 }
 
-public class SetApplicationSettingFailureAction<TApplicationSetting> : FailureAction where TApplicationSetting : IApplicationSetting {
+public class SetApplicationSettingFailureAction : FailureAction, IApplicationSetting {
 
     public SetApplicationSettingFailureAction(string errorMessage) : base(errorMessage) { }
 
 }
+
+//public class SetApplicationSettingAction<TApplicationSetting> where TApplicationSetting : IApplicationSetting
+//{
+
+//    public SetApplicationSettingAction(TApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;
+
+//    public TApplicationSetting ApplicationSetting { get; }
+
+//}
+
+//public class SetApplicationSettingSuccessAction<TApplicationSetting> where TApplicationSetting : IApplicationSetting
+//{
+
+//    public SetApplicationSettingSuccessAction(TApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;
+
+//    public TApplicationSetting ApplicationSetting { get; }
+
+//}
+
+//public class SetApplicationSettingFailureAction<TApplicationSetting> : FailureAction where TApplicationSetting : IApplicationSetting
+//{
+
+//    public SetApplicationSettingFailureAction(string errorMessage) : base(errorMessage) { }
+
+//}
 
