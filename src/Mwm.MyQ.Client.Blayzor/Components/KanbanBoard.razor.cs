@@ -187,4 +187,9 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     public async Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
         await SetIsActionStatusOnly(applicationSetting.CurrentValue);
     }
+
+    public Task CheckThisOut<TTest>(TTest test) where TTest : class {
+        Logger.LogInformation($"TEST: {typeof(TTest).Name}");   
+        return Task.CompletedTask;
+    }
 }

@@ -9,6 +9,9 @@ using Mwm.MyQ.Client.Service.Store.Features.Settings;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
+using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
@@ -61,30 +64,37 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
 
 
         //foreach (var i in this.GetType().GetInterfaces()) {
-            //var consumerType = typeof(IApplicationSettingConsumer<>).MakeGenericType(typeof(IsActionStatusOnlyFlag));
-            //
+        //var consumerType = typeof(IApplicationSettingConsumer<>).MakeGenericType(typeof(IsActionStatusOnlyFlag));
+        //
 
 
-            
-        //}
+
+        //var consumerConcreteType = this.GetType();
+        //var genericMethod = consumerConcreteType.GetMethod("ApplySetting", new[] { typeof(IsActionStatusOnlyFlag) });
+        //genericMethod.Invoke(this, new[] { new IsActionStatusOnlyFlag() });
 
         // Go through all application settings and trigger them.
         foreach (var applicationSetting in ApplicationState.Value.Settings) {
-            var consumerType = typeof(IApplicationSettingConsumer<>).MakeGenericType(applicationSetting.GetType());
-            var implementsConsumerType = consumerType.IsAssignableFrom(this.GetType());
-            if (implementsConsumerType) { 
-            }
-            Logger.LogInformation($">>> INTERFACE: {consumerType} : {implementsConsumerType}");
-
             await ApplyTo(applicationSetting);
         }
     }
 
-    public async Task ApplyTo<TSetting>(TSetting setting) where TSetting : IApplicationSetting {
-        Logger.LogInformation($"ApplyTo: {typeof(TSetting).Name}");
-        if (this is IApplicationSettingConsumer<TSetting> applicationSettingConsumer)
-            await applicationSettingConsumer.ApplySetting(setting);
+    public Task ApplyTo(IApplicationSetting applicationSetting) {
+        var consumerType = typeof(IApplicationSettingConsumer<>).MakeGenericType(applicationSetting.GetType());
+        var implementsConsumerType = consumerType.IsAssignableFrom(this.GetType());
+        if (implementsConsumerType) {
+            var consumerConcreteType = this.GetType();
+            var consumerMethod = consumerConcreteType.GetMethod("ApplySetting", new[] { applicationSetting.GetType() });
+            var result = consumerMethod.Invoke(this, new[] { applicationSetting });
+        }
+        return Task.CompletedTask;
     }
+
+    //public static async Task<object> InvokeAsync(this MethodInfo @this, object obj, params object[] parameters) {
+    //    dynamic awaitable = @this.Invoke(obj, parameters);
+    //    await awaitable;
+    //    return awaitable.GetAwaiter().GetResult();
+    //}
 
     protected virtual Task HandleModelsLoaded() => Task.CompletedTask;
 
