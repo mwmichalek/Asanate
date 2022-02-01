@@ -45,38 +45,8 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
         //ActionSubscriber.SubscribeToAction<IApplicationSetting>(this, (setting) => { });
         await base.OnInitializedAsync();
 
-        //    info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //  >>> INTERFACE: Microsoft.AspNetCore.Components.IComponent
-        //info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //  >>> INTERFACE: System.IDisposable
-        //info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //  >>> INTERFACE: Microsoft.AspNetCore.Components.IHandleAfterRender
-        //info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //  >>> INTERFACE: Microsoft.AspNetCore.Components.IHandleEvent
-        //info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //  >>> INTERFACE: Mwm.MyQ.Client.Service.Components.IApplicationSettingConsumer`1[Mwm.MyQ.Client.Service.Store.Features.Settings.IsActionStatusOnlyFlag]
-        //info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //      >>> INTERFACE: Mwm.MyQ.Client.Service.Components.IApplicationSettingConsumer`1[Mwm.MyQ.Client.Service.Store.Features.Settings.IsGroupedByCompanyFlag]
-        //info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //      >>> INTERFACE: Mwm.MyQ.Client.Service.Components.IApplicationSettingConsumer`1[Mwm.MyQ.Client.Service.Store.Features.Settings.IsInFocusOnlyFlag]
-        //info: Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent[0]
-        //      >>> INTERFACE: Mwm.MyQ.Client.Service.Components.IApplicationSettingConsumer
-
-
-        //foreach (var i in this.GetType().GetInterfaces()) {
-        //var consumerType = typeof(IApplicationSettingConsumer<>).MakeGenericType(typeof(IsActionStatusOnlyFlag));
-        //
-
-
-
-        //var consumerConcreteType = this.GetType();
-        //var genericMethod = consumerConcreteType.GetMethod("ApplySetting", new[] { typeof(IsActionStatusOnlyFlag) });
-        //genericMethod.Invoke(this, new[] { new IsActionStatusOnlyFlag() });
-
-        // Go through all application settings and trigger them.
-        foreach (var applicationSetting in ApplicationState.Value.Settings) {
+        foreach (var applicationSetting in ApplicationState.Value.Settings) 
             await ApplyTo(applicationSetting);
-        }
     }
 
     public Task ApplyTo(IApplicationSetting applicationSetting) {
@@ -89,12 +59,6 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
         }
         return Task.CompletedTask;
     }
-
-    //public static async Task<object> InvokeAsync(this MethodInfo @this, object obj, params object[] parameters) {
-    //    dynamic awaitable = @this.Invoke(obj, parameters);
-    //    await awaitable;
-    //    return awaitable.GetAwaiter().GetResult();
-    //}
 
     protected virtual Task HandleModelsLoaded() => Task.CompletedTask;
 
