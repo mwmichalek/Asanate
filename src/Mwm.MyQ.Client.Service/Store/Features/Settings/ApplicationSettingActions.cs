@@ -29,29 +29,3 @@ public class SetApplicationSettingFailureAction : FailureAction, IApplicationSet
     public SetApplicationSettingFailureAction(string errorMessage) : base(errorMessage) { }
 
 }
-
-//public class SetApplicationSettingAction<TApplicationSetting> where TApplicationSetting : IApplicationSetting
-//{
-
-//    public SetApplicationSettingAction(TApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;
-
-//    public TApplicationSetting ApplicationSetting { get; }
-
-//}
-
-//public class SetApplicationSettingSuccessAction<TApplicationSetting> where TApplicationSetting : IApplicationSetting
-//{
-
-//    public SetApplicationSettingSuccessAction(TApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;
-
-//    public TApplicationSetting ApplicationSetting { get; }
-
-//}
-
-//public class SetApplicationSettingFailureAction<TApplicationSetting> : FailureAction where TApplicationSetting : IApplicationSetting
-//{
-
-//    public SetApplicationSettingFailureAction(string errorMessage) : base(errorMessage) { }
-
-//}
-

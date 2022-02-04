@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
 
-namespace Mwm.MyQ.Client.Service.Facades {
+namespace Mwm.MyQ.Client.Service.Facades;
     public class ApplicationStateFacade {
 
         private readonly ILogger<ApplicationStateFacade> _logger;
@@ -17,4 +17,3 @@ namespace Mwm.MyQ.Client.Service.Facades {
         }
 
     }
-}

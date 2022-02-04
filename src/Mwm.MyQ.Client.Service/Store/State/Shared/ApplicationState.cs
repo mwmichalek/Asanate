@@ -20,7 +20,10 @@ public class ApplicationState : RootState {
     public ApplicationState() : this(false, null, ApplicationSettingTypes.DefaultSettings, default) {
     }
 
-    public ApplicationState(bool isLoading = false, string? currentErrorMessage = null, IEnumerable<IApplicationSetting>? settings = null, IApplicationSetting? currentSetting = default) :
+    public ApplicationState(bool isLoading = false, 
+                            string? currentErrorMessage = null, 
+                            IEnumerable<IApplicationSetting>? settings = null, 
+                            IApplicationSetting? currentSetting = default) :
         base(isLoading, currentErrorMessage) {
         _lookup = settings?.ToLookup(e => e.GetType());
         Settings = settings;

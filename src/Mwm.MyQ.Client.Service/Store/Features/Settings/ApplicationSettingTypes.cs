@@ -15,7 +15,7 @@ public class ApplicationSettingTypes {
         new IsInFocusOnlyFlag(),
         new IsGroupedByCompanyFlag { CurrentValue = true },
         new IsActionStatusOnlyFlag(),
-        new IsInFocusedTskModelFilter { IsApplied = false }
+        //new IsInFocusedTskModelFilter { IsApplied = false }
     };
 }
 
@@ -26,16 +26,3 @@ public class IsGroupedByCompanyFlag : PrimativeApplicationSetting<bool> { }
 public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> { }
 
 
-public class IsInFocusedTskModelFilter : ModelFilter<TskModel, Tsk> {
-
-    public override string Title => "Tsk == In Focus";
-
-    public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
-        try {
-            return models.Cast<TskModel>().Where(tm => tm.IsInFocus);
-        } catch (Exception) {
-            return models;
-        }
-    }
-       
-}
