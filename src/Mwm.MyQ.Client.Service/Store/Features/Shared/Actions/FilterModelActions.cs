@@ -21,10 +21,16 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
     public class FilterModelSuccessAction<TModel, TEntity> where TModel : EntityModel<TEntity> 
                                                            where TEntity : INamedEntity {
 
-        public FilterModelSuccessAction(ModelFilter<TModel, TEntity> modelFilter) =>
-            (ModelFilter) = (modelFilter);
+        public FilterModelSuccessAction(ModelFilter<TModel, TEntity> currentModelFilter,
+                                        IEnumerable<ModelFilter<TModel, TEntity>> modelFilters,
+                                        IEnumerable<TModel> filteredModels) =>
+            (CurrentModelFilter, ModelFilters, FilteredModels) = (currentModelFilter, modelFilters, filteredModels);
 
-        public ModelFilter<TModel, TEntity> ModelFilter { get; }
+        public ModelFilter<TModel, TEntity> CurrentModelFilter { get; }
+
+        public IEnumerable<ModelFilter<TModel, TEntity>> ModelFilters { get; }
+
+        public IEnumerable<TModel> FilteredModels { get; }
 
     }
 

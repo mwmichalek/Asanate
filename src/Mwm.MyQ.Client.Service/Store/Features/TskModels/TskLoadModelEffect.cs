@@ -77,11 +77,4 @@ public class TskLoadModelEffect : LoadModelEffect<TskModel, Tsk> {
         };
     }
 
-    //public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
-    //    var filteredModels = models;
-    //    //foreach (IModelFilter<TskModel, Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<TskModel,Tsk> mf && mf.IsApplied))
-    //    //    filteredModels = filter.Filter(filteredModels);
-    //    return filteredModels;
-    //}
-
 }

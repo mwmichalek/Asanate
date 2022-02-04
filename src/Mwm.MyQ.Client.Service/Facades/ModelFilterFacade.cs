@@ -11,12 +11,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Facades;
-public class ModelStateFacade {
+public class ModelFilterFacade {
 
-    private readonly ILogger<ModelStateFacade> _logger;
+    private readonly ILogger<ModelFilterFacade> _logger;
     private readonly IDispatcher _dispatcher;
 
-    public ModelStateFacade(ILogger<ModelStateFacade> logger, IDispatcher dispatcher) =>
+    public ModelFilterFacade(ILogger<ModelFilterFacade> logger, IDispatcher dispatcher) =>
         (_logger, _dispatcher) = (logger, dispatcher);
 
     public void Set<TModel, TEntity>(ModelFilter<TModel, TEntity> modelFilter) where TModel : EntityModel<TEntity>

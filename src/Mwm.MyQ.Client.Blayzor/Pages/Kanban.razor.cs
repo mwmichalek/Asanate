@@ -19,12 +19,16 @@ using Syncfusion.Blazor.Popups;
 using Mwm.MyQ.Client.Blayzor.Components;
 using Mwm.MyQ.Client.Blayzor.Helpers;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
+using Mwm.MyQ.Client.Service.Store.Features.ModelFilters;
 
 namespace Mwm.MyQ.Client.Blayzor.Pages {
     public partial class Kanban : EventHandlerComponent {
 
         [Inject]
         public ApplicationStateFacade ApplicationStateFacade { get; set; }
+
+        [Inject]
+        public ModelFilterFacade ModelFilterFacade { get; set; }
 
         public KanbanBoard refKanbanBoard;
 
@@ -60,7 +64,8 @@ namespace Mwm.MyQ.Client.Blayzor.Pages {
                     CurrentValue = value
                 });
 
-                //TODO: (MWM) Change to new filter here
+                ModelFilterFacade.Set(new IsInFocusedTskModelFilter { IsApplied = value });
+
                 _isInFocusOnly = value;
             }
         }

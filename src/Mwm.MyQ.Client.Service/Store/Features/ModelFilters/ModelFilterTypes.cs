@@ -28,7 +28,7 @@ public class IsInFocusedTskModelFilter : ModelFilter<TskModel, Tsk> {
 
     public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
         try {
-            return models.Cast<TskModel>().Where(tm => tm.IsInFocus);
+            return models.Where(tm => tm.IsInFocus);
         } catch (Exception) {
             return models;
         }
