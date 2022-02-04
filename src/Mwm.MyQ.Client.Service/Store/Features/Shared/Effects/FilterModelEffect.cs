@@ -35,13 +35,22 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
                 var models = _modelState.Value.Models;
 
                 // At this point the filters are the existing ones, need to sub in the new one.
+                
+
+
+
 
                 //TODO:(MWM) Look up old filter and replace it with this one.
 
                 //TODO:(MWM) Reduce ModelState 
 
-                var modelFilters = _modelState.Value.ModelFilters;
+                var modelFilters = _modelState.Value.ModelFilters.ToList();
+                var newFilter = action.ModelFilter;
+                var oldFilter = modelFilters.SingleOrDefault(mf => mf.GetType() == newFilter.GetType());
 
+                if (oldFilter != null)
+                    modelFilters.Remove(oldFilter);
+                modelFilters.Add(oldFilter);
 
                 var filteredModels = Filter(models);
 

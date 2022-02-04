@@ -14,13 +14,26 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
         //LoadModelSuccessAction<TModelEntity>
         [ReducerMethod]
         public static ModelState<TskModel, Tsk> ReduceLoadModelSuccessAction(ModelState<TskModel, Tsk> state, LoadModelSuccessAction<TskModel, Tsk> action) =>
-            new ModelState<TskModel, Tsk>(false, null, action.Models, action.FilteredModels, null);
+            new ModelState<TskModel, Tsk>(false, null, action.Models, action.FilteredModels, state.ModelFilters);
+
+
+        [ReducerMethod]
+        public static ModelState<TskModel, Tsk> ReduceFilterModelSuccessAction(ModelState<TskModel, Tsk> state, FilterModelSuccessAction<TskModel, Tsk> action) =>
+            new ModelState<TskModel, Tsk>(false, null, state.Models, action.FilteredModels, state.ModelFilters);
+
+
+
 
         //[ReducerMethod]
         //public static ModelState<Tsk> ReduceLoadTsksFailureAction(ModelState<Tsk> state, LoadEntityFailureAction<Tsk> action) =>
         //    new ModelState<Tsk>(false, action.ErrorMessage, null, state.CurrentModel);
 
-
+        //public ModelState(bool isLoading = false,
+        //              string? currentErrorMessage = null,
+        //              IEnumerable<TModel>? models = null,
+        //              IEnumerable<TModel>? filteredModels = null,
+        //              IEnumerable<ModelFilter<TModel, TEntity>> modelFilters = null,
+        //              TModel? currentModel = default) :
 
     }
 }
