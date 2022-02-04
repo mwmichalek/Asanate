@@ -8,25 +8,23 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Actions {
 
-    public class FilterModelAction<TModelFilter, TModel, TEntity> where TModelFilter : ModelFilter<TModel, TEntity>
-                                                                  where TModel : EntityModel<TEntity>
-                                                                  where TEntity : INamedEntity {
+    public class FilterModelAction<TModel, TEntity> where TModel : EntityModel<TEntity>
+                                                    where TEntity : INamedEntity {
 
-        public FilterModelAction(TModelFilter modelFilter) =>
+        public FilterModelAction(ModelFilter<TModel, TEntity> modelFilter) =>
             (ModelFilter) = (modelFilter);
 
-        public TModelFilter ModelFilter { get; }
+        public ModelFilter<TModel, TEntity> ModelFilter { get; }
 
     }
 
-    public class FilterModelSuccessAction<TModelFilter, TModel, TEntity> where TModelFilter : ModelFilter<TModel, TEntity> 
-                                                                         where TModel : EntityModel<TEntity> 
-                                                                         where TEntity : INamedEntity {
+    public class FilterModelSuccessAction<TModel, TEntity> where TModel : EntityModel<TEntity> 
+                                                           where TEntity : INamedEntity {
 
-        public FilterModelSuccessAction(TModelFilter modelFilter) =>
+        public FilterModelSuccessAction(ModelFilter<TModel, TEntity> modelFilter) =>
             (ModelFilter) = (modelFilter);
 
-        public TModelFilter ModelFilter { get; }
+        public ModelFilter<TModel, TEntity> ModelFilter { get; }
 
     }
 

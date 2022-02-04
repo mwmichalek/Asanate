@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mwm.MyQ.Client.Service.Facades {
+namespace Mwm.MyQ.Client.Service.Facades;
 public class ModelStateFacade {
 
     private readonly ILogger<ModelStateFacade> _logger;
@@ -22,7 +22,7 @@ public class ModelStateFacade {
     public void Set<TModel, TEntity>(ModelFilter<TModel, TEntity> modelFilter) where TModel : EntityModel<TEntity>
                                                                                where TEntity : INamedEntity {
         _logger.LogInformation($"Issuing action to set { modelFilter.GetType().Name} ...");
-        _dispatcher.Dispatch(new FilterModelAction(modelFilter));
+        _dispatcher.Dispatch(new FilterModelAction<TModel, TEntity>(modelFilter));
     }
 
 }

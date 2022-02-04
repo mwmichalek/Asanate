@@ -23,11 +23,11 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
         protected readonly ILogger<LoadModelEffect<TModel, TEntity>> _logger;
 
-        protected IState<ApplicationState> _applicationState { get; set; }
+        protected IState<ModelState<TModel, TEntity>> _modelState { get; set; }
 
         public LoadModelEffect(ILogger<LoadModelEffect<TModel, TEntity>> logger,
-                               IState<ApplicationState> applicationState) =>
-                                (_logger, _applicationState) = (logger, applicationState);
+                               IState<ModelState<TModel, TEntity>> modelState) =>
+                                (_logger, _modelState) = (logger, modelState);
 
         public override Task HandleAsync(LoadModelAction<TModel, TEntity> action, IDispatcher dispatcher) {
             var entityName = typeof(TEntity).Name;
@@ -49,7 +49,12 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
         public abstract TModel CreateModel(TEntity entity);
 
-        public abstract IEnumerable<TModel> Filter(IEnumerable<TModel> models);
+        public IEnumerable<TModel> Filter(IEnumerable<TModel> models) {
+            var filteredModels = models;
+            foreach (var filter in _modelState.Value.ModelFilters.Where(mf => mf.IsApplied))
+                filteredModels = filter.Filter(filteredModels);
+            return filteredModels;
+        }
     }
 
 }

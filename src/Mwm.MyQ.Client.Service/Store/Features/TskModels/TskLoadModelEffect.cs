@@ -31,7 +31,7 @@ public class TskLoadModelEffect : LoadModelEffect<TskModel, Tsk> {
                               IState<EntityState<Initiative>> initiativesState,
                               IState<EntityState<Project>> projectsState,
                               IState<EntityState<Company>> companiesState,
-                              IState<ApplicationState> applicationState) : base(logger, applicationState) {
+                              IState<ModelState<TskModel, Tsk>> modelState) : base(logger, modelState) {
         _tsksState = tsksState;
         _initiativesState = initiativesState;
         _projectsState = projectsState;
@@ -77,11 +77,11 @@ public class TskLoadModelEffect : LoadModelEffect<TskModel, Tsk> {
         };
     }
 
-    public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
-        var filteredModels = models;
-        //foreach (IModelFilter<TskModel, Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<TskModel,Tsk> mf && mf.IsApplied))
-        //    filteredModels = filter.Filter(filteredModels);
-        return filteredModels;
-    }
+    //public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
+    //    var filteredModels = models;
+    //    //foreach (IModelFilter<TskModel, Tsk> filter in _applicationState.Value.Settings.Where(s => s is IModelFilter<TskModel,Tsk> mf && mf.IsApplied))
+    //    //    filteredModels = filter.Filter(filteredModels);
+    //    return filteredModels;
+    //}
 
 }
