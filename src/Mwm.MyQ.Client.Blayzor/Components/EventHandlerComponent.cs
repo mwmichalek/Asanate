@@ -15,7 +15,7 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public abstract class EventHandlerComponent : FluxorComponent, IApplicationSettingConsumer {
+public abstract class GetRidOfMeEventHandlerComponent : FluxorComponent, IApplicationSettingConsumer {
 
     [Inject]
     public IState<EntityState<Tsk>> TsksState { get; set; }
