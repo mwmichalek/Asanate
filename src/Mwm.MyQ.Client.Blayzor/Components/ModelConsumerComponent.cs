@@ -42,21 +42,23 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
     protected override async Task OnInitializedAsync() {
         ModelsState.StateChanged += async (s, e) => await HandleModelsLoaded();
         ApplicationState.StateChanged += async (s, e) => await ApplyTo(e.CurrentSetting);
-        //ActionSubscriber.SubscribeToAction<IApplicationSetting>(this, (setting) => { });
-        await base.OnInitializedAsync();
 
         foreach (var applicationSetting in ApplicationState.Value.Settings) 
             await ApplyTo(applicationSetting);
+
+        await base.OnInitializedAsync();
     }
 
     public Task ApplyTo(IApplicationSetting applicationSetting) {
-        var consumerType = typeof(IApplicationSettingConsumer<>).MakeGenericType(applicationSetting.GetType());
-        var implementsConsumerType = consumerType.IsAssignableFrom(this.GetType());
-        if (implementsConsumerType) {
-            var consumerConcreteType = this.GetType();
-            var consumerMethod = consumerConcreteType.GetMethod("ApplySetting", new[] { applicationSetting.GetType() });
-            var result = consumerMethod.Invoke(this, new[] { applicationSetting });
-        }
+        if (applicationSetting != null) { 
+            var consumerType = typeof(IApplicationSettingConsumer<>).MakeGenericType(applicationSetting.GetType());
+            var implementsConsumerType = consumerType.IsAssignableFrom(this.GetType());
+            if (implementsConsumerType) {
+                var consumerConcreteType = this.GetType();
+                var consumerMethod = consumerConcreteType.GetMethod("ApplySetting", new[] { applicationSetting.GetType() });
+                var result = consumerMethod.Invoke(this, new[] { applicationSetting });
+            }
+        } 
         return Task.CompletedTask;
     }
 

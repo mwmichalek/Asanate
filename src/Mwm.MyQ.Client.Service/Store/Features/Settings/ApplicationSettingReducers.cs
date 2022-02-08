@@ -18,66 +18,11 @@ public static class ApplicationSettingReducers {
 
     [ReducerMethod]
     public static ApplicationState ReduceSetApplicationSettingSuccessAction(ApplicationState state, SetApplicationSettingSuccessAction action) {
-        var settings = state.Settings.ToList();
-        var setting = state.FindByType(action.ApplicationSetting.GetType());
-        if (setting != null)
-            settings.Remove(setting);
-        settings.Add(action.ApplicationSetting);
-
-        return new ApplicationState(false, null, settings, action.ApplicationSetting);
+        return new ApplicationState(false, null, action.ApplicationSettings, action.CurrentSetting);
     }
 
     [ReducerMethod]
     public static ApplicationState ReduceSetApplicationSettingFailureAction(ApplicationState state, SetApplicationSettingFailureAction action) =>
         new ApplicationState(false, action.ErrorMessage, state.Settings, state.CurrentSetting);
-
-
-
-
-    //[ReducerMethod]
-    //public static ApplicationState ReduceSetApplicationSettingAction(ApplicationState state, SetApplicationSettingAction<IsGroupedByCompanyFlag> _) =>
-    //       new ApplicationState(true, null, state.Settings, null);
-
-    //[ReducerMethod]
-    //public static ApplicationState ReduceSetApplicationSettingSuccessAction(ApplicationState state, SetApplicationSettingSuccessAction<IsGroupedByCompanyFlag> action) {
-    //    var settings = state.Settings.ToList();
-    //    var setting = state.FindByType(action.ApplicationSetting.GetType());
-    //    if (setting != null)
-    //        settings.Remove(setting);
-    //    settings.Add(action.ApplicationSetting);
-
-    //    return new ApplicationState(false, null, settings, action.ApplicationSetting);
-    //}
-
-    //[ReducerMethod]
-    //public static ApplicationState ReduceSetApplicationSettingFailureAction(ApplicationState state, SetApplicationSettingFailureAction<IsGroupedByCompanyFlag> action) =>
-    //    new ApplicationState(false, action.ErrorMessage, state.Settings, state.CurrentSetting);
-
-
-
-
-
-    //[ReducerMethod]
-    //public static ApplicationState ReduceSetApplicationSettingAction(ApplicationState state, SetApplicationSettingAction<IsActionStatusOnlyFlag> _) =>
-    //       new ApplicationState(true, null, state.Settings, null);
-
-    //[ReducerMethod]
-    //public static ApplicationState ReduceSetApplicationSettingSuccessAction(ApplicationState state, SetApplicationSettingSuccessAction<IsActionStatusOnlyFlag> action) {
-    //    var settings = state.Settings.ToList();
-    //    var setting = state.FindByType(action.ApplicationSetting.GetType());
-    //    if (setting != null)
-    //        settings.Remove(setting);
-    //    settings.Add(action.ApplicationSetting);
-
-    //    return new ApplicationState(false, null, settings, action.ApplicationSetting);
-    //}
-
-    //[ReducerMethod]
-    //public static ApplicationState ReduceSetApplicationSettingFailureAction(ApplicationState state, SetApplicationSettingFailureAction<IsActionStatusOnlyFlag> action) =>
-    //    new ApplicationState(false, action.ErrorMessage, state.Settings, state.CurrentSetting);
-
-
-
-
 
 }

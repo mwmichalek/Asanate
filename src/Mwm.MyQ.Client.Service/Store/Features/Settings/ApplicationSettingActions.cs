@@ -18,9 +18,12 @@ public class SetApplicationSettingAction : IApplicationSetting {
 
 public class SetApplicationSettingSuccessAction : IApplicationSetting {
 
-    public SetApplicationSettingSuccessAction(IApplicationSetting applicationSetting) => ApplicationSetting = applicationSetting;
+    public SetApplicationSettingSuccessAction(IApplicationSetting currentSetting, IEnumerable<IApplicationSetting> applicationSettings) => 
+        (CurrentSetting, ApplicationSettings) = (currentSetting, applicationSettings);
 
-    public IApplicationSetting ApplicationSetting { get; }
+    public IApplicationSetting CurrentSetting { get; }
+
+    public IEnumerable<IApplicationSetting> ApplicationSettings { get;}
 
 }
 
