@@ -34,11 +34,6 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
         [Inject]
         public ModelFilterFacade ModelFilterFacade { get; set; }
 
-        protected Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) {
-            _isGroupedTogether = flag.CurrentValue;
-            return Task.CompletedTask;
-        }
-
         private bool _isGroupedTogether = true;
         public bool IsGroupedTogether {
             get => _isGroupedTogether;
@@ -49,11 +44,6 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
                 });
                 _isGroupedTogether = value;
             }
-        }
-
-        protected Task HandleUpdateAsync(IsInFocusOnlyFlag flag) {
-            _isInFocusOnly = flag.CurrentValue;
-            return Task.CompletedTask;
         }
 
         private bool _isInFocusOnly = false;
@@ -71,11 +61,6 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
             }
         }
 
-        protected Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) {
-            _isActionStatusOnly = flag.CurrentValue;
-            return Task.CompletedTask;
-        }
-
         private bool _isActionStatusOnly = false;
         public bool IsActionStatusOnly {
             get => _isActionStatusOnly;
@@ -90,16 +75,19 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
 
         public Task ApplySetting(IsInFocusOnlyFlag applicationSetting) {
             Logger.LogInformation($"IsInFocusOnlyFlag: {applicationSetting.CurrentValue}");
+            _isInFocusOnly = applicationSetting.CurrentValue;
             return Task.CompletedTask;
         }
 
         public Task ApplySetting(IsGroupedByCompanyFlag applicationSetting) {
             Logger.LogInformation($"IsGroupedByCompanyFlag: {applicationSetting.CurrentValue}");
+            _isGroupedTogether = applicationSetting.CurrentValue;
             return Task.CompletedTask;
         }
 
         public Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
             Logger.LogInformation($"IsActionStatusOnlyFlag: {applicationSetting.CurrentValue}");
+            _isActionStatusOnly = applicationSetting.CurrentValue;
             return Task.CompletedTask;
         }
 
