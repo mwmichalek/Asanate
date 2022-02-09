@@ -2,5 +2,5 @@
 
 namespace Mwm.MyQ.Client.Blayzor.Shared;
 
-public partial class TopMenu : EventHandlerComponent {
+public partial class TopMenu {
 }

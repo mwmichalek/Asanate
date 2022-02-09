@@ -1,26 +1,17 @@
-﻿using Mwm.MyQ.Client.Service.Facades;
-using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
-using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
-using Mwm.MyQ.Client.Service.Store.State.Shared;
+﻿using Microsoft.Extensions.Logging;
 using Mwm.MyQ.Application.Tsks.Commands;
-using Mwm.MyQ.Data;
+using Mwm.MyQ.Client.Blayzor.Helpers;
+using Mwm.MyQ.Client.Service.Components;
+using Mwm.MyQ.Client.Service.Facades;
+using Mwm.MyQ.Client.Service.Models;
+using Mwm.MyQ.Client.Service.Store.Features.Settings;
+using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.MyQ.Domain;
 using Syncfusion.Blazor.Kanban;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Syncfusion.Blazor.Popups;
-using Mwm.MyQ.Client.Blayzor.Components;
-using Mwm.MyQ.Client.Blayzor.Helpers;
-using Fluxor.Blazor.Web.Components;
-using Mwm.MyQ.Client.Service.Models;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
-using Fluxor;
-using System.Collections;
-using Mwm.MyQ.Client.Service.Store.Features.Settings;
-using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 

@@ -1,4 +1,4 @@
-@inherits Mwm.MyQ.Client.Blayzor.Components.EventHandlerComponent
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 @using Mwm.MyQ.Client.Blayzor.Helpers
 @using Mwm.MyQ.Client.Service.Models
@@ -6,35 +6,19 @@
 @using Mwm.MyQ.Client.Blayzor.Components
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Cards
+
 @page "/"
 @page "/kanban"
 
 <div class="row pb-3">
     <div class="col-lg-12">
-        <SfCard>
-            <CardContent>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="is-groupded-by-company" class="text-light">Group By Company</label>
-                        <SfSwitch id="is-groupded-by-company" @bind-Checked="IsGroupedTogether"></SfSwitch>
-                    </div>
-                    <div class="col-lg-3">
-                        <label for="is-infocus-only" class="text-light">Is InFocus Only</label>
-                        <SfSwitch id="is-infocus-only" @bind-Checked="IsInFocusOnly"></SfSwitch>
-                    </div>
-                    <div class="col-lg-3">
-                        <label for="is-actionstatus-only" class="text-light">Is Action Status Only</label>
-                        <SfSwitch id="is-actionstatus-only" @bind-Checked="IsActionStatusOnly"></SfSwitch>
-                    </div>
-                </div>
-            </CardContent>
-        </SfCard>
+        <KanbanFilters />
     </div>
 </div>
 <div class="row">
     <div class="col-lg-12">
         <div class="d-flex flex-row justify-content-center">
-            <KanbanBoard @ref="refKanbanBoard" />
+            <KanbanBoard />
         </div>
     </div>
 </div>

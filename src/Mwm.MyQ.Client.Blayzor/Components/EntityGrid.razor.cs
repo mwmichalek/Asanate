@@ -9,29 +9,27 @@ using Mwm.MyQ.Domain;
 using Syncfusion.Blazor.Kanban;
 using System.Threading.Tasks;
 using Mwm.MyQ.Client.Service.Components;
+using System.Collections.Generic;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityGrid : TskModelConsumerComponent {
-
-    [Inject]
-    ILogger<EntityGrid> Logger { get; set; }
+public partial class EntityGrid : ModelConsumerComponent<TskModel, Tsk> {
 
     private TskPopup refTskPopup;
 
+    private List<TskModel> filteredTskModels = new List<TskModel>();
+
+    public IEnumerable<TskModel> FilteredTskModels {
+        get => filteredTskModels;
+        set { }
+    }
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
-
-        //ApplicationState.StateChanged += (s, e) => UpdateSettings(e);
     }
 
     public void ShowTskEditor(TskModel tskModel) {
         refTskPopup.Update(tskModel);
     }
-
-    //private void UpdateSettings(ApplicationState applicationState) {
-    //    Logger.LogInformation($"Updated setting: {applicationState.CurrentSetting.GetType().Name}");
-    //}
 
 }

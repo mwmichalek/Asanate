@@ -1,9 +1,10 @@
-﻿@inherits Mwm.MyQ.Client.Blayzor.Components.TskModelConsumerComponent
-
+﻿@inherits Mwm.MyQ.Client.Blayzor.Components.ModelConsumerComponent<TskModel, Tsk>
 @using Mwm.MyQ.Client.Service.Models
+@using Mwm.MyQ.Client.Service.Store.State.Shared
+@using Mwm.MyQ.Domain;
 @using Syncfusion.Blazor.Grids
 
-<SfGrid DataSource="@TskModels" 
+<SfGrid DataSource="@FilteredTskModels" 
         AllowSorting="true"
         EnableAdaptiveUI="true">
     <GridColumns>
