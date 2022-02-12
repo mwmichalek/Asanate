@@ -57,9 +57,10 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
         
     }
 
-    protected override Task OnAfterRenderAsync(bool firstRender) {
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
         Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
-        return base.OnAfterRenderAsync(firstRender);
+        await base.OnAfterRenderAsync(firstRender);
+        await InitializeBoardAsync();
     }
 
     private async Task InitializeBoardAsync() {
