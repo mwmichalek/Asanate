@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Storage;
+using Mwm.MyQ.Client.Service.Store.Features.ModelFilters;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Actions;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
@@ -40,9 +41,9 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
 
                 if (oldFilter != null)
                     modelFilters.Remove(oldFilter);
-                modelFilters.Add(oldFilter);
+                modelFilters.Add(newFilter);
 
-                var filteredModels = Filter(models);
+                var filteredModels = Filter(models, modelFilters);
 
                 _logger.LogInformation($">>> Loaded models {modelName}(s), triggered by {entityName}, successfully!");
                 dispatcher.Dispatch(new FilterModelSuccessAction<TModel, TEntity>(action.ModelFilter, modelFilters, filteredModels));
@@ -53,9 +54,9 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Shared.Effects {
             return Task.CompletedTask;
         }
 
-        public IEnumerable<TModel> Filter(IEnumerable<TModel> models) {
-            var filteredModels = models;
-            foreach (var filter in _modelState.Value.ModelFilters.Where(mf => mf.IsApplied))
+        public IEnumerable<TModel> Filter(IEnumerable<TModel> models, List<ModelFilter<TModel, TEntity>> modelFilters) {
+            var filteredModels = models;     
+            foreach (var filter in modelFilters.Where(mf => mf.IsApplied))
                 filteredModels = filter.Filter(filteredModels);
             return filteredModels;
         }

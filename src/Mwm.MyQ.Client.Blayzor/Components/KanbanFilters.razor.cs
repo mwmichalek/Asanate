@@ -50,12 +50,12 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
         public bool IsInFocusOnly { 
             get => _isInFocusOnly;
             set {
+                ModelFilterFacade.Set(new IsInFocusedTskModelFilter { IsApplied = value });
+
                 ApplicationStateFacade.Set(new IsInFocusOnlyFlag {
                     PreviousValue = _isInFocusOnly,
                     CurrentValue = value
                 });
-
-                ModelFilterFacade.Set(new IsInFocusedTskModelFilter { IsApplied = value });
 
                 _isInFocusOnly = value;
             }

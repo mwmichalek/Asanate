@@ -112,8 +112,6 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     public async Task DragStopHandlerAsync(DragEventArgs<TskModel> args) {
         foreach (var updatedTskModel in args.Data) {
             try {
-
-
                 var originalTskModel = ModelsState.FindById(updatedTskModel.Id);
 
                 if (updatedTskModel.Status != originalTskModel.Status) {
@@ -135,9 +133,24 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
         refTskPopup.Update(args.Data);
     }
 
-    //protected override async Task HandleUpdateAsync(IsGroupedByCompanyFlag flag) => await SetIsGroupedByCompany(flag.CurrentValue);
+    public bool IsInFocusOnly { get; set; } = false;
+
+    public async Task ApplySetting(IsInFocusOnlyFlag applicationSetting) {
+        await SetIsInFocusOnly(applicationSetting.CurrentValue);
+    }
+
+    public Task SetIsInFocusOnly(bool isInFocusOnly) {
+        IsInFocusOnly = isInFocusOnly;
+        //FilterTskModels();
+        StateHasChanged(); //Because a collection changed.
+        return Task.CompletedTask;
+    }
 
     public bool IsGroupedByCompany { get; set; } = true;
+
+    public async Task ApplySetting(IsGroupedByCompanyFlag applicationSetting) {
+        await SetIsGroupedByCompany(applicationSetting.CurrentValue);
+    }
 
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
@@ -145,34 +158,13 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
         await RefreshBoardAsync();
     }
 
-    //protected override Task HandleUpdateAsync(IsInFocusOnlyTskFilter filter) => SetIsInFocusOnly(filter.CurrentValue);
-
-    public bool IsInFocusOnly { get; set; } = false;
-
-    public Task SetIsInFocusOnly(bool isInFocusOnly) {
-        IsInFocusOnly = isInFocusOnly;
-        //FilterTskModels();
-        //StateHasChanged(); //Because a collection changed.
-        return Task.CompletedTask;
+    public async Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
+        await SetIsActionStatusOnly(applicationSetting.CurrentValue);
     }
-
-    //protected override async Task HandleUpdateAsync(IsActionStatusOnlyFlag flag) => await SetIsActionStatusOnly(flag.CurrentValue);
 
     public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
         UpdateColumns();
         await RefreshBoardAsync();
-    }
-
-    public async Task ApplySetting(IsInFocusOnlyFlag applicationSetting) {
-        await SetIsInFocusOnly(applicationSetting.CurrentValue);
-    }
-
-    public async Task ApplySetting(IsGroupedByCompanyFlag applicationSetting) {
-        await SetIsGroupedByCompany(applicationSetting.CurrentValue);
-    }
-
-    public async Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
-        await SetIsActionStatusOnly(applicationSetting.CurrentValue);
     }
 }
