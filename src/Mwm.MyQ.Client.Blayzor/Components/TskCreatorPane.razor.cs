@@ -20,10 +20,10 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityCreatorPane : FluxorComponent {
+public partial class TskCreatorPane : FluxorComponent {
 
     [Inject]
-    ILogger<EntityCreatorPane> Logger { get; set; }
+    ILogger<TskCreatorPane> Logger { get; set; }
 
     [Inject]
     public IState<EntityState<Tsk>> TsksState { get; set; }

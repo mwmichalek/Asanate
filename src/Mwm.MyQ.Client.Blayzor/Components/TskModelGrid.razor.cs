@@ -10,10 +10,11 @@ using Syncfusion.Blazor.Kanban;
 using System.Threading.Tasks;
 using Mwm.MyQ.Client.Service.Components;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mwm.MyQ.Client.Blayzor.Components;
 
-public partial class EntityGrid : ModelConsumerComponent<TskModel, Tsk> {
+public partial class TskModelGrid : ModelConsumerComponent<TskModel, Tsk> {
 
     private TskPopup refTskPopup;
 
@@ -26,6 +27,11 @@ public partial class EntityGrid : ModelConsumerComponent<TskModel, Tsk> {
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
+    }
+
+    protected override async Task HandleModelsLoaded() {
+        Logger.LogInformation($">>> HandleModelsLoaded triggered.");
+        filteredTskModels = ModelsState.Value.FilteredModels.ToList();
     }
 
     public void ShowTskEditor(TskModel tskModel) {

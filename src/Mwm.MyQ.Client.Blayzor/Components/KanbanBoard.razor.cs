@@ -65,7 +65,8 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     private async Task InitializeBoardAsync() {
         if (HasValues()) {
             Logger.LogDebug($">>> Initialization Started, models[{filteredTskModels.Count}]");
-            filteredTskModels = ModelsState.Value.FilteredModels.ToList();
+
+            filteredTskModels = ModelsState.Value.FilteredModels.OrderByDescending(fm => fm.IsInFocus).ThenBy(fm => fm.Name).ToList();
             UpdateSwimLanes();
             UpdateColumns();
             await RefreshBoardAsync();

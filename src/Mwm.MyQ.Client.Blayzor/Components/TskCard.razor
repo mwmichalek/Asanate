@@ -6,11 +6,11 @@
                     <div class="col-8 p-0">
                         @if (IncludeCompanyName) {
                             <small style="color: #ccc;" class="card-subtitle">
-                                @TskModel.CompanyName.ToUpper() - @TskModel.ProjectAbbreviation.ToUpper() > @TskModel.InitiativeName
+                                @TskModel.CompanyName?.ToUpper() - @TskModel.ProjectAbbreviation?.ToUpper() > @TskModel.InitiativeName
                             </small>
                         } else {
                             <small style="color: #ccc;" class="card-subtitle">
-                                @TskModel.ProjectAbbreviation.ToUpper() > @TskModel.InitiativeName
+                                @TskModel.ProjectAbbreviation?.ToUpper() > @TskModel.InitiativeName
                             </small>
                         }
                     </div>
@@ -50,14 +50,16 @@
                             <i class="far fa-lightbulb" @onclick="@ToggleInFocus"></i>
                         </div>
                     }
-                    @if (TskModel.IsArchived) {
-                        <div class="col-1 p-0 m-0" style="color: yellow; cursor: pointer;">
-                            <i class="fas fa-check-square" @onclick="@ToggleIsArchived"></i>
-                        </div>
-                    } else {
-                        <div class="col-1 p-0 m-0" style="color: grey; cursor: pointer;">
-                            <i class="far fa-check-square" @onclick="@ToggleIsArchived"></i>
-                        </div>
+                    @if (TskModel.Status == Domain.Status.Done) {
+                        @if (TskModel.IsArchived) {
+                            <div class="col-1 p-0 m-0" style="color: yellow; cursor: pointer;">
+                                <i class="fas fa-check-square" @onclick="@ToggleIsArchived"></i>
+                            </div>
+                        } else {
+                            <div class="col-1 p-0 m-0" style="color: grey; cursor: pointer;">
+                                <i class="far fa-check-square" @onclick="@ToggleIsArchived"></i>
+                            </div>
+                        }
                     }
                 </div>
             </div>
