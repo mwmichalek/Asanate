@@ -19,7 +19,7 @@ namespace Mwm.MyQ.Client.Service.Store.Features.Tsks {
 
         [ReducerMethod]
         public static ModelState<TskModel, Tsk> ReduceFilterModelSuccessAction(ModelState<TskModel, Tsk> state, FilterModelSuccessAction<TskModel, Tsk> action) =>
-            new ModelState<TskModel, Tsk>(false, null, state.Models, action.FilteredModels, state.ModelFilters);
+            new ModelState<TskModel, Tsk>(false, null, state.Models, action.FilteredModels, action.ModelFilters);
 
     }
 }

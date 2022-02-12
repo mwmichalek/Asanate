@@ -54,7 +54,6 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     protected override async Task HandleModelsLoaded() {
         Logger.LogInformation($">>> HandleModelsLoaded triggered.");
         await InitializeBoardAsync();
-        
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
