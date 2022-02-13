@@ -103,8 +103,6 @@ public partial class TskCreatorPane : FluxorComponent {
         InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
         ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
         UpdateProjectDropDown();
-
-        
     }
 
     private void UpdateProjectDropDown() {

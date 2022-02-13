@@ -74,19 +74,16 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
         }
 
         public Task ApplySetting(IsInFocusOnlyFlag applicationSetting) {
-            Logger.LogInformation($"IsInFocusOnlyFlag: {applicationSetting.CurrentValue}");
             _isInFocusOnly = applicationSetting.CurrentValue;
             return Task.CompletedTask;
         }
 
         public Task ApplySetting(IsGroupedByCompanyFlag applicationSetting) {
-            Logger.LogInformation($"IsGroupedByCompanyFlag: {applicationSetting.CurrentValue}");
             _isGroupedTogether = applicationSetting.CurrentValue;
             return Task.CompletedTask;
         }
 
         public Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
-            Logger.LogInformation($"IsActionStatusOnlyFlag: {applicationSetting.CurrentValue}");
             _isActionStatusOnly = applicationSetting.CurrentValue;
             return Task.CompletedTask;
         }
