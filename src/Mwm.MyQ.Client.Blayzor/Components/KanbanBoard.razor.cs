@@ -46,31 +46,31 @@ public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     }
 
     protected override async Task OnInitializedAsync() {
-        Logger.LogInformation($">>> OnInitializedAsync triggered.");
+        //Logger.LogInformation($">>> OnInitializedAsync triggered.");
         await base.OnInitializedAsync();
         await InitializeBoardAsync();
     }
 
     protected override async Task HandleModelsLoaded() {
-        Logger.LogInformation($">>> HandleModelsLoaded triggered.");
+        //Logger.LogInformation($">>> HandleModelsLoaded triggered.");
         await InitializeBoardAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
-        Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
+        //Logger.LogInformation($"OnAfterRenderAsync : {firstRender}");
         await base.OnAfterRenderAsync(firstRender);
         await InitializeBoardAsync();
     }
 
     private async Task InitializeBoardAsync() {
         if (HasValues()) {
-            Logger.LogDebug($">>> Initialization Started, models[{filteredTskModels.Count}]");
+            Logger.LogDebug($">>> InitializeBoardAsync Started, models[{filteredTskModels.Count}]");
 
             filteredTskModels = ModelsState.Value.FilteredModels.OrderByDescending(fm => fm.IsInFocus).ThenBy(fm => fm.Name).ToList();
             UpdateSwimLanes();
             UpdateColumns();
             await RefreshBoardAsync();
-            Logger.LogDebug($">>> Initialization Completed, models[{filteredTskModels.Count}]");
+            Logger.LogDebug($">>> InitializeBoardAsync Completed, models[{filteredTskModels.Count}]");
         } else
             Logger.LogDebug($"Not ready to be initialized.");
     }

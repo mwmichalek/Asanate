@@ -4,9 +4,16 @@
 @using Mwm.MyQ.Domain;
 @using Syncfusion.Blazor.Grids
 
-<SfGrid DataSource="@FilteredTskModels" 
+<h2>@FilteredTskModels.Count()</h2>
+
+<SfGrid
+        @ref="refSfGrid"
+        DataSource="@FilteredTskModels" 
         AllowSorting="true"
-        EnableAdaptiveUI="true">
+        EnableAdaptiveUI="true"
+        EnableAutoRowHeight="true"
+        Height="100%" 
+        Width="90%" >
     <GridColumns>
         <GridColumn Field=@nameof(TskModel.CompanyNameAndProjectName) 
                     HeaderText="Project" 
