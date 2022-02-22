@@ -41,7 +41,7 @@ public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent 
 
     protected override async Task OnInitializedAsync() {
         ModelsState.StateChanged += async (s, e) => await HandleModelsLoaded();
-        //ApplicationState.StateChanged += async (s, e) => await ApplyTo(e.CurrentSetting);
+        ApplicationState.StateChanged += async (s, e) => await ApplyTo(e.CurrentSetting);
 
         foreach (var applicationSetting in ApplicationState.Value.Settings) 
             await ApplyTo(applicationSetting);
