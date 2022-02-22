@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class KanbanBoard : ModelConsumerComponent<TskModel, Tsk>, 
-                                   IApplicationSettingConsumer<IsInFocusOnlyFlag>,
-                                   IApplicationSettingConsumer<IsGroupedByCompanyFlag>,
-                                   IApplicationSettingConsumer<IsActionStatusOnlyFlag> {
+public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>, 
+                                      IApplicationSettingConsumer<IsInFocusOnlyFlag>,
+                                      IApplicationSettingConsumer<IsGroupedByCompanyFlag>,
+                                      IApplicationSettingConsumer<IsActionStatusOnlyFlag> {
 
     private List<TskModel> filteredTskModels = new List<TskModel>();
 

@@ -31,9 +31,8 @@ services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localho
 
 var configuration = services.AddConfigurationWithUserSecrets();
 services.AddLogging();
-services.AddClientServices();
-
 services.AddMudServices();
+services.AddClientServices();
 
 var server = builder.Build();
 var serviceProvider = server.Services;
