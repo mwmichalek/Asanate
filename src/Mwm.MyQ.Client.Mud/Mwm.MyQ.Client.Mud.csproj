@@ -2,27 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="MudBlazor" Version="6.0.6" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mwm.MyQ.Application\Mwm.MyQ.Application.csproj" />
     <ProjectReference Include="..\Mwm.MyQ.Client.Service\Mwm.MyQ.Client.Service.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Common\Mwm.MyQ.Common.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Data\Mwm.MyQ.Data.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Domain\Mwm.MyQ.Domain.csproj" />
+    <ProjectReference Include="..\Mwm.MyQ.Persistance\Mwm.MyQ.Persistance.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Components\" />
   </ItemGroup>
 
 </Project>

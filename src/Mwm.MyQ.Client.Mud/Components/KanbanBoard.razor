@@ -1,0 +1,24 @@
+﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
+@using Mwm.MyQ.Client.Mud.Helpers
+@using Mwm.MyQ.Client.Service.Models
+@using Mwm.MyQ.Client.Service.Store.State.Shared
+@using Mwm.MyQ.Domain;
+@using Mwm.MyQ.Client.Mud.Components
+
+Get your Kanban On!
+
+@if (IsLoading()) {
+    <div class="spinner-border" role="status">
+        <span class="sr-only alert-light">Loading...</span>
+    </div>
+}
+@if (HasErrors()) {
+    <span class="text-light">Whoops! Looks like an issue occurred loading TskModels</span>
+} else if (HasValues()) {
+    <h2>There should be stuff here!</h2>
+
+    @foreach (var tskModel in FilteredTskModels) {
+        <span>@tskModel.Name</span><br/>
+    }
+}
+
