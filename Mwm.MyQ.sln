@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Application.Asana",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Client.Blayzor", "src\Mwm.MyQ.Client.Blayzor\Mwm.MyQ.Client.Blayzor.csproj", "{736AF595-F216-49E9-B4FC-44DFE8BCBC03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mwm.MyQ.Client.Mud", "src\Mwm.MyQ.Client.Mud\Mwm.MyQ.Client.Mud.csproj", "{BC8B1FE0-A9F6-428F-AA95-593050545B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mwm.MyQ.Client.Mud", "src\Mwm.MyQ.Client.Mud\Mwm.MyQ.Client.Mud.csproj", "{BC8B1FE0-A9F6-428F-AA95-593050545B91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

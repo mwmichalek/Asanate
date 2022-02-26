@@ -17,25 +17,29 @@
     <MudDropContainer T="TskModel" 
                       Items="FilteredTskModels" 
                       ItemDropped="DragStopHandlerAsync"
-                      Class="d-flex flex-wrap flex-grow-1"
+                      Class="m-1 mt-3"
+                      
                       CanDropClass="mud-border-success" 
                       NoDropClass="mud-border-error"
                       ItemsSelector="@((tm,dropzone) => IsGroupedByCompany ? dropzone == $"{tm.CompanyName}_{tm.Status.ToStr()}" : 
                                                                              dropzone == tm.Status.ToStr())">
+        <!--Style="background-color: red;" d-flex flex-wrap flex-grow-1-->
         <ChildContent>
             @if (IsGroupedByCompany) {
                 foreach (var companyName in CompanyNames) {
-                    <MudGrid Spacing="2" Justify="Justify.Center">
+                    <MudGrid Class="d-flex flex-grow-1" Justify="Justify.SpaceEvenly">
+                        <MudText Typo="Typo.h6" Class="mb-4">@companyName</MudText>
                         @foreach (var status in Statuses) {
                             var dropzone = $"{companyName}_{status.ToStr()}";
-                            <MudItem>
                                 <MudDropZone T="TskModel" 
+                                             Style="width:300px;"
                                              Identifier="@dropzone" 
                                              CanDrop="@((tm) => CanChangeToStatus(tm, dropzone))" 
-                                             Class="rounded-lg border-2 border-solid mud-border-lines-default pa-6 ma-8 flex-grow-1">
-                                    <MudText Typo="Typo.h6" Class="mb-4">@dropzone</MudText>
+                                             Class="rounded-lg border-2 border-solid mud-border-lines-default p-1 m-1 mt-4 flex-grow-1">
+                                    <MudText Typo="Typo.h6" Class="mb-4">@status.ToStr()</MudText>
                                 </MudDropZone>
-                            </MudItem>
+                                <!--Style="background-color: yellow;"-->
+       
                         }
                     </MudGrid>
                 }
@@ -43,14 +47,14 @@
                 <MudGrid Spacing="2" Justify="Justify.Center">
                     @foreach (var status in Statuses) {
                         var dropzone = status.ToStr();
-                        <MudItem>
+
                         <MudDropZone T="TskModel" 
-                                     Identifier="@dropzone" 
-                                     CanDrop="@((tm) => CanChangeToStatus(tm, dropzone))" 
-                                     Class="rounded-lg border-2 border-solid mud-border-lines-default pa-6 ma-8 flex-grow-1">
+                                        Identifier="@dropzone" 
+                                        CanDrop="@((tm) => CanChangeToStatus(tm, dropzone))" 
+                                        Class="rounded-lg border-2 border-solid mud-border-lines-default pa-6 ma-8 flex-grow-1">
                             <MudText Typo="Typo.h6" Class="mb-4">@dropzone</MudText>
                         </MudDropZone>
-                        </MudItem>
+       
                     }
                 </MudGrid>
             }
@@ -63,8 +67,10 @@
                 </MudPaper>*@
              
         </ChildContent>
-        <ItemRenderer>
-            <MudListItem Text="@context.Name"/>
+        <ItemRenderer>  
+            <!--MudItem Class="m-1 p-1"-->
+                <TskCard TskModel="@context" />
+            <!--MudItem-->
         </ItemRenderer>
     </MudDropContainer>
 

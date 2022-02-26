@@ -8,6 +8,7 @@
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         MyQ
+        <MudSpacer />
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Elevation="2">
@@ -17,7 +18,7 @@
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer ><!--MaxWidth="MaxWidth.Medium"-->
+        <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
             @Body
         </MudContainer>
     </MudMainContent>
