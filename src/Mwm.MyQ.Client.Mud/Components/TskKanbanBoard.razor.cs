@@ -127,25 +127,6 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
             return tskModel.Status != statusStr.ToStatus();
     }
 
-    //public async Task DragStopHandlerAsync(DragEventArgs<TskModel> args) {
-    //    foreach (var updatedTskModel in args.Data) {
-    //        try {
-    //            var originalTskModel = ModelsState.FindById(updatedTskModel.Id);
-
-    //            if (updatedTskModel.Status != originalTskModel.Status) {
-    //                Logger.LogInformation($"Moved: {updatedTskModel.Name}, FromStatus: {originalTskModel.Status} ToStatus: {updatedTskModel.Status}");
-    //                await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
-    //                    Id = updatedTskModel.Id,
-    //                    Name = originalTskModel.Name,
-    //                    Status = updatedTskModel.Status
-    //                });
-    //            }
-    //        } catch (Exception ex) {
-    //            Logger.LogError($"Unable to update: {updatedTskModel.Name}, {ex}");
-    //        }
-    //    }
-    //}
-
     //public void ShowTskEditor(DialogOpenEventArgs<TskModel> args) {
     //    args.Cancel = true;
     //    refTskPopup.Update(args.Data);
