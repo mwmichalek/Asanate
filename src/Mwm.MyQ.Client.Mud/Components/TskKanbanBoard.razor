@@ -16,22 +16,42 @@
 
     <MudDropContainer T="TskModel" 
                       Items="FilteredTskModels" 
+                      ItemDropped="DragStopHandlerAsync"
                       Class="d-flex flex-wrap flex-grow-1"
-                      ItemsSelector="@((item,dropzone) => item.Status.ToStr() == dropzone)"  >
-                          <!-- 
-        
-        ItemDropped="ItemUpdated"
-    -->
+                      ItemsSelector="@((tm,dropzone) => IsGroupedByCompany ? dropzone == $"{tm.CompanyName}_{tm.Status.ToStr()}" : 
+                                                                             dropzone == tm.Status.ToStr())">
         <ChildContent>
-            @foreach (var status in Statuses) {
-                var dropzone = status.ToStr();
-                <MudPaper Class="ma-4 flex-grow-1">
-                     <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
-                         <MudListSubheader>Drop Zone @dropzone</MudListSubheader>
-                         <MudDropZone T="TskModel" Identifier="@dropzone" Class="flex-grow-1" />
-                     </MudList>
-                 </MudPaper>
-             }
+            @if (IsGroupedByCompany) {
+                foreach (var companyName in CompanyNames) {
+                    foreach (var status in Statuses) {
+                        var dropzone = $"{companyName}_{status.ToStr()}";
+                        <MudDropZone T="TskModel" 
+                                     Identifier="@dropzone" 
+                                     CanDrop="@((tm) => CanChangeToStatus(tm, dropzone))" 
+                                     Class="rounded-lg border-2 border-solid mud-border-lines-default pa-6 ma-8">
+                            <MudText Typo="Typo.h6" Class="mb-4">@dropzone</MudText>
+                        </MudDropZone>
+                    }
+                }
+            } else {
+                foreach (var status in Statuses) {
+                    var dropzone = status.ToStr();
+                    <MudDropZone T="TskModel" 
+                                 Identifier="@dropzone" 
+                                 CanDrop="@((tm) => CanChangeToStatus(tm, dropzone))" 
+                                 Class="rounded-lg border-2 border-solid mud-border-lines-default pa-6 ma-8">
+                        <MudText Typo="Typo.h6" Class="mb-4">@dropzone</MudText>
+                    </MudDropZone>
+                }
+            }
+  
+            @*<MudPaper Class="ma-4 flex-grow-1">
+                    <MudList Clickable="true" Class="d-flex flex-column mud-height-full">
+                        <MudListSubheader>@statusStr</MudListSubheader>
+                        <MudDropZone T="TskModel" Identifier="@statusStr" Class="flex-grow-1" />
+                    </MudList>
+                </MudPaper>*@
+             
         </ChildContent>
         <ItemRenderer>
             <MudListItem Text="@context.Name"/>
@@ -44,3 +64,14 @@
     
 }
 
+@*<div class="d-flex flex-wrap justify-space-between">
+    <MudDropZone T="DropItem" Identifier="Fridge" CanDrop="@((item) => false)" Class="rounded-lg border-2 border-solid mud-border-lines-default pa-6 ma-8">
+        <MudText Typo="Typo.h6" Class="mb-4">Fridge</MudText>
+    </MudDropZone>
+    <MudDropZone T="DropItem" Identifier="Dinner" CanDrop="@((item) => item.IsPicked == false && item.IsRotten == false)" Class="rounded-lg border-2 border-solid mud-border-lines-default pa-6 ma-8 flex-grow-1">
+        <MudText Typo="Typo.h6" Class="mb-4">Soup</MudText>
+    </MudDropZone>
+    <MudDropZone T="DropItem" Identifier="Trash" CanDrop="@((item) => item.IsPicked == false && item.IsRotten == true)" Class="rounded-lg border-2 border-dashed mud-border-lines-default pa-6 ma-8 flex-grow-1">
+        <MudText Typo="Typo.h6" Class="mb-4">Trash</MudText>
+    </MudDropZone>
+</div>*@

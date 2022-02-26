@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MudBlazor;
 using Mwm.MyQ.Application.Tsks.Commands;
 using Mwm.MyQ.Client.Mud.Helpers;
 using Mwm.MyQ.Client.Service.Components;
@@ -26,12 +27,12 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
         set { } 
     }
 
-    private List<Status> statuses = StatusExtensions.AllStatuses;
+    private List<Status> statuses;
+    public List<Status> Statuses => statuses;
+    
 
-    public List<Status> Statuses {
-        get => statuses;
-        set { }
-    }
+    //TODO:(MWM) This might need to change to 
+    public List<string> CompanyNames => filteredTskModels.Select(x => x.CompanyName).Distinct().ToList();
 
     protected override async Task OnInitializedAsync() {
         Logger.LogInformation($">>> OnInitializedAsync triggered.");
@@ -63,31 +64,31 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     }
 
     //private void UpdateSwimLanes() {
-        //if (refKanbanBoard != null) {
-        //    if (IsGroupedByCompany) {
-        //        refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
-        //            SortDirection = SortDirection.Ascending,
-        //            KeyField = "CompanyName",
-        //            TextField = "CompanyName"
-        //        };
-        //    } else {
-        //        refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
-        //            SortDirection = SortDirection.Ascending,
-        //            KeyField = string.Empty,
-        //            TextField = string.Empty
-        //        };
-        //    }
-        //}
+    //if (refKanbanBoard != null) {
+    //    if (IsGroupedByCompany) {
+    //        refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
+    //            SortDirection = SortDirection.Ascending,
+    //            KeyField = "CompanyName",
+    //            TextField = "CompanyName"
+    //        };
+    //    } else {
+    //        refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
+    //            SortDirection = SortDirection.Ascending,
+    //            KeyField = string.Empty,
+    //            TextField = string.Empty
+    //        };
+    //    }
+    //}
     //}
 
     //private void UpdateColumns() {
-        //if (refKanbanBoard != null) {
-        //    refKanbanBoard.Columns = statuses.Select(s => s.ToStr())
-        //                                     .Select(s => new KanbanColumn {
-        //                                         HeaderText = s,
-        //                                         KeyField = s.ToKeyFields()
-        //                                     }).ToList();
-        //}
+    //if (refKanbanBoard != null) {
+    //    refKanbanBoard.Columns = statuses.Select(s => s.ToStr())
+    //                                     .Select(s => new KanbanColumn {
+    //                                         HeaderText = s,
+    //                                         KeyField = s.ToKeyFields()
+    //                                     }).ToList();
+    //}
     //}
 
     //private async Task RefreshBoardAsync() {
@@ -96,6 +97,35 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     //}
 
     //####################################### ACTIONS ################################
+
+    private async Task DragStopHandlerAsync(MudItemDropInfo<TskModel> dropInfo) {
+        var newStatus = IsGroupedByCompany ? dropInfo.DropzoneIdentifier.Split('_')[1].ToStatus() : 
+                                             dropInfo.DropzoneIdentifier.ToStatus();
+        var tskModel = dropInfo.Item;
+
+        try {
+
+            Logger.LogInformation($"Moved: {tskModel.Name}, FromStatus: {tskModel.Status} ToStatus: {newStatus}");
+            await EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                Id = tskModel.Id,
+                Name = tskModel.Name,
+                Status = newStatus
+            });
+            
+        } catch (Exception ex) {
+            Logger.LogError($"Unable to update: {tskModel.Name}, {ex}");
+        }
+    }
+
+    private bool CanChangeToStatus(TskModel tskModel, string statusStr) {
+        if (IsGroupedByCompany) {
+            var companyNameAndStatusStr = statusStr.Split('_');
+            var companyName = companyNameAndStatusStr[0];
+            var status = companyNameAndStatusStr[1].ToStatus();
+            return tskModel.Status != status && tskModel.CompanyName == companyName;
+        } else
+            return tskModel.Status != statusStr.ToStatus();
+    }
 
     //public async Task DragStopHandlerAsync(DragEventArgs<TskModel> args) {
     //    foreach (var updatedTskModel in args.Data) {
