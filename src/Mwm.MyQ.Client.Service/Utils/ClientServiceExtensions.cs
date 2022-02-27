@@ -21,7 +21,7 @@ namespace Mwm.MyQ.Client.Service.Utils {
 
             services.AddScoped<EntityStateFacade>();
             services.AddScoped<ApplicationStateFacade>();
-            services.AddScoped<ModelFilterFacade>();
+            services.AddScoped<ModelFacade>();
             services.AddScoped<IEntityStorage, WebApiEntityStorage>();
 
             return services;

@@ -22,7 +22,7 @@ public class ModelState<TModel, TEntity> : RootState where TModel : EntityModel<
 
     private ILookup<int, TModel> _lookup;
 
-    public ModelState() : this(false, null, null, null, ModelFilterTypes.DefaultModelFilters<TModel, TEntity>(), default) {
+    public ModelState() : this(false, null, null, null, ModelFilterTypes.DefaultModelFilters<TModel, TEntity>()) {
     }
 
     public ModelState(bool isLoading = false, 

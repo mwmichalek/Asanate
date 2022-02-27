@@ -16,6 +16,9 @@ public partial class TskCard : ComponentBase {
     [Inject]
     public EntityStateFacade EntityStateFacade { get; set; }
 
+    [Inject]
+    public ModelFacade ModelFacade { get; set; }    
+
     [Parameter]
     public bool IncludeCompanyName { get; set; }
 
@@ -67,6 +70,10 @@ public partial class TskCard : ComponentBase {
             Id = TskModel.Id,
             IsArchived = TskModel.IsArchived
         }));
+    }
+
+    public async Task Edit() {
+        await Task.Run(() => ModelFacade.Edit<TskModel, Tsk>(TskModel));
     }
 
 

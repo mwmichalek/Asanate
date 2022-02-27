@@ -34,6 +34,8 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     //TODO:(MWM) This might need to change to 
     public List<string> CompanyNames => filteredTskModels.Select(x => x.CompanyName).Distinct().ToList();
 
+    private TskDialog refTskDialog;
+
     protected override async Task OnInitializedAsync() {
         Logger.LogInformation($">>> OnInitializedAsync triggered.");
         await base.OnInitializedAsync();
@@ -129,7 +131,7 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
 
     //public void ShowTskEditor(DialogOpenEventArgs<TskModel> args) {
     //    args.Cancel = true;
-    //    refTskPopup.Update(args.Data);
+    //    refTskDialog.Update(args.Data);
     //}
 
     public bool IsInFocusOnly { get; set; } = false;
