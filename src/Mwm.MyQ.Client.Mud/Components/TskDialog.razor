@@ -9,11 +9,10 @@
             </MudText>
         </TitleContent>
         <DialogContent>
-            <p>How awesome are inline dialogs?</p>
-            <MudRating Class="mt-3"/>
+            <p>@TskModel.Name</p>
         </DialogContent>
         <DialogActions>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary"Class="px-10">Close</MudButton><!-- OnClick="Submit" -->
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Close"  Class="px-10">Close</MudButton><!-- OnClick="Submit" -->
         </DialogActions>
     </MudDialog>
 }
