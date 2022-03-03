@@ -24,7 +24,7 @@ public partial class TskDialog: ComponentBase {
 
     public bool IsNew => TskModel != null && TskModel.Id == 0;
 
-    public TskModel TskModel;
+    public TskModel TskModel { get; set; }
 
     protected override async Task OnInitializedAsync() {
         ModelsState.StateChanged += async (s, e) => {

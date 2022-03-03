@@ -1,6 +1,6 @@
-﻿
+﻿TskModel: @(TskModel != null) IsDialogShowing: @IsDialogShowing
 
-@if (TskModel != null) {
+@if (TskModel != null && IsDialogShowing) {
     var headerMessage = (IsNew) ? "ADD TSK" : "EDIT TASK";
     <MudDialog @bind-IsVisible="@IsDialogShowing" ><!--Options="dialogOptions"-->
         <TitleContent>
@@ -15,6 +15,8 @@
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Close"  Class="px-10">Close</MudButton><!-- OnClick="Submit" -->
         </DialogActions>
     </MudDialog>
+} else {
+    <h2>Ballz</h2>
 }
 
 @*  <SfDialog @ref="Dialog" Height="50%" Width="50%" Target="#target" IsModal="true" ShowCloseIcon="true" @bind-Visible="@IsDialogShowing" >
