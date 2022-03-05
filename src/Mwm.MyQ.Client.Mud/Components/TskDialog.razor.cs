@@ -1,6 +1,7 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using MudBlazor;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
@@ -23,6 +24,10 @@ public partial class TskDialog: ComponentBase {
     public bool IsDialogShowing { get; set; }
 
     public bool IsNew => TskModel != null && TskModel.Id == 0;
+
+    public DialogOptions DialogOptions => new DialogOptions { FullWidth = true };
+
+    public string HeaderMessage => (IsNew) ? "ADD TSK" : "EDIT TASK";
 
     public TskModel TskModel { get; set; }
 
@@ -53,9 +58,8 @@ public partial class TskDialog: ComponentBase {
 
     public void Close() {
         Logger.LogInformation($"Closing TskModel.");
-        TskModel = null;
-
         IsDialogShowing = false;
+        TskModel = null;
         StateHasChanged();
     }
 
