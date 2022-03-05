@@ -32,7 +32,7 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
         public ApplicationStateFacade ApplicationStateFacade { get; set; }
 
         [Inject]
-        public ModelFilterFacade ModelFilterFacade { get; set; }
+        public ModelFacade ModelFacade { get; set; }
 
         private bool _isGroupedTogether = true;
         public bool IsGroupedTogether {
@@ -50,7 +50,7 @@ namespace Mwm.MyQ.Client.Blayzor.Components {
         public bool IsInFocusOnly { 
             get => _isInFocusOnly;
             set {
-                ModelFilterFacade.Set(new IsInFocusedTskModelFilter { IsApplied = value });
+                ModelFacade.SetFilter(new IsInFocusedTskModelFilter { IsApplied = value });
 
                 ApplicationStateFacade.Set(new IsInFocusOnlyFlag {
                     PreviousValue = _isInFocusOnly,
