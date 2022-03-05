@@ -1,194 +1,93 @@
 ﻿
 
-    <MudDialog @bind-IsVisible="@IsDialogShowing" Options="DialogOptions">
-        <TitleContent>
-            <MudText Typo="Typo.h6">
-                <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3"/>
-                @HeaderMessage
-            </MudText>
-        </TitleContent>
-        <DialogContent>
-            <EditForm Model="@TskModel" OnValidSubmit="Save">
-                <DataAnnotationsValidator/>
+<MudDialog @bind-IsVisible="@IsDialogShowing" Options="DialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3"/>
+            @HeaderMessage
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <EditForm Model="@TskModel" OnValidSubmit="SaveAsync">
+            <DataAnnotationsValidator/>
 
-                <MudCard>
-                    <MudCardContent>
-                        <MudGrid>
-                            <MudItem xs="12">
-                                <MudTextField Label="Name" 
-                                              HelperText=""
-                                              @bind-Value="TskModel.Name" 
-                                              For="@(() => TskModel.Name)" />
-                            </MudItem>
-                            <MudItem xs="3">
+            <MudCard>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="12">
+                            <MudTextField Label="Name" 
+                                            HelperText=""
+                                            @bind-Value="TskModel.Name" 
+                                            For="@(() => TskModel.Name)" />
+                        </MudItem>
+                        <MudItem xs="4">
                             <MudDatePicker Label="Due Date" 
-                                           Editable="true" 
-                                           @bind-Date="TskModel.DueDate" 
-                                           Placeholder="Select Date" 
-                                           For="@(() => TskModel.DueDate)" />
-                            </MudItem>
-                            <MudItem xs="3">
+                                            Editable="true" 
+                                            @bind-Date="TskModel.DueDate" 
+                                            Placeholder="Select Date" 
+                                            For="@(() => TskModel.DueDate)" />
+                        </MudItem>
+                        <MudItem xs="4">
                             <MudDatePicker Label="Start Date" 
-                                           Editable="true" 
-                                           @bind-Date="TskModel.StartDate" 
-                                           Placeholder="Select Date" 
-                                           For="@(() => TskModel.StartDate)" />
-                            </MudItem>
-                            <MudItem xs="3">
-                            <MudTextField Label="Started Date" 
-                                          HelperText=""
-                                          @bind-Value="TskModel.StartedDate" 
-                                          For="@(() => TskModel.StartedDate)" />
-                            </MudItem>
-                            <MudItem xs="3">
+                                            Editable="true" 
+                                            @bind-Date="TskModel.StartDate" 
+                                            Placeholder="Select Date" 
+                                            For="@(() => TskModel.StartDate)" />
+                        </MudItem>
+                        @*<MudItem xs="3">
+                        <MudTextField Label="Started Date" 
+                                        HelperText=""
+                                        @bind-Value="TskModel.StartedDate" 
+                                        For="@(() => TskModel.StartedDate)" />
+                        </MudItem>*@
+                        <MudItem xs="4">
                             <MudDatePicker Label="Completed Date" 
-                                           Editable="true" 
-                                           @bind-Date="TskModel.CompletedDate" 
-                                           Placeholder="Select Date" 
-                                           For="@(() => TskModel.CompletedDate)" />
+                                            Editable="true" 
+                                            @bind-Date="TskModel.CompletedDate" 
+                                            Placeholder="Select Date" 
+                                            For="@(() => TskModel.CompletedDate)" />
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudNumericField Label="Duration Estimate (Hrs)"
+                                                HelperText=""
+                                                @bind-Value="TskModel.DurationEstimate" 
+                                                Variant="Variant.Text" 
+                                                For="@(() => TskModel.DurationEstimate)"
+                                                Min="0"  
+                                                Max="8"
+                                                Format="F2"
+                                                Step="0.25F"
+                                                />
                             </MudItem>
                             <MudItem xs="6">
-                            <MudNumericField Label="Duration Estimate (Hrs)"
-                                             HelperText=""
-                                             @bind-Value="TskModel.DurationEstimate" 
-                                             Variant="Variant.Text" 
-                                             For="@(() => TskModel.DurationEstimate)"
-                                             Min="0"  
-                                             Max="8"
-                                             Format="F2"
-                                             Step="0.25F"
-                                             />
-                             </MudItem>
-                             <MudItem xs="6">
-                             <MudNumericField Label="Duration Completed (Hrs)"
-                                             HelperText=""
-                                             @bind-Value="TskModel.DurationCompleted" 
-                                             Variant="Variant.Text" 
-                                             For="@(() => TskModel.DurationCompleted)"
-                                             Min="0"  
-                                             Max="8"
-                                             Format="F2"
-                                             Step="0.25F"
-                                             />
-                            </MudItem>
-                            <MudItem xs="12">
+                                <MudNumericField Label="Duration Completed (Hrs)"
+                                                HelperText=""
+                                                @bind-Value="TskModel.DurationCompleted" 
+                                                Variant="Variant.Text" 
+                                                For="@(() => TskModel.DurationCompleted)"
+                                                Min="0"  
+                                                Max="8"
+                                                Format="F2"
+                                                Step="0.25F"
+                                                />
+                        </MudItem>
+                        <MudItem xs="12">
                             <MudTextField T="string" 
-                                          Label="Notes" 
-                                          HelperText=""
-                                          @bind-Value="TskModel.Notes"
-                                          Variant="Variant.Outlined" 
-                                          For="@(() => TskModel.Notes)"
-                                          Lines="3" />
-                            </MudItem>
-                        </MudGrid>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit" Class="ml-auto mr-2">Save</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Close"  Class="px-10">Close</MudButton>
-                    </MudCardActions>
-                </MudCard>
+                                            Label="Notes" 
+                                            HelperText=""
+                                            @bind-Value="TskModel.Notes"
+                                            Variant="Variant.Outlined" 
+                                            For="@(() => TskModel.Notes)"
+                                            Lines="3" />
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit" Class="ml-auto mr-2">Save</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Close"  Class="px-10">Close</MudButton>
+                </MudCardActions>
+            </MudCard>
    
-            </EditForm>
-        </DialogContent>
-       @* <DialogActions>
-
-        </DialogActions>*@
-    </MudDialog>
-
-
-
-
-@*
-
-    <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="externalId">External ID:</label>
-                                    @TskModel.InitiativeExternalId
-                                </div>
-                                <div class="form-group col-md-9">
-                                    <label for="name">Name:</label>
-                                    <SfTextBox Id="name" 
-                                               class="form-control" 
-                                               Placeholder="Name" 
-                                               @bind-Value="@TskModel.Name" 
-                                               @onkeydown="KeyboardEventHandlerAsync">
-                                    </SfTextBox >
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="dueDate">Due Date:</label>
-                                    <SfDatePicker ID="dueDate" TValue="DateTime?" @bind-Value="@TskModel.DueDate" Placeholder='Choose a Date'></SfDatePicker>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="startDate">Start Date:</label>
-                                    <SfDatePicker ID="startDate" TValue="DateTime?" @bind-Value="@TskModel.StartDate" Placeholder='Choose a Date'></SfDatePicker>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="startDate">Started Date:</label>
-                                    @TskModel.StartedDate?.ToString("MM-dd-YYYY");
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="completedDate">Completed Date:</label>
-                                    <SfDatePicker ID="completedDate" TValue="DateTime?" @bind-Value="@TskModel.CompletedDate" Placeholder='Choose a Date'></SfDatePicker>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="durationEstimate">Duration Estimate:</label>
-                                    <SfDropDownList ID="durationEstimate" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationEstimate" Placeholder="Duration in hours" DataSource="@DurationDropDown">
-                                    </SfDropDownList>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="durationCompleted">Duration Completed:</label>
-                                    <SfDropDownList ID="durationCompleted" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationCompleted" Placeholder="Duration in hours" DataSource="@DurationDropDown">
-                                    </SfDropDownList>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="notes">Notes:</label>
-                                <SfRichTextEditor @ref="TextEditor" @bind-Value="@TskModel.Notes" />
-                            </div>
-
-
-*@
-
-
-
-
-
-
-
-
-
-
-      @*                              <MudTextField Label="Email" Class="mt-3"
-                                              @bind-Value="model.Email" For="@(() => model.Email)"/>
-                                <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
-                                              @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
-                                <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
-                                              @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password"/>*@
-
-
-
-
-                                               @*<MudItem xs="12" sm="5">
-                        <MudPaper Class="pa-4 mud-height-full">
-                            <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
-                            @if (success)
-                            {
-                                <MudText Color="Color.Success">Success</MudText>
-                            }
-                            else
-                            {
-                                <MudText Color="@Color.Error">
-                                    <ValidationSummary />
-                                </MudText>
-                            }
-                        </MudPaper>
-                    </MudItem>
-                    <MudItem xs="12">
-                        <MudText Typo="Typo.body2" Align="Align.Center">
-                            Fill out the form correctly to see the success message.
-                        </MudText>
-                    </MudItem>*@
+        </EditForm>
+    </DialogContent>
+</MudDialog>
