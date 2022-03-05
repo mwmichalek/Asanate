@@ -56,6 +56,13 @@ public partial class TskDialog: ComponentBase {
         StateHasChanged();
     }
 
+    public void Save() {
+        Logger.LogInformation($"Saving TskModel.");
+        IsDialogShowing = false;
+        TskModel = null;
+        StateHasChanged();
+    }
+
     public void Close() {
         Logger.LogInformation($"Closing TskModel.");
         IsDialogShowing = false;

@@ -8,32 +8,34 @@
             </MudText>
         </TitleContent>
         <DialogContent>
-            This is the way we do it.
-            <p>@TskModel.Name</p>
+            <EditForm Model="@TskModel" OnValidSubmit="Save">
+                <DataAnnotationsValidator/>
+
+                <MudCard>
+                    <MudCardContent>
+                        <MudTextField Label="Name" HelperText=""
+                                        @bind-Value="TskModel.Name" For="@(() => TskModel.Name)"/>
+
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit" Class="ml-auto">Save</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Close"  Class="px-10">Close</MudButton>
+                    </MudCardActions>
+                </MudCard>
+   
+            </EditForm>
         </DialogContent>
-        <DialogActions>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Close"  Class="px-10">Close</MudButton><!-- OnClick="Submit" -->
-        </DialogActions>
+       @* <DialogActions>
+
+        </DialogActions>*@
     </MudDialog>
 
 
-@*  <SfDialog @ref="Dialog" Height="50%" Width="50%" Target="#target" IsModal="true" ShowCloseIcon="true" @bind-Visible="@IsDialogShowing" >
-        <DialogTemplates>
-            <Header>
-                @if (IsNew) {
-                    <h2>ADD TSK</h2>
-                } else {
-                    <h2>UPDATE TSK</h2>
-                }
-            </Header>
-            <Content>
-                <div class="dialogContent">
 
-                    <div class="container">
-                        <EditForm id="form " Model="@TskModel" OnValidSubmit="@SaveAsync">
-                            <DataAnnotationsValidator />
-                            <ValidationSummary />
-                            <div class="form-row">
+
+@*
+
+    <div class="form-row">
                                 <div class="form-group col-md-3">
                                     <label for="externalId">External ID:</label>
                                     @TskModel.InitiativeExternalId
@@ -82,15 +84,46 @@
                                 <label for="notes">Notes:</label>
                                 <SfRichTextEditor @ref="TextEditor" @bind-Value="@TskModel.Notes" />
                             </div>
-                        </EditForm>
-                    </div>
 
-                </div>
-            </Content>
-            <FooterTemplate>
-                <SfButton class="e-control e-btn e-success" @onclick="@SaveAsync">SAVE</SfButton>
-                <SfButton class="e-control e-btn e-secondary" @onclick="@Close">CLOSE</SfButton>
-            </FooterTemplate>
-        </DialogTemplates>
-        <DialogEvents Closed="@DialogCloseHandler"></DialogEvents>
-    </SfDialog>*@
+
+*@
+
+
+
+
+
+
+
+
+
+
+      @*                              <MudTextField Label="Email" Class="mt-3"
+                                              @bind-Value="model.Email" For="@(() => model.Email)"/>
+                                <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                                              @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
+                                <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+                                              @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password"/>*@
+
+
+
+
+                                               @*<MudItem xs="12" sm="5">
+                        <MudPaper Class="pa-4 mud-height-full">
+                            <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
+                            @if (success)
+                            {
+                                <MudText Color="Color.Success">Success</MudText>
+                            }
+                            else
+                            {
+                                <MudText Color="@Color.Error">
+                                    <ValidationSummary />
+                                </MudText>
+                            }
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body2" Align="Align.Center">
+                            Fill out the form correctly to see the success message.
+                        </MudText>
+                    </MudItem>*@
