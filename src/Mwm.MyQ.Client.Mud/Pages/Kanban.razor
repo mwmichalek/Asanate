@@ -8,35 +8,37 @@
 
 <PageTitle>Kanban</PageTitle>
 
-<MudToggleIconButton @bind-Toggled="@IsGroupedTogether"
-                     Icon="@Icons.Filled.Dehaze" 
-                     Color="@Color.Error" 
-                     Title="All Statuses"
-                     Size="Size.Large" 
-                     ToggledIcon="@Icons.Filled.Dehaze" 
-                     ToggledColor="@Color.Success" 
-                     ToggledTitle="Action Statuses" 
-                     ToggledSize="Size.Large" />
+<MudPaper Class="mt-4 d-flex justify-end flex-grow-1 gap-4" Elevation="0">
+    <MudToggleIconButton @bind-Toggled="@IsGroupedTogether"
+                         Icon="@Icons.Filled.Dehaze" 
+                         Color="@Color.Error" 
+                         Title="Grouped Together"
+                         Size="Size.Large" 
+                         ToggledIcon="@Icons.Filled.Dehaze" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Grouped By Company" 
+                         ToggledSize="Size.Large" />
 
-<MudToggleIconButton @bind-Toggled="@IsActionStatusOnly"
-                     Icon="@Icons.Outlined.OfflineBolt" 
-                     Color="@Color.Error" 
-                     Title="All Statuses"
-                     Size="Size.Large" 
-                     ToggledIcon="@Icons.Outlined.OfflineBolt" 
-                     ToggledColor="@Color.Success" 
-                     ToggledTitle="Action Statuses" 
-                     ToggledSize="Size.Large" />
+    <MudToggleIconButton @bind-Toggled="@IsActionStatusOnly"
+                         Icon="@Icons.Outlined.OfflineBolt" 
+                         Color="@Color.Error" 
+                         Title="All Statuses"
+                         Size="Size.Large" 
+                         ToggledIcon="@Icons.Outlined.OfflineBolt" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Action Statuses" 
+                         ToggledSize="Size.Large" />
 
-<MudToggleIconButton @bind-Toggled="@IsInFocusOnly"
-                     Icon="@Icons.Filled.Biotech" 
-                     Color="@Color.Error" 
-                     Title="All Statuses"
-                     Size="Size.Large" 
-                     ToggledIcon="@Icons.Filled.Biotech" 
-                     ToggledColor="@Color.Success" 
-                     ToggledTitle="Action Statuses" 
-                     ToggledSize="Size.Large" />
+    <MudToggleIconButton @bind-Toggled="@IsInFocusOnly"
+                         Icon="@Icons.Filled.Biotech" 
+                         Color="@Color.Error" 
+                         Title="All Tsks"
+                         Size="Size.Large" 
+                         ToggledIcon="@Icons.Filled.Biotech" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="In Focus Tsks" 
+                         ToggledSize="Size.Large" /> 
+</MudPaper>
 
 <TskKanbanBoard />
 
