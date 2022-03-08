@@ -18,3 +18,72 @@
         <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
     </MudCardActions>
 </MudCard>
+
+@*<div class="card-template">
+    <div class="e-card-header pb-2" style="@HeaderStyles">
+        <div class="e-card-header-caption">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8 p-0">
+                        @if (IncludeCompanyName) {
+                            <small style="color: #ccc;" class="card-subtitle">
+                                @TskModel.CompanyName?.ToUpper() - @TskModel.ProjectAbbreviation?.ToUpper() > @TskModel.InitiativeName
+                            </small>
+                        } else {
+                            <small style="color: #ccc;" class="card-subtitle">
+                                @TskModel.ProjectAbbreviation?.ToUpper() > @TskModel.InitiativeName
+                            </small>
+                        }
+                    </div>
+                    <div class="col-4 p-0 text-right">
+                        <a target="_blank" class="link-alert card-subtitle" href="@TskModel.InitiativeExternalLink">@TskModel.InitiativeExternalId</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col p-0">
+                        <div class="e-card-header-title e-tooltip-text">@TskModel.Name</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="e-card-content">
+        <div class="e-text e-tooltip-text">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <span class="font-weight-lighter">@((MarkupString)TskModel.Notes)</span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-5">
+                        <span class="badge rounded-pill bg-primary">@HourProgressDisplay</span>
+                    </div>
+                    <div class="col-5 text-right">
+                        <span class="@DueDateDisplayClass">@DueDateDisplay</span>
+                    </div>
+                    @if (TskModel.IsInFocus) {
+                        <div class="col-1 p-0 m-0" style="color: yellow; cursor: pointer;">
+                            <i class="fas fa-lightbulb" @onclick="@ToggleInFocus"></i>
+                        </div>
+                    } else {
+                        <div class="col-1 p-0 m-0" style="color: grey; cursor: pointer;">
+                            <i class="far fa-lightbulb" @onclick="@ToggleInFocus"></i>
+                        </div>
+                    }
+                    @if (TskModel.Status == Domain.Status.Done) {
+                        @if (TskModel.IsArchived) {
+                            <div class="col-1 p-0 m-0" style="color: yellow; cursor: pointer;">
+                                <i class="fas fa-check-square" @onclick="@ToggleIsArchived"></i>
+                            </div>
+                        } else {
+                            <div class="col-1 p-0 m-0" style="color: grey; cursor: pointer;">
+                                <i class="far fa-check-square" @onclick="@ToggleIsArchived"></i>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@

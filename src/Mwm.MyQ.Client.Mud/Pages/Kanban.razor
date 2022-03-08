@@ -1,9 +1,42 @@
-﻿@page "/"
+﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
+@page "/"
 @page "/kanban"
 
 @using Mwm.MyQ.Client.Mud.Components
+@using Mwm.MyQ.Client.Service.Models
+@using Mwm.MyQ.Domain
 
 <PageTitle>Kanban</PageTitle>
+
+<MudToggleIconButton @bind-Toggled="@IsGroupedTogether"
+                     Icon="@Icons.Filled.Dehaze" 
+                     Color="@Color.Error" 
+                     Title="All Statuses"
+                     Size="Size.Large" 
+                     ToggledIcon="@Icons.Filled.Dehaze" 
+                     ToggledColor="@Color.Success" 
+                     ToggledTitle="Action Statuses" 
+                     ToggledSize="Size.Large" />
+
+<MudToggleIconButton @bind-Toggled="@IsActionStatusOnly"
+                     Icon="@Icons.Outlined.OfflineBolt" 
+                     Color="@Color.Error" 
+                     Title="All Statuses"
+                     Size="Size.Large" 
+                     ToggledIcon="@Icons.Outlined.OfflineBolt" 
+                     ToggledColor="@Color.Success" 
+                     ToggledTitle="Action Statuses" 
+                     ToggledSize="Size.Large" />
+
+<MudToggleIconButton @bind-Toggled="@IsInFocusOnly"
+                     Icon="@Icons.Filled.Biotech" 
+                     Color="@Color.Error" 
+                     Title="All Statuses"
+                     Size="Size.Large" 
+                     ToggledIcon="@Icons.Filled.Biotech" 
+                     ToggledColor="@Color.Success" 
+                     ToggledTitle="Action Statuses" 
+                     ToggledSize="Size.Large" />
 
 <TskKanbanBoard />
 

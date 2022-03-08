@@ -127,11 +127,6 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
             return tskModel.Status != statusStr.ToStatus();
     }
 
-    //public void ShowTskEditor(DialogOpenEventArgs<TskModel> args) {
-    //    args.Cancel = true;
-    //    refTskDialog.Update(args.Data);
-    //}
-
     public bool IsInFocusOnly { get; set; } = false;
 
     public async Task ApplySetting(IsInFocusOnlyFlag applicationSetting) {
