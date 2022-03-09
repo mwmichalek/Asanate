@@ -37,6 +37,8 @@ namespace Mwm.MyQ.Domain {
 
         public bool IsInFocus { get; set; }
 
+        public int SortIndex { get; set; }
+
     }
 
 }

@@ -129,8 +129,12 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                             _logger.LogDebug($"Adding Company: {asanaCompanyName}");
                             _companyRepository.Add(new Company {
                                 Name = asanaCompanyName,
-                                IsPersonal = asanaCompanyName == Company.PersonalCompanyName
-                                //TODO:(MWM) Need to rewire to get project modified date;
+                                IsPersonal = asanaCompanyName == Company.PersonalCompanyName,
+                                SortIndex = (asanaCompanyName == "BX") ? 1 :
+                                            (asanaCompanyName == "L49") ? 2 :
+                                            (asanaCompanyName == "MWM") ? 3 :
+                                            (asanaCompanyName == "KMV") ? 4 :
+                                            (asanaCompanyName == "SGN") ? 5 : 0
                             });
                             requiresSaving = true;
                         }
@@ -164,9 +168,9 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                                                 asanaProject.Color == "light-purple" ? "#b36bd4" :
                                                 asanaProject.Color == "light-warm-gray" ? "#6d6e6f" : asanaProject.Color,
                                 ExternalIdPrexfix = (asanaProject.Company == "KMV") ? "SHOP" :
-                                                    (asanaProject.Company == "Blackstone") ? "BPS" : null,
+                                                    (asanaProject.Company == "BX") ? "BPS" : null,
                                 ExternalAppBaseUrl = (asanaProject.Company == "KMV") ? "https://kmv-digital.atlassian.net/browse/" :
-                                                    (asanaProject.Company == "Blackstone") ? "https://blackstone.jira.com/browse/" : null
+                                                    (asanaProject.Company == "BX") ? "https://blackstone.jira.com/browse/" : null,
                             };
                             newProject.Initiatives.Add(new Initiative {
                                 Name = Initiative.DefaultInitiativeName
@@ -194,9 +198,12 @@ namespace Mwm.MyQ.Application.Asana.Commands {
 
             private Result SyncTaskAndInitiatives(Command command) {
                 var tskResults = _asanaTskService.RetrieveAll(command.Since).Result;
+                
 
                 if (tskResults.TryUsing(out List<AsanaTsk> asanaTsks)) {
                     var requiresSaving = false;
+
+                    asanaTsks.OrderBy(t => t.CreatedAt).ToList();
 
                     foreach (var asanaTsk in asanaTsks.Where(t => !string.IsNullOrEmpty(t.ProjectName))) {
                         var initiativeName = string.IsNullOrEmpty(asanaTsk.SubProjectName) ? Initiative.DefaultInitiativeName : asanaTsk.SubProjectName;

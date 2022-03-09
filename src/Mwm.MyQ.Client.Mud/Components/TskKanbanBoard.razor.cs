@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using MudBlazor;
 using Mwm.MyQ.Application.Tsks.Commands;
 using Mwm.MyQ.Client.Mud.Helpers;
@@ -7,6 +9,7 @@ using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
 using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
+using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
 using System;
 using System.Collections.Generic;
@@ -21,6 +24,9 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
                                       IApplicationSettingConsumer<IsActionStatusOnlyFlag> {
 
     private List<TskModel> filteredTskModels = new List<TskModel>();
+
+    [Inject]
+    public IState<EntityState<Company>> CompaniesState { get; set; }
 
     public IEnumerable<TskModel> FilteredTskModels { 
         get => filteredTskModels;
