@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>, 
+public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
                                       IApplicationSettingConsumer<IsInFocusOnlyFlag>,
                                       IApplicationSettingConsumer<IsGroupedByCompanyFlag>,
                                       IApplicationSettingConsumer<IsActionStatusOnlyFlag> {
@@ -28,17 +28,20 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     [Inject]
     public IState<EntityState<Company>> CompaniesState { get; set; }
 
-    public IEnumerable<TskModel> FilteredTskModels { 
+    public IEnumerable<TskModel> FilteredTskModels {
         get => filteredTskModels;
-        set { } 
+        set { }
     }
 
     private List<Status> statuses;
     public List<Status> Statuses => statuses;
-    
 
-    //TODO:(MWM) This might need to change to 
-    public List<string> CompanyNames => filteredTskModels.Select(x => x.CompanyName).Distinct().ToList();
+    public List<Company> Companies {
+        get {
+            var currentCompanyNames = filteredTskModels.Select(x => x.CompanyName).Distinct().ToList();
+            return CompaniesState.Value.Entities.Where(c => currentCompanyNames.Contains(c.Name)).OrderBy(c => c.SortIndex).ToList();
+        }
+    }
 
     protected override async Task OnInitializedAsync() {
         Logger.LogInformation($">>> OnInitializedAsync triggered.");
@@ -151,15 +154,17 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
         await SetIsGroupedByCompany(applicationSetting.CurrentValue);
     }
 
-    public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
+    public Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
+        return Task.CompletedTask;
     }
 
     public async Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
         await SetIsActionStatusOnly(applicationSetting.CurrentValue);
     }
 
-    public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
+    public Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
+        return Task.CompletedTask;
     }
 }

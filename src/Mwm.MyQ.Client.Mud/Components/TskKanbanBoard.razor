@@ -23,12 +23,12 @@
                                                                              dropzone == tm.Status.ToStr())">
         <ChildContent>
             @if (IsGroupedByCompany) {
-                foreach (var companyName in CompanyNames) {
-                    <MudText Typo="Typo.h4" Class="mb-2 mt-4">@companyName</MudText>
+                foreach (var company in Companies) {
+                    <MudText Typo="Typo.h4" Class="mb-2 mt-4">@company.Name</MudText>
                     <MudGrid Class="d-flex flex-grow-1" Justify="Justify.SpaceEvenly">
                         
                         @foreach (var status in Statuses) {
-                            var dropzone = $"{companyName}_{status.ToStr()}";
+                            var dropzone = $"{company.Name}_{status.ToStr()}";
                             <MudDropZone T="TskModel" 
                                             Style="width:300px;"
                                             Identifier="@dropzone" 

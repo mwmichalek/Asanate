@@ -33,13 +33,14 @@ public partial class TskDialog: ComponentBase {
 
     public TskModel TskModel { get; set; }
 
-    protected override async Task OnInitializedAsync() {
+    protected override Task OnInitializedAsync() {
         ModelsState.StateChanged += async (s, e) => {
             if (e.CurrentModel != null)
-                Update(e.CurrentModel);
+                await Update(e.CurrentModel);
             else
-                Close();
+                await Close();
         };
+        return Task.CompletedTask;
     }
 
     public void Add(int? initiativeId) {
@@ -51,11 +52,12 @@ public partial class TskDialog: ComponentBase {
         StateHasChanged();
     }
 
-    public void Update(TskModel tskModel) {
+    public Task Update(TskModel tskModel) {
         Logger.LogInformation($"Updating TskModel.");
         TskModel = tskModel;
         IsDialogShowing = true;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 
 
@@ -92,17 +94,18 @@ public partial class TskDialog: ComponentBase {
                 });
                 
             }
-            Close();
+            await Close();
         } catch (Exception ex) {
             Logger.LogError($"Unable to update: {TskModel.Name}, {ex}");
         }
     }
 
-    public void Close() {
+    public Task Close() {
         Logger.LogInformation($"Closing TskModel.");
         IsDialogShowing = false;
         TskModel = null;
         StateHasChanged();
+        return Task.CompletedTask;
     }
 
 }
