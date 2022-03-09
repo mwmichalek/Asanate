@@ -1,8 +1,9 @@
 ﻿<MudCard Outlined="true"
          Class="m-2" 
+         
          @ondblclick="@Edit"
          > <!--Style="width: 300px;"-->
-    <MudCardHeader>
+    <MudCardHeader Style="@HeaderStyle">
         <CardHeaderContent>
             <MudText Typo="Typo.h6">@TskModel.Name</MudText>
         </CardHeaderContent>
