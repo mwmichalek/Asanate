@@ -1,0 +1,42 @@
+﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
+@using Mwm.MyQ.Domain;
+@using Mwm.MyQ.Client.Service.Models
+
+<MudTable Items="@FilteredTskModels" 
+          FixedHeader="true"
+          Hover="true" SortLabel="Sort By">
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortBy="new Func<TskModel, object>(x=>x.CompanyNameAndProjectName)">Project</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<TskModel, object>(x=>x.InitiativeName)">Initiative</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<TskModel, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<TskModel, object>(x=>x.Status.ToStr())">Status</MudTableSortLabel></MudTh>
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Project">@context.CompanyNameAndProjectName</MudTd>
+        <MudTd DataLabel="Initiative">@context.InitiativeName</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Status">@context.Status.ToStr()</MudTd>
+        <MudTd DataLabel="Actions">
+            <MudIconButton Icon="@Icons.Filled.Edit" 
+                           Color="Color.Primary" 
+                           aria-label="Edit" 
+                           OnClick="@(() => Edit(@context))" />
+            <MudIconButton Icon="@Icons.Filled.Archive" 
+                           Color="Color.Primary" 
+                           aria-label="Archive" 
+                           OnClick="@(() => Archive(@context))" />
+            <MudIconButton Icon="@Icons.Filled.Check" 
+                           Color="Color.Primary" 
+                           aria-label="Complete" 
+                           OnClick="@(() => Complete(@context))" />
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+
+@*
+                    <button @onclick="() => ShowTskEditor(tskModel)" class="btn btn-primary"><i class="fas fa-pen-square"></i></button>
+                    <button class="btn btn-primary"><i class="fas fa-archive"></i></button>
+                    <button class="btn btn-primary"><i class="fas fa-check-square"></i></button>*@
+

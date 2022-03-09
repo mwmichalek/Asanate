@@ -135,7 +135,6 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
 
     public Task SetIsInFocusOnly(bool isInFocusOnly) {
         IsInFocusOnly = isInFocusOnly;
-        //FilterTskModels();
         StateHasChanged(); //Because a collection changed.
         return Task.CompletedTask;
     }
@@ -148,8 +147,6 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
 
     public async Task SetIsGroupedByCompany(bool isGroupedByCompany) {
         IsGroupedByCompany = isGroupedByCompany;
-        //UpdateSwimLanes();
-        //await RefreshBoardAsync();
     }
 
     public async Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
@@ -158,7 +155,5 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
 
     public async Task SetIsActionStatusOnly(bool isActionStatusOnly) {
         statuses = isActionStatusOnly ? StatusExtensions.ActionStatuses : StatusExtensions.AllStatuses;
-        //UpdateColumns();
-        //await RefreshBoardAsync();
     }
 }
