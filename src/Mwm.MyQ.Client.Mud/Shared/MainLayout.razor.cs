@@ -22,4 +22,23 @@ public partial class MainLayout {
     void DrawerToggle() {
         _drawerOpen = !_drawerOpen;
     }
+
+    public MudTheme CustomTheme => new MudTheme() {
+        Typography = new Typography() {
+            H5 = new H5() {
+                FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "1.25rem",
+                FontWeight = 500,
+                LineHeight = 1.6,
+                LetterSpacing = ".0075em"
+            },
+            H6 = new H6() {
+                FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
+                FontSize = ".9rem",
+                FontWeight = 500,
+                LineHeight = 1.6,
+                LetterSpacing = ".0075em"
+            }
+        }
+    };
 }
