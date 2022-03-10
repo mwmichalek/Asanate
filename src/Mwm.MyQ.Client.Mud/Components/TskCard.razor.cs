@@ -5,25 +5,27 @@ using Mwm.MyQ.Application.Tsks.Commands;
 using Mwm.MyQ.Domain;
 using System;
 using System.Threading.Tasks;
+using Mwm.MyQ.Client.Service.Components;
+using Mwm.MyQ.Client.Service.Store.Features.Settings;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskCard : ComponentBase {
+public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
+                               IApplicationSettingConsumer<IsGroupedByCompanyFlag> {
 
     [Parameter]
     public TskModel TskModel { get; set; }
 
-    [Inject]
-    public EntityStateFacade EntityStateFacade { get; set; }
+    //[Inject]
+    //public EntityStateFacade EntityStateFacade { get; set; }
 
     [Inject]
     public ModelFacade ModelFacade { get; set; }    
 
-    [Parameter]
     public bool IncludeCompanyName { get; set; }
 
     public string HeaderStyle => TskModel.IsInFocus ? $"background-color: {TskModel.ProjectColor}; background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0 0);" :
-                                                       $"background-color: {TskModel.ProjectColor}; background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0 0);";
+                                                      $"background-color: {TskModel.ProjectColor}; background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0 0);";
 
     public string HeaderClasses => TskModel.IsInFocus ? "bg-primary" : "bg-dark";
 
@@ -76,5 +78,9 @@ public partial class TskCard : ComponentBase {
         await Task.Run(() => ModelFacade.Edit<TskModel, Tsk>(TskModel));
     }
 
+    public Task ApplySetting(IsGroupedByCompanyFlag applicationSetting) {
+        IncludeCompanyName = !applicationSetting.CurrentValue;
+        return Task.CompletedTask;
+    }
 
 }

@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
 using Mwm.MyQ.Application.Tsks.Commands;
-using Mwm.MyQ.Client.Mud.Helpers;
 using Mwm.MyQ.Client.Service.Components;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
-using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
 using System;
@@ -71,39 +69,6 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
             Logger.LogDebug($"Not ready to be initialized.");
         return Task.CompletedTask;
     }
-
-    //private void UpdateSwimLanes() {
-    //if (refKanbanBoard != null) {
-    //    if (IsGroupedByCompany) {
-    //        refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
-    //            SortDirection = SortDirection.Ascending,
-    //            KeyField = "CompanyName",
-    //            TextField = "CompanyName"
-    //        };
-    //    } else {
-    //        refKanbanBoard.SwimlaneSettings = new KanbanSwimlaneSettings {
-    //            SortDirection = SortDirection.Ascending,
-    //            KeyField = string.Empty,
-    //            TextField = string.Empty
-    //        };
-    //    }
-    //}
-    //}
-
-    //private void UpdateColumns() {
-    //if (refKanbanBoard != null) {
-    //    refKanbanBoard.Columns = statuses.Select(s => s.ToStr())
-    //                                     .Select(s => new KanbanColumn {
-    //                                         HeaderText = s,
-    //                                         KeyField = s.ToKeyFields()
-    //                                     }).ToList();
-    //}
-    //}
-
-    //private async Task RefreshBoardAsync() {
-    //    if (refKanbanBoard != null)
-    //        await refKanbanBoard.RefreshAsync();
-    //}
 
     //####################################### ACTIONS ################################
 

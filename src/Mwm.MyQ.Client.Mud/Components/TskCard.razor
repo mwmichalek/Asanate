@@ -1,10 +1,19 @@
-﻿<MudCard Outlined="true"
+﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
+@using Mwm.MyQ.Client.Service.Models
+@using Mwm.MyQ.Domain
+
+<MudCard Outlined="true"
          Class="m-2" 
          
          @ondblclick="@Edit"
          > <!--Style="width: 300px;"-->
     <MudCardHeader Style="@HeaderStyle">
         <CardHeaderContent>
+            @if (IncludeCompanyName) {
+                <MudText Typo="Typo.h6">@TskModel.CompanyName - @TskModel.InitiativeName </MudText>
+            } else {
+                <MudText Typo="Typo.h6">@TskModel.InitiativeName </MudText>
+            }
             <MudText Typo="Typo.h6">@TskModel.Name</MudText>
         </CardHeaderContent>
 @*        <CardHeaderActions>
