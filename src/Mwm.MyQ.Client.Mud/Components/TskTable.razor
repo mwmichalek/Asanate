@@ -22,14 +22,17 @@
                            Color="Color.Primary" 
                            aria-label="Edit" 
                            OnClick="@(() => Edit(@context))" />
-            <MudIconButton Icon="@Icons.Filled.Archive" 
-                           Color="Color.Primary" 
-                           aria-label="Archive" 
-                           OnClick="@(() => Archive(@context))" />
+            
             <MudIconButton Icon="@Icons.Filled.Check" 
                            Color="Color.Primary" 
                            aria-label="Complete" 
                            OnClick="@(() => Complete(@context))" />
+            @if (@context.Status == Status.Done) {
+                <MudIconButton Icon="@Icons.Filled.Archive" 
+                           Color="Color.Primary" 
+                           aria-label="Archive" 
+                           OnClick="@(() => Archive(@context))" />
+            }
         </MudTd>
     </RowTemplate>
 </MudTable>

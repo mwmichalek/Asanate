@@ -7,14 +7,18 @@
          
          @ondblclick="@Edit"
          > <!--Style="width: 300px;"-->
-    <MudCardHeader Style="@HeaderStyle">
+    <MudCardHeader Style="@HeaderStyle" Class="p-2">
         <CardHeaderContent>
             @if (IncludeCompanyName) {
-                <MudText Typo="Typo.h6">@TskModel.CompanyName - @TskModel.InitiativeName </MudText>
+                <MudText Typo="Typo.h6" Color="Color.Surface">
+                    @TskModel.CompanyName > @TskModel.InitiativeName
+                </MudText>
             } else {
-                <MudText Typo="Typo.h6">@TskModel.InitiativeName </MudText>
+                <MudText Typo="Typo.h6" Color="Color.Surface">
+                    @TskModel.InitiativeName 
+                </MudText>
             }
-            <MudText Typo="Typo.h6">@TskModel.Name</MudText>
+            <MudText Typo="Typo.h5">@TskModel.Name</MudText>
         </CardHeaderContent>
 @*        <CardHeaderActions>
             <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
@@ -22,9 +26,18 @@
     </MudCardHeader>
     <MudCardContent>
         <MudText>@TskModel.Notes</MudText>
+        @if (@TskModel.InitiativeExternalLink != null) {
+            <MudLink Target="_blank" Href="@TskModel.InitiativeExternalLink" Typo="Typo.body2">@TskModel.InitiativeExternalId</MudLink>
+        }
+        
     </MudCardContent>
     <MudCardActions>
-        <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
+        @if (TskModel.Status == Status.Done) {
+            <MudIconButton Icon="@Icons.Filled.Archive" 
+                           Color="Color.Primary" 
+                           aria-label="Archive" 
+                           OnClick="@(() => ToggleIsArchived())" />
+        }
     </MudCardActions>
 </MudCard>
 

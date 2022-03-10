@@ -25,16 +25,44 @@ public partial class MainLayout {
 
     public MudTheme CustomTheme => new MudTheme() {
         Typography = new Typography() {
-            H5 = new H5() {
+            H1 = new H1() {
+                FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "4rem",
+                FontWeight = 500,
+                LineHeight = 1.6,
+                LetterSpacing = ".0075em"
+            },
+            H2 = new H2() {
+                FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "2.5rem",
+                FontWeight = 500,
+                LineHeight = 1.6,
+                LetterSpacing = ".0075em"
+            },
+            H3 = new H3() {
+                FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "2rem",
+                FontWeight = 500,
+                LineHeight = 1.6,
+                LetterSpacing = ".0075em"
+            },
+            H4 = new H4() {
                 FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
                 FontSize = "1.25rem",
                 FontWeight = 500,
                 LineHeight = 1.6,
                 LetterSpacing = ".0075em"
             },
-            H6 = new H6() {
+            H5 = new H5() {
                 FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
                 FontSize = ".9rem",
+                FontWeight = 500,
+                LineHeight = 1.6,
+                LetterSpacing = ".0075em"
+            },
+            H6 = new H6() {
+                FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
+                FontSize = ".75rem",
                 FontWeight = 500,
                 LineHeight = 1.6,
                 LetterSpacing = ".0075em"
