@@ -58,20 +58,30 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
         return null;
     }
 
-    public async Task ToggleInFocus() {
-        TskModel.IsInFocus = !TskModel.IsInFocus;
-        await Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
-            Id = TskModel.Id,
-            IsInFocus = TskModel.IsInFocus
-        }));
+    public bool IsInFocus {
+        get {
+            return TskModel.IsInFocus;
+        }
+        set {
+            TskModel.IsInFocus = !TskModel.IsInFocus;
+            Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                Id = TskModel.Id,
+                IsInFocus = TskModel.IsInFocus
+            }));
+        }
     }
 
-    public async Task ToggleIsArchived() {
-        TskModel.IsArchived = !TskModel.IsArchived;
-        await Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
-            Id = TskModel.Id,
-            IsArchived = TskModel.IsArchived
-        }));
+    public bool IsArchived {
+        get {
+            return TskModel.IsArchived;
+        }
+        set {
+            TskModel.IsArchived = !TskModel.IsArchived;
+            Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                Id = TskModel.Id,
+                IsArchived = TskModel.IsArchived
+            }));
+        }
     }
 
     public async Task Edit() {

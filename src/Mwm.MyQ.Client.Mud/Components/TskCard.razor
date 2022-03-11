@@ -9,55 +9,75 @@
          > <!--Style="width: 300px;"-->
     <MudCardHeader Style="@HeaderStyle" Class="p-2">
         <CardHeaderContent>
-            @if (IncludeCompanyName) {
-                <MudText Typo="Typo.h6" Color="Color.Surface">
-                    @TskModel.CompanyName > @TskModel.InitiativeName
-                </MudText>
-            } else {
-                <MudText Typo="Typo.h6" Color="Color.Surface">
-                    @TskModel.InitiativeName 
-                </MudText>
-            }
-            
+            <MudGrid>
+                @if (IncludeCompanyName) {
+                    <MudItem xs="8">
+                        <MudText Typo="Typo.h6" Color="Color.Surface">
+                            @TskModel.CompanyName > @TskModel.InitiativeName
+                        </MudText>
+                    </MudItem>
+                } else {
+                    <MudItem xs="8">
+                        <MudText Typo="Typo.h6" Color="Color.Surface">
+                            @TskModel.InitiativeName 
+                        </MudText>
+                    </MudItem>
+                }
+                @if (@TskModel.InitiativeExternalLink != null) {
+                    <MudItem xs="4" Class="justify-end">
+                        <MudLink Target="_blank" 
+                                 Href="@TskModel.InitiativeExternalLink" 
+                                 Typo="Typo.body2">
+                            @TskModel.InitiativeExternalId
+                        </MudLink>
+                    </MudItem>
+                }
+            </MudGrid>
             <MudText Typo="Typo.h5">@TskModel.Name</MudText>
         </CardHeaderContent>
-@*        <CardHeaderActions>
-            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-        </CardHeaderActions>*@
     </MudCardHeader>
-    <MudCardContent>
-        <MudText>@TskModel.Notes</MudText>
-        
-        
-    </MudCardContent>
+    @if (!string.IsNullOrEmpty(TskModel.Notes)) {
+        <MudCardContent>
+            <MudText>@TskModel.Notes</MudText>
+            <MudDivider />
+        </MudCardContent>
+    }
+    
     <MudCardActions>
+        
         <MudGrid>
-            <MudItem xs="4">
-                @if (@TskModel.InitiativeExternalLink != null) {
-                    <MudLink Target="_blank" Href="@TskModel.InitiativeExternalLink" Typo="Typo.body2">@TskModel.InitiativeExternalId</MudLink>
-                }
-                
+            <MudItem xs="5">
+                <MudText Typo="Typo.h6" Color="Color.Surface" Class="@DueDateDisplayClass" >
+                    @DueDateDisplay
+                </MudText>
             </MudItem>
-            <MudItem xs="6">
+            <MudItem xs="5">
+                <MudText Typo="Typo.h6" Color="Color.Surface">
+                    @HourProgressDisplay
+                </MudText>
             </MudItem>
             <MudItem xs="2">
                 @if (TskModel.Status == Status.Done) {
-                    <MudIconButton Icon="@Icons.Filled.Archive" 
-                                   Size="Size.Small"
-                                   Color="Color.Primary" 
-                                   aria-label="Archive" 
-                                   OnClick="@(() => ToggleIsArchived())" />
-
-                    <MudToggleIconButton @bind-Toggled="@IsActionStatusOnly"
-                         Icon="@Icons.Outlined.OfflineBolt" 
+                    <MudToggleIconButton @bind-Toggled="@IsArchived"
+                         Icon="@Icons.Filled.Archive" 
                          Color="@Color.Error" 
                          Title="All Statuses"
-                         Size="Size.Large" 
-                         ToggledIcon="@Icons.Outlined.OfflineBolt" 
+                         Size="Size.Small" 
+                         ToggledIcon="@Icons.Filled.Archive" 
                          ToggledColor="@Color.Success" 
                          ToggledTitle="Action Statuses" 
-                         ToggledSize="Size.Large" />
+                         ToggledSize="Size.Small" />
                 }
+
+                <MudToggleIconButton @bind-Toggled="@IsInFocus"
+                         Icon="@Icons.Filled.Biotech" 
+                         Color="@Color.Error" 
+                         Title="All Statuses"
+                         Size="Size.Small" 
+                         ToggledIcon="@Icons.Filled.Biotech" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Action Statuses" 
+                         ToggledSize="Size.Small" />
             </MudItem>
         </MudGrid>
     </MudCardActions>
