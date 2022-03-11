@@ -18,6 +18,7 @@
                     @TskModel.InitiativeName 
                 </MudText>
             }
+            
             <MudText Typo="Typo.h5">@TskModel.Name</MudText>
         </CardHeaderContent>
 @*        <CardHeaderActions>
@@ -26,18 +27,39 @@
     </MudCardHeader>
     <MudCardContent>
         <MudText>@TskModel.Notes</MudText>
-        @if (@TskModel.InitiativeExternalLink != null) {
-            <MudLink Target="_blank" Href="@TskModel.InitiativeExternalLink" Typo="Typo.body2">@TskModel.InitiativeExternalId</MudLink>
-        }
+        
         
     </MudCardContent>
     <MudCardActions>
-        @if (TskModel.Status == Status.Done) {
-            <MudIconButton Icon="@Icons.Filled.Archive" 
-                           Color="Color.Primary" 
-                           aria-label="Archive" 
-                           OnClick="@(() => ToggleIsArchived())" />
-        }
+        <MudGrid>
+            <MudItem xs="4">
+                @if (@TskModel.InitiativeExternalLink != null) {
+                    <MudLink Target="_blank" Href="@TskModel.InitiativeExternalLink" Typo="Typo.body2">@TskModel.InitiativeExternalId</MudLink>
+                }
+                
+            </MudItem>
+            <MudItem xs="6">
+            </MudItem>
+            <MudItem xs="2">
+                @if (TskModel.Status == Status.Done) {
+                    <MudIconButton Icon="@Icons.Filled.Archive" 
+                                   Size="Size.Small"
+                                   Color="Color.Primary" 
+                                   aria-label="Archive" 
+                                   OnClick="@(() => ToggleIsArchived())" />
+
+                    <MudToggleIconButton @bind-Toggled="@IsActionStatusOnly"
+                         Icon="@Icons.Outlined.OfflineBolt" 
+                         Color="@Color.Error" 
+                         Title="All Statuses"
+                         Size="Size.Large" 
+                         ToggledIcon="@Icons.Outlined.OfflineBolt" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Action Statuses" 
+                         ToggledSize="Size.Large" />
+                }
+            </MudItem>
+        </MudGrid>
     </MudCardActions>
 </MudCard>
 
