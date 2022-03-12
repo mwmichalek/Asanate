@@ -12,8 +12,11 @@
                onmouseover="@(() => DrawOpen())"
                onmouseout="@(() => DrawClose())"
                Elevation="2" Variant="@DrawerVariant.Mini">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h5" Class="mt-1">MyQ</MudText>
+        <MudDrawerHeader Class="p-2">
+            <MudAvatar Rounded="true" Color="Color.Warning" Variant="Variant.Filled">
+                <MudIcon Color="Color.Dark" Icon="@Icons.Filled.Group" Size="Size.Large" />
+            </MudAvatar>
+  
         </MudDrawerHeader>
         <NavMenu/>
     </MudDrawer>

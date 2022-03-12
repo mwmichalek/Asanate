@@ -1,12 +1,11 @@
 ﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
 @using Mwm.MyQ.Client.Service.Models
 @using Mwm.MyQ.Domain
-
+@using MudBlazor
 <MudCard Outlined="true"
          Class="m-2" 
-         
-         @ondblclick="@Edit"
-         > <!--Style="width: 300px;"-->
+         @ondblclick="@Edit">
+         <!--Style="width: 300px;"-->
     <MudCardHeader Style="@HeaderStyle" Class="p-2">
         <CardHeaderContent>
             <MudGrid>
@@ -47,7 +46,15 @@
         <MudGrid>
             <MudItem xs="5" Class="d-flex justify-start">
                 @if (!string.IsNullOrEmpty(DueDateDisplay)) {
-                    <MudText Typo="Typo.h6">@DueDateDisplay</MudText><MudChip Size="Size.Small" Variant="Variant.Text" Color="@DueDateCountColor">@DueDateCount</MudChip>
+                    <MudText Typo="Typo.h6"
+                             Class="mt-2">
+                        @DueDateDisplay
+                    </MudText>
+                    <MudChip Size="Size.Small" 
+                             Variant="Variant.Text" 
+                             Color="@DueDateCountColor">
+                        @DueDateCount
+                    </MudChip>
                 }
             </MudItem>
             <MudItem xs="5">
@@ -59,7 +66,7 @@
                 @if (TskModel.Status == Status.Done) {
                     <MudToggleIconButton @bind-Toggled="@IsArchived"
                          Icon="@Icons.Filled.Archive" 
-                         Color="@Color.Error" 
+                         Color="@Color.Default" 
                          Title="All Statuses"
                          Size="Size.Small" 
                          ToggledIcon="@Icons.Filled.Archive" 
@@ -69,7 +76,7 @@
                 } else {
                     <MudToggleIconButton @bind-Toggled="@IsDone"
                          Icon="@Icons.Filled.CheckBox" 
-                         Color="@Color.Error" 
+                         Color="@Color.Default" 
                          Title="All Statuses"
                          Size="Size.Small" 
                          ToggledIcon="@Icons.Filled.CheckBox" 
@@ -80,7 +87,7 @@
 
                 <MudToggleIconButton @bind-Toggled="@IsInFocus"
                          Icon="@Icons.Filled.Biotech" 
-                         Color="@Color.Error" 
+                         Color="@Color.Default" 
                          Title="All Statuses"
                          Size="Size.Small" 
                          ToggledIcon="@Icons.Filled.Biotech" 
