@@ -2,79 +2,108 @@
 @using Mwm.MyQ.Domain
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<MudGrid>
-    <MudItem xs="4">
-        <MudSelect @bind-Value="SelectedProject" Label="Project" AnchorOrigin="Origin.BottomCenter" ToStringFunc="((p) => p.Name)">
-            @foreach (var project in Projects) {
-                <MudSelectItem Value="@project" />
-            }
-        </MudSelect>
-    </MudItem>
-    <MudItem xs="4">
-        @if (!IsInInitiativeCreationMode) {
-            <MudGrid>
-                <MudItem xs="11">
-                    <MudSelect @bind-Value="SelectedInitiative" Label="Initiative" AnchorOrigin="Origin.BottomCenter" ToStringFunc="((p) => p.Name)">
-                        @foreach (var initiative in Initiatives) {
-                            <MudSelectItem Value="@initiative" />
-                        }
-                    </MudSelect>
-                </MudItem>
-                <MudItem xs="1">
-                    <MudIconButton Icon="@Icons.Filled.Add"
-                                   Variant="Variant.Outlined"
-                                   Color="Color.Primary"
-                                   Size="Size.Small"
-                                   Class="mt-4"
-                                   OnClick="(() => SetInitiativeCreationMode(true))" />
-                </MudItem>
-            </MudGrid>
-        } else {
-            <EditForm Model="@PendingInitiative" OnValidSubmit="SavePendingInitiativeAsync">
+<EditForm Model="@PendingTsk" 
+          Context="Tsk" 
+          OnValidSubmit="SavePendingTskAsync">
+    <MudGrid>
+        <MudItem xs="6">
+            <MudSelect @bind-Value="SelectedProject" 
+                       Label="Project" 
+                       AnchorOrigin="Origin.BottomCenter" 
+                       ToStringFunc="((p) => p.Name)">
+                @foreach (var project in Projects) {
+                    <MudSelectItem Value="@project" />
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="6">
+            @if (!IsInInitiativeCreationMode) {
                 <MudGrid>
-                    @if (!string.IsNullOrEmpty(PendingInitiativeExternalIdPrefix)) {
-                        <MudItem xs="6">
-                            <MudTextField @bind-Value="PendingInitiative.Name" 
-                                          Label="Initiative Name" 
-                                          AutoFocus="true"
-                                          Variant="Variant.Text"
-                                          RequiredError="Initiative Name is required!"
-                                          For="@(() => PendingInitiative.Name)" />
-                        </MudItem>
-  
-                        <MudItem xs="3">
-                            <MudTextField @bind-Value="PendingInitiative.ExternalId" 
-                                          Adornment="Adornment.Start"
-                                          AdornmentText="@PendingInitiativeExternalIdPrefix"
-                                          Label="Initiative Id" 
-                                          Variant="Variant.Text" 
-                                          For="@(() => PendingInitiative.ExternalId)" />
-                        </MudItem>
-                    } else {
-                        <MudItem xs="9">
-                            <MudTextField @bind-Value="PendingInitiative.Name" 
-                                          Label="Initiative Name" 
-                                          AutoFocus="true"
-                                          Variant="Variant.Text"
-                                          RequiredError="Initiative Name is required!"/>
-                        </MudItem>
-                    }
-                    <MudItem xs="3">
-                        <MudIconButton Icon="@Icons.Filled.Save"
-                                       ButtonType="ButtonType.Submit"
-                                       Variant="Variant.Outlined"
-                                       Color="Color.Primary"
-                                       Size="Size.Small"
-                                       Class="mt-4" />
-                        <MudIconButton Icon="@Icons.Filled.Cancel"
+                    <MudItem xs="11">
+                        <MudSelect @bind-Value="SelectedInitiative" 
+                                   Label="Initiative" 
+                                   AnchorOrigin="Origin.BottomCenter" 
+                                   ToStringFunc="((p) => p.Name)">
+                            @foreach (var initiative in Initiatives) {
+                                <MudSelectItem Value="@initiative" />
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="1">
+                        <MudIconButton Icon="@Icons.Filled.Add"
                                        Variant="Variant.Outlined"
                                        Color="Color.Primary"
                                        Size="Size.Small"
                                        Class="mt-4"
-                                       OnClick="(() => SetInitiativeCreationMode(false))" />
+                                       OnClick="(() => SetInitiativeCreationMode(true))" />
                     </MudItem>
                 </MudGrid>
-            </EditForm>
-        }
-    </MudItem>
-</MudGrid>
+            } else {
+                <EditForm Context="Initiative" 
+                          Model="@PendingInitiative" 
+                          OnValidSubmit="SavePendingInitiativeAsync">
+                    <MudGrid>
+                        @if (!string.IsNullOrEmpty(PendingInitiativeExternalIdPrefix)) {
+                            <MudItem xs="6">
+                                <MudTextField @bind-Value="PendingInitiative.Name" 
+                                              Label="Initiative Name" 
+                                              AutoFocus="true"
+                                              Variant="Variant.Text"
+                                              RequiredError="Initiative Name is required!"
+                                              For="@(() => PendingInitiative.Name)" />
+                            </MudItem>
+  
+                            <MudItem xs="3">
+                                <MudTextField @bind-Value="PendingInitiative.ExternalId" 
+                                              Adornment="Adornment.Start"
+                                              AdornmentText="@PendingInitiativeExternalIdPrefix"
+                                              Label="Initiative Id" 
+                                              Variant="Variant.Text" 
+                                              For="@(() => PendingInitiative.ExternalId)" />
+                            </MudItem>
+                        } else {
+                            <MudItem xs="9">
+                                <MudTextField @bind-Value="PendingInitiative.Name" 
+                                              Label="Initiative Name" 
+                                              AutoFocus="true"
+                                              Variant="Variant.Text"
+                                              RequiredError="Initiative Name is required!"/>
+                            </MudItem>
+                        }
+                        <MudItem xs="3">
+                            <MudIconButton Icon="@Icons.Filled.Save"
+                                           ButtonType="ButtonType.Submit"
+                                           Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           Class="mt-4" />
+                            <MudIconButton Icon="@Icons.Filled.Cancel"
+                                           Variant="Variant.Outlined"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           Class="mt-4"
+                                           OnClick="(() => SetInitiativeCreationMode(false))" />
+                        </MudItem>
+                    </MudGrid>
+                </EditForm>
+            }
+        </MudItem>
+        <MudItem xs="6">
+            <MudSelect @bind-Value="PendingTsk.Status" 
+                       Label="Status" 
+                       AnchorOrigin="Origin.BottomCenter" 
+                       ToStringFunc="((s) => s.ToStr())" >
+                <MudSelectItem Value="@Status.Open" />
+                <MudSelectItem Value="@Status.Ready_To_Start" />
+            </MudSelect>
+
+            @*<div class="col-md-3">
+                <label class="text-light" for="status">Status</label><br />
+                <SfRadioButton Label="@Status.Open.ToStr()" Name="status" Value="@Status.Open.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+                <SfRadioButton Label="@Status.Planned.ToStr()" Name="status" Value="@Status.Planned.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+                <SfRadioButton Label="@Status.Ready_To_Start.ToStr()" Name="status" Value="@Status.Ready_To_Start.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+            </div>*@
+
+        </MudItem>
+    </MudGrid>
+</EditForm>

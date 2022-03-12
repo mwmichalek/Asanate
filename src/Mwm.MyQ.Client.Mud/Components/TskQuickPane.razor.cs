@@ -60,7 +60,7 @@ public partial class TskQuickPane : FluxorComponent {
     public Initiative PendingInitiative { get; set; } = new Initiative();
     public string PendingInitiativeExternalIdPrefix { get; set; } = string.Empty;
 
-
+    public Tsk PendingTsk { get; set; } = new Tsk();
 
     public List<Project> Projects { get; set; } = new List<Project>();
 
@@ -82,6 +82,7 @@ public partial class TskQuickPane : FluxorComponent {
         get => selectedInitiative; 
         set {
             selectedInitiative = value;
+            PendingTsk.InitiativeId = selectedInitiative.Id;
         }
     }
 
@@ -127,7 +128,7 @@ public partial class TskQuickPane : FluxorComponent {
                 InitiativesState.Value.CurrentEntity != null &&
                 InitiativesState.Value.CurrentEntity.Name == PendingInitiative.Name) {
 
-                selectedInitiative = InitiativesState.Value.CurrentEntity;
+                SelectedInitiative = InitiativesState.Value.CurrentEntity;
                 PendingInitiativeExternalIdPrefix = string.Empty;
                 PendingInitiative = new Initiative();
             }
@@ -144,8 +145,8 @@ public partial class TskQuickPane : FluxorComponent {
                                                          .ToList();
 
             // If initiative is not set or from a different project, update that shit
-            if (selectedInitiative == null || selectedInitiative.ProjectId != selectedProjectId) 
-                selectedInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
+            if (SelectedInitiative == null || SelectedInitiative.ProjectId != selectedProjectId) 
+                SelectedInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
                                                                                           i.Name == Initiative.DefaultInitiativeName);
 
             StateHasChanged();
@@ -172,7 +173,7 @@ public partial class TskQuickPane : FluxorComponent {
         StateHasChanged();
     }
 
-    public async Task Saving() {
+    public async Task SavePendingTskAsync() {
         //try {
 
         //    if (!string.IsNullOrEmpty(NewTskName) && !IsInInitiativeCreationMode) {
