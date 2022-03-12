@@ -4,14 +4,18 @@
 
 <MudGrid> 
     <MudItem xs="3">
-        <MudSelect T="DropDown<Project>" SelectedValues="@SelectedProjectDropDown" Label="Project" AnchorOrigin="Origin.BottomCenter">
-            @foreach (var projectDropDown in ProjectDropDowns) {
-                <MudSelectItem Value="@projectDropDown"  /> 
+        <MudSelect @bind-Value="SelectedProject" Label="Project" AnchorOrigin="Origin.BottomCenter" ToStringFunc="((p) => p.Name)">
+            @foreach (var project in Projects) {
+                <MudSelectItem Value="@project"  /> 
             }
         </MudSelect>
     </MudItem>
-    <MudItem xs="4" Class="justify-end">
-       
+    <MudItem xs="3">
+       <MudSelect @bind-Value="SelectedInitiative" Label="Initiative" AnchorOrigin="Origin.BottomCenter" ToStringFunc="((p) => p.Name)">
+            @foreach (var initiative in Initiatives) {
+                <MudSelectItem Value="@initiative"  /> 
+            }
+        </MudSelect>
     </MudItem>
 </MudGrid>
 
