@@ -44,6 +44,7 @@ namespace Mwm.MyQ.Application.Initiatives.Commands {
                 try {
                     var initiative = new Initiative {
                         ProjectId = command.ProjectId.Value,
+                        ExternalId = command.ExternalId,
                         Name = command.Name,
                         ModifiedDate = DateTime.Now
                     };

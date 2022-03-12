@@ -57,11 +57,10 @@ public partial class TskQuickPane : FluxorComponent {
 
     public bool IsInInitiativeCreationMode { get; set; } = false;
 
+    public Initiative PendingInitiative { get; set; } = new Initiative();
     public string PendingInitiativeExternalIdPrefix { get; set; } = string.Empty;
 
-    public string PendingInitiativeName { get; set; } = string.Empty;
 
-    public string PendingInitiativeExternalId { get; set; } = string.Empty;
 
     public List<Project> Projects { get; set; } = new List<Project>();
 
@@ -122,16 +121,15 @@ public partial class TskQuickPane : FluxorComponent {
     private void UpdateInitiativeDropDown() {
 
         if (InitiativesState.HasValue()) {
-            Logger.LogInformation($"DropDown Build: {PendingInitiativeName} [{InitiativesState.Value.CurrentEntity}]");
+            
             // New Initiative triggered rebuild of dropdown
-            if (!string.IsNullOrEmpty(PendingInitiativeName) && 
+            if (!string.IsNullOrEmpty(PendingInitiative.Name) && 
                 InitiativesState.Value.CurrentEntity != null &&
-                InitiativesState.Value.CurrentEntity.Name == PendingInitiativeName) {
+                InitiativesState.Value.CurrentEntity.Name == PendingInitiative.Name) {
 
                 selectedInitiative = InitiativesState.Value.CurrentEntity;
                 PendingInitiativeExternalIdPrefix = string.Empty;
-                PendingInitiativeName = string.Empty;
-                PendingInitiativeExternalId = string.Empty;
+                PendingInitiative = new Initiative();
             }
 
             Logger.LogInformation("Updating Initiatives Dropdown.");
@@ -156,15 +154,17 @@ public partial class TskQuickPane : FluxorComponent {
 
     public void SetInitiativeCreationMode(bool isInInitiativeCreationMode) {
         IsInInitiativeCreationMode = isInInitiativeCreationMode;
+        if (!IsInInitiativeCreationMode) 
+            PendingInitiative = new Initiative();
         StateHasChanged();
     }
 
-    public async Task SavePendingInitiative() {
+    public async Task SavePendingInitiativeAsync() {
 
         // Save to server
         await EntityStateFacade.Add<Initiative, InitiativeAdd.Command>(new InitiativeAdd.Command {
-            Name = PendingInitiativeName,
-            ExternalId = !string.IsNullOrEmpty(PendingInitiativeExternalId) ? PendingInitiativeExternalId : null,
+            Name = PendingInitiative.Name,
+            ExternalId = !string.IsNullOrEmpty(PendingInitiative.ExternalId) ? PendingInitiative.ExternalId : null,
             ProjectId = selectedProject.Id
         });
 
