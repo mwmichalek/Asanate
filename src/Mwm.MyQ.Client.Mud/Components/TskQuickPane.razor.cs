@@ -57,8 +57,11 @@ public partial class TskQuickPane : FluxorComponent {
 
     public bool IsInInitiativeCreationMode { get; set; } = false;
 
-    public string NewInitiativeExternalIdPrefix { get; set; } = string.Empty;
+    public string PendingInitiativeExternalIdPrefix { get; set; } = string.Empty;
 
+    public string PendingInitiativeName { get; set; } = string.Empty;
+
+    public string PendingInitiativeExternalId { get; set; } = string.Empty;
 
     public List<Project> Projects { get; set; } = new List<Project>();
 
@@ -111,7 +114,7 @@ public partial class TskQuickPane : FluxorComponent {
                 if (genericProject != null) 
                     selectedProject = genericProject;
             }
-
+            IsInInitiativeCreationMode = false;
             UpdateInitiativeDropDown();
         }
     }
@@ -119,40 +122,54 @@ public partial class TskQuickPane : FluxorComponent {
     private void UpdateInitiativeDropDown() {
 
         if (InitiativesState.HasValue()) {
+            Logger.LogInformation($"DropDown Build: {PendingInitiativeName} [{InitiativesState.Value.CurrentEntity}]");
+            // New Initiative triggered rebuild of dropdown
+            if (!string.IsNullOrEmpty(PendingInitiativeName) && 
+                InitiativesState.Value.CurrentEntity != null &&
+                InitiativesState.Value.CurrentEntity.Name == PendingInitiativeName) {
+
+                selectedInitiative = InitiativesState.Value.CurrentEntity;
+                PendingInitiativeExternalIdPrefix = string.Empty;
+                PendingInitiativeName = string.Empty;
+                PendingInitiativeExternalId = string.Empty;
+            }
+
             Logger.LogInformation("Updating Initiatives Dropdown.");
             var selectedProjectId = selectedProject.Id;
             Project project = ProjectsState.FindById(selectedProjectId);
-            NewInitiativeExternalIdPrefix = (project != null && !string.IsNullOrEmpty(project.ExternalIdPrexfix)) ?
+            PendingInitiativeExternalIdPrefix = (project != null && !string.IsNullOrEmpty(project.ExternalIdPrexfix)) ?
                 $"{project.ExternalIdPrexfix}-" :
                 string.Empty;
 
             Initiatives = InitiativesState.Value.Entities.Where(i => i.ProjectId == selectedProjectId)
                                                          .OrderBy(i => i.Name)
                                                          .ToList();
+
             // If initiative is not set or from a different project, update that shit
-            if (selectedInitiative == null || selectedInitiative.ProjectId != selectedProjectId) {
+            if (selectedInitiative == null || selectedInitiative.ProjectId != selectedProjectId) 
                 selectedInitiative = InitiativesState.Value.Entities.SingleOrDefault(i => i.ProjectId == selectedProjectId &&
                                                                                           i.Name == Initiative.DefaultInitiativeName);
-            }
 
             StateHasChanged();
         }
     }
 
-    public async Task SetInitiativeCreationMode(bool isInInitiativeCreationMode) {
-        this.IsInInitiativeCreationMode = isInInitiativeCreationMode;
-        //if (!isInInitiativeCreationMode) {
-        //    NewInitiativeName = string.Empty;
-        //    NewInitiativeExternalId = string.Empty;
-        //}
-
+    public void SetInitiativeCreationMode(bool isInInitiativeCreationMode) {
+        IsInInitiativeCreationMode = isInInitiativeCreationMode;
         StateHasChanged();
+    }
 
-        if (isInInitiativeCreationMode) {
-            //if (refInitiativeName == null)
-            //    await Task.Delay(1000);
-            //await refInitiativeName?.FocusAsync();
-        }
+    public async Task SavePendingInitiative() {
+
+        // Save to server
+        await EntityStateFacade.Add<Initiative, InitiativeAdd.Command>(new InitiativeAdd.Command {
+            Name = PendingInitiativeName,
+            ExternalId = !string.IsNullOrEmpty(PendingInitiativeExternalId) ? PendingInitiativeExternalId : null,
+            ProjectId = selectedProject.Id
+        });
+
+        IsInInitiativeCreationMode = false;
+        StateHasChanged();
     }
 
     public async Task Saving() {

@@ -60,6 +60,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     [HttpPost("Add")]
     public async Task<IActionResult> Add(TAddEntityCommand command) {
         var sw = Stopwatch.StartNew();
+        _logger.LogInformation("Taking giant shit");
         var result = await _entityService.ExecuteAddCommand(command);
 
         if (result.IsSuccess) {

@@ -2,143 +2,191 @@
 @using Mwm.MyQ.Domain
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<MudGrid> 
-    <MudItem xs="3">
+<MudGrid>
+    <MudItem xs="4">
         <MudSelect @bind-Value="SelectedProject" Label="Project" AnchorOrigin="Origin.BottomCenter" ToStringFunc="((p) => p.Name)">
             @foreach (var project in Projects) {
-                <MudSelectItem Value="@project"  /> 
+                <MudSelectItem Value="@project" />
             }
         </MudSelect>
     </MudItem>
-    <MudItem xs="3">
-       <MudSelect @bind-Value="SelectedInitiative" Label="Initiative" AnchorOrigin="Origin.BottomCenter" ToStringFunc="((p) => p.Name)">
-            @foreach (var initiative in Initiatives) {
-                <MudSelectItem Value="@initiative"  /> 
-            }
-        </MudSelect>
+    <MudItem xs="4">
+        @if (!IsInInitiativeCreationMode) {
+            <MudGrid>
+                <MudItem xs="11">
+                    <MudSelect @bind-Value="SelectedInitiative" Label="Initiative" AnchorOrigin="Origin.BottomCenter" ToStringFunc="((p) => p.Name)">
+                        @foreach (var initiative in Initiatives) {
+                            <MudSelectItem Value="@initiative" />
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="1">
+                    <MudIconButton Icon="@Icons.Filled.Add"
+                                   Variant="Variant.Outlined"
+                                   Color="Color.Primary"
+                                   Size="Size.Small"
+                                   Class="mt-4"
+                                   OnClick="(() => SetInitiativeCreationMode(true))" />
+                </MudItem>
+            </MudGrid>
+        } else {
+            <MudGrid>
+                @if (!string.IsNullOrEmpty(PendingInitiativeExternalIdPrefix)) {
+                    <MudItem xs="6">
+                        <MudTextField @bind-Value="PendingInitiativeName" Label="Initiative" Variant="Variant.Text" />
+                    </MudItem>
+  
+                    <MudItem xs="3">
+                        <MudTextField @bind-Value="PendingInitiativeExternalId" 
+                                      Adornment="Adornment.Start"
+                                      AdornmentText="@PendingInitiativeExternalIdPrefix"
+                                      Label="Standard" 
+                                      Variant="Variant.Text" />
+                    </MudItem>
+                } else {
+                    <MudItem xs="9">
+                        <MudTextField @bind-Value="PendingInitiativeName" Label="Initiative" Variant="Variant.Text" />
+                    </MudItem>
+                }
+                <MudItem xs="3">
+                    <MudIconButton Icon="@Icons.Filled.Save"
+                               Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               Class="mt-4"
+                               OnClick="(() => SavePendingInitiative())" />
+                    <MudIconButton Icon="@Icons.Filled.Cancel"
+                               Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               Class="mt-4"
+                               OnClick="(() => SetInitiativeCreationMode(false))" />
+                </MudItem>
+            </MudGrid>
+        }
     </MudItem>
 </MudGrid>
 
 @*<div class="container">
     <div class="row mb-4">
-        <div class="col-md-3">
-            <label class="text-light" for="projects">Project</label>
-            <SfDropDownList ID="projects"
-                            TValue="int"
-                            TItem="DropDownEntity"
-                            DataSource="@ProjectDropDownEntities"
-                            @bind-Value="@SelectedProjectId">
-                <DropDownListFieldSettings Value="Id"
-                                           Text="Name">
-                </DropDownListFieldSettings>
-            </SfDropDownList>
-        </div>
-        <div class="col-md-6">
-            <div class="container">
-                <div class="row">
-                    @if (!IsInInitiativeCreationMode) {
-                        <div class="col-md-10">
-                            <label class="text-light" for="initiatives">Initiative</label>
-                            <SfDropDownList ID="initiatives"
-                                        TValue="int"
-                                        TItem="DropDownEntity"
-                                        DataSource="@InitiativeDropDownEntities"
-                                        @bind-Value="@SelectedInitiativeId">
-                                <DropDownListFieldSettings Value="Id"
-                                                       Text="Name">
-                                </DropDownListFieldSettings>
-                            </SfDropDownList>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end p-0">
-                            <SfButton @onclick="() => SetInitiativeCreationMode(true)" class="btn btn-labeled btn-primary">
-                                <span class="btn-label"><i class="fa fa-folder-plus"></i></span>
-                            </SfButton>
-                        </div>
-                    } else {
-                        if (!string.IsNullOrEmpty(NewInitiativeExternalIdPrefix)) {
-                            <div class="col-md-6 p-0">
-                                <label class="text-light" for="initiative">Initiative</label>
-                                <SfTextBox Id="initiative"
-                                   class="form-control"
-                                   Placeholder="Initiative"
-                                   Input="@InitiativeNameChanged"
-                                   @ref="refInitiativeName"
-                                   @bind-Value="@NewInitiativeName"
-                                   @onkeydown="KeyboardEventHandler">
-                                </SfTextBox>
-                            </div>
-                            <div class="col-md-4 d-flex align-items-end pl-1">
-                                <span class="text-light mb-1">@NewInitiativeExternalIdPrefix</span>
-                                <SfTextBox Id="initiativeId"
-                                   class="form-control"
-                                   Placeholder="Id"
-                                   Input="@NewInitiativeExternalIdChanged"
-                                   @bind-Value="@NewInitiativeExternalId"
-                                   @onkeydown="KeyboardEventHandler">
-                                </SfTextBox>
-                            </div>
-                        } else {
-                            <div class="col-md-10 p-0">
-                                <label class="text-light" for="initiative">Initiative</label>
-                                <SfTextBox Id="initiative"
-                                   class="form-control"
-                                   Placeholder="Initiative"
-                                   Input="@InitiativeNameChanged"
-                                   @ref="refInitiativeName"
-                                   @bind-Value="@NewInitiativeName"
-                                   @onkeydown="KeyboardEventHandler">
-                                </SfTextBox>
-                            </div>
-                        }
-                        <div class="col-md-1 d-flex align-items-end">
-                            <SfButton @onclick="@Saving" class="btn btn-labeled btn-success">
-                                <span class="btn-label"><i class="fa fa-save"></i></span>
-                            </SfButton>
-                        </div>
-                        <div class="col-md-1 d-flex align-items-end">
-                            <SfButton @onclick="() => SetInitiativeCreationMode(false)" class="btn btn-labeled btn-danger">
-                                <span class="btn-label"><i class="fas fa-window-close"></i></span>
-                            </SfButton>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <label class="text-light" for="status">Status</label><br />
-            <SfRadioButton Label="@Status.Open.ToStr()" Name="status" Value="@Status.Open.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
-            <SfRadioButton Label="@Status.Planned.ToStr()" Name="status" Value="@Status.Planned.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
-            <SfRadioButton Label="@Status.Ready_To_Start.ToStr()" Name="status" Value="@Status.Ready_To_Start.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
-        </div>
+    <div class="col-md-3">
+    <label class="text-light" for="projects">Project</label>
+    <SfDropDownList ID="projects"
+    TValue="int"
+    TItem="DropDownEntity"
+    DataSource="@ProjectDropDownEntities"
+    @bind-Value="@SelectedProjectId">
+    <DropDownListFieldSettings Value="Id"
+    Text="Name">
+    </DropDownListFieldSettings>
+    </SfDropDownList>
+    </div>
+    <div class="col-md-6">
+    <div class="container">
+    <div class="row">
+    @if (!IsInInitiativeCreationMode) {
+    <div class="col-md-10">
+    <label class="text-light" for="initiatives">Initiative</label>
+    <SfDropDownList ID="initiatives"
+    TValue="int"
+    TItem="DropDownEntity"
+    DataSource="@InitiativeDropDownEntities"
+    @bind-Value="@SelectedInitiativeId">
+    <DropDownListFieldSettings Value="Id"
+    Text="Name">
+    </DropDownListFieldSettings>
+    </SfDropDownList>
+    </div>
+    <div class="col-md-2 d-flex align-items-end p-0">
+    <SfButton @onclick="() => SetInitiativeCreationMode(true)" class="btn btn-labeled btn-primary">
+    <span class="btn-label"><i class="fa fa-folder-plus"></i></span>
+    </SfButton>
+    </div>
+    } else {
+    if (!string.IsNullOrEmpty(NewInitiativeExternalIdPrefix)) {
+    <div class="col-md-6 p-0">
+    <label class="text-light" for="initiative">Initiative</label>
+    <SfTextBox Id="initiative"
+    class="form-control"
+    Placeholder="Initiative"
+    Input="@InitiativeNameChanged"
+    @ref="refInitiativeName"
+    @bind-Value="@NewInitiativeName"
+    @onkeydown="KeyboardEventHandler">
+    </SfTextBox>
+    </div>
+    <div class="col-md-4 d-flex align-items-end pl-1">
+    <span class="text-light mb-1">@NewInitiativeExternalIdPrefix</span>
+    <SfTextBox Id="initiativeId"
+    class="form-control"
+    Placeholder="Id"
+    Input="@NewInitiativeExternalIdChanged"
+    @bind-Value="@NewInitiativeExternalId"
+    @onkeydown="KeyboardEventHandler">
+    </SfTextBox>
+    </div>
+    } else {
+    <div class="col-md-10 p-0">
+    <label class="text-light" for="initiative">Initiative</label>
+    <SfTextBox Id="initiative"
+    class="form-control"
+    Placeholder="Initiative"
+    Input="@InitiativeNameChanged"
+    @ref="refInitiativeName"
+    @bind-Value="@NewInitiativeName"
+    @onkeydown="KeyboardEventHandler">
+    </SfTextBox>
+    </div>
+    }
+    <div class="col-md-1 d-flex align-items-end">
+    <SfButton @onclick="@Saving" class="btn btn-labeled btn-success">
+    <span class="btn-label"><i class="fa fa-save"></i></span>
+    </SfButton>
+    </div>
+    <div class="col-md-1 d-flex align-items-end">
+    <SfButton @onclick="() => SetInitiativeCreationMode(false)" class="btn btn-labeled btn-danger">
+    <span class="btn-label"><i class="fas fa-window-close"></i></span>
+    </SfButton>
+    </div>
+    }
+    </div>
+    </div>
+    </div>
+    <div class="col-md-3">
+    <label class="text-light" for="status">Status</label><br />
+    <SfRadioButton Label="@Status.Open.ToStr()" Name="status" Value="@Status.Open.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+    <SfRadioButton Label="@Status.Planned.ToStr()" Name="status" Value="@Status.Planned.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+    <SfRadioButton Label="@Status.Ready_To_Start.ToStr()" Name="status" Value="@Status.Ready_To_Start.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
+    </div>
 
     </div>
     <div class="row mb-4">
-        <div class="col-md-5">
-            <label class="text-light" for="name">Name @NewTskName</label>
-            <SfTextBox Id="name"
-                       class="form-control"
-                       Placeholder="Name"
-                       Input="@TskNameChanged"
-                       @ref="refTskName"
-                       @bind-Value="@NewTskName"
-                       @onkeydown="KeyboardEventHandler">
-            </SfTextBox>
-        </div>
-        <div class="col-md-3">
-            <label class="text-light" for="durationEstamate">Estimate (Hrs) @NewTskEstimatedDuration</label>
-            <SfTextBox Id="durationEstamate"
-                       class="form-control"
-                       Placeholder="Estimate"
-                       Input="@TskDurationEstimateChanged"
-                       @ref="refTskEstimatedDuration"
-                       @bind-Value="@NewTskEstimatedDuration"
-                       @onkeydown="KeyboardEventHandler">
-            </SfTextBox>
-        </div>
-        <div class="col-md-4  d-flex align-items-end">
-            <SfButton @onclick="@Saving" class="btn btn-labeled btn-danger">
-                <span class="btn-label"><i class="fa fa-save">&nbsp;Save</i></span>
-            </SfButton>
-        </div>
+    <div class="col-md-5">
+    <label class="text-light" for="name">Name @NewTskName</label>
+    <SfTextBox Id="name"
+    class="form-control"
+    Placeholder="Name"
+    Input="@TskNameChanged"
+    @ref="refTskName"
+    @bind-Value="@NewTskName"
+    @onkeydown="KeyboardEventHandler">
+    </SfTextBox>
     </div>
-</div>*@
+    <div class="col-md-3">
+    <label class="text-light" for="durationEstamate">Estimate (Hrs) @NewTskEstimatedDuration</label>
+    <SfTextBox Id="durationEstamate"
+    class="form-control"
+    Placeholder="Estimate"
+    Input="@TskDurationEstimateChanged"
+    @ref="refTskEstimatedDuration"
+    @bind-Value="@NewTskEstimatedDuration"
+    @onkeydown="KeyboardEventHandler">
+    </SfTextBox>
+    </div>
+    <div class="col-md-4  d-flex align-items-end">
+    <SfButton @onclick="@Saving" class="btn btn-labeled btn-danger">
+    <span class="btn-label"><i class="fa fa-save">&nbsp;Save</i></span>
+    </SfButton>
+    </div>
+    </div>
+    </div>*@
