@@ -42,21 +42,20 @@
             <MudDivider />
         </MudCardContent>
     }
-    
     <MudCardActions>
         
         <MudGrid>
-            <MudItem xs="5">
-                <MudText Typo="Typo.h6" Color="Color.Surface" Class="@DueDateDisplayClass" >
-                    @DueDateDisplay
-                </MudText>
+            <MudItem xs="5" Class="d-flex justify-start">
+                @if (!string.IsNullOrEmpty(DueDateDisplay)) {
+                    <MudText Typo="Typo.h6">@DueDateDisplay</MudText><MudChip Size="Size.Small" Variant="Variant.Text" Color="@DueDateCountColor">@DueDateCount</MudChip>
+                }
             </MudItem>
             <MudItem xs="5">
                 <MudText Typo="Typo.h6" Color="Color.Surface">
                     @HourProgressDisplay
                 </MudText>
             </MudItem>
-            <MudItem xs="2">
+            <MudItem xs="2" Class="d-flex justify-end">
                 @if (TskModel.Status == Status.Done) {
                     <MudToggleIconButton @bind-Toggled="@IsArchived"
                          Icon="@Icons.Filled.Archive" 
@@ -64,6 +63,16 @@
                          Title="All Statuses"
                          Size="Size.Small" 
                          ToggledIcon="@Icons.Filled.Archive" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Action Statuses" 
+                         ToggledSize="Size.Small" />
+                } else {
+                    <MudToggleIconButton @bind-Toggled="@IsDone"
+                         Icon="@Icons.Filled.CheckBox" 
+                         Color="@Color.Error" 
+                         Title="All Statuses"
+                         Size="Size.Small" 
+                         ToggledIcon="@Icons.Filled.CheckBox" 
                          ToggledColor="@Color.Success" 
                          ToggledTitle="Action Statuses" 
                          ToggledSize="Size.Small" />

@@ -21,16 +21,16 @@ namespace Mwm.MyQ.Domain {
 
         public static List<Status> AllStatuses => new List<Status> { 
             Status.Open, 
-            Status.Planned, 
             Status.Ready_To_Start, 
+            Status.In_Progress,
             Status.Pending, 
             Status.Done 
         };
 
         public static List<Status> ActionStatuses => new List<Status> {
             Status.Ready_To_Start,
-            Status.Pending,
-            Status.Done
+            Status.In_Progress,
+            Status.Pending
         };
 
 
@@ -39,6 +39,8 @@ namespace Mwm.MyQ.Domain {
             if (Enum.TryParse(typeof(Status), statusStr.Replace(" ", "_"), true, out object? statusObj))
                 return (Status)statusObj;
             if (statusStr == "Queued")
+                return Status.Open;
+            if (statusStr == "Planned")
                 return Status.Open;
             return Status.Unknown;
         }

@@ -20,7 +20,7 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
     //public EntityStateFacade EntityStateFacade { get; set; }
 
     [Inject]
-    public ModelFacade ModelFacade { get; set; }    
+    public ModelFacade ModelFacade { get; set; }
 
     public bool IncludeCompanyName { get; set; }
 
@@ -37,20 +37,27 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
     public string DueDateDisplay {
         get {
             var daysTillDueDate = DaysTillDueDate();
-            return (daysTillDueDate.HasValue) ? $"{TskModel.DueDate.Value.ToString("MM/dd/yyyy")} ({Math.Abs(daysTillDueDate.Value)})" : string.Empty;
-        }
-    }
-    public string DueDateDisplayClass {
-        get {
-            var daysTillDueDate = DaysTillDueDate();
-            return (!daysTillDueDate.HasValue) ? string.Empty :
-                   (daysTillDueDate > 0) ? "text-light" :
-                   (daysTillDueDate == 0) ? "text-warning" :
-                                            "text-danger";
+            return (daysTillDueDate.HasValue) ? $"{TskModel.DueDate.Value.ToString("MM/dd/yyyy")}" : string.Empty;
         }
     }
 
-    public int? DaysTillDueDate() {
+    public MudBlazor.Color DueDateCountColor {
+        get {
+            var daysTillDueDate = DaysTillDueDate();
+            return (!daysTillDueDate.HasValue || daysTillDueDate > 0) ? MudBlazor.Color.Info :
+                   (daysTillDueDate == 0) ? MudBlazor.Color.Warning :
+                                            MudBlazor.Color.Error;
+        }
+    }
+
+    public int? DueDateCount {
+        get {
+            var daysTillDueDate = DaysTillDueDate();
+            return daysTillDueDate.HasValue ? Math.Abs(daysTillDueDate.Value) : null;
+        } 
+    }
+        
+    private int? DaysTillDueDate() {
         if (TskModel.DueDate.HasValue && !TskModel.CompletedDate.HasValue) {
             var daysTillDueDate = -1 * (int)(DateTime.Now - TskModel.DueDate.Value).TotalDays;
             return daysTillDueDate;
@@ -67,6 +74,19 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
             Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
                 Id = TskModel.Id,
                 IsInFocus = TskModel.IsInFocus
+            }));
+        }
+    }
+
+    public bool IsDone {
+        get {
+            return TskModel.Status == Status.Done;
+        }
+        set {
+            TskModel.Status = Status.Done;  
+            Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+                Id = TskModel.Id,
+                Status = TskModel.Status
             }));
         }
     }

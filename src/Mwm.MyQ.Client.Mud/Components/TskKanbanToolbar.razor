@@ -1,0 +1,49 @@
+﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
+@using Mwm.MyQ.Client.Service.Models
+@using Mwm.MyQ.Domain
+
+<MudPaper Elevation="25"  >
+    <MudToolBar Class="p-1">
+        <MudToggleIconButton @bind-Toggled="@IsGroupedTogether"
+                         Icon="@Icons.Filled.Dehaze" 
+                         Color="@Color.Error" 
+                         Title="Grouped Together"
+                         Size="Size.Medium" 
+                         ToggledIcon="@Icons.Filled.Dehaze" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Grouped By Company" 
+                         ToggledSize="Size.Medium" />
+                         <MudSpacer />
+        <MudToggleIconButton @bind-Toggled="@IsActionStatusOnly"
+                         Icon="@Icons.Outlined.OfflineBolt" 
+                         Color="@Color.Error" 
+                         Title="All Statuses"
+                         Size="Size.Medium" 
+                         ToggledIcon="@Icons.Outlined.OfflineBolt" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Action Statuses" 
+                         ToggledSize="Size.Medium" />
+
+        <MudToggleIconButton @bind-Toggled="@IsInFocusOnly"
+                         Icon="@Icons.Filled.Biotech" 
+                         Color="@Color.Error" 
+                         Title="All Tsks"
+                         Size="Size.Medium" 
+                         ToggledIcon="@Icons.Filled.Biotech" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="In Focus Tsks" 
+                         ToggledSize="Size.Medium" /> 
+
+@*        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Class="mr-5" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Add" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Edit" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Remove" Color="Color.Inherit" />
+        <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Outlined.Notifications" />
+        <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
+        <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt" />
+        <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />*@
+
+    </MudToolBar>
+</MudPaper>

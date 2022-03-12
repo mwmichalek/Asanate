@@ -1,8 +1,9 @@
-﻿@using MyQ = Mwm.MyQ.Client.Mud.Pages 
+﻿@using Mwm.MyQ.Client.Mud.Components
+@using MyQ = Mwm.MyQ.Client.Mud.Pages 
 
 <MudText Typo="Typo.h6" Color="Color.Surface">
     @if (CurrentPage == MyQ.Page.Kanban) {
-        <span>Kanban</span>
+        <TskKanbanToolbar />
     } else if (CurrentPage == MyQ.Page.Notes) {
         <span>Notes</span>
     }
