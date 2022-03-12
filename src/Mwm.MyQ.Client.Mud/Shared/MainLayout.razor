@@ -6,13 +6,12 @@
 
 <MudLayout>
     <MudAppBar>
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        MyQ
-        <MudSpacer />
         <Mwm.MyQ.Client.Mud.Shared.TopNav />
-       
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" Elevation="2">
+    <MudDrawer @bind-Open="@IsDrawOpen" 
+               onmouseover="@(() => DrawOpen())"
+               onmouseout="@(() => DrawClose())"
+               Elevation="2" Variant="@DrawerVariant.Mini">
         <MudDrawerHeader>
             <MudText Typo="Typo.h5" Class="mt-1">MyQ</MudText>
         </MudDrawerHeader>

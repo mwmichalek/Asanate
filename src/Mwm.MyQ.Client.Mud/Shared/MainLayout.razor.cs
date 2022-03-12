@@ -18,10 +18,16 @@ using MudBlazor;
 namespace Mwm.MyQ.Client.Mud.Shared;
 
 public partial class MainLayout {
-    bool _drawerOpen = true;
-    void DrawerToggle() {
-        _drawerOpen = !_drawerOpen;
+
+    public void DrawOpen() {
+        IsDrawOpen = true;
     }
+
+    public void DrawClose() {
+        IsDrawOpen = false;
+    }
+
+    public bool IsDrawOpen { get; set; }
 
     public MudTheme CustomTheme => new MudTheme() {
         Typography = new Typography() {

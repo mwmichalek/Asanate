@@ -13,6 +13,4 @@ namespace Mwm.MyQ.Client.Mud.Pages;
 
 public partial class Kanban  { 
 
-    
-
 }
