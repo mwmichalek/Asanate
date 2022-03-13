@@ -5,8 +5,9 @@
 <EditForm Model="@PendingTsk" 
           Context="Tsk" 
           OnValidSubmit="SavePendingTskAsync">
+    <DataAnnotationsValidator/>
     <MudGrid>
-        <MudItem xs="6">
+        <MudItem xs="3">
             <MudSelect @bind-Value="SelectedProject" 
                        Label="Project" 
                        AnchorOrigin="Origin.BottomCenter" 
@@ -88,22 +89,43 @@
                 </EditForm>
             }
         </MudItem>
-        <MudItem xs="6">
+        <MudItem xs="3">
             <MudSelect @bind-Value="PendingTsk.Status" 
                        Label="Status" 
                        AnchorOrigin="Origin.BottomCenter" 
                        ToStringFunc="((s) => s.ToStr())" >
                 <MudSelectItem Value="@Status.Open" />
+                @*<MudSelectItem Value="@Status.Planned" />*@
                 <MudSelectItem Value="@Status.Ready_To_Start" />
             </MudSelect>
-
-            @*<div class="col-md-3">
-                <label class="text-light" for="status">Status</label><br />
-                <SfRadioButton Label="@Status.Open.ToStr()" Name="status" Value="@Status.Open.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
-                <SfRadioButton Label="@Status.Planned.ToStr()" Name="status" Value="@Status.Planned.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
-                <SfRadioButton Label="@Status.Ready_To_Start.ToStr()" Name="status" Value="@Status.Ready_To_Start.ToStr()" @bind-Checked="@NewTskStatus"></SfRadioButton>
-            </div>*@
-
+        </MudItem>
+        <MudItem xs="5">
+            <MudTextField @bind-Value="PendingTsk.Name" 
+                          Label="Name" 
+                          AutoFocus="true"
+                          Variant="Variant.Text"
+                          RequiredError="Name is required!"/>
+        </MudItem>
+        <MudItem xs="3">
+            <MudTextField @bind-Value="PendingTsk.DurationEstimate" 
+                          Label="Estimate" 
+                          Variant="Variant.Text"
+                          RequiredError="Estimate is required!"/>
+        </MudItem>
+        <MudItem xs="4">
+            <MudIconButton Icon="@Icons.Filled.Save"
+                           ButtonType="ButtonType.Submit"
+                           Variant="Variant.Outlined"
+                           Color="Color.Primary"
+                           Size="Size.Small"
+                           Class="mt-4" />
+            <MudIconButton Icon="@Icons.Filled.Cancel"
+                           Variant="Variant.Outlined"
+                           Color="Color.Primary"
+                           Size="Size.Small"
+                           Class="mt-4" />
+        </MudItem>
+        <MudItem xs="6">
         </MudItem>
     </MudGrid>
 </EditForm>

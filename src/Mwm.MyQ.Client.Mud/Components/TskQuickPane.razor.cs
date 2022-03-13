@@ -60,7 +60,7 @@ public partial class TskQuickPane : FluxorComponent {
     public Initiative PendingInitiative { get; set; } = new Initiative();
     public string PendingInitiativeExternalIdPrefix { get; set; } = string.Empty;
 
-    public Tsk PendingTsk { get; set; } = new Tsk();
+    public Tsk PendingTsk { get; set; } = new Tsk { Status = Status.Open };
 
     public List<Project> Projects { get; set; } = new List<Project>();
 
@@ -98,7 +98,7 @@ public partial class TskQuickPane : FluxorComponent {
         if (!ProjectsState.HasValue())
             await EntityStateFacade.Load<Project>();
 
-        TsksState.StateChanged += (s, e) => Saved(e);
+        TsksState.StateChanged += (s, e) => SavedPendingTsk();
         InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
         ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
         UpdateProjectDropDown();
@@ -174,6 +174,15 @@ public partial class TskQuickPane : FluxorComponent {
     }
 
     public async Task SavePendingTskAsync() {
+
+        await EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
+            Name = PendingTsk.Name,
+            DurationEstimate = PendingTsk.DurationEstimate > 0 ? PendingTsk.DurationEstimate : null,
+            Status = PendingTsk.Status,
+            InitiativeId = PendingTsk.InitiativeId
+        });
+
+
         //try {
 
         //    if (!string.IsNullOrEmpty(NewTskName) && !IsInInitiativeCreationMode) {
@@ -181,12 +190,7 @@ public partial class TskQuickPane : FluxorComponent {
         //        float.TryParse(NewTskEstimatedDuration, out float estimatedDuration);
         //        var tskStatus = NewTskStatus.ToStatus();
 
-        //        await EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
-        //            Name = NewTskName,
-        //            DurationEstimate = estimatedDuration > 0 ? estimatedDuration : null,
-        //            Status = tskStatus,
-        //            InitiativeId = selectedInitiative.Id
-        //        });
+
         //        PendingTskName = NewTskName;
         //        NewTskName = string.Empty;
         //        NewTskEstimatedDuration = string.Empty;
@@ -195,11 +199,7 @@ public partial class TskQuickPane : FluxorComponent {
         //    } else if (!string.IsNullOrEmpty(NewInitiativeName) && IsInInitiativeCreationMode) {
         //        Logger.LogInformation($"Pending item: {NewInitiativeName}");
 
-        //        await EntityStateFacade.Add<Initiative, InitiativeAdd.Command>(new InitiativeAdd.Command {
-        //            Name = NewInitiativeName,
-        //            ExternalId = NewInitiativeExternalId,
-        //            ProjectId = selectedInitiative.Id
-        //        });
+
         //        PendingInitiativeName = NewInitiativeName;
         //        NewInitiativeName = string.Empty;
         //        NewInitiativeExternalId = string.Empty;
@@ -212,40 +212,17 @@ public partial class TskQuickPane : FluxorComponent {
         //}
     }
 
-    public void Saved(EntityState<Tsk> entityState) {
-        //if (entityState.CurrentEntity != null &&
-        //    entityState.CurrentEntity.Name == PendingTskName) {
-        //    Logger.LogInformation($"Adding item to list: {PendingTskName}");
-
-        //    var tsk = entityState.CurrentEntity;
-
-        //    Initiative initiative = InitiativesState.FindById(tsk.InitiativeId);
-        //    Project project = (initiative != null) ? ProjectsState.FindById(initiative.ProjectId) : null;
-        //    Company company = (project != null) ? CompaniesState.FindById(project.CompanyId) : null;
-
-        //    SavedTskModels.Insert(0, new TskModel {
-        //        Name = tsk.Name,
-        //        InitiativeName = initiative.Name,
-        //        ProjectName = project.Name,
-        //        CompanyName = company.Name,
-        //        DurationEstimate = tsk.DurationEstimate,
-        //        Status = tsk.Status
-        //    });
-        //    PendingTskName = string.Empty;
-        //}
+    public void ResetPendingTsk() {
+        PendingTsk = new Tsk {
+            InitiativeId = PendingTsk.InitiativeId,
+            Status = PendingTsk.Status
+        };
     }
 
-    //private void TskNameChanged(InputEventArgs args) => NewTskName = args.Value;
+    public void SavedPendingTsk() {
+        if (TsksState.Value.CurrentEntity != null &&
+            TsksState.Value.CurrentEntity.Name == PendingTsk.Name)
+            ResetPendingTsk();
+    }
 
-    //private void TskDurationEstimateChanged(InputEventArgs args) => NewTskEstimatedDuration = args.Value;
-
-    //private void InitiativeNameChanged(InputEventArgs args) => NewInitiativeName = args.Value;
-
-    //private void NewInitiativeExternalIdChanged(InputEventArgs args) => NewInitiativeExternalId = args.Value;
-
-    //public async Task KeyboardEventHandler(KeyboardEventArgs args) {
-    //    if (args.Key == "Enter")
-    //        await Saving();
-    //    return;
-    //}
 }

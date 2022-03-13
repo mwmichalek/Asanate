@@ -22,12 +22,12 @@
                            Color="Color.Primary" 
                            aria-label="Edit" 
                            OnClick="@(() => Edit(@context))" />
-            
-            <MudIconButton Icon="@Icons.Filled.Check" 
+            @if (@context.Status != Status.Done) {
+                <MudIconButton Icon="@Icons.Filled.Check" 
                            Color="Color.Primary" 
                            aria-label="Complete" 
                            OnClick="@(() => Complete(@context))" />
-            @if (@context.Status == Status.Done) {
+            } else {
                 <MudIconButton Icon="@Icons.Filled.Archive" 
                            Color="Color.Primary" 
                            aria-label="Archive" 
@@ -37,9 +37,4 @@
     </RowTemplate>
 </MudTable>
 
-
-@*
-                    <button @onclick="() => ShowTskEditor(tskModel)" class="btn btn-primary"><i class="fas fa-pen-square"></i></button>
-                    <button class="btn btn-primary"><i class="fas fa-archive"></i></button>
-                    <button class="btn btn-primary"><i class="fas fa-check-square"></i></button>*@
 
