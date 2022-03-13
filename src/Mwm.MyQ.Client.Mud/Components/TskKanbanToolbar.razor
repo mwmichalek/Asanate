@@ -4,6 +4,17 @@
 
 <MudPaper Elevation="25"  >
     <MudToolBar Class="p-1">
+        
+                         <MudSpacer />
+        <MudToggleIconButton @bind-Toggled="@IsTskQuickPaneVisible"
+                         Icon="@Icons.Filled.AddTask" 
+                         Color="@Color.Default" 
+                         Title="Add Tsks"
+                         Size="Size.Medium" 
+                         ToggledIcon="@Icons.Filled.AddTask" 
+                         ToggledColor="@Color.Success" 
+                         ToggledTitle="Add Tsks" 
+                         ToggledSize="Size.Medium" />
         <MudToggleIconButton @bind-Toggled="@IsGroupedTogether"
                          Icon="@Icons.Filled.Dehaze" 
                          Color="@Color.Default" 

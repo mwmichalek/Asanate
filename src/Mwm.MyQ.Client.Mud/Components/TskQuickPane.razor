@@ -1,8 +1,8 @@
-﻿@using Mwm.MyQ.Client.Mud.Models.Shared
+﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
+@using Mwm.MyQ.Client.Service.Models
 @using Mwm.MyQ.Domain
-@inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
-<MudPaper Height="170px" Class="p-2">
+<MudPaper Height="170px" Class="@($"p-2 {PaneClasses}")" >
     <EditForm Model="@PendingTsk" 
               Context="Tsk" 
               OnValidSubmit="SavePendingTskAsync">
@@ -117,14 +117,15 @@
                 <MudIconButton Icon="@Icons.Filled.Save"
                                ButtonType="ButtonType.Submit"
                                Variant="Variant.Outlined"
-                               Color="Color.Primary"
-                               Size="Size.Small"
+                               Color="Color.Success"
+                               Size="Size.Medium"
                                Class="mt-4" />
                 <MudIconButton Icon="@Icons.Filled.Cancel"
                                Variant="Variant.Outlined"
-                               Color="Color.Primary"
-                               Size="Size.Small"
-                               Class="mt-4" />
+                               Color="Color.Default"
+                               Size="Size.Medium"
+                               Class="mt-4"
+                               OnClick="(() => CloseAsync())" />
             </MudItem>
             <MudItem xs="6">
             </MudItem>

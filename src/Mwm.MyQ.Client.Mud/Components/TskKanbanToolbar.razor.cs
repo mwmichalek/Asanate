@@ -12,7 +12,9 @@ namespace Mwm.MyQ.Client.Mud.Components;
 public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
                                         IApplicationSettingConsumer<IsInFocusOnlyFlag>,
                                         IApplicationSettingConsumer<IsGroupedByCompanyFlag>,
-                                        IApplicationSettingConsumer<IsActionStatusOnlyFlag> {
+                                        IApplicationSettingConsumer<IsActionStatusOnlyFlag>,
+                                        IApplicationSettingConsumer<IsTskQuickPaneVisibleFlag> {
+
     [Inject]
     public ApplicationStateFacade ApplicationStateFacade { get; set; }
 
@@ -58,6 +60,18 @@ public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
         }
     }
 
+    private bool _isTskQuickPaneVisible = false;
+    public bool IsTskQuickPaneVisible {
+        get => _isTskQuickPaneVisible;
+        set {
+            ApplicationStateFacade.Set(new IsTskQuickPaneVisibleFlag {
+                PreviousValue = _isTskQuickPaneVisible,
+                CurrentValue = value
+            });
+            _isTskQuickPaneVisible = value;
+        }
+    }
+
     public Task ApplySetting(IsInFocusOnlyFlag applicationSetting) {
         _isInFocusOnly = applicationSetting.CurrentValue;
         return Task.CompletedTask;
@@ -70,6 +84,11 @@ public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
 
     public Task ApplySetting(IsActionStatusOnlyFlag applicationSetting) {
         _isActionStatusOnly = applicationSetting.CurrentValue;
+        return Task.CompletedTask;
+    }
+
+    public Task ApplySetting(IsTskQuickPaneVisibleFlag applicationSetting) {
+        _isTskQuickPaneVisible = applicationSetting.CurrentValue;
         return Task.CompletedTask;
     }
 }

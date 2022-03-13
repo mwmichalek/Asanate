@@ -14,13 +14,15 @@ using System.Threading.Tasks;
 using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Mud.Models.Shared;
 using System;
+using Mwm.MyQ.Client.Service.Store.Features.Settings;
+using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskQuickPane : FluxorComponent {
-
+public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
+                                    IApplicationSettingConsumer<IsTskQuickPaneVisibleFlag> {
     [Inject]
-    ILogger<TskQuickPane> Logger { get; set; }
+    public ApplicationStateFacade ApplicationStateFacade { get; set; }
 
     [Inject]
     public IState<EntityState<Tsk>> TsksState { get; set; }
@@ -34,26 +36,9 @@ public partial class TskQuickPane : FluxorComponent {
     [Inject]
     public IState<EntityState<Company>> CompaniesState { get; set; }
 
-    [Inject]
-    public EntityStateFacade EntityStateFacade { get; set; }
+    public bool IsTskQuickPaneVisible { get; set;}
 
-    //public string NewTskName { get; set; } = string.Empty;
-
-    //public string PendingTskName { get; set; } = string.Empty;
-
-    //public string NewTskEstimatedDuration { get; set; }
-
-    //public string NewTskStatus { get; set; } = Status.Open.ToStr();
-
-    //public string NewInitiativeName { get; set; } = string.Empty;
-
-    //public string PendingInitiativeName { get; set; } = string.Empty;
-
-    //public string NewInitiativeExternalId { get; set; } = string.Empty;
-
-    
-
-    //public List<TskModel> SavedTskModels { get; set; } = new List<TskModel>();
+    public string PaneClasses => IsTskQuickPaneVisible ? "d-inline" : "d-none";
 
     public bool IsInInitiativeCreationMode { get; set; } = false;
 
@@ -183,6 +168,13 @@ public partial class TskQuickPane : FluxorComponent {
         });
     }
 
+    public async Task CloseAsync() {
+        ApplicationStateFacade.Set(new IsTskQuickPaneVisibleFlag {
+            PreviousValue = true,
+            CurrentValue = false
+        });
+    }
+
     public void ResetPendingTsk() {
         PendingTsk = new Tsk {
             InitiativeId = PendingTsk.InitiativeId,
@@ -198,4 +190,8 @@ public partial class TskQuickPane : FluxorComponent {
         }
     }
 
+    public Task ApplySetting(IsTskQuickPaneVisibleFlag applicationSetting) {
+        IsTskQuickPaneVisible = applicationSetting.CurrentValue;
+        return Task.CompletedTask;
+    }
 }
