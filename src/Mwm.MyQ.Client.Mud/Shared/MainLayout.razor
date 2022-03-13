@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Mwm.MyQ.Client.Mud.Components
+@inherits LayoutComponentBase
 
 <MudThemeProvider IsDarkMode="true" Theme="CustomTheme" />
 <MudDialogProvider />
@@ -16,12 +17,34 @@
             <MudAvatar Rounded="true" Color="Color.Warning" Variant="Variant.Filled">
                 <MudIcon Color="Color.Dark" Icon="@Icons.Filled.Group" Size="Size.Large" />
             </MudAvatar>
-  
         </MudDrawerHeader>
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
+
         <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+
+@*            <MudDrawer Height="300px" Width="100%" ClipMode="DrawerClipMode.Docked" Anchor="Anchor.Top" Variant="@DrawerVariant.Persistent">
+                <MudDrawerHeader>
+                    <MudText Typo="Typo.h6">Settings</MudText>
+                </MudDrawerHeader>
+                <MudNavMenu>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.AccountBox">Profile</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.ShoppingCart">Orders</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Filled.History">Order History</MudNavLink>
+                </MudNavMenu>
+            </MudDrawer>*@
+
+            <!--MudDrawer Open="true" 
+                       Elevation="1" 
+                       Variant="@DrawerVariant.Temporary" 
+                       Anchor="Anchor.Top"
+                       Class="p-3"
+                       >
+                
+            </!MudDrawer-->
+            <!-- Style="overflow:hidden;" -->
+            <TskQuickPane />
             @Body
         </MudContainer>
     </MudMainContent>

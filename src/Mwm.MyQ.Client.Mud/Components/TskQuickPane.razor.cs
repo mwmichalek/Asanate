@@ -161,7 +161,7 @@ public partial class TskQuickPane : FluxorComponent {
     }
 
     public async Task SavePendingInitiativeAsync() {
-
+        Logger.LogInformation($"Saving Initiative: {PendingInitiative.Name} ...");
         // Save to server
         await EntityStateFacade.Add<Initiative, InitiativeAdd.Command>(new InitiativeAdd.Command {
             Name = PendingInitiative.Name,
@@ -174,42 +174,13 @@ public partial class TskQuickPane : FluxorComponent {
     }
 
     public async Task SavePendingTskAsync() {
-
+        Logger.LogInformation($"Saving Tsk: {PendingTsk.Name} ...");
         await EntityStateFacade.Add<Tsk, TskAdd.Command>(new TskAdd.Command {
             Name = PendingTsk.Name,
             DurationEstimate = PendingTsk.DurationEstimate > 0 ? PendingTsk.DurationEstimate : null,
             Status = PendingTsk.Status,
             InitiativeId = PendingTsk.InitiativeId
         });
-
-
-        //try {
-
-        //    if (!string.IsNullOrEmpty(NewTskName) && !IsInInitiativeCreationMode) {
-        //        Logger.LogInformation($"Pending item: {NewTskName}");
-        //        float.TryParse(NewTskEstimatedDuration, out float estimatedDuration);
-        //        var tskStatus = NewTskStatus.ToStatus();
-
-
-        //        PendingTskName = NewTskName;
-        //        NewTskName = string.Empty;
-        //        NewTskEstimatedDuration = string.Empty;
-        //        StateHasChanged();
-        //        //await refTskName.FocusAsync();
-        //    } else if (!string.IsNullOrEmpty(NewInitiativeName) && IsInInitiativeCreationMode) {
-        //        Logger.LogInformation($"Pending item: {NewInitiativeName}");
-
-
-        //        PendingInitiativeName = NewInitiativeName;
-        //        NewInitiativeName = string.Empty;
-        //        NewInitiativeExternalId = string.Empty;
-        //        IsInInitiativeCreationMode = false;
-        //        StateHasChanged();
-        //        //await refTskName.FocusAsync();
-        //    }
-        //} catch (Exception ex) {
-        //    Logger.LogError($"Unable to update: {NewTskName}, {ex}");
-        //}
     }
 
     public void ResetPendingTsk() {
@@ -221,8 +192,10 @@ public partial class TskQuickPane : FluxorComponent {
 
     public void SavedPendingTsk() {
         if (TsksState.Value.CurrentEntity != null &&
-            TsksState.Value.CurrentEntity.Name == PendingTsk.Name)
+            TsksState.Value.CurrentEntity.Name == PendingTsk.Name) {
+            Logger.LogInformation($"... Saved.");
             ResetPendingTsk();
+        }
     }
 
 }
