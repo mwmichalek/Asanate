@@ -40,6 +40,8 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
 
     public string PaneClasses => IsTskQuickPaneVisible ? "d-inline" : "d-none";
 
+    
+
     public bool IsInInitiativeCreationMode { get; set; } = false;
 
     public Initiative PendingInitiative { get; set; } = new Initiative();
@@ -91,8 +93,11 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
 
     private void UpdateProjectDropDown() {
         if (ProjectsState.HasValue()) {
-            Projects = ProjectsState.Value.Entities.OrderBy(p => p.Name).ToList();
-
+            var companies = CompaniesState.Value.Entities.OrderBy(c => c.SortIndex).ToList();
+            Projects.Clear();
+            foreach (var company in companies)
+                Projects.AddRange(ProjectsState.Value.Entities.Where(p => p.CompanyId == company.Id).OrderBy(p => p.Name).ToList());
+   
             // If Project hasn't been set yet, then set it to 'Generic' 
             if (selectedProject == null) {
                 var genericProject = ProjectsState.Value.Entities.SingleOrDefault(p => p.Name == Project.DefaultProjectName);
@@ -193,5 +198,13 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
     public Task ApplySetting(IsTskQuickPaneVisibleFlag applicationSetting) {
         IsTskQuickPaneVisible = applicationSetting.CurrentValue;
         return Task.CompletedTask;
+    }
+
+    public string ToProjectName(Project project) {
+        if (CompaniesState.HasValue()) {
+            var company = CompaniesState.FindById(project.CompanyId);
+            if (company != null) return $"{company.Name} - {project.Name}";
+        }
+        return project.Name;
     }
 }

@@ -29,10 +29,21 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
 
     public string HeaderClasses => TskModel.IsInFocus ? "bg-primary" : "bg-dark";
 
-    public string HourProgressDisplay => (TskModel.DurationCompleted.HasValue && TskModel.DurationEstimate.HasValue) ?
-                                         $"{TskModel.DurationCompleted} / ~{TskModel.DurationEstimate}" :
-                                         TskModel.DurationCompleted.HasValue ? TskModel.DurationCompleted.ToString() :
-                                         TskModel.DurationEstimate.HasValue ? $"~{TskModel.DurationEstimate}" : "";
+    public string HourProgressDisplay {
+        get {
+            if (TskModel.DurationCompleted.HasValue && TskModel.DurationEstimate.HasValue) {
+                if (TskModel.DurationCompleted.Value >= TskModel.DurationEstimate.Value)
+                    return $"{TskModel.DurationCompleted.Value} / {TskModel.DurationCompleted.Value}";
+                else
+                    return $"{TskModel.DurationCompleted.Value} / {TskModel.DurationEstimate.Value}";
+            } else if (TskModel.DurationCompleted.HasValue) {
+                return $"{TskModel.DurationCompleted.Value}";
+            } else if (TskModel.DurationEstimate.HasValue) {
+                return $"~{TskModel.DurationEstimate.Value}";
+            }
+            return string.Empty;
+        }
+    }
 
     public string DueDateDisplay {
         get {
