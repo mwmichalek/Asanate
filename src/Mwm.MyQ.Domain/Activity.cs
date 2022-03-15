@@ -20,6 +20,6 @@ public class Activity : Entity {
 
     public int TskId { get; set; }
 
-    public Tsk Tsk { get; set; }
+    public virtual Tsk Tsk { get; set; }
 
 }
