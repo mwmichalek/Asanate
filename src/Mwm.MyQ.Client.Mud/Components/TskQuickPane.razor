@@ -1,13 +1,14 @@
 ﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
 @using Mwm.MyQ.Client.Service.Models
 @using Mwm.MyQ.Domain
+@using MudBlazor
 
-<MudPaper Height="170px" Class="@($"p-2 {PaneClasses}")" >
+<MudPaper Elevation="10" Height="170px" Class="@($"p-2 {PaneClasses}")" >
     <EditForm Model="@PendingTsk" 
               Context="Tsk" 
               OnValidSubmit="SavePendingTskAsync">
         <DataAnnotationsValidator/>
-        <MudGrid>
+        <MudGrid Style="@($"color:{Colors.LightGreen.Accent3}; background:{Colors.BlueGrey.Darken4};")">
             <MudItem xs="3">
                 <MudSelect @bind-Value="SelectedProject" 
                            Label="Project" 
