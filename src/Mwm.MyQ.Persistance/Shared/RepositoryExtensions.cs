@@ -18,8 +18,8 @@ namespace Mwm.MyQ.Persistance.Shared {
             services.AddScoped<IRepository<Company>, Repository<Company>>();
             services.AddScoped<IRepository<Initiative>, Repository<Initiative>>();
             //services.AddScoped<IRepository<Initiative>, InitiativeRepository>();
-            services.AddScoped<IRepository<Tsk>, Repository<Tsk>>();
-            //services.AddScoped<IRepository<Tsk>, TskRepository>(); // Includes Initiative.Project.Company
+            //services.AddScoped<IRepository<Tsk>, Repository<Tsk>>();
+            services.AddScoped<IRepository<Tsk>, TskRepository>(); // Includes Activities
             services.AddScoped<IRepository<User>, Repository<User>>();
 
 
