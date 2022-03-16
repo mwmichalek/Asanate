@@ -41,7 +41,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     }
 
     [HttpGet]
-    public async Task<List<TEntity>> All() {
+    public virtual async Task<List<TEntity>> All() {
         var sw = Stopwatch.StartNew();
         var result = await _repository.WhereAsync(ent => ent.IsDeleted == false);
 
@@ -50,7 +50,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     }
 
     [HttpGet("{id}")]
-    public async Task<TEntity> Get(int id) {
+    public virtual async Task<TEntity> Get(int id) {
         var sw = Stopwatch.StartNew();
         var result = await _repository.GetAll().SingleOrDefaultAsync(e => e.Id == id);
         _logger.LogInformation($"Loaded {result.Name} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
@@ -58,7 +58,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     }
 
     [HttpPost("Add")]
-    public async Task<IActionResult> Add(TAddEntityCommand command) {
+    public virtual async Task<IActionResult> Add(TAddEntityCommand command) {
         var sw = Stopwatch.StartNew();
         _logger.LogInformation("Taking giant shit");
         var result = await _entityService.ExecuteAddCommand(command);
@@ -71,7 +71,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     }
 
     [HttpPost("Update")]
-    public async Task<IActionResult> Update(TUpdateEntityCommand command) {
+    public virtual async Task<IActionResult> Update(TUpdateEntityCommand command) {
         var sw = Stopwatch.StartNew();
         var result = await _entityService.ExecuteUpdateCommand(command);
 
@@ -83,7 +83,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     }
 
     [HttpPost("Delete")]
-    public async Task<IActionResult> Delete(TDeleteEntityCommand command) {
+    public virtual async Task<IActionResult> Delete(TDeleteEntityCommand command) {
         var sw = Stopwatch.StartNew();
         var result = await _entityService.ExecuteDeleteCommand(command);
 
