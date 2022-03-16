@@ -25,7 +25,7 @@ public class CompanyController : EntityController<Company,
                                                   UpdateNotSupportedEntityCommand<Company>,
                                                   DeleteNotSupportedEntityCommand<Company>> {
 
-    public CompanyController(ILogger<EntityController<Company>> logger, IRepository<Company> repository, IEntityService<Company> entityService)
+    public CompanyController(ILogger<IEntityController<Company>> logger, IRepository<Company> repository, IEntityService<Company> entityService)
         : base(logger, repository, entityService) { }
 
 }
@@ -37,7 +37,7 @@ public class ProjectController : EntityController<Project,
                                                   ProjectUpdate.Command,
                                                   ProjectDelete.Command> {
 
-    public ProjectController(ILogger<EntityController<Project>> logger, IRepository<Project> repository, IEntityService<Project> entityService)
+    public ProjectController(ILogger<IEntityController<Project>> logger, IRepository<Project> repository, IEntityService<Project> entityService)
         : base(logger, repository, entityService) { }
 
 }
@@ -50,7 +50,7 @@ public class InitiativeController : EntityController<Initiative,
                                                      InitiativeDelete.Command> {
 
 
-    public InitiativeController(ILogger<EntityController<Initiative>> logger, IRepository<Initiative> repository, IEntityService<Initiative> entityService)
+    public InitiativeController(ILogger<IEntityController<Initiative>> logger, IRepository<Initiative> repository, IEntityService<Initiative> entityService)
         : base(logger, repository, entityService) { }
 
 }
@@ -62,7 +62,7 @@ public class TskController : EntityController<Tsk,
                                               TskUpdate.Command,
                                               TskDelete.Command> {
 
-    public TskController(ILogger<EntityController<Tsk>> logger, IRepository<Tsk> repository, IEntityService<Tsk> entityService)
+    public TskController(ILogger<IEntityController<Tsk>> logger, IRepository<Tsk> repository, IEntityService<Tsk> entityService)
         : base(logger, repository, entityService) { }
 
 }
