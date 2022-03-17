@@ -30,7 +30,7 @@ namespace Mwm.MyQ.Client.Service.Models {
 
         public float? DurationEstimate { get; set; }
 
-        public float? DurationCompleted { get; set; }
+        public float? DurationCompleted => ActivityModels.Sum(am => am.Duration);
 
         public string Notes { get; set; }
 
@@ -65,6 +65,8 @@ namespace Mwm.MyQ.Client.Service.Models {
         public string CompanyNameAndProjectName => $"{CompanyName} - {ProjectName}";
 
         public bool IsInFocus { get; set; }
+
+        public List<ActivityModel> ActivityModels { get; set; } = new List<ActivityModel>();    
 
     }
 }

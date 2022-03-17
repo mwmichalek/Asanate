@@ -62,8 +62,9 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="durationCompleted">Duration Completed:</label>
-                                    <SfDropDownList ID="durationCompleted" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationCompleted" Placeholder="Duration in hours" DataSource="@DurationDropDown">
-                                    </SfDropDownList>
+                                    @*<SfDropDownList ID="durationCompleted" TValue="float?" TItem="float" @bind-Value="@TskModel.DurationCompleted" Placeholder="Duration in hours" DataSource="@DurationDropDown">
+                                    </SfDropDownList>*@
+                                    @TskModel.DurationCompleted
                                 </div>
                             </div>
                             <div class="form-group">

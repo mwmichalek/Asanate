@@ -59,7 +59,6 @@ public class TskLoadModelEffect : LoadModelEffect<TskModel, Tsk> {
             Name = t.Name,
             Status = t.Status,
             DurationEstimate = t.DurationEstimate,
-            DurationCompleted = t.DurationCompleted,
             Notes = t.Notes,
             CreatedDate = t.CreatedDate,
             DueDate = t.DueDate,
@@ -73,7 +72,19 @@ public class TskLoadModelEffect : LoadModelEffect<TskModel, Tsk> {
             ProjectAbbreviation = project?.Abbreviation,
             CompanyName = company?.Name,
             ProjectColor = project?.Color,
-            IsInFocus = t.IsInFocus
+            IsInFocus = t.IsInFocus,
+            ActivityModels = (t.Activities != null) ? t.Activities?.Select(a => CreateModel(a)).ToList() : 
+                                                      new List<ActivityModel>()
+        };
+    }
+
+    public ActivityModel CreateModel(Activity activity) {
+        return new ActivityModel {
+            Id = activity.Id,
+            Notes = activity.Notes,
+            StartTime = activity.StartTime,
+            EndTime = activity.EndTime,
+            Duration = activity.Duration
         };
     }
 

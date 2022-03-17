@@ -48,23 +48,24 @@
                                             For="@(() => TskModel.CompletedDate)" />
                         </MudItem>
                         <MudItem xs="6">
+                            @*<MudNumericField Label="Duration Completed (Hrs)"
+                                                HelperText=""
+                                                @bind-Value="TskModel.DurationCompleted" 
+                                                Variant="Variant.Text" 
+                                                For="@(() => TskModel.DurationCompleted)"
+                                                Min="0"  
+                                                Max="8"
+                                                Format="F2"
+                                                Step="0.25F"
+                                                />*@
+                            @TskModel.DurationCompleted
+                        </MudItem>
+                        <MudItem xs="6">
                             <MudNumericField Label="Duration Estimate (Hrs)"
                                                 HelperText=""
                                                 @bind-Value="TskModel.DurationEstimate" 
                                                 Variant="Variant.Text" 
                                                 For="@(() => TskModel.DurationEstimate)"
-                                                Min="0"  
-                                                Max="8"
-                                                Format="F2"
-                                                Step="0.25F"
-                                                />
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudNumericField Label="Duration Completed (Hrs)"
-                                                HelperText=""
-                                                @bind-Value="TskModel.DurationCompleted" 
-                                                Variant="Variant.Text" 
-                                                For="@(() => TskModel.DurationCompleted)"
                                                 Min="0"  
                                                 Max="8"
                                                 Format="F2"

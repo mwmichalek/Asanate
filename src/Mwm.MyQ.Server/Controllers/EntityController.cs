@@ -43,6 +43,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     [HttpGet]
     public virtual async Task<List<TEntity>> All() {
         var sw = Stopwatch.StartNew();
+        //TODO:(MWM) Need to figure this shit out.
         var result = await _repository.WhereAsync(ent => ent.IsDeleted == false);
 
         _logger.LogInformation($"Loaded {result.Count} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
@@ -52,6 +53,7 @@ public partial class EntityController<TEntity, TAddEntityCommand, TUpdateEntityC
     [HttpGet("{id}")]
     public virtual async Task<TEntity> Get(int id) {
         var sw = Stopwatch.StartNew();
+        //TODO
         var result = await _repository.GetAll().SingleOrDefaultAsync(e => e.Id == id);
         _logger.LogInformation($"Loaded {result.Name} {typeof(TEntity).Name} is {sw.ElapsedMilliseconds} ms");
         return result;
