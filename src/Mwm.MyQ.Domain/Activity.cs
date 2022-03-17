@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Domain;
@@ -20,6 +21,7 @@ public class Activity : Entity {
 
     public int TskId { get; set; }
 
+    [JsonIgnore]
     public virtual Tsk Tsk { get; set; }
 
 }
