@@ -18,6 +18,10 @@ namespace Mwm.MyQ.Persistance {
             return _database.Tsks.Include(t => t.Activities);
         }
 
+        public override Task<List<Tsk>> WhereAsync(Expression<Func<Tsk, bool>> pred) {
+            return _database.Tsks.Where(pred).Include(t => t.Activities).ToListAsync();
+        }
+
         //public override Task<List<Tsk>> WhereAsync(Expression<Func<Tsk, bool>> pred) {
         //    return base.WhereAsync(pred).Include();
         //}
