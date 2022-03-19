@@ -92,7 +92,7 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
     }
 
     private void UpdateProjectDropDown() {
-        if (ProjectsState.HasValue()) {
+        if (ProjectsState.HasValue() && CompaniesState.HasValue()) {
             var companies = CompaniesState.Value.Entities.OrderBy(c => c.SortIndex).ToList();
             Projects.Clear();
             foreach (var company in companies)

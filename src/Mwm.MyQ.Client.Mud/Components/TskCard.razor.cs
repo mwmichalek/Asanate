@@ -7,20 +7,20 @@ using System;
 using System.Threading.Tasks;
 using Mwm.MyQ.Client.Service.Components;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
+using System.Collections.Generic;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
 public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
                                IApplicationSettingConsumer<IsGroupedByCompanyFlag> {
 
+    [Inject]
+    public ModelFacade ModelFacade { get; set; }
+
     [Parameter]
     public TskModel TskModel { get; set; }
 
-    //[Inject]
-    //public EntityStateFacade EntityStateFacade { get; set; }
-
-    [Inject]
-    public ModelFacade ModelFacade { get; set; }
+    public ActivityModel ActivityModel { get; set; } = new ActivityModel();
 
     public bool IncludeCompanyName { get; set; }
 
@@ -122,6 +122,25 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
     public Task ApplySetting(IsGroupedByCompanyFlag applicationSetting) {
         IncludeCompanyName = !applicationSetting.CurrentValue;
         return Task.CompletedTask;
+    }
+
+    public Task ShowActivityForm(bool isVisible) {
+        ActivityModel.IsVisible = isVisible;
+        return Task.CompletedTask;
+    }
+
+    public async Task SaveActivity() {
+        await Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
+            Id = TskModel.Id,
+            Activities = new List<Activity> {
+                new Activity {
+                    Notes = ActivityModel.Notes,
+                    StartTime = ActivityModel.StartTime,
+                    Duration = ActivityModel.Duration
+                }
+            }
+        }));
+        ActivityModel = new ActivityModel();
     }
 
 }

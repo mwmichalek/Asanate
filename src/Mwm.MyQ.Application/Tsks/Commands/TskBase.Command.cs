@@ -55,6 +55,8 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
 
             public int? InitiativeId { get; set; }
 
+            public List<Activity> Activities { get; set; }
+
         }
     }
 }

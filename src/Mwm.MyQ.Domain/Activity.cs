@@ -7,21 +7,29 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Domain;
 
-public class Activity : Entity {
+public class Activity {
+
+    public int Id { get; set; }
 
     public string Notes { get; set; }
 
     public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-    public DateTime? StartTime { get; set; } 
+    public DateTime? StartTime { get; set; }
 
     public DateTime? EndTime { get; set; }
 
     public float Duration { get; set; }
 
+    public int SortIndex { get; set; }
+
+    public bool IsDeleted { get; set; }
+
     public int TskId { get; set; }
 
     [JsonIgnore]
     public virtual Tsk Tsk { get; set; }
+
+
 
 }

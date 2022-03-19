@@ -12,10 +12,12 @@ public class ActivityModel {
 
     public string Notes { get; set; }
 
-    public DateTime? StartTime { get; set; }
+    public DateTime? StartTime { get; set; } = DateTime.Now;
 
     public DateTime? EndTime { get; set; }
 
     public float Duration { get; set; }
+
+    public bool IsVisible { get; set; }
 
 }
