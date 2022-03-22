@@ -48,7 +48,7 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
     public string DueDateDisplay {
         get {
             var daysTillDueDate = DaysTillDueDate();
-            return (daysTillDueDate.HasValue) ? $"{TskModel.DueDate.Value.ToString("MM/dd/yyyy")}" : string.Empty;
+            return (daysTillDueDate.HasValue) ? $"{TskModel.DueDate.Value.ToString("MM/dd/yy")}" : string.Empty;
         }
     }
 

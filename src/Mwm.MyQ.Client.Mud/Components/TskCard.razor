@@ -3,8 +3,7 @@
 @using Mwm.MyQ.Domain
 @using MudBlazor
 <MudCard Outlined="true"
-         Class="m-2" 
-         @ondblclick="@Edit">
+         Class="m-2">
     <!--Style="width: 300px;"-->
     <MudCardHeader Style="@HeaderStyle" Class="p-2">
         <CardHeaderContent>
@@ -43,7 +42,7 @@
     }
     <MudCardActions>
         <MudGrid>
-            <MudItem xs="5">
+            <MudItem xs="2" Class="d-flex justify-start">
                 @if (!string.IsNullOrEmpty(HourProgressDisplay)) {
                     <MudChip Size="Size.Medium" 
                              Variant="Variant.Text" 
@@ -52,7 +51,7 @@
                     </MudChip>
                 }
             </MudItem>
-            <MudItem xs="5" Class="d-flex justify-start">
+            <MudItem xs="6" Class="d-flex justify-start">
                 @if (!string.IsNullOrEmpty(DueDateDisplay)) {
                     <MudChip Size="Size.Medium" 
                              Variant="Variant.Text" 
@@ -64,18 +63,9 @@
                             @DueDateCount
                         </MudChip>
                     </MudChip>
-                    @*<MudText Typo="Typo.h6"
-                             Class="mt-2">
-                        @DueDateDisplay
-                    </MudText>
-                    <MudChip Size="Size.Small" 
-                             Variant="Variant.Text" 
-                             Color="@DueDateCountColor">
-                        @DueDateCount
-                    </MudChip>*@
                 }
             </MudItem>
-            <MudItem xs="2" Class="d-flex justify-end">
+            <MudItem xs="4" Class="d-flex justify-end">
                 <MudIconButton Icon="@Icons.Filled.MoreTime" 
                                OnClick="@(() => ShowActivityForm(true))"
                                aria-label="Add more time"/>
@@ -85,7 +75,7 @@
                          TransformOrigin="Origin.TopCenter"
                          Variant="Variant.Text" 
                          Color="@Color.Default">
-                    <div class="d-flex align-center m-2 p-3">
+                    <div class="d-flex align-center m-1 p-1">
                         <MudNumericField Label="Duration Estimate (Hrs)"
                                                 @bind-Value="ActivityModel.Duration"
                                                 HelperText=""
@@ -97,7 +87,7 @@
                                                 For="@(() => ActivityModel.Duration)"
                                                 />
                     </div>
-                    <div class="d-flex align-center m-2 p-3">
+                    <div class="d-flex align-center m-1 p-1">
                         <MudDatePicker Label="Date" 
                                             Editable="true" 
                                             @bind-Date="ActivityModel.StartTime" 
@@ -105,7 +95,7 @@
                                             For="@(() => ActivityModel.StartTime)"
                                              />
                     </div>
-                    <div class="d-flex align-center m-2 p-3">
+                    <div class="d-flex align-center m-1 p-1">
                         <MudTextField Label="Notes" 
                                             @bind-Value="ActivityModel.Notes"
                                             HelperText=""
@@ -113,7 +103,7 @@
                                             For="@(() => ActivityModel.Notes)"
                                              />
                     </div>
-                    <div class="d-flex align-right m-2 p-3">
+                    <div class="d-flex align-right m-1 p-1">
                         <MudIconButton Icon="@Icons.Filled.Save" 
                                        Color="Color.Success" 
                                        aria-label="save"
@@ -158,7 +148,8 @@
                          ToggledSize="Size.Small" />
 
                 <MudIconButton Icon="@Icons.Filled.Edit" 
-                        aria-label="Edit"/>
+                        aria-label="Edit"
+                        OnClick="@Edit" />
             </MudItem>
         </MudGrid>
     </MudCardActions>
