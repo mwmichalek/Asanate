@@ -124,8 +124,18 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
         return Task.CompletedTask;
     }
 
+    private static bool _globalActivityFormIsVisible = false;
+
+    private bool ActivityFormIsVisible { get; set; }
+
     public Task ShowActivityForm(bool isVisible) {
-        ActivityModel.IsVisible = isVisible;
+        if (isVisible && !_globalActivityFormIsVisible) {
+            ActivityFormIsVisible = true;
+            _globalActivityFormIsVisible = true;
+        } else if (!isVisible) {
+            ActivityFormIsVisible = false;
+            _globalActivityFormIsVisible = false;
+        }
         return Task.CompletedTask;
     }
 

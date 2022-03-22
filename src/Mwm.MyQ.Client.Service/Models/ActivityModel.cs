@@ -18,6 +18,4 @@ public class ActivityModel {
 
     public float Duration { get; set; }
 
-    public bool IsVisible { get; set; }
-
 }
