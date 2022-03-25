@@ -45,7 +45,7 @@
             <MudItem xs="2" Class="d-flex justify-start">
                 @if (!string.IsNullOrEmpty(HourProgressDisplay)) {
                     <MudChip Size="Size.Medium" 
-                             Variant="Variant.Text" 
+                             Variant="Variant.Outlined" 
                              Color="@Color.Info">
                         @HourProgressDisplay
                     </MudChip>
@@ -68,6 +68,7 @@
             <MudItem xs="4" Class="d-flex justify-end">
                 <MudIconButton Icon="@Icons.Filled.MoreTime" 
                                OnClick="@(() => ShowActivityForm(true))"
+                               Size="Size.Small" 
                                aria-label="Add more time"/>
                 <MudPopover  Class="" 
                          Open="@ActivityFormIsVisible" 
@@ -106,10 +107,12 @@
                     <div class="d-flex align-right m-1 p-1">
                         <MudIconButton Icon="@Icons.Filled.Save" 
                                        Color="Color.Success" 
+                                       Size="Size.Small" 
                                        aria-label="save"
                                        OnClick="@(() => SaveActivity())" />
                         <MudIconButton Icon="@Icons.Filled.Cancel" 
                                        Color="Color.Error" 
+                                       Size="Size.Small" 
                                        aria-label="save"
                                        OnClick="@(() => ShowActivityForm(false))" />
                     </div>
@@ -149,6 +152,7 @@
 
                 <MudIconButton Icon="@Icons.Filled.Edit" 
                         aria-label="Edit"
+                        Size="Size.Small" 
                         OnClick="@Edit" />
             </MudItem>
         </MudGrid>

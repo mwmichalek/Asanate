@@ -228,10 +228,10 @@ namespace Mwm.MyQ.Application.Asana.Commands {
 
                         var existingTsk = _tskRepository.GetByGid(asanaTsk.Gid);
                         if (existingTsk == null) {
-                            var fakeActivities = Enumerable.Range(1, 5).Select(i => new Activity {
+                            var fakeActivities = Enumerable.Range(1, 4).Select(i => new Activity {
                                 Notes = $"{asanaTsk.Name} - {i}",
                                 StartTime = DateTime.Now,
-                                Duration = i
+                                Duration = i / 4
                             }).ToList();
 
 
