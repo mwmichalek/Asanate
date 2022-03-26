@@ -139,7 +139,8 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
         return Task.CompletedTask;
     }
 
-    public async Task SaveActivity() {
+    public async Task SaveActivityAsync() {
+        await ShowActivityForm(false);
         await Task.Run(() => EntityStateFacade.Update<Tsk, TskUpdate.Command>(new TskUpdate.Command {
             Id = TskModel.Id,
             Activities = new List<Activity> {

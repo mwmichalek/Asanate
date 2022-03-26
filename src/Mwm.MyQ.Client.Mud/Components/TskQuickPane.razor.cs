@@ -40,8 +40,6 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
 
     public string PaneClasses => IsTskQuickPaneVisible ? "d-inline" : "d-none";
 
-    
-
     public bool IsInInitiativeCreationMode { get; set; } = false;
 
     public Initiative PendingInitiative { get; set; } = new Initiative();
@@ -76,15 +74,6 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
 
-        //if (!TsksState.HasValue())
-        //    await EntityStateFacade.Load<Tsk>();
-        //if (!InitiativesState.HasValue())
-        //    await EntityStateFacade.Load<Initiative>();
-        //if (!CompaniesState.HasValue())
-        //    await EntityStateFacade.Load<Company>();
-        //if (!ProjectsState.HasValue())
-        //    await EntityStateFacade.Load<Project>();
-
         TsksState.StateChanged += (s, e) => SavedPendingTsk();
         InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
         ProjectsState.StateChanged += (s, e) => UpdateProjectDropDown();
@@ -111,7 +100,7 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
 
     private void UpdateInitiativeDropDown() {
 
-        if (InitiativesState.HasValue()) {
+        if (InitiativesState.HasValue() && selectedProject != null) {
             
             // New Initiative triggered rebuild of dropdown
             if (!string.IsNullOrEmpty(PendingInitiative.Name) && 

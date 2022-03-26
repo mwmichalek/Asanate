@@ -60,7 +60,6 @@ public partial class TskDialog: ComponentBase {
         return Task.CompletedTask;
     }
 
-
     public async Task SaveAsync() {
         Logger.LogInformation($"Saving Dialog.");
         try {

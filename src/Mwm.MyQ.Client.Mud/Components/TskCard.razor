@@ -66,58 +66,69 @@
                 }
             </MudItem>
             <MudItem xs="4" Class="d-flex justify-end">
-                <MudIconButton Icon="@Icons.Filled.MoreTime" 
+                @if (TskModel.Status != Status.Done) {
+                    <MudIconButton Icon="@Icons.Filled.MoreTime" 
                                OnClick="@(() => ShowActivityForm(true))"
                                Size="Size.Small" 
                                aria-label="Add more time"/>
-                <MudPopover  Class="" 
+                    <MudPopover  Class="" 
                          Open="@ActivityFormIsVisible" 
                          AnchorOrigin="Origin.BottomCenter" 
                          TransformOrigin="Origin.TopCenter"
                          Variant="Variant.Text" 
                          Color="@Color.Default">
-                    <div class="d-flex align-center m-1 p-1">
-                        <MudNumericField Label="Duration Estimate (Hrs)"
-                                                @bind-Value="ActivityModel.Duration"
-                                                HelperText=""
-                                                Variant="Variant.Text" 
-                                                Min="0"  
-                                                Max="8"
-                                                Format="F2"
-                                                Step="0.25F"
-                                                For="@(() => ActivityModel.Duration)"
-                                                />
-                    </div>
-                    <div class="d-flex align-center m-1 p-1">
-                        <MudDatePicker Label="Date" 
-                                            Editable="true" 
-                                            @bind-Date="ActivityModel.StartTime" 
-                                            Placeholder="Select Date" 
-                                            For="@(() => ActivityModel.StartTime)"
-                                             />
-                    </div>
-                    <div class="d-flex align-center m-1 p-1">
-                        <MudTextField Label="Notes" 
-                                            @bind-Value="ActivityModel.Notes"
-                                            HelperText=""
-                                            Variant="Variant.Text" 
-                                            For="@(() => ActivityModel.Notes)"
-                                             />
-                    </div>
-                    <div class="d-flex align-right m-1 p-1">
-                        <MudIconButton Icon="@Icons.Filled.Save" 
-                                       Color="Color.Success" 
-                                       Size="Size.Small" 
-                                       aria-label="save"
-                                       OnClick="@(() => SaveActivity())" />
-                        <MudIconButton Icon="@Icons.Filled.Cancel" 
-                                       Color="Color.Error" 
-                                       Size="Size.Small" 
-                                       aria-label="save"
-                                       OnClick="@(() => ShowActivityForm(false))" />
-                    </div>
-                </MudPopover >
 
+                        <EditForm Model="@ActivityModel" 
+                                  Context="Activity" 
+                                  OnValidSubmit="SaveActivityAsync">
+                              
+                            <div class="d-flex align-center m-1 p-1">
+                                <MudNumericField Label="Duration Estimate (Hrs)"
+                                                        @bind-Value="ActivityModel.Duration"
+                                                        HelperText=""
+                                                        AutoFocus="true"
+                                                        Variant="Variant.Text" 
+                                                        Min="0"  
+                                                        Max="8"
+                                                        Format="F2"
+                                                        Step="0.25F"
+                                                        For="@(() => ActivityModel.Duration)"
+                                                        />
+                            </div>
+                            
+                            <div class="d-flex align-center m-1 p-1">
+                                <MudTextField Label="Notes" 
+                                                    @bind-Value="ActivityModel.Notes"
+                                                    HelperText=""
+                                                    Variant="Variant.Text" 
+                                                    For="@(() => ActivityModel.Notes)"
+                                                     />
+                            </div>
+                            <div class="d-flex align-center m-1 p-1">
+                                <MudDatePicker Label="Date" 
+                                                    Editable="true" 
+                                                    @bind-Date="ActivityModel.StartTime" 
+                                                    Placeholder="Select Date" 
+                                                    For="@(() => ActivityModel.StartTime)"
+                                                     />
+                            </div>
+                            <div class="d-flex align-right m-1 p-1">
+                                <MudIconButton Icon="@Icons.Filled.Save" 
+                                               ButtonType="ButtonType.Submit"
+                                               Color="Color.Success" 
+                                               Size="Size.Small" 
+                                               aria-label="save" />
+                                <MudIconButton Icon="@Icons.Filled.Cancel" 
+                                               Color="Color.Error" 
+                                               Size="Size.Small" 
+                                               aria-label="save"
+                                               OnClick="@(() => ShowActivityForm(false))" />
+                            </div>
+
+
+                        </EditForm>
+                    </MudPopover >
+                }
                 @if (TskModel.Status == Status.Done) {
                     <MudToggleIconButton @bind-Toggled="@IsArchived"
                          Icon="@Icons.Filled.Archive" 

@@ -69,7 +69,8 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
                     if (command.CreatedById.HasValue) tsk.CreatedById = command.CreatedById.Value;
                     if (command.ModifiedById.HasValue) tsk.ModifiedById = command.ModifiedById.Value;
                     if (command.InitiativeId.HasValue) tsk.InitiativeId = command.InitiativeId.Value;
-                    if (command.Activities != null) tsk.Activities = command.Activities;
+                    //if (command.Activities != null) tsk.Activities = command.Activities;
+                    if (command.Activities != null) tsk.Activities.AddRange(command.Activities);
                     tsk.ModifiedDate = DateTime.Now;    
 
                     await _tskRepository.SaveAsync();
