@@ -36,8 +36,6 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
             public async Task<Result<int>> Handle(Command command, CancellationToken cancellationToken) {
                 if (command.Id == 0)
                     return Result.Fail("Id can't be zero.");
-                //if (string.IsNullOrEmpty(command.Name))
-                //    return Result.Fail("Tsk Name can't be null.");
 
                 var tskResult = await UpdateTsk(command);
 
@@ -69,7 +67,6 @@ namespace Mwm.MyQ.Application.Tsks.Commands {
                     if (command.CreatedById.HasValue) tsk.CreatedById = command.CreatedById.Value;
                     if (command.ModifiedById.HasValue) tsk.ModifiedById = command.ModifiedById.Value;
                     if (command.InitiativeId.HasValue) tsk.InitiativeId = command.InitiativeId.Value;
-                    //if (command.Activities != null) tsk.Activities = command.Activities;
                     if (command.Activities != null) tsk.Activities.AddRange(command.Activities);
                     tsk.ModifiedDate = DateTime.Now;    
 
