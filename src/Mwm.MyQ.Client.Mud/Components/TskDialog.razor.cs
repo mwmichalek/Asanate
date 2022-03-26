@@ -101,10 +101,12 @@ public partial class TskDialog: ComponentBase {
     }
 
     public Task Close() {
-        Logger.LogInformation($"Closing TskModel.");
-        IsDialogShowing = false;
-        TskModel = null;
-        StateHasChanged();
+        if (IsDialogShowing) {
+            Logger.LogInformation($"Closing TskModel.");
+            IsDialogShowing = false;
+            TskModel = null;
+            StateHasChanged();
+        }
         return Task.CompletedTask;
     }
 

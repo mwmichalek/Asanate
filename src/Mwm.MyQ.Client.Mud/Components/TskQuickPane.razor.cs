@@ -76,14 +76,14 @@ public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
 
-        if (!TsksState.HasValue())
-            await EntityStateFacade.Load<Tsk>();
-        if (!InitiativesState.HasValue())
-            await EntityStateFacade.Load<Initiative>();
-        if (!CompaniesState.HasValue())
-            await EntityStateFacade.Load<Company>();
-        if (!ProjectsState.HasValue())
-            await EntityStateFacade.Load<Project>();
+        //if (!TsksState.HasValue())
+        //    await EntityStateFacade.Load<Tsk>();
+        //if (!InitiativesState.HasValue())
+        //    await EntityStateFacade.Load<Initiative>();
+        //if (!CompaniesState.HasValue())
+        //    await EntityStateFacade.Load<Company>();
+        //if (!ProjectsState.HasValue())
+        //    await EntityStateFacade.Load<Project>();
 
         TsksState.StateChanged += (s, e) => SavedPendingTsk();
         InitiativesState.StateChanged += (s, e) => UpdateInitiativeDropDown();
