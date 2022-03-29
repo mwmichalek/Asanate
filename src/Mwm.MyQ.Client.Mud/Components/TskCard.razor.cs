@@ -154,4 +154,16 @@ public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
         ActivityModel = new ActivityModel();
     }
 
+    public bool ShowHourProgressDisplay => (TskModel.DurationCompleted.HasValue || TskModel.DurationCompleted > 0) &&
+                                           (TskModel.DurationEstimate.HasValue || TskModel.DurationEstimate > 0);
+    public bool ShowDueDateDisplay => !string.IsNullOrEmpty(DueDateDisplay);
+
+    public bool ShowSpacer => (ShowHourProgressDisplay == ShowDueDateDisplay);
+
+    public string DueDateClasses => $"pt-1 pb-1 d-flex { (ShowHourProgressDisplay ? "justify-end" : "justify-start") }";
+
+    public string ButtonClasses => $"{ (ExtraRow ? "pt-0" : "pt-1")} pb-2 d-flex justify-end";
+
+    public bool ExtraRow => ShowHourProgressDisplay && ShowDueDateDisplay;
+
 }

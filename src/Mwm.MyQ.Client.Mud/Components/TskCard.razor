@@ -35,37 +35,41 @@
         </CardHeaderContent>
     </MudCardHeader>
     @if (!string.IsNullOrEmpty(TskModel.Notes)) {
-        <MudCardContent>
+        <MudCardContent Class="m-1 p-1">
             <MudText>@TskModel.Notes</MudText>
-            <MudDivider />
+            <MudDivider  />
         </MudCardContent>
     }
     <MudCardActions>
         <MudGrid>
-            <MudItem xs="2" Class="d-flex justify-start">
-                @if (!string.IsNullOrEmpty(HourProgressDisplay)) {
+            @if (ShowHourProgressDisplay) {
+                <MudItem xs="6" Class="pt-1 pb-1 d-flex justify-start">
                     <MudChip Size="Size.Medium" 
-                             Variant="Variant.Outlined" 
-                             Color="@Color.Info">
+                                Variant="Variant.Outlined" 
+                                Color="@Color.Info">
                         @HourProgressDisplay
                     </MudChip>
-                }
-            </MudItem>
-            <MudItem xs="6" Class="d-flex justify-start">
-                @if (!string.IsNullOrEmpty(DueDateDisplay)) {
+                </MudItem>
+            }
+            @if (ShowDueDateDisplay) {
+                <MudItem xs="6" Class="@DueDateClasses">
                     <MudChip Size="Size.Medium" 
-                             Variant="Variant.Text" 
-                             Color="@DueDateCountColor">
+                                Variant="Variant.Text" 
+                                Color="@DueDateCountColor">
                         @DueDateDisplay 
                         <MudChip Size="Size.Small" 
-                             Variant="Variant.Outlined" 
-                             Color="@DueDateCountColor">
+                                Variant="Variant.Outlined" 
+                                Color="@DueDateCountColor">
                             @DueDateCount
                         </MudChip>
                     </MudChip>
-                }
-            </MudItem>
-            <MudItem xs="4" Class="d-flex justify-end">
+               
+                </MudItem>
+            }
+            @if (ShowSpacer) {
+                <MudItem xs="6" Class="pt-0 pb-1 d-flex justify-start" />
+            }
+            <MudItem xs="6" Class="@ButtonClasses">
                 @if (TskModel.Status != Status.Done) {
                     <MudIconButton Icon="@Icons.Filled.MoreTime" 
                                OnClick="@(() => ShowActivityForm(true))"
@@ -87,6 +91,7 @@
                                                         @bind-Value="ActivityModel.Duration"
                                                         HelperText=""
                                                         AutoFocus="true"
+                                                        Placeholder="0"
                                                         Variant="Variant.Text" 
                                                         Min="0"  
                                                         Max="8"

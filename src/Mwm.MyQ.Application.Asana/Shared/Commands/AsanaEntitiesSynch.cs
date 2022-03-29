@@ -228,11 +228,11 @@ namespace Mwm.MyQ.Application.Asana.Commands {
 
                         var existingTsk = _tskRepository.GetByGid(asanaTsk.Gid);
                         if (existingTsk == null) {
-                            var fakeActivities = Enumerable.Range(1, 4).Select(i => new Activity {
-                                Notes = $"{asanaTsk.Name} - {i}",
-                                StartTime = DateTime.Now,
-                                Duration = i / 4
-                            }).ToList();
+                            //var fakeActivities = Enumerable.Range(1, 4).Select(i => new Activity {
+                            //    Notes = $"{asanaTsk.Name} - {i}",
+                            //    StartTime = DateTime.Now,
+                            //    Duration = i / 4
+                            //}).ToList();
 
 
                             _logger.LogDebug($"Adding Tsk: {asanaTsk.Name}");
@@ -248,7 +248,7 @@ namespace Mwm.MyQ.Application.Asana.Commands {
                                 Initiative = existingInitiative,
                                 AssignedTo = _userRepository.GetByName(asanaTsk.AssignedTo.Name),
                                 ModifiedDate = asanaTsk.ModifiedAt.Value,
-                                Activities = fakeActivities
+                                //Activities = fakeActivities
                             });
                             requiresSaving = true;
                         } else {
