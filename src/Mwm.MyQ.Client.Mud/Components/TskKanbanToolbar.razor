@@ -1,11 +1,33 @@
 ﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
 @using Mwm.MyQ.Client.Service.Models
 @using Mwm.MyQ.Domain
+@using System.Linq
 
 <MudPaper Elevation="25"  >
     <MudToolBar Class="p-1">
         
-                         <MudSpacer />
+        <MudSpacer />
+
+       @* <MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" MultiSelection="true" @bind-Value="value" @bind-SelectedValues="options" T="string" Label="US States" AdornmentIcon="@Icons.Material.Filled.Search" AnchorOrigin="Origin.BottomCenter">
+            @foreach (var state in states)
+            {
+                <MudSelectItem T="string" Value="@state">@state</MudSelectItem>
+            }
+        </MudSelect>*@
+
+        <MudSelect MultiSelectionTextFunc="@(new Func<List<string>, string>(GetCompanyNameFilterText))" 
+                   MultiSelection="true" 
+                   @bind-Value="CompanyNames"
+                   @bind-SelectedValues="CompanyFilter" 
+                   T="string" 
+                   Label="Company" 
+                   AdornmentIcon="@Icons.Material.Filled.Search" 
+                   AnchorOrigin="Origin.BottomCenter">
+            @foreach (var companyName in CompanyNames)
+            {
+                <MudSelectItem T="string" Value="@companyName">@companyName</MudSelectItem>
+            }
+        </MudSelect>
         <MudToggleIconButton @bind-Toggled="@IsTskQuickPaneVisible"
                          Icon="@Icons.Filled.AddTask" 
                          Color="@Color.Default" 
