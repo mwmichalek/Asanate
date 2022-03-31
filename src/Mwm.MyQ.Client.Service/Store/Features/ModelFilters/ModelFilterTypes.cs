@@ -35,3 +35,17 @@ public class IsInFocusedTskModelFilter : ModelFilter<TskModel, Tsk> {
     }
 
 }
+
+public class ByCompanyTskModelFilter : ModelFilter<TskModel, Tsk> {
+
+    public override string Title => "Filter By Company";
+
+    public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
+        try {
+            return models.Where(tm => tm.IsInFocus);
+        } catch (Exception) {
+            return models;
+        }
+    }
+
+}

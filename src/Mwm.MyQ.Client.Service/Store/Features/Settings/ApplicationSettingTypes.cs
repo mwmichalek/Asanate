@@ -15,8 +15,7 @@ public class ApplicationSettingTypes {
         new IsInFocusOnlyFlag(),
         new IsGroupedByCompanyFlag { CurrentValue = true },
         new IsActionStatusOnlyFlag(),
-        new IsTskQuickPaneVisibleFlag(),
-        new CompanyFilter()
+        new IsTskQuickPaneVisibleFlag()
     };
 }
 
@@ -27,6 +26,4 @@ public class IsGroupedByCompanyFlag : PrimativeApplicationSetting<bool> { }
 public class IsActionStatusOnlyFlag : PrimativeApplicationSetting<bool> { }
 
 public class IsTskQuickPaneVisibleFlag : PrimativeApplicationSetting<bool> { }
-
-public class CompanyFilter : ObjectApplicationSetting<List<int>> { }
 

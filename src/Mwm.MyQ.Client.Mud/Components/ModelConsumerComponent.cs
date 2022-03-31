@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
+//TODO:(MWM) Don't call it ModelConusmer, the ModelState should just be injected where its neexted.  Focus this on
+// just the Application State, and maybe add ModelFilter State.  Why did I make that different from Application State again?
 public abstract class ModelConsumerComponent<TModel, TEntity> : FluxorComponent where TModel : EntityModel<TEntity>
                                                                                 where TEntity : INamedEntity {
     [Inject]

@@ -18,8 +18,7 @@ public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
                                         IApplicationSettingConsumer<IsInFocusOnlyFlag>,
                                         IApplicationSettingConsumer<IsGroupedByCompanyFlag>,
                                         IApplicationSettingConsumer<IsActionStatusOnlyFlag>,
-                                        IApplicationSettingConsumer<IsTskQuickPaneVisibleFlag>,
-                                        IApplicationSettingConsumer<CompanyFilter> {
+                                        IApplicationSettingConsumer<IsTskQuickPaneVisibleFlag> {
 
     [Inject]
     public ApplicationStateFacade ApplicationStateFacade { get; set; }
@@ -30,7 +29,7 @@ public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
     [Inject]
     public ModelFacade ModelFacade { get; set; }
 
-    public List<string> CompanyName => CompaniesState.HasValue() ? CompaniesState.Value.Entities.Select(c => c.Name).ToList() : 
+    public List<string> AllCompanyNames => CompaniesState.HasValue() ? CompaniesState.Value.Entities.Select(c => c.Name).ToList() : 
                                                                   new List<string>();
 
     private bool _isGroupedTogether = true;
@@ -84,19 +83,22 @@ public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
         }
     }
 
-    private List<int> _companyFilter = new List<int>();
-    public List<string> CompanyFilter {
-        get => _companyFilter;
+    private List<Company> _companyFilter = new List<Company>();
+    public IEnumerable<string> CompanyFilter {
+        get => _companyFilter.Select(cf => cf.Name);
+                                           
         set {
-            ApplicationStateFacade.Set(new CompanyFilter {
-                PreviousValue = _companyFilter,
-                CurrentValue = value
-            });
-            _companyFilter = value;
+            var newCompanyFilter = CompaniesState.HasValue() ? CompaniesState.Value.Entities.Where(e => value.Contains(e.Name)).ToList() : 
+                                                               new List<Company>();
+            //ApplicationStateFacade.Set(new CompanyFilter {
+            //    PreviousValue = _companyFilter.Select(cf => cf.Id).ToList(),
+            //    CurrentValue = newCompanyFilter.Select(cf => cf.Id).ToList()
+            //});
+            _companyFilter = newCompanyFilter;
         }
     }
 
-    public string CompanyNames { get; set; }
+    public string SelectCompanyNames { get; set; }
 
     private string GetCompanyNameFilterText(List<string> selectedCompanyNames) {
         return string.Join(',', selectedCompanyNames);
@@ -123,7 +125,9 @@ public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
         return Task.CompletedTask;
     }
 
-    public Task ApplySetting(CompanyFilter applicationSetting) {
-        throw new System.NotImplementedException();
-    }
+    //public Task ApplySetting(CompanyFilter applicationSetting) {
+    //    var newCompanyFilter = CompaniesState.HasValue() ? CompaniesState.Value.Entities.Where(e => applicationSetting.CurrentValue.Contains(e.Id)).ToList() :
+    //                                                           new List<Company>();
+    //    return Task.CompletedTask;
+    //}
 }
