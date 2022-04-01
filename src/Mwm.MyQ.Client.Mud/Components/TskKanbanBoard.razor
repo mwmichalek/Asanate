@@ -1,16 +1,17 @@
-﻿@inherits Mwm.MyQ.Client.Mud.Components.ModelConsumerComponent<TskModel, Tsk>
+﻿@inherits Mwm.MyQ.Client.Mud.Components.EventListenerComponent
 @using Mwm.MyQ.Client.Mud.Helpers
 @using Mwm.MyQ.Client.Service.Models
+@using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers
 @using Mwm.MyQ.Client.Service.Store.State.Shared
 @using Mwm.MyQ.Domain;
 @using Mwm.MyQ.Client.Mud.Components
 
-@if (IsLoading()) {
+@if (TskModelsState.IsLoading()) {
     <MudText Typo="Typo.h6" Class="m-4">Loading...</MudText>
 }
-@if (HasErrors()) {
+@if (TskModelsState.HasErrors()) {
     <MudText Typo="Typo.h6" Class="m-4">Whoops! Looks like an issue occurred loading TskModels</MudText>
-} else if (HasValues()) {
+} else if (TskModelsState.HasValue()) {
 
     <MudDropContainer T="TskModel" 
                       Items="FilteredTskModels" 

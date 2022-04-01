@@ -7,6 +7,7 @@ using Mwm.MyQ.Client.Service.Components;
 using Mwm.MyQ.Client.Service.Facades;
 using Mwm.MyQ.Client.Service.Models;
 using Mwm.MyQ.Client.Service.Store.Features.Settings;
+using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 using Mwm.MyQ.Client.Service.Store.State.Shared;
 using Mwm.MyQ.Domain;
 using System;
@@ -16,15 +17,21 @@ using System.Threading.Tasks;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
+public partial class TskKanbanBoard : EventListenerComponent,
                                       IApplicationSettingConsumer<IsInFocusOnlyFlag>,
                                       IApplicationSettingConsumer<IsGroupedByCompanyFlag>,
                                       IApplicationSettingConsumer<IsActionStatusOnlyFlag> {
 
-    private List<TskModel> filteredTskModels = new List<TskModel>();
+    [Inject]
+    public EntityStateFacade EntityStateFacade { get; set; }
+
+    [Inject]
+    public IState<ModelState<TskModel, Tsk>> TskModelsState { get; set; }
 
     [Inject]
     public IState<EntityState<Company>> CompaniesState { get; set; }
+
+    private List<TskModel> filteredTskModels = new List<TskModel>();
 
     public IEnumerable<TskModel> FilteredTskModels {
         get => filteredTskModels;
@@ -42,12 +49,14 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     }
 
     protected override async Task OnInitializedAsync() {
+        
         Logger.LogInformation($">>> OnInitializedAsync triggered.");
         await base.OnInitializedAsync();
+        TskModelsState.StateChanged += async (s, e) => await HandleModelsLoaded();
         await InitializeBoardAsync();
     }
 
-    protected override async Task HandleModelsLoaded() {
+    protected virtual async Task HandleModelsLoaded() {
         Logger.LogInformation($">>> HandleModelsLoaded triggered.");
         await InitializeBoardAsync();
     }
@@ -59,10 +68,10 @@ public partial class TskKanbanBoard : ModelConsumerComponent<TskModel, Tsk>,
     }
 
     private Task InitializeBoardAsync() {
-        if (HasValues()) {
+        if (TskModelsState.HasValue()) {
             Logger.LogDebug($">>> InitializeBoardAsync Started, models[{filteredTskModels.Count}]");
 
-            filteredTskModels = ModelsState.Value.FilteredModels.OrderByDescending(fm => fm.IsInFocus).ThenBy(fm => fm.Name).ToList();
+            filteredTskModels = TskModelsState.Value.FilteredModels.OrderByDescending(fm => fm.IsInFocus).ThenBy(fm => fm.Name).ToList();
 
             Logger.LogDebug($">>> InitializeBoardAsync Completed, models[{filteredTskModels.Count}]");
         } else

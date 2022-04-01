@@ -11,11 +11,14 @@ using System.Collections.Generic;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskCard : ModelConsumerComponent<TskModel, Tsk>,
+public partial class TskCard : EventListenerComponent,
                                IApplicationSettingConsumer<IsGroupedByCompanyFlag> {
 
     [Inject]
     public ModelFacade ModelFacade { get; set; }
+
+    [Inject]
+    public EntityStateFacade EntityStateFacade { get; set; }
 
     [Parameter]
     public TskModel TskModel { get; set; }
