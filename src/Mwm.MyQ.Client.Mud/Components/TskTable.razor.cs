@@ -8,13 +8,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mwm.MyQ.Application.Tsks.Commands;
+using Mwm.MyQ.Client.Service.Store.State.Shared;
+using Fluxor;
+using Mwm.MyQ.Client.Service.Store.Features.Shared.Helpers;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskTable : ModelConsumerComponent<TskModel, Tsk> {
+public partial class TskTable : EventListenerComponent {
 
     [Inject]
     public ModelFacade ModelFacade { get; set; }
+
+    [Inject]
+    public EntityStateFacade EntityStateFacade { get; set; }
+
+    [Inject]
+    public IState<ModelState<TskModel, Tsk>> TskModelsState { get; set; }
 
     private List<TskModel> filteredTskModels = new List<TskModel>();
 
@@ -25,19 +34,20 @@ public partial class TskTable : ModelConsumerComponent<TskModel, Tsk> {
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();
+        TskModelsState.StateChanged += async (s, e) => await HandleModelsLoaded();
         await InitializeGridAsync();
     }
 
-    protected override async Task HandleModelsLoaded() {
+    protected async Task HandleModelsLoaded() {
         //TODO: This is getting called way too many times
         await InitializeGridAsync();
     }
 
     private Task InitializeGridAsync() {
-        if (HasValues()) {
+        if (TskModelsState.HasValue()) {
             Logger.LogDebug($">>> InitializeGridAsync Started, models[{filteredTskModels.Count}]");
 
-            filteredTskModels = ModelsState.Value.FilteredModels.ToList();
+            filteredTskModels = TskModelsState.Value.FilteredModels.ToList();
 
             Logger.LogDebug($">>> InitializeGridAsync Completed, models[{filteredTskModels.Count}]");
         } else

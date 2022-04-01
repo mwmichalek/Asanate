@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskKanbanToolbar : ModelConsumerComponent<TskModel, Tsk>,
+public partial class TskKanbanToolbar : EventListenerComponent,
                                         IApplicationSettingConsumer<IsInFocusOnlyFlag>,
                                         IApplicationSettingConsumer<IsGroupedByCompanyFlag>,
                                         IApplicationSettingConsumer<IsActionStatusOnlyFlag>,

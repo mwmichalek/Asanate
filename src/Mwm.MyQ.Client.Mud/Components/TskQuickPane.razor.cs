@@ -19,10 +19,13 @@ using Mwm.MyQ.Client.Service.Components;
 
 namespace Mwm.MyQ.Client.Mud.Components;
 
-public partial class TskQuickPane : ModelConsumerComponent<TskModel, Tsk>,
+public partial class TskQuickPane : EventListenerComponent,
                                     IApplicationSettingConsumer<IsTskQuickPaneVisibleFlag> {
     [Inject]
     public ApplicationStateFacade ApplicationStateFacade { get; set; }
+
+    [Inject]
+    public EntityStateFacade EntityStateFacade { get; set; }
 
     [Inject]
     public IState<EntityState<Tsk>> TsksState { get; set; }
