@@ -62,6 +62,7 @@ public class TskLoadModelEffect : LoadModelEffect<TskModel, Tsk> {
             Notes = t.Notes,
             CreatedDate = t.CreatedDate,
             DueDate = t.DueDate,
+            ScheduledFocusDate = t.ScheduledFocusDate,
             StartDate = t.StartDate,
             StartedDate = t.StartedDate,
             CompletedDate = t.CompletedDate,

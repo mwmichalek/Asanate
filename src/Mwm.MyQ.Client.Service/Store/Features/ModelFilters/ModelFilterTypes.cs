@@ -18,7 +18,8 @@ public class ModelFilterTypes {
     }
 
     private static List<IModelFilter> defaultModelFilters = new List<IModelFilter> {
-        new IsInFocusedTskModelFilter { IsApplied = false }
+        new IsInFocusedTskModelFilter { IsApplied = false },
+        new ByCompanyTskModelFilter{ IsApplied = false }
     };
 }
 
@@ -40,9 +41,11 @@ public class ByCompanyTskModelFilter : ModelFilter<TskModel, Tsk> {
 
     public override string Title => "Filter By Company";
 
+    public List<string> CompanyNames { get; set; } = new List<string>();
+
     public override IEnumerable<TskModel> Filter(IEnumerable<TskModel> models) {
         try {
-            return models.Where(tm => tm.IsInFocus);
+            return models.Where(tm => CompanyNames.Contains(tm.CompanyName));
         } catch (Exception) {
             return models;
         }

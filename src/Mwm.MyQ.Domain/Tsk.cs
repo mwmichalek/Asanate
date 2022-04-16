@@ -25,6 +25,8 @@ namespace Mwm.MyQ.Domain {
 
         public DateTime? DueDate { get; set; }
 
+        public DateTime? ScheduledFocusDate { get; set; }
+
         public DateTime? StartDate { get; set; }
 
         public DateTime? StartedDate { get; set; }

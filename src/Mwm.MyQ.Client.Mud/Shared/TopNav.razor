@@ -10,11 +10,13 @@
 <MudSpacer />
 
 
-    @if (CurrentPage == MyQ.Page.Kanban) {
+    @*@if (CurrentPage == MyQ.Page.Kanban) {
         <TskKanbanToolbar />
     } else if (CurrentPage == MyQ.Page.Notes) {
         <span>Notes</span>
-    }
+    }*@
+
+    <TskToolbar/>
 
 
 @*<MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />*@
